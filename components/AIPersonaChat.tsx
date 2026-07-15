@@ -7,7 +7,7 @@ export const AIPersonaChat: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const suggestedQuestions = [
     { label: "Experience & Stack", text: "Tell me about your tech stack and experience." },
@@ -22,14 +22,19 @@ export const AIPersonaChat: React.FC = () => {
       {
         id: 'welcome',
         role: 'model',
-        text: "Hi, I am Matan's portfolio assistant. Ask me about Matan's projects, stack (Vue 3, React, PHP, GTM/GA4), or how to get in touch! I will keep my answers brief.",
+        text: "Hi, I am Matan's Interactive Assistant. Feel free to ask me about my checkout projects, professional experience, or how to get in touch!",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
     ]);
   }, []);
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        top: containerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   }, [messages, loading]);
 
   const handleSend = async (textToSend: string) => {
@@ -75,6 +80,47 @@ export const AIPersonaChat: React.FC = () => {
     }
   };
 
+  const formatLinks = (text: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
+    const parts = text.split(urlRegex);
+    return parts.map((part, index) => {
+      if (part.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+        return (
+          <a key={index} href={`mailto:${part}`} className="text-accent underline hover:text-accent-hover transition-colors font-mono font-semibold">
+            {part}
+          </a>
+        );
+      } else if (part.match(/^https?:\/\/[^\s]+/)) {
+        const url = part.replace(/[.,;:)\]]+$/, '');
+        const trailing = part.slice(url.length);
+        return (
+          <React.Fragment key={index}>
+            <a href={url} target="_blank" rel="noopener noreferrer" className="text-accent underline hover:text-accent-hover transition-colors font-mono font-semibold">
+              {url}
+            </a>
+            {trailing}
+          </React.Fragment>
+        );
+      }
+      return part;
+    });
+  };
+
+  const renderMessageText = (text: string) => {
+    const parts = text.split(/(\*\*[^*]+\*\*)/g);
+    return parts.map((part, index) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        const cleanText = part.slice(2, -2);
+        return (
+          <strong key={index} className="font-bold text-text">
+            {formatLinks(cleanText)}
+          </strong>
+        );
+      }
+      return formatLinks(part);
+    });
+  };
+
   return (
     <div className="w-full mt-4 border border-border rounded-xl bg-surface overflow-hidden text-left shadow-[0_1px_6px_rgba(0,0,0,0.03)] selection:bg-accent-soft">
       {/* Header Info */}
@@ -82,14 +128,14 @@ export const AIPersonaChat: React.FC = () => {
         <div className="flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-text-muted animate-pulse"></span>
           <span className="font-mono text-[10px] tracking-wider text-text uppercase font-bold">
-            Portfolio Assistant
+            Matan's Interactive Assistant
           </span>
         </div>
         <span className="font-mono text-[9px] text-text-muted">Active</span>
       </div>
 
       {/* Message Feed */}
-      <div className="p-5 h-[270px] overflow-y-auto space-y-4 bg-white border-b border-border">
+      <div ref={containerRef} className="p-5 h-[270px] overflow-y-auto space-y-4 bg-white border-b border-border">
         {messages.map((m) => {
           const isModel = m.role === 'model';
           return (
@@ -101,7 +147,7 @@ export const AIPersonaChat: React.FC = () => {
                     : 'bg-accent-soft border-border text-text rounded-br-none'
                 }`}
               >
-                <p className="text-xs font-sans leading-relaxed whitespace-pre-line">{m.text}</p>
+                <p className="text-xs font-sans leading-relaxed whitespace-pre-line">{renderMessageText(m.text)}</p>
                 <div 
                   className={`text-[8px] mt-1.5 font-mono ${
                     isModel ? 'text-text-muted' : 'text-accent'
@@ -121,7 +167,6 @@ export const AIPersonaChat: React.FC = () => {
             </div>
           </div>
         )}
-        <div ref={scrollRef} />
       </div>
 
       {/* Suggested Questions Quick Grid */}

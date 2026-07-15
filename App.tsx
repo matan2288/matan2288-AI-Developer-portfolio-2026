@@ -40,24 +40,13 @@ export default function App() {
   const [contactSubmitted, setContactSubmitted] = useState(false);
 
   // States for Carousel / Grid views of experience and testimonials
-  const [expViewMode, setExpViewMode] = useState<'carousel' | 'grid'>('carousel');
   const [activeExpIdx, setActiveExpIdx] = useState(0);
-
-  const [testViewMode, setTestViewMode] = useState<'carousel' | 'grid'>('carousel');
-  const [activeTestIdx, setActiveTestIdx] = useState(0);
 
   const nextExp = () => {
     setActiveExpIdx((prev) => (prev + 1) % portfolioExperiences.length);
   };
   const prevExp = () => {
     setActiveExpIdx((prev) => (prev - 1 + portfolioExperiences.length) % portfolioExperiences.length);
-  };
-
-  const nextTest = () => {
-    setActiveTestIdx((prev) => (prev + 1) % portfolioRecommendations.length);
-  };
-  const prevTest = () => {
-    setActiveTestIdx((prev) => (prev - 1 + portfolioRecommendations.length) % portfolioRecommendations.length);
   };
 
   // Full section order (scroll-spy navigation matching the Mikon specification)
@@ -114,10 +103,6 @@ export default function App() {
           <a href="#home" className="flex items-center gap-3">
             <span className="text-sm font-bold tracking-tight text-text uppercase">
               matan<span className="text-text-muted font-normal">2288</span>
-            </span>
-            <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-bg-alt text-[10px] text-text-muted font-medium border border-border select-none">
-              <span className="w-1.5 h-1.5 rounded-full bg-text-subtle animate-pulse"></span>
-              Available for contracts
             </span>
           </a>
 
@@ -180,18 +165,13 @@ export default function App() {
         {/* Section 00 — Home (Hero split layout with live AI chat above the fold) */}
         <section id="home" className="min-h-[calc(100vh-4rem)] flex items-center bg-white py-12 md:py-20">
           <div className="max-w-6xl mx-auto px-6 md:px-8 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 lg:items-start items-center">
               
               {/* Left Column: Primary Professional Facts */}
               <div className="lg:col-span-6 space-y-6">
                 <div>
-                  {/* Availability status line */}
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bg-alt text-text-muted text-[11px] font-mono tracking-tight font-semibold border border-border mb-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-text-subtle animate-pulse"></span>
-                    Available for select contracts &amp; roles
-                  </div>
                   <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-text leading-tight uppercase font-sans">
-                    Matan <span className="block text-text-muted">// 2288</span>
+                    Matan <span className="text-text-muted">2288</span>
                   </h1>
                 </div>
 
@@ -233,7 +213,7 @@ export default function App() {
                 <div className="bg-bg-alt rounded-2xl p-4 md:p-6 border border-border/80">
                   <div className="mb-2 pl-1">
                     <span className="text-[10px] font-mono text-text-muted uppercase tracking-wider block font-bold">
-                      00 // Interactive Sandbox Route
+                      00 — Interactive Sandbox Route
                     </span>
                     <p className="text-xs text-text-muted">
                       Query the Gemini guide instantly regarding core accomplishments:
@@ -258,12 +238,9 @@ export default function App() {
                   High technical standards. Rigorous engineering form.
                 </h2>
               </div>
-              <div className="lg:col-span-7 space-y-4 text-text-muted text-sm sm:text-base leading-relaxed">
+              <div className="lg:col-span-7 text-text-muted text-sm sm:text-base leading-relaxed">
                 <p>
-                  I treat digital systems with absolute discipline. In enterprise checkouts where every extra block of script increases bundle weights and ruins customer transaction rates, I commit to lightweight component loops, clean type handling, and robust analytical tracking coverage.
-                </p>
-                <p>
-                  Over my 4 years of client-facing deliverables, I have established a track record of resolving critical bottlenecks on production lines, managing secure Adobe OKTA integrations, and presenting technical diagnostics directly to stakeholder matrices.
+                  I build high-performance e-commerce checkout buyflows with absolute discipline. Over 4 years of software development, I have optimized subscriber checkout pipelines, automated GA4 dataLayer tracking, and resolved live enterprise performance bottlenecks.
                 </p>
               </div>
             </div>
@@ -304,7 +281,7 @@ export default function App() {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-4">
                   <span className="text-[10px] uppercase tracking-widest text-text-muted block mb-1">
-                    01.2 // Toolsets
+                    01.2 — Toolsets
                   </span>
                   <h3 className="text-xl font-bold uppercase text-text tracking-tight mb-3">
                     Enterprise Tech Stack
@@ -343,7 +320,7 @@ export default function App() {
           <div className="max-w-6xl mx-auto px-6 md:px-8">
             <SectionLabel num="02" title="Experience &amp; Case Studies" />
             
-            {/* Header row with text and the modern visual toggle controls */}
+            {/* Header row with text */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
               <div className="max-w-xl">
                 <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-text uppercase leading-tight mb-2">
@@ -353,181 +330,103 @@ export default function App() {
                   Contract delivery roles optimizing high-converting subscriber checkouts, checkout state pipelines, and telemetry-tracking analytics.
                 </p>
               </div>
-              <div className="flex items-center gap-2 self-start md:self-auto">
-                <div className="flex bg-bg-alt border border-border p-1 rounded-xl">
-                  <button
-                    onClick={() => setExpViewMode('carousel')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer ${
-                      expViewMode === 'carousel'
-                        ? 'bg-white text-text shadow-2xs border border-border'
-                        : 'text-text-muted hover:text-text'
-                    }`}
+            </div>
+
+            {/* Carousel layout */}
+            <div className="max-w-4xl">
+              <AnimatePresence mode="wait">
+                {portfolioExperiences.map((exp, idx) => {
+                  if (idx !== activeExpIdx) return null;
+                  const caseDescription = exp.company.includes("Altice")
+                    ? "Migrated the legacy React enterprise portal system into Drupal and Vue 3 custom components. Completely rebuilt the subscriber buyflow pathways, reducing transaction times."
+                    : exp.company.includes("UK")
+                    ? "Delivered high-performance mobile wrappers and order paths using React and Redux-Saga. Resolved live checkout bottlenecks and high-concurrency race conditions during broadband product launches."
+                    : "Designed automated component packages using Adobe Experience Manager (AEM). Configured custom lightweight JS routines to feed user interactions and buyflow navigation states straight to GA4 dataLayers.";
+
+                  return (
+                    <motion.div 
+                      key={idx}
+                      initial={{ opacity: 0, x: 12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -12 }}
+                      transition={{ duration: 0.2 }}
+                      className="group bg-bg-alt p-6 md:p-8 rounded-2xl border border-border hover:border-text transition-all duration-300 relative"
+                    >
+                      <div className="absolute left-[-2px] top-6 w-[4px] h-[40px] bg-text-subtle group-hover:bg-text transition-colors rounded-r-lg"></div>
+                      
+                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+                        <div>
+                          <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider block mb-1">
+                            0{idx + 1} — {exp.company} — {exp.location}
+                          </span>
+                          <h4 className="text-lg font-bold text-text uppercase">
+                            {exp.role}
+                          </h4>
+                        </div>
+                        <span className="text-xs text-text-muted font-medium bg-white border border-border px-3 py-1 rounded-lg shrink-0 self-start md:self-auto">
+                          {exp.period}
+                        </span>
+                      </div>
+
+                      <p className="text-xs text-[#4B5563] leading-relaxed mb-6 italic max-w-3xl">
+                        {caseDescription}
+                      </p>
+
+                      <ul className="space-y-3 mb-6">
+                        {exp.bullets.map((bullet, bulletIdx) => (
+                          <li key={bulletIdx} className="text-xs sm:text-sm text-[#4B5563] leading-relaxed flex items-start gap-2.5">
+                            <CheckCircle className="text-text-subtle shrink-0 mt-0.5" size={14} />
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <div className="flex flex-wrap gap-1.5 pt-4 border-t border-border/60">
+                        {exp.skills.map((s) => (
+                          <span key={s} className="text-[10px] text-text bg-white border border-border px-2.5 py-1 rounded-md">
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+
+              {/* Carousel Controls */}
+              <div className="flex items-center justify-between mt-6">
+                <div className="flex gap-1.5">
+                  {portfolioExperiences.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveExpIdx(i)}
+                      className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                        activeExpIdx === i ? 'w-6 bg-text' : 'w-1.5 bg-border hover:bg-text-subtle'
+                      }`}
+                      aria-label={`Go to slide ${i + 1}`}
+                    />
+                  ))}
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <button 
+                    onClick={prevExp}
+                    className="p-2 border border-border rounded-xl bg-white hover:border-text text-text-muted hover:text-text transition-all shadow-2xs cursor-pointer"
                   >
-                    <SlidersHorizontal size={11} />
-                    <span>Carousel</span>
+                    <ChevronLeft size={16} />
                   </button>
-                  <button
-                    onClick={() => setExpViewMode('grid')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer ${
-                      expViewMode === 'grid'
-                        ? 'bg-white text-text shadow-2xs border border-border'
-                        : 'text-text-muted hover:text-text'
-                    }`}
+                  <span className="font-mono text-xs text-text-muted select-none">
+                    0{activeExpIdx + 1} / 0{portfolioExperiences.length}
+                  </span>
+                  <button 
+                    onClick={nextExp}
+                    className="p-2 border border-border rounded-xl bg-white hover:border-text text-text-muted hover:text-text transition-all shadow-2xs cursor-pointer"
                   >
-                    <LayoutGrid size={11} />
-                    <span>Grid View</span>
+                    <ChevronRight size={16} />
                   </button>
                 </div>
               </div>
             </div>
-
-            {/* Render chosen view mode */}
-            {expViewMode === 'carousel' ? (
-              <div className="max-w-4xl">
-                <AnimatePresence mode="wait">
-                  {portfolioExperiences.map((exp, idx) => {
-                    if (idx !== activeExpIdx) return null;
-                    const caseDescription = exp.company.includes("Altice")
-                      ? "Migrated the legacy React enterprise portal system into Drupal and Vue 3 custom components. Completely rebuilt the subscriber buyflow pathways, reducing transaction times."
-                      : exp.company.includes("UK")
-                      ? "Delivered high-performance mobile wrappers and order paths using React and Redux-Saga. Resolved live checkout bottlenecks and high-concurrency race conditions during broadband product launches."
-                      : "Designed automated component packages using Adobe Experience Manager (AEM). Configured custom lightweight JS routines to feed user interactions and buyflow navigation states straight to GA4 dataLayers.";
-
-                    return (
-                      <motion.div 
-                        key={idx}
-                        initial={{ opacity: 0, x: 12 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -12 }}
-                        transition={{ duration: 0.2 }}
-                        className="group bg-bg-alt p-6 md:p-8 rounded-2xl border border-border hover:border-text transition-all duration-300 relative"
-                      >
-                        <div className="absolute left-[-2px] top-6 w-[4px] h-[40px] bg-text-subtle group-hover:bg-text transition-colors rounded-r-lg"></div>
-                        
-                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
-                          <div>
-                            <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider block mb-1">
-                              0{idx + 1} // {exp.company} // {exp.location}
-                            </span>
-                            <h4 className="text-lg font-bold text-text uppercase">
-                              {exp.role}
-                            </h4>
-                          </div>
-                          <span className="text-xs text-text-muted font-medium bg-white border border-border px-3 py-1 rounded-lg shrink-0 self-start md:self-auto">
-                            {exp.period}
-                          </span>
-                        </div>
-
-                        <p className="text-xs text-[#4B5563] leading-relaxed mb-6 italic max-w-3xl">
-                          {caseDescription}
-                        </p>
-
-                        <ul className="space-y-3 mb-6">
-                          {exp.bullets.map((bullet, bulletIdx) => (
-                            <li key={bulletIdx} className="text-xs sm:text-sm text-[#4B5563] leading-relaxed flex items-start gap-2.5">
-                              <CheckCircle className="text-text-subtle shrink-0 mt-0.5" size={14} />
-                              <span>{bullet}</span>
-                            </li>
-                          ))}
-                        </ul>
-
-                        <div className="flex flex-wrap gap-1.5 pt-4 border-t border-border/60">
-                          {exp.skills.map((s) => (
-                            <span key={s} className="text-[10px] text-text bg-white border border-border px-2.5 py-1 rounded-md">
-                              {s}
-                            </span>
-                          ))}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </AnimatePresence>
-
-                {/* Carousel Controls */}
-                <div className="flex items-center justify-between mt-6">
-                  <div className="flex gap-1.5">
-                    {portfolioExperiences.map((_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setActiveExpIdx(i)}
-                        className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                          activeExpIdx === i ? 'w-6 bg-text' : 'w-1.5 bg-border hover:bg-text-subtle'
-                        }`}
-                        aria-label={`Go to slide ${i + 1}`}
-                      />
-                    ))}
-                  </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <button 
-                      onClick={prevExp}
-                      className="p-2 border border-border rounded-xl bg-white hover:border-text text-text-muted hover:text-text transition-all shadow-2xs cursor-pointer"
-                    >
-                      <ChevronLeft size={16} />
-                    </button>
-                    <span className="font-mono text-xs text-text-muted select-none">
-                      0{activeExpIdx + 1} / 0{portfolioExperiences.length}
-                    </span>
-                    <button 
-                      onClick={nextExp}
-                      className="p-2 border border-border rounded-xl bg-white hover:border-text text-text-muted hover:text-text transition-all shadow-2xs cursor-pointer"
-                    >
-                      <ChevronRight size={16} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {portfolioExperiences.map((exp, idx) => {
-                  const caseDescription = exp.company.includes("Altice")
-                    ? "Migrated legacy React portal systems to modern Drupal & Vue 3 custom components."
-                    : exp.company.includes("UK")
-                    ? "Delivered broadband order checkouts in React & Redux-Saga; optimized webpack bundles."
-                    : "Built lightweight component modules in AEM. Crafted auto-tracking JS script layouts.";
-
-                  return (
-                    <div key={idx} className="bg-bg-alt p-5 rounded-2xl border border-border hover:border-text transition-all duration-300 flex flex-col justify-between">
-                      <div>
-                        <div className="flex justify-between items-start mb-3">
-                          <span className="text-[9px] font-bold text-text-muted uppercase tracking-wider block">
-                            0{idx + 1} // {exp.company}
-                          </span>
-                          <span className="text-[10px] text-text-subtle font-mono">{exp.period}</span>
-                        </div>
-                        <h4 className="text-sm font-bold text-text uppercase mb-1">
-                          {exp.role}
-                        </h4>
-                        <p className="text-xs text-[#4B5563] leading-relaxed mb-4">
-                          {caseDescription}
-                        </p>
-                        
-                        <ul className="space-y-1.5 mb-4 text-[11px] text-text-muted">
-                          {exp.bullets.slice(0, 2).map((bullet, bulletIdx) => (
-                            <li key={bulletIdx} className="line-clamp-2">
-                              • {bullet}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="flex flex-wrap gap-1 pt-3 border-t border-border/40">
-                        {exp.skills.slice(0, 4).map((s) => (
-                          <span key={s} className="text-[9px] text-text bg-white border border-border px-1.5 py-0.5 rounded">
-                            {s}
-                          </span>
-                        ))}
-                        {exp.skills.length > 4 && (
-                          <span className="text-[9px] text-text-subtle px-1 py-0.5 font-mono">
-                            +{exp.skills.length - 4}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
           </div>
         </section>
 
@@ -546,119 +445,26 @@ export default function App() {
                   What delivery leads, principal engineers, and stakeholders say about our joint contract delivery.
                 </p>
               </div>
-              <div className="flex items-center gap-2 self-start md:self-auto">
-                <div className="flex bg-white border border-border p-1 rounded-xl">
-                  <button
-                    onClick={() => setTestViewMode('carousel')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer ${
-                      testViewMode === 'carousel'
-                        ? 'bg-bg-alt text-text shadow-2xs border border-border'
-                        : 'text-text-muted hover:text-text'
-                    }`}
-                  >
-                    <SlidersHorizontal size={11} />
-                    <span>Carousel</span>
-                  </button>
-                  <button
-                    onClick={() => setTestViewMode('grid')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer ${
-                      testViewMode === 'grid'
-                        ? 'bg-bg-alt text-text shadow-2xs border border-border'
-                        : 'text-text-muted hover:text-text'
-                    }`}
-                  >
-                    <LayoutGrid size={11} />
-                    <span>Grid View</span>
-                  </button>
-                </div>
-              </div>
             </div>
 
-            {testViewMode === 'carousel' ? (
-              <div className="relative bg-white border border-border p-8 md:p-12 rounded-3xl shadow-2xs overflow-hidden">
-                <div className="absolute right-6 top-4 text-8xl font-serif text-neutral-100 select-none pointer-events-none">
-                  “
-                </div>
-                <AnimatePresence mode="wait">
-                  {portfolioRecommendations.map((rec, idx) => {
-                    if (idx !== activeTestIdx) return null;
-                    return (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, x: 12 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -12 }}
-                        transition={{ duration: 0.2 }}
-                        className="space-y-6 relative z-10"
-                      >
-                        <p className="text-sm sm:text-base text-text leading-relaxed font-serif italic max-w-4xl">
-                          "{rec.quote}"
-                        </p>
-                        <div>
-                          <h5 className="font-bold text-sm text-text uppercase">
-                            {rec.author}
-                          </h5>
-                          <div className="text-xs font-mono text-text-muted mt-1">
-                            {rec.role} · <span className="font-semibold text-accent">{rec.company}</span>
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </AnimatePresence>
-
-                {/* Navigation and Indicator bar */}
-                <div className="flex items-center justify-between mt-8 pt-6 border-t border-border/60">
-                  <div className="flex gap-1.5">
-                    {portfolioRecommendations.map((_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setActiveTestIdx(i)}
-                        className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                          activeTestIdx === i ? 'w-6 bg-text' : 'w-1.5 bg-border hover:bg-text-subtle'
-                        }`}
-                        aria-label={`Go to testimonial ${i + 1}`}
-                      />
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button 
-                      onClick={prevTest}
-                      className="p-2 border border-border rounded-xl bg-bg-alt hover:border-text text-text-muted hover:text-text transition-all cursor-pointer"
-                    >
-                      <ChevronLeft size={16} />
-                    </button>
-                    <span className="font-mono text-xs text-text-muted select-none">
-                      0{activeTestIdx + 1} / 0{portfolioRecommendations.length}
-                    </span>
-                    <button 
-                      onClick={nextTest}
-                      className="p-2 border border-border rounded-xl bg-bg-alt hover:border-text text-text-muted hover:text-text transition-all cursor-pointer"
-                    >
-                      <ChevronRight size={16} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {portfolioRecommendations.map((rec, idx) => (
-                  <div key={idx} className="bg-white border border-border p-6 rounded-2xl shadow-xs hover:border-accent hover:shadow-sm transition-all flex flex-col justify-between">
-                    <p className="text-sm text-[#4B5563] leading-relaxed italic mb-6">
-                      "{rec.quote}"
-                    </p>
-                    <div>
-                      <h5 className="font-bold text-sm text-text uppercase">
-                        {rec.author}
-                      </h5>
-                      <div className="text-[11px] font-mono text-text-muted">
-                        {rec.role} · <span className="font-semibold text-accent">{rec.company}</span>
-                      </div>
+            {/* Grid layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {portfolioRecommendations.map((rec, idx) => (
+                <div key={idx} className="bg-white border border-border p-6 rounded-2xl shadow-xs hover:border-accent hover:shadow-sm transition-all flex flex-col justify-between">
+                  <p className="text-sm text-[#4B5563] leading-relaxed italic mb-6">
+                    "{rec.quote}"
+                  </p>
+                  <div>
+                    <h5 className="font-bold text-sm text-text uppercase">
+                      {rec.author}
+                    </h5>
+                    <div className="text-[11px] font-mono text-text-muted">
+                      {rec.role} · <span className="font-semibold text-accent">{rec.company}</span>
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
+                </div>
+              ))}
+            </div>
 
             <div className="mt-8 text-right pr-2">
               <span className="font-mono text-[9px] text-text-subtle uppercase tracking-widest block">

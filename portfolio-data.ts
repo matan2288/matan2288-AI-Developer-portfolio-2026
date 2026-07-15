@@ -33,28 +33,28 @@ export const portfolioPillars: PillarItem[] = [
     num: "01",
     title: "Checkout Buyflow Redesign",
     subtitle: "High-Converting Digital Pipelines",
-    desc: "Spearheaded enterprise-level Buyflow checkouts, converting complex legacy code into modern Vue.js and lightweight component structures (Altice, 3UK). Reduced drop-off and boosted conversion metrics through seamless and highly secure transactional flows."
+    desc: "Enterprise checkout buyflows built in Vue and React. Optimizing conversion and load paths to reduce drop-offs."
   },
   {
     id: "analytics",
     num: "02",
     title: "Telemetry & GTM Automation",
     subtitle: "High-Fidelity Interaction Analytics",
-    desc: "Engineered self-acting scripts mapping click navigations automatically straight to GA4 dataLayers. Configured complex tag manager setups to track critical metrics with bulletproof precision and direct stakeholder alignment."
+    desc: "Automated click tracking straight to GA4 dataLayers. Structured telemetry with bulletproof precision."
   },
   {
     id: "typesafety",
     num: "03",
-    title: "TypeScript / Full-Stack Spezialisation",
+    title: "TypeScript / Full-Stack",
     subtitle: "Zero-Friction Systems",
-    desc: "Committed to robust type structures in React/Vue on the frontend and Express/PHP backends. Designed unified state models and responsive caching patterns that resist regression and build cleanly."
+    desc: "Rigorous TypeScript state handling across frontend and Node/PHP backends with zero regression."
   },
   {
     id: "discipline",
     num: "04",
     title: "Systematic Progress",
     subtitle: "Focus and Consistent Form",
-    desc: "Bringing absolute structure, careful attention to detail, and progressive tuning to software performance, load handling, and database optimization."
+    desc: "Consistent attention to details, progressive tuning, and systematic performance optimization."
   }
 ];
 
@@ -118,19 +118,19 @@ export const portfolioSkills: SkillCategory[] = [
 
 export const portfolioRecommendations: RecommendationItem[] = [
   {
-    quote: "Matan completely overhauled our e-commerce checkout flow. His attention to precise page loads, analytical integration, and clean TypeScript state was exactly what our enterprise project required. His speed under tight client deadlines is remarkable.",
+    quote: "Matan completely overhauled our e-commerce checkout flow. His clean TypeScript state and attention to fast page loads was exactly what we needed.",
     author: "Enterprise Delivery Lead",
     role: "Altice Migration Contract",
     company: "Telecom Partner"
   },
   {
-    quote: "Matan came on board for our checkout streams under immense pressure. He resolved persistent state synchronization bugs and delivered a highly converting broadband subscriber flow without breaking existing systems. Extremely technical and focused.",
+    quote: "Matan resolved persistent checkout state sync bugs and delivered highly converting broadband subscriber buyflows under tight deadlines.",
     author: "Principal Engineer",
     role: "eCommerce Division",
     company: "3UK Contract"
   },
   {
-    quote: "An absolute asset for analytics integration and modular component building. Matan automated our GA4 tracking elements with lightweight Vanilla JS scripts, saving hundreds of hours of manual setup. Pragmatic, fast, and high-standard.",
+    quote: "An asset for GA4 analytics. Matan automated tracking with lightweight scripts, saving hundreds of hours of manual configuration.",
     author: "Marketing Technology Director",
     role: "Digital Tag Infrastructure",
     company: "USCC Contract"
