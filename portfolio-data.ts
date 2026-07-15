@@ -52,9 +52,9 @@ export const portfolioPillars: PillarItem[] = [
   {
     id: "discipline",
     num: "04",
-    title: "Systematic Progress / Powerlifting",
-    subtitle: "Resilient Engineering Philosophy",
-    desc: "Applying the raw discipline, focus on meticulous form, and progressive overloading of powerlifting (squats, bench, deadlifts) directly into software load handling, performance tuning, and clean database configuration."
+    title: "Systematic Progress",
+    subtitle: "Focus and Consistent Form",
+    desc: "Bringing absolute structure, careful attention to detail, and progressive tuning to software performance, load handling, and database optimization."
   }
 ];
 

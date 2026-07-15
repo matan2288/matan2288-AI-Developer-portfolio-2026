@@ -10,10 +10,10 @@ export const AIPersonaChat: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const suggestedQuestions = [
-    { label: "01 / TECH STACK", text: "What is your main enterprise stack?" },
-    { label: "02 / BUYFLOW", text: "What did you build for Altice?" },
-    { label: "03 / ANALYTICS", text: "How do you automate GA4 event tracking?" },
-    { label: "04 / RAW IRON", text: "How does powerlifting help your dev work?" }
+    { label: "Experience & Stack", text: "Tell me about your tech stack and experience." },
+    { label: "Core Projects", text: "What are your core projects?" },
+    { label: "Contract Status", text: "Are you open to contract or full-time roles?" },
+    { label: "Engineering Ethic", text: "How does powerlifting translate to your code?" }
   ];
 
   // Auto-initialize on page load via useEffect
@@ -22,7 +22,7 @@ export const AIPersonaChat: React.FC = () => {
       {
         id: 'welcome',
         role: 'model',
-        text: "Hi, I am Matan's AI Digital Twin. I have exactly 4 years of software developer experience in enterprise checkouts and analytics automation. Ask me anything—I will answer briefly.",
+        text: "Hi, I am Matan's portfolio assistant. Ask me about Matan's projects, stack (Vue 3, React, PHP, GTM/GA4), or how to get in touch! I will keep my answers brief.",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
     ]);
@@ -76,35 +76,35 @@ export const AIPersonaChat: React.FC = () => {
   };
 
   return (
-    <div className="w-full mt-10 border border-zinc-200 rounded-lg bg-white overflow-hidden text-left shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+    <div className="w-full mt-4 border border-border rounded-xl bg-surface overflow-hidden text-left shadow-[0_1px_6px_rgba(0,0,0,0.03)] selection:bg-accent-soft">
       {/* Header Info */}
-      <div className="border-b border-zinc-150 bg-zinc-50 px-5 py-3.5 flex items-center justify-between text-xs">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
-          <span className="font-mono text-[10px] tracking-wider text-zinc-900 uppercase font-semibold">
-            Matan // Twin Dialogue (Brief Mode)
+      <div className="border-b border-border bg-bg-alt px-5 py-3 flex items-center justify-between text-xs">
+        <div className="flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-text-muted animate-pulse"></span>
+          <span className="font-mono text-[10px] tracking-wider text-text uppercase font-bold">
+            Portfolio Assistant
           </span>
         </div>
-        <span className="font-mono text-[9px] text-zinc-400">Gemini 3.5 Active</span>
+        <span className="font-mono text-[9px] text-text-muted">Active</span>
       </div>
 
       {/* Message Feed */}
-      <div className="p-5 h-[280px] overflow-y-auto space-y-4 bg-white border-b border-zinc-150">
+      <div className="p-5 h-[270px] overflow-y-auto space-y-4 bg-white border-b border-border">
         {messages.map((m) => {
           const isModel = m.role === 'model';
           return (
             <div key={m.id} className={`flex ${isModel ? 'justify-start' : 'justify-end'}`}>
               <div 
-                className={`max-w-[90%] rounded px-4 py-3 border ${
+                className={`max-w-[85%] rounded-lg px-4 py-3 border ${
                   isModel 
-                    ? 'bg-zinc-50/50 border-zinc-200 text-zinc-800 rounded-bl-none' 
-                    : 'bg-zinc-900 border-zinc-900 text-white rounded-br-none'
+                    ? 'bg-bg-alt border-border text-text rounded-bl-none' 
+                    : 'bg-accent-soft border-border text-text rounded-br-none'
                 }`}
               >
                 <p className="text-xs font-sans leading-relaxed whitespace-pre-line">{m.text}</p>
                 <div 
                   className={`text-[8px] mt-1.5 font-mono ${
-                    isModel ? 'text-zinc-400' : 'text-zinc-300'
+                    isModel ? 'text-text-muted' : 'text-accent'
                   }`}
                 >
                   {m.timestamp}
@@ -115,9 +115,9 @@ export const AIPersonaChat: React.FC = () => {
         })}
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-zinc-50 border border-zinc-200 rounded rounded-bl-none px-4 py-3 flex items-center gap-2">
-              <Loader2 className="animate-spin text-zinc-400" size={12} />
-              <span className="text-[10px] font-mono text-zinc-500">Formulating concise reply...</span>
+            <div className="bg-bg-alt border border-border rounded-lg rounded-bl-none px-4 py-3 flex items-center gap-2">
+              <Loader2 className="animate-spin text-accent" size={12} />
+              <span className="text-[10px] font-mono text-text-muted">Formulating concise reply...</span>
             </div>
           </div>
         )}
@@ -125,17 +125,17 @@ export const AIPersonaChat: React.FC = () => {
       </div>
 
       {/* Suggested Questions Quick Grid */}
-      <div className="p-3 bg-zinc-50 border-b border-zinc-150 grid grid-cols-2 gap-2">
+      <div className="p-3 bg-bg-alt border-b border-border grid grid-cols-2 gap-2">
         {suggestedQuestions.map((q, idx) => (
           <button
             key={idx}
             type="button"
             onClick={() => handleSend(q.text)}
             disabled={loading}
-            className="text-left py-1.5 px-3 rounded border border-zinc-200 bg-white hover:border-zinc-900 text-[10px] text-zinc-600 hover:text-zinc-900 transition-all font-mono tracking-tight flex items-center justify-between cursor-pointer outline-none"
+            className="text-left py-2 px-3 rounded border border-border bg-white hover:border-accent hover:text-accent hover:shadow-xs transition-all font-mono tracking-tight flex items-center justify-between cursor-pointer outline-none text-[10px]"
           >
-            <span>{q.label}</span>
-            <ArrowRight size={10} className="text-zinc-400" />
+            <span className="truncate pr-1">{q.label}</span>
+            <ArrowRight size={10} className="text-text-subtle shrink-0 group-hover:text-accent" />
           </button>
         ))}
       </div>
@@ -150,13 +150,13 @@ export const AIPersonaChat: React.FC = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask about checkout projects, GA4 tracking..."
-          className="flex-grow bg-white border border-zinc-200 rounded px-3 py-2 text-xs text-zinc-800 placeholder-zinc-400 outline-none focus:border-zinc-900 font-mono"
+          className="flex-grow bg-white border border-border rounded px-3 py-2 text-xs text-text placeholder-text-subtle outline-none focus:border-accent font-mono transition-colors"
           disabled={loading}
         />
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="rounded bg-zinc-900 text-white px-3.5 py-2 hover:bg-zinc-800 transition-colors disabled:opacity-35 flex items-center justify-center cursor-pointer outline-none font-mono text-xs"
+          className="rounded bg-accent text-white px-3.5 py-2 hover:bg-accent-hover transition-colors disabled:opacity-35 flex items-center justify-center cursor-pointer outline-none font-mono text-xs shadow-xs"
         >
           {loading ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />}
         </button>
