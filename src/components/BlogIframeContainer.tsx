@@ -34,49 +34,83 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
     }
   };
 
-  const iframeUrl = `${window.location.origin}${window.location.pathname}?app=blog`;
+  const [customUrl, setCustomUrl] = useState<string>(
+    import.meta.env.VITE_BLOG_APP_URL || ''
+  );
+
+  const iframeUrl = customUrl.trim() || `${window.location.origin}${window.location.pathname}?app=blog`;
 
   return (
     <div className="min-h-screen bg-bg-alt pt-6 pb-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Shell Toolbar for iFrame Embedded Blog */}
-        <div className="bg-white rounded-xl border border-border p-4 mb-6 shadow-xs flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={onBackToPortfolio}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-border bg-bg-alt text-xs font-mono uppercase tracking-wider text-text hover:text-accent hover:border-text transition-all cursor-pointer"
-            >
-              <ArrowLeft size={14} />
-              <span>Back to Portfolio Shell</span>
-            </button>
-            <span className="text-border">|</span>
-            <div className="flex items-center gap-2 text-xs font-mono text-text-muted">
-              <Layers size={14} className="text-accent" />
-              <span className="font-bold text-text uppercase">Micro-Frontend Mode:</span>
-              <span className="hidden sm:inline px-2 py-0.5 rounded bg-neutral-100 text-[11px] font-mono text-neutral-700 border border-neutral-200">
-                src/BlogApp.tsx
-              </span>
+        <div className="bg-white rounded-xl border border-border p-4 mb-6 shadow-xs space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={onBackToPortfolio}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-border bg-bg-alt text-xs font-mono uppercase tracking-wider text-text hover:text-accent hover:border-text transition-all cursor-pointer"
+              >
+                <ArrowLeft size={14} />
+                <span>Back to Portfolio Shell</span>
+              </button>
+              <span className="text-border">|</span>
+              <div className="flex items-center gap-2 text-xs font-mono text-text-muted">
+                <Layers size={14} className="text-accent" />
+                <span className="font-bold text-text uppercase">Micro-Frontend Mode:</span>
+                <span className="hidden sm:inline px-2 py-0.5 rounded bg-neutral-100 text-[11px] font-mono text-neutral-700 border border-neutral-200">
+                  {customUrl.trim() ? 'External AI Studio App' : 'src/blog/App.tsx'}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleRefresh}
+                title="Reload iFrame App"
+                className="p-2 rounded-lg border border-border text-text-muted hover:text-text hover:bg-neutral-50 transition-colors cursor-pointer"
+              >
+                <RefreshCw size={14} className={!isLoaded ? 'animate-spin' : ''} />
+              </button>
+              <a
+                href={iframeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-xs font-mono text-text-muted hover:text-text hover:bg-neutral-50 transition-colors"
+              >
+                <ExternalLink size={13} />
+                <span className="hidden sm:inline">Open App in New Tab</span>
+              </a>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleRefresh}
-              title="Reload iFrame App"
-              className="p-2 rounded-lg border border-border text-text-muted hover:text-text hover:bg-neutral-50 transition-colors cursor-pointer"
-            >
-              <RefreshCw size={14} className={!isLoaded ? 'animate-spin' : ''} />
-            </button>
-            <a
-              href={iframeUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-xs font-mono text-text-muted hover:text-text hover:bg-neutral-50 transition-colors"
-            >
-              <ExternalLink size={13} />
-              <span className="hidden sm:inline">Open App in New Tab</span>
-            </a>
+          {/* External App URL input field */}
+          <div className="pt-2 border-t border-border flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+            <label className="text-text-muted flex items-center gap-1.5 shrink-0">
+              <span>Connect External AI Studio App URL:</span>
+            </label>
+            <input
+              type="text"
+              placeholder={`Default: ${window.location.origin}${window.location.pathname}?app=blog`}
+              value={customUrl}
+              onChange={(e) => {
+                setCustomUrl(e.target.value);
+                setIsLoaded(false);
+              }}
+              className="flex-1 min-w-[280px] px-3 py-1 bg-bg-alt border border-border rounded text-[11px] font-mono text-text placeholder:text-text-muted focus:outline-none focus:border-text"
+            />
+            {customUrl && (
+              <button
+                onClick={() => {
+                  setCustomUrl('');
+                  setIsLoaded(false);
+                }}
+                className="text-[10px] text-text-muted hover:text-text underline uppercase"
+              >
+                Reset to Internal
+              </button>
+            )}
           </div>
         </div>
 
