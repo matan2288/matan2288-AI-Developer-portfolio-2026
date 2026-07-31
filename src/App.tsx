@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { AIPersonaChat, Timeline, portfolioPillars, portfolioSkills, portfolioRecommendations } from './features/dashboard';
-import { BlogView } from './features/blog';
+import { BlogIframeContainer } from './components/BlogIframeContainer';
 import { Button } from './components/ui/button';
 import { Input, Textarea } from './components/ui/input';
 
@@ -241,14 +241,12 @@ export default function App() {
       {/* Main View Router */}
       {currentView === 'blog' ? (
         <main className="pt-16">
-          <BlogView 
+          <BlogIframeContainer 
             onBackToPortfolio={() => {
               setCurrentView('portfolio');
               setSelectedPostId(null);
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            selectedPostId={selectedPostId}
-            onSelectPost={setSelectedPostId}
           />
         </main>
       ) : (

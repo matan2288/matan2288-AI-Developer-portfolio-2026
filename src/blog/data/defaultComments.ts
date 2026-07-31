@@ -1,4 +1,4 @@
-import { CommentItem } from './types';
+import { CommentItem } from '../types';
 
 export const INITIAL_COMMENTS: Record<string, CommentItem[]> = {
   'e-commerce-telecom-buyflows': [
