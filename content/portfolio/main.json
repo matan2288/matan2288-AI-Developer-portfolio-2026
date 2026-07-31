@@ -1,0 +1,22 @@
+{
+  "developerName": "Matan Elmaliah",
+  "title": "Software Developer",
+  "location": "📍 Tel Aviv, Israel · Remote & Hybrid",
+  "avatarUrl": "https://picsum.photos/seed/matandev/400/400",
+  "heroBio": "Fullstack & Frontend Specialist with 4 years of experience delivering scalable web software, transaction buyflows, and high-fidelity GTM dataLayers for prominent enterprise telecom systems.",
+  "aboutTitle": "High technical standards. Rigorous engineering form.",
+  "aboutBio1": "I build pixel-perfect, highly performant web systems, e-commerce buyflows, and robust backend integrations. With exactly 4 years of professional experience across prominent telecom giants (Altice, 3UK, USCellular, T-Mobile) and a disciplined background as an IDF navy diving technician and powerlifter, I approach code quality and scalability systematically.",
+  "aboutBio2": "📍 Located in Tel Aviv, Israel · Available for contract, hybrid or remote roles.",
+  "contactEmail": "MaTaN2288@gmail.com",
+  "linkedInUrl": "https://www.linkedin.com/in/matan2288",
+  "stats": [
+    {
+      "value": "04 Years",
+      "label": "Software Developer"
+    },
+    {
+      "value": "4 Enterprise",
+      "label": "Clients delivered"
+    }
+  ]
+}

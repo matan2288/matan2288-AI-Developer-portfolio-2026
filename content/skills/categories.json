@@ -1,0 +1,24 @@
+{
+  "categories": [
+    {
+      "title": "Core Frontend Frameworks",
+      "items": ["React", "React Native", "Vue 3", "Redux Toolkit", "Redux-Saga", "Vuex", "TypeScript", "JavaScript (ES6+)"]
+    },
+    {
+      "title": "Styling & UI Architecture",
+      "items": ["Sass / SCSS", "Tailwind CSS", "Storybook", "Framer Motion", "Semantic HTML5", "ARIA Accessibility"]
+    },
+    {
+      "title": "Backend & Databases",
+      "items": ["Node.js", "Java", "Express.js", "MySQL", "MongoDB", "RESTful APIs"]
+    },
+    {
+      "title": "CMS & Platforms",
+      "items": ["Adobe Experience Manager (AEM)", "Drupal", "PHP", "Contentful CMS", "TinaCMS"]
+    },
+    {
+      "title": "Artificial Intelligence & Workspaces",
+      "items": ["Agent Orchestration", "Context Engineering", "RAG pipelines", "Semantic Embeddings", "VectorDB", "MCP Servers", "Figma", "Playwright automation", "Vitest"]
+    }
+  ]
+}

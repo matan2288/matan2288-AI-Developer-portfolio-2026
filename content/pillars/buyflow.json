@@ -1,0 +1,7 @@
+{
+  "id": "Buyflow Optimization",
+  "num": "01.1A",
+  "title": "E-Commerce Buyflows",
+  "subtitle": "High-Converting Checkout Pipes",
+  "desc": "Refactored key checkout pipelines and subscriber registration pathways for Altice and 3UK. Implemented reactive validation, dynamic form caching, and secure payment integrations using modern React, Redux-Saga, and Vue 3."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "navy",
+  "company": "IDF, Israeli Navy",
+  "role": "Diving Gear Technician (Team Lead)",
+  "location": "Israel",
+  "period": "2013 — 2019",
+  "isLatest": false,
+  "bullets": [
+    "Led a dedicated team of five specialists maintaining critical diving and life-support equipment.",
+    "Engineered meticulous logging systems and protocols to eliminate operating failure in high-stakes environments.",
+    "Managed inventory, conducted technical training, and delivered flawless equipment readiness."
+  ],
+  "skills": ["Leadership", "Operations", "Technical Protocols", "Team Management"]
+}

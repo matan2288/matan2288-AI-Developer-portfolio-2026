@@ -1,0 +1,22 @@
+{
+  "id": "amdocs",
+  "company": "Amdocs (Delivery Unit)",
+  "role": "Software Developer",
+  "location": "Tel Aviv, Israel",
+  "period": "2022 — PRESENT",
+  "isLatest": true,
+  "bullets": [
+    "Took ownership of developing core Frontend features for a major client across their eCommerce platform, self-service portal, and mobile app, using React, TypeScript and Redux-Saga.",
+    "Participated in a major site migration of a project from React and Contentful to Vue, Drupal, PHP and NodeJS while developing and maintaining custom E2E features and admin tools.",
+    "Led Adobe Analytics development and architecture, implementing accurate data tracking while managing client engagements, gathering requirements, and providing support in bi-weekly meetings.",
+    "Delivered custom CMS features and JavaScript based components in AEM and Drupal systems, improving editor efficiency and supporting enterprise content management.",
+    "Built RESTful APIs while integrating platforms with multiple third-party services.",
+    "Designed and built pixel-perfect, responsive, and accessible and mobile-first oriented user interfaces using SCSS and semantic HTML, following ARIA best practices.",
+    "Conducted various successful Proof of Concepts (POCs) that successfully evolved into full-scale development initiatives.",
+    "Collaborated with cross-functional teams and clients, providing direct technical support, and resolving critical production defects to ensure perfect alignment.",
+    "Onboarded and mentored new team members while conducting regular code reviews to ensure scalability, readability, and maintainability of the codebase."
+  ],
+  "skills": [
+    "React", "Redux-Saga", "Vue 3", "TypeScript", "Node.js", "PHP", "Drupal", "AEM", "Adobe Analytics", "SCSS", "RESTful APIs", "Docker"
+  ]
+}

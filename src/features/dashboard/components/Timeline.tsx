@@ -1,6 +1,6 @@
 import React from 'react';
-import { Briefcase, GraduationCap, Anchor, CheckCircle, Database, ChevronRight } from 'lucide-react';
-import { motion } from 'motion/react';
+import { Briefcase, GraduationCap, Anchor, CheckCircle } from 'lucide-react';
+import { useTinaExperiences } from '../../../services/tinaContent';
 
 interface TimelineItemProps {
   id: string;
@@ -13,6 +13,19 @@ interface TimelineItemProps {
   skills?: string[];
   isLatest?: boolean;
 }
+
+const getExperienceIcon = (id: string) => {
+  switch (id) {
+    case 'amdocs':
+      return <Briefcase size={14} />;
+    case 'bootcamp':
+      return <GraduationCap size={14} />;
+    case 'navy':
+      return <Anchor size={14} />;
+    default:
+      return <Briefcase size={14} />;
+  }
+};
 
 const TimelineCard: React.FC<TimelineItemProps> = ({
   role,
@@ -84,64 +97,13 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
 };
 
 export const Timeline: React.FC = () => {
-  const experiences = [
-    {
-      id: 'amdocs',
-      company: 'Amdocs (Delivery Unit)',
-      role: 'Software Developer',
-      location: 'Tel Aviv, Israel',
-      period: '2022 — PRESENT',
-      isLatest: true,
-      icon: <Briefcase size={14} />,
-      bullets: [
-        "Took ownership of developing core Frontend features for a major client across their eCommerce platform, self-service portal, and mobile app, using React, TypeScript and Redux-Saga.",
-        "Participated in a major site migration of a project from React and Contentful to Vue, Drupal, PHP and NodeJS while developing and maintaining custom E2E features and admin tools.",
-        "Led Adobe Analytics development and architecture, implementing accurate data tracking while managing client engagements, gathering requirements, and providing support in bi-weekly meetings.",
-        "Delivered custom CMS features and JavaScript based components in AEM and Drupal systems, improving editor efficiency and supporting enterprise content management.",
-        "Built RESTful APIs while integrating platforms with multiple third-party services.",
-        "Designed and built pixel-perfect, responsive, and accessible and mobile-first oriented user interfaces using SCSS and semantic HTML, following ARIA best practices.",
-        "Conducted various successful Proof of Concepts (POCs) that successfully evolved into full-scale development initiatives.",
-        "Collaborated with cross-functional teams and clients, providing direct technical support, and resolving critical production defects to ensure perfect alignment.",
-        "Onboarded and mentored new team members while conducting regular code reviews to ensure scalability, readability, and maintainability of the codebase."
-      ],
-      skills: [
-        'React', 'Redux-Saga', 'Vue 3', 'TypeScript', 'Node.js', 'PHP', 'Drupal', 'AEM', 'Adobe Analytics', 'SCSS', 'RESTful APIs', 'Docker'
-      ]
-    },
-    {
-      id: 'bootcamp',
-      company: 'Etgar College',
-      role: 'Web Development Bootcamp',
-      location: 'Israel',
-      period: '2020',
-      icon: <GraduationCap size={14} />,
-      bullets: [
-        "Completed intensive web development training covering Full-Stack architectures.",
-        "Built dynamic single page applications using modern JavaScript frameworks.",
-        "Acquired deep fundamentals in relational schemas, state propagation, and web systems."
-      ],
-      skills: ['JavaScript', 'HTML5', 'CSS3', 'Sass', 'SQL', 'MongoDB']
-    },
-    {
-      id: 'navy',
-      company: 'IDF, Israeli Navy',
-      role: 'Diving Gear Technician (Team Lead)',
-      location: 'Israel',
-      period: '2013 — 2019',
-      icon: <Anchor size={14} />,
-      bullets: [
-        "Led a dedicated team of five specialists maintaining critical diving and life-support equipment.",
-        "Engineered meticulous logging systems and protocols to eliminate operating failure in high-stakes environments.",
-        "Managed inventory, conducted technical training, and delivered flawless equipment readiness."
-      ]
-    }
-  ];
+  const experiences = useTinaExperiences();
 
   return (
     <div className="max-w-4xl mx-auto">
       <div className="space-y-2 mb-8">
         <span className="font-mono text-[9px] uppercase tracking-widest text-text-subtle font-bold block">
-          Chronological Lifecycle
+          Chronological Lifecycle · TinaCMS Managed
         </span>
         <h3 className="text-xl font-bold uppercase text-text tracking-tight">
           Professional Timestamp Timeline
@@ -151,11 +113,13 @@ export const Timeline: React.FC = () => {
       <div className="relative">
         {experiences.map((exp) => (
           <TimelineCard
-            key={exp.id}
+            key={exp.id || exp.company}
             {...exp}
+            icon={getExperienceIcon(exp.id)}
           />
         ))}
       </div>
     </div>
   );
 };
+

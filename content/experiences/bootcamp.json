@@ -1,0 +1,14 @@
+{
+  "id": "bootcamp",
+  "company": "Etgar College",
+  "role": "Web Development Bootcamp",
+  "location": "Israel",
+  "period": "2020",
+  "isLatest": false,
+  "bullets": [
+    "Completed intensive web development training covering Full-Stack architectures.",
+    "Built dynamic single page applications using modern JavaScript frameworks.",
+    "Acquired deep fundamentals in relational schemas, state propagation, and web systems."
+  ],
+  "skills": ["JavaScript", "HTML5", "CSS3", "Sass", "SQL", "MongoDB"]
+}
