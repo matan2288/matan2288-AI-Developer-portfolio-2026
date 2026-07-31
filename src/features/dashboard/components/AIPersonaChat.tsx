@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Send, Loader2, ArrowRight } from 'lucide-react';
-import { chatWithMatanPersona } from '../services/geminiService';
+import React, { useState, useEffect, useRef } from 'react';
+import { Send, Sparkles } from 'lucide-react';
 import { ChatMessage } from '../types';
+import { chatWithMatanPersona } from '../../../services/api-client';
 
 export const AIPersonaChat: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -11,18 +11,18 @@ export const AIPersonaChat: React.FC = () => {
 
   const suggestedQuestions = [
     { label: "Experience & Stack", text: "Tell me about your tech stack and experience." },
-    { label: "Core Projects", text: "What are your core projects?" },
-    { label: "Contract Status", text: "Are you open to contract or full-time roles?" },
-    { label: "Engineering Ethic", text: "How does powerlifting translate to your code?" }
+    { label: "Checkout Redesigns", text: "How did you optimize Altice and 3UK checkout flows?" },
+    { label: "GTM / Analytics", text: "How do you automate GA4 dataLayers and tracking?" },
+    { label: "Powerlifter Discipline", text: "How does powerlifting relate to your software development?" }
   ];
 
-  // Auto-initialize on page load via useEffect
   useEffect(() => {
+    // Initial greeting
     setMessages([
       {
         id: 'welcome',
         role: 'model',
-        text: "Hi, I am Matan's Interactive Assistant. Feel free to ask me about my checkout projects, professional experience, or how to get in touch!",
+        text: "Hey! I'm Matan's digital double. Ask me anything about my software development career, e-commerce checkout projects, GTM tracking, or navy tech background!",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
     ]);
@@ -52,12 +52,7 @@ export const AIPersonaChat: React.FC = () => {
     setLoading(true);
 
     try {
-      const mappedHistory = [...messages, userMessage].map(m => ({
-        role: m.role,
-        parts: [{ text: m.text }]
-      }));
-
-      const reply = await chatWithMatanPersona(mappedHistory);
+      const reply = await chatWithMatanPersona(messages, textToSend);
 
       const modelMessage: ChatMessage = {
         id: Math.random().toString(),
@@ -117,21 +112,21 @@ export const AIPersonaChat: React.FC = () => {
           </strong>
         );
       }
-      return formatLinks(part);
+      return <React.Fragment key={index}>{formatLinks(part)}</React.Fragment>;
     });
   };
 
   return (
-    <div className="w-full mt-4 border border-border rounded-xl bg-surface overflow-hidden text-left shadow-[0_1px_6px_rgba(0,0,0,0.03)] selection:bg-accent-soft">
-      {/* Header Info */}
-      <div className="border-b border-border bg-bg-alt px-5 py-3 flex items-center justify-between text-xs">
-        <div className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-text-muted animate-pulse"></span>
-          <span className="font-mono text-[10px] tracking-wider text-text uppercase font-bold">
-            Matan's Interactive Assistant
+    <div className="flex flex-col bg-white border border-border rounded-xl shadow-2xs overflow-hidden">
+      {/* Sandbox Header */}
+      <div className="bg-bg-alt px-4 py-3 border-b border-border flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-neutral-900 animate-pulse" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-text font-bold">
+            Matan Gemini Digital Double
           </span>
         </div>
-        <span className="font-mono text-[9px] text-text-muted">Active</span>
+        <Sparkles size={12} className="text-text-muted" />
       </div>
 
       {/* Message Feed */}
@@ -139,31 +134,31 @@ export const AIPersonaChat: React.FC = () => {
         {messages.map((m) => {
           const isModel = m.role === 'model';
           return (
-            <div key={m.id} className={`flex ${isModel ? 'justify-start' : 'justify-end'}`}>
-              <div 
-                className={`max-w-[85%] rounded-lg px-4 py-3 border ${
-                  isModel 
-                    ? 'bg-bg-alt border-border text-text rounded-bl-none' 
-                    : 'bg-accent-soft border-border text-text rounded-br-none'
+            <div
+              key={m.id}
+              className={`flex flex-col ${isModel ? 'items-start' : 'items-end'} space-y-1`}
+            >
+              <div
+                className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-xs leading-relaxed ${
+                  isModel
+                    ? 'bg-bg-alt text-text border border-border rounded-tl-none'
+                    : 'bg-accent text-white rounded-tr-none'
                 }`}
               >
-                <p className="text-xs font-sans leading-relaxed whitespace-pre-line">{renderMessageText(m.text)}</p>
-                <div 
-                  className={`text-[8px] mt-1.5 font-mono ${
-                    isModel ? 'text-text-muted' : 'text-accent'
-                  }`}
-                >
-                  {m.timestamp}
-                </div>
+                <p className="whitespace-pre-wrap">{renderMessageText(m.text)}</p>
               </div>
+              <span className="font-mono text-[9px] text-text-subtle px-1">
+                {m.timestamp}
+              </span>
             </div>
           );
         })}
         {loading && (
-          <div className="flex justify-start">
-            <div className="bg-bg-alt border border-border rounded-lg rounded-bl-none px-4 py-3 flex items-center gap-2">
-              <Loader2 className="animate-spin text-accent" size={12} />
-              <span className="text-[10px] font-mono text-text-muted">Formulating concise reply...</span>
+          <div className="flex flex-col items-start space-y-1">
+            <div className="bg-bg-alt text-text border border-border rounded-2xl rounded-tl-none px-4 py-2.5 text-xs flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 bg-text rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+              <span className="w-1.5 h-1.5 bg-text rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+              <span className="w-1.5 h-1.5 bg-text rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
             </div>
           </div>
         )}
@@ -174,36 +169,39 @@ export const AIPersonaChat: React.FC = () => {
         {suggestedQuestions.map((q, idx) => (
           <button
             key={idx}
-            type="button"
             onClick={() => handleSend(q.text)}
             disabled={loading}
-            className="text-left py-2 px-3 rounded border border-border bg-white hover:border-accent hover:text-accent hover:shadow-xs transition-all font-mono tracking-tight flex items-center justify-between cursor-pointer outline-none text-[10px]"
+            className="text-left px-2.5 py-1.5 bg-white border border-border hover:border-text rounded-lg text-[10px] text-text-muted hover:text-text font-medium leading-normal transition-all cursor-pointer truncate disabled:opacity-50"
+            title={q.text}
           >
-            <span className="truncate pr-1">{q.label}</span>
-            <ArrowRight size={10} className="text-text-subtle shrink-0 group-hover:text-accent" />
+            {q.label}
           </button>
         ))}
       </div>
 
-      {/* Input Row */}
+      {/* Input Form */}
       <form
-        onSubmit={(e) => { e.preventDefault(); handleSend(input); }}
-        className="p-3 bg-white flex gap-2"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSend(input);
+        }}
+        className="p-3 bg-white flex items-center gap-2"
       >
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask about checkout projects, GA4 tracking..."
-          className="flex-grow bg-white border border-border rounded px-3 py-2 text-xs text-text placeholder-text-subtle outline-none focus:border-accent font-mono transition-colors"
           disabled={loading}
+          placeholder="Type a message to Matan's clone..."
+          className="flex-1 bg-bg-alt border border-border rounded-lg px-3.5 py-2 text-xs text-text outline-none focus:border-accent focus:bg-white transition-all font-sans disabled:opacity-50"
         />
         <button
           type="submit"
-          disabled={loading || !input.trim()}
-          className="rounded bg-accent text-white px-3.5 py-2 hover:bg-accent-hover transition-colors disabled:opacity-35 flex items-center justify-center cursor-pointer outline-none font-mono text-xs shadow-xs"
+          disabled={!input.trim() || loading}
+          className="p-2 bg-accent hover:bg-accent-hover text-white rounded-lg transition-colors cursor-pointer disabled:opacity-40"
+          aria-label="Send message"
         >
-          {loading ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />}
+          <Send size={13} />
         </button>
       </form>
     </div>
