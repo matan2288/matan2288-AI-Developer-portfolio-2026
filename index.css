@@ -1,26 +1,31 @@
 :root {
   --color-bg: #FFFFFF;
-  --color-bg-alt: #F8FAFC;
+  --color-bg-alt: #FAFAFB;
   --color-surface: #FFFFFF;
-  --color-border: #E2E8F0;
-  --color-border-hover: #CBD5E1;
+  --color-border: #EAEFF5;
+  --color-border-hover: #DCE3EB;
   --color-text: #0F172A;
-  --color-text-muted: #475569;
+  --color-text-muted: #64748B;
   --color-text-subtle: #94A3B8;
   --color-accent: #0F172A;
   --color-accent-hover: #1E293B;
-  --color-accent-soft: #F1F5F9;
-  --color-accent-muted: #E2E8F0;
+  --color-accent-soft: #F4F7FA;
+  --color-accent-muted: #EAEFF5;
   --color-success: #334155;
-  --color-success-soft: #F1F5F9;
+  --color-success-soft: #F4F7FA;
 }
 
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   scroll-behavior: smooth;
   margin: 0;
+}
+
+/* Enforce sans-serif sitewide with zero monospace fallbacks */
+code, kbd, samp, pre, .font-mono, input, textarea, button {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
 }
 
 /* Custom styles for active sections or clean layouts */

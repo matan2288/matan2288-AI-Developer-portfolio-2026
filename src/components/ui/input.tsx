@@ -14,15 +14,15 @@ export const Input: React.FC<InputProps> = ({
   return (
     <div className="space-y-1.5 w-full">
       {label && (
-        <label className="text-[10px] font-mono text-text-muted uppercase block font-bold">
+        <label className="text-xs text-text-muted uppercase block font-semibold tracking-wide">
           {label}
         </label>
       )}
       <input
-        className={`w-full bg-white border border-border rounded-lg px-4 py-2.5 text-xs text-text font-mono tracking-tight outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all ${className}`}
+        className={`w-full bg-white border border-border rounded-lg px-4 py-2.5 text-sm text-text font-sans outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all ${className}`}
         {...props}
       />
-      {error && <p className="text-[10px] font-mono text-red-500">{error}</p>}
+      {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   );
 };
@@ -41,15 +41,15 @@ export const Textarea: React.FC<TextareaProps> = ({
   return (
     <div className="space-y-1.5 w-full">
       {label && (
-        <label className="text-[10px] font-mono text-text-muted uppercase block font-bold">
+        <label className="text-xs text-text-muted uppercase block font-semibold tracking-wide">
           {label}
         </label>
       )}
       <textarea
-        className={`w-full bg-white border border-border rounded-lg px-4 py-2.5 text-xs text-text font-sans outline-none focus:border-accent focus:ring-1 focus:ring-accent resize-none leading-relaxed transition-all ${className}`}
+        className={`w-full bg-white border border-border rounded-lg px-4 py-2.5 text-sm text-text font-sans outline-none focus:border-accent focus:ring-1 focus:ring-accent resize-none leading-relaxed transition-all ${className}`}
         {...props}
       />
-      {error && <p className="text-[10px] font-mono text-red-500">{error}</p>}
+      {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   );
 };

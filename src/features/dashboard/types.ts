@@ -28,6 +28,17 @@ export interface RecommendationItem {
   company: string;
 }
 
+export interface CertificationItem {
+  id: string;
+  title: string;
+  issuer: string;
+  issueDate: string;
+  credentialId?: string;
+  description: string;
+  skills: string[];
+  driveUrl: string;
+}
+
 export interface ChatMessage {
   id: string;
   role: 'user' | 'model';

@@ -1,22 +1,23 @@
 {
   "developerName": "Matan Elmaliah",
   "title": "Software Developer",
-  "location": "📍 Tel Aviv, Israel · Remote & Hybrid",
+  "location": "Tel Aviv, Israel",
   "avatarUrl": "https://picsum.photos/seed/matandev/400/400",
-  "heroBio": "Fullstack & Frontend Specialist with 4 years of experience delivering scalable web software, transaction buyflows, and high-fidelity GTM dataLayers for prominent enterprise telecom systems.",
-  "aboutTitle": "High technical standards. Rigorous engineering form.",
-  "aboutBio1": "I build pixel-perfect, highly performant web systems, e-commerce buyflows, and robust backend integrations. With exactly 4 years of professional experience across prominent telecom giants (Altice, 3UK, USCellular, T-Mobile) and a disciplined background as an IDF navy diving technician and powerlifter, I approach code quality and scalability systematically.",
-  "aboutBio2": "📍 Located in Tel Aviv, Israel · Available for contract, hybrid or remote roles.",
+  "heroBio": "Software developer specializing in React, TypeScript, and full-stack web applications with 4 years of experience building scalable systems.",
+  "aboutTitle": "Software Developer",
+  "aboutBio1": "I build performant web applications, modern interfaces, and robust integrations with 4 years of professional experience across telecom systems.",
+  "aboutBio2": "Tel Aviv, Israel · Available for hybrid or remote roles.",
   "contactEmail": "MaTaN2288@gmail.com",
   "linkedInUrl": "https://www.linkedin.com/in/matan2288",
+  "blogUrl": "https://ai.google/blog/",
   "stats": [
     {
-      "value": "04 Years",
-      "label": "Software Developer"
+      "value": "4 Years",
+      "label": "Experience"
     },
     {
-      "value": "4 Enterprise",
-      "label": "Clients delivered"
+      "value": "Enterprise",
+      "label": "Telecom scale"
     }
   ]
 }

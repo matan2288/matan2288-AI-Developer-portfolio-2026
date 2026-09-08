@@ -1,54 +1,107 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavbarContainer } from './containers/NavbarContainer';
 import { HeroContainer } from './containers/HeroContainer';
-import { AboutContainer } from './containers/AboutContainer';
 import { ExperienceContainer } from './containers/ExperienceContainer';
 import { TestimonialsContainer } from './containers/TestimonialsContainer';
 import { ContactContainer } from './containers/ContactContainer';
 import { FooterContainer } from './containers/FooterContainer';
 import { BlogIframeContainer } from './components/BlogIframeContainer';
-import { TinaAdmin } from './components/TinaAdmin';
+import { AdminPageContainer } from './containers/AdminPageContainer';
+import { CertificationsContainer } from './containers/CertificationsContainer';
 import { 
   useTinaPortfolio, 
-  useTinaPillars, 
-  useTinaSkills, 
-  useTinaRecommendations 
+  useTinaRecommendations,
+  useTinaCertifications
 } from './services/tinaContent';
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isTinaAdminOpen, setIsTinaAdminOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('00');
-  const [currentView, setCurrentView] = useState<'portfolio' | 'blog'>('portfolio');
+  
+  // Detect initial view from URL params or hash
+  const [currentView, setCurrentView] = useState<'portfolio' | 'blog' | 'admin' | 'certifications'>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('view') === 'admin' || window.location.hash === '#admin') {
+        return 'admin';
+      }
+      if (params.get('view') === 'blog' || window.location.hash === '#blog') {
+        return 'blog';
+      }
+      if (params.get('view') === 'certifications' || window.location.hash === '#certifications') {
+        return 'certifications';
+      }
+    }
+    return 'portfolio';
+  });
 
-  // Tina CMS content state hooks
+  const isPreviewMode = typeof window !== 'undefined' && (
+    new URLSearchParams(window.location.search).get('preview') === 'true' ||
+    window.self !== window.top
+  );
+
+  // Sync view selection with browser URL history
+  const handleSelectView = (view: 'portfolio' | 'blog' | 'admin' | 'certifications') => {
+    setCurrentView(view);
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      if (view === 'portfolio') {
+        url.searchParams.delete('view');
+      } else {
+        url.searchParams.set('view', view);
+      }
+      window.history.replaceState({}, '', url.toString());
+    }
+  };
+
+  // Tina CMS content state hooks (reactive to live draft updates)
   const portfolio = useTinaPortfolio();
-  const portfolioPillars = useTinaPillars();
-  const portfolioSkills = useTinaSkills();
   const portfolioRecommendations = useTinaRecommendations();
+  const portfolioCertifications = useTinaCertifications();
 
   // Navigation config for scroll-spy and header links
   const navItems = [
     { num: '00', label: 'Home',         id: 'home',         href: '#home' },
-    { num: '01', label: 'About',        id: 'about',        href: '#about' },
-    { num: '02', label: 'Experience',   id: 'experience',   href: '#experience' },
-    { num: '03', label: 'Testimonials', id: 'testimonials', href: '#testimonials' },
-    { num: '04', label: 'Contact',      id: 'contact',      href: '#contact' },
+    { num: '01', label: 'Experience',   id: 'experience',   href: '#experience' },
+    { num: '02', label: 'Testimonials', id: 'testimonials', href: '#testimonials' },
+    { num: '03', label: 'Contact',      id: 'contact',      href: '#contact' },
   ];
+
+  const isClickScrollingRef = useRef(false);
+  const scrollLockTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Scroll spy listener
   useEffect(() => {
     if (currentView !== 'portfolio') return;
 
     const handleScroll = () => {
-      const scrollPos = window.scrollY + 240;
-      
-      for (const item of navItems) {
+      // Don't override active section while programmatic smooth scroll is underway
+      if (isClickScrollingRef.current) return;
+
+      const windowHeight = window.innerHeight;
+      const scrollY = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight;
+
+      // Bottom of page: activate Contact section ('03') reliably
+      if (scrollY + windowHeight >= scrollHeight - 60) {
+        setActiveSection('03');
+        return;
+      }
+
+      // Top of page: activate Home section ('00')
+      if (scrollY < 80) {
+        setActiveSection('00');
+        return;
+      }
+
+      // Reading probe line at 35% from viewport top
+      const probeY = windowHeight * 0.35;
+      for (let i = navItems.length - 1; i >= 0; i--) {
+        const item = navItems[i];
         const element = document.getElementById(item.id);
         if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetHeight = element.offsetHeight;
-          if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= probeY && rect.bottom > 0) {
             setActiveSection(item.num);
             break;
           }
@@ -56,15 +109,28 @@ export default function App() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run once on mount to set initial active section
+    handleScroll();
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, [currentView]);
 
   // Smooth scroll click handler
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
+    const targetItem = navItems.find((n) => n.href === href);
+    if (targetItem) {
+      setActiveSection(targetItem.num);
+      isClickScrollingRef.current = true;
+      if (scrollLockTimeoutRef.current) clearTimeout(scrollLockTimeoutRef.current);
+      scrollLockTimeoutRef.current = setTimeout(() => {
+        isClickScrollingRef.current = false;
+      }, 750);
+    }
+
     if (currentView !== 'portfolio') {
-      setCurrentView('portfolio');
+      handleSelectView('portfolio');
       setTimeout(() => {
         const id = href.replace('#', '');
         const element = document.getElementById(id);
@@ -92,15 +158,18 @@ export default function App() {
     setIsMenuOpen(false);
   };
 
+  // Dedicated Full-Page Admin Studio View
+  if (currentView === 'admin') {
+    return (
+      <AdminPageContainer 
+        onBackToPortfolio={() => handleSelectView('portfolio')} 
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white text-text font-sans selection:bg-accent-soft selection:text-accent antialiased scroll-smooth">
       
-      {/* TinaCMS Headless Studio Modal */}
-      <TinaAdmin 
-        isOpen={isTinaAdminOpen} 
-        onClose={() => setIsTinaAdminOpen(false)} 
-      />
-
       {/* Header / Navbar Container */}
       <NavbarContainer 
         portfolioName={portfolio.developerName}
@@ -110,16 +179,27 @@ export default function App() {
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}
         onNavClick={handleNavClick}
-        onOpenTinaAdmin={() => setIsTinaAdminOpen(true)}
-        onSelectView={setCurrentView}
+        onOpenTinaAdmin={() => handleSelectView('admin')}
+        onSelectView={handleSelectView}
       />
 
       {/* Main View Switcher */}
       {currentView === 'blog' ? (
-        <main className="pt-16">
+        <main className="pt-16 h-screen flex flex-col overflow-hidden">
           <BlogIframeContainer 
             onBackToPortfolio={() => {
-              setCurrentView('portfolio');
+              handleSelectView('portfolio');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        </main>
+      ) : currentView === 'certifications' ? (
+        <main>
+          <CertificationsContainer 
+            certifications={portfolioCertifications}
+            developerName={portfolio.developerName}
+            onBackToPortfolio={() => {
+              handleSelectView('portfolio');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           />
@@ -131,25 +211,18 @@ export default function App() {
           <HeroContainer 
             portfolio={portfolio}
             onNavClick={handleNavClick}
-            onOpenTinaAdmin={() => setIsTinaAdminOpen(true)}
+            onOpenTinaAdmin={() => handleSelectView('admin')}
           />
 
-          {/* Section 01 — About & Profile Container */}
-          <AboutContainer 
-            portfolio={portfolio}
-            pillars={portfolioPillars}
-            skills={portfolioSkills}
-          />
-
-          {/* Section 02 — Experience Timeline Container */}
+          {/* Section 01 — Experience Timeline Container */}
           <ExperienceContainer />
 
-          {/* Section 03 — Testimonials Container */}
+          {/* Section 02 — Testimonials Container */}
           <TestimonialsContainer 
             recommendations={portfolioRecommendations}
           />
 
-          {/* Section 04 — Contact Container */}
+          {/* Section 03 — Contact Container */}
           <ContactContainer 
             portfolio={portfolio}
           />

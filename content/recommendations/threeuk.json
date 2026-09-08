@@ -1,6 +1,6 @@
 {
-  "quote": "A dedicated engineer who consistently goes above and beyond to make sure systems are optimized. During our major broadband product launch, Matan resolved deep-seated concurrency race conditions in the Redux state, keeping checkout latency down to a minimum.",
+  "quote": "Consistently delivers optimized, reliable solutions. During our broadband launch, Matan efficiently resolved complex state issues across our order funnel.",
   "author": "Principal Architect",
-  "role": "Core Order Engineering",
-  "company": "3UK Program"
+  "role": "Order Engineering",
+  "company": "Three UK"
 }

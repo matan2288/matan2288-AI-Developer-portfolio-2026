@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Edit3 } from 'lucide-react';
+import { ArrowRight, Mail } from 'lucide-react';
 import { AIPersonaChat } from '../features/dashboard';
 import { PortfolioContent } from '../features/dashboard/types';
 
@@ -12,96 +12,82 @@ interface HeroContainerProps {
 export const HeroContainer: React.FC<HeroContainerProps> = ({
   portfolio,
   onNavClick,
-  onOpenTinaAdmin,
 }) => {
   const firstName = portfolio.developerName.split(' ')[0] || '';
   const restName = portfolio.developerName.split(' ').slice(1).join(' ') || '';
 
   return (
-    <section id="home" className="min-h-[calc(100vh-4rem)] flex items-center bg-white py-12 md:py-20">
-      <div className="max-w-6xl mx-auto px-6 md:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 lg:items-start items-center">
+    <section id="home" className="min-h-[calc(100vh-4rem)] flex items-center bg-white pt-20 pb-12 sm:pt-24 sm:pb-16 md:py-20 lg:py-0">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 lg:items-start items-center">
           
           {/* Left Column: Developer Profile */}
           <div className="lg:col-span-6 space-y-6">
             
-            <div className="flex flex-col sm:flex-row items-start gap-5">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5">
               <div className="relative shrink-0 group">
-                <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden bg-white shadow-2xs">
+                <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-2xl overflow-hidden bg-neutral-100 shadow-2xs border border-border">
                   <img
                     src={portfolio.avatarUrl}
                     alt={portfolio.developerName}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 ease-in-out group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 ring-1 ring-inset ring-neutral-200/50 rounded-2xl pointer-events-none" />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-black/5 rounded-2xl pointer-events-none" />
                 </div>
               </div>
 
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-text-muted font-bold block">
-                    00 — {portfolio.title}
-                  </span>
-                  <span className="px-1.5 py-0.5 rounded bg-neutral-100 text-[9px] font-mono text-neutral-600 border border-neutral-200">
-                    TinaCMS Content
-                  </span>
-                </div>
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-text uppercase font-sans leading-tight">
-                  {firstName} <span className="text-text-muted">{restName}</span>
+              <div className="space-y-1.5 min-w-0 flex-1">
+                <span className="text-xs uppercase tracking-wider text-accent font-semibold block truncate max-w-full">
+                  {portfolio.title}
+                </span>
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-text uppercase font-sans leading-tight break-words">
+                  {firstName} <span className="text-text-muted font-normal">{restName}</span>
                 </h1>
-                <p className="text-xs font-mono text-accent uppercase tracking-wider font-semibold">
+                <p className="text-xs text-text-muted uppercase tracking-wider font-medium">
                   {portfolio.location}
                 </p>
               </div>
             </div>
 
-            <p className="text-base text-text-muted leading-relaxed">
+            <p className="text-sm sm:text-base text-text-muted leading-relaxed break-words">
               {portfolio.heroBio}
             </p>
 
             {/* Quantitative Highlights List */}
-            <div className="grid grid-cols-2 gap-4 py-2 border-y border-border">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-3 sm:gap-4 py-3.5 border-y border-border">
               {portfolio.stats.map((stat, idx) => (
-                <div key={idx}>
-                  <span className="block text-xl font-bold text-text">{stat.value}</span>
-                  <span className="text-[11px] font-mono uppercase tracking-widest text-text-muted">{stat.label}</span>
+                <div key={idx} className="min-w-0">
+                  <span className="block text-lg sm:text-xl font-bold text-text truncate">{stat.value}</span>
+                  <span className="text-xs uppercase tracking-wider text-text-muted block truncate font-medium">{stat.label}</span>
                 </div>
               ))}
             </div>
 
-            {/* Actions */}
-            <div className="flex flex-wrap items-center gap-4">
+            {/* Clean Actions */}
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1">
               <a 
                 href="#experience"
                 onClick={(e) => onNavClick(e, '#experience')}
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-accent hover:bg-accent-hover text-white text-xs font-mono uppercase tracking-wider rounded-lg shadow-sm transition-all"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white hover:bg-neutral-50 text-text border border-border/80 hover:border-neutral-300 text-xs font-medium rounded-xl shadow-2xs transition-all shrink-0 cursor-pointer"
               >
-                View Timeline <ArrowRight size={13} />
+                <span>View Experience</span>
+                <ArrowRight size={13} className="text-text-muted" />
               </a>
-              <button
-                onClick={onOpenTinaAdmin}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white border border-border hover:border-text text-text hover:bg-neutral-50 text-xs font-mono uppercase tracking-wider rounded-lg transition-all cursor-pointer font-bold"
+              <a 
+                href="#contact"
+                onClick={(e) => onNavClick(e, '#contact')}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white hover:bg-neutral-50 text-text border border-border/80 hover:border-neutral-300 text-xs font-medium rounded-xl shadow-2xs transition-all cursor-pointer shrink-0"
               >
-                <Edit3 size={13} className="text-emerald-500" />
-                <span>Edit Content in TinaCMS</span>
-              </button>
+                <Mail size={13} className="text-text-muted" />
+                <span>Get in Touch</span>
+              </a>
             </div>
           </div>
 
-          {/* Right Column: AI Sandbox */}
-          <div className="lg:col-span-6">
-            <div className="bg-bg-alt rounded-2xl p-4 md:p-6 border border-border/80">
-              <div className="mb-2 pl-1">
-                <span className="text-[10px] font-mono text-text-muted uppercase tracking-wider block font-bold">
-                  00 — Interactive Assistant Route
-                </span>
-                <p className="text-xs text-text-muted">
-                  Query the guide regarding core accomplishments:
-                </p>
-              </div>
-              <AIPersonaChat />
-            </div>
+          {/* Right Column: AI Assistant */}
+          <div className="lg:col-span-6 w-full">
+            <AIPersonaChat />
           </div>
 
         </div>
