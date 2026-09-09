@@ -11,18 +11,17 @@ export const TestimonialsContainer: React.FC<TestimonialsContainerProps> = ({
   recommendations,
 }) => {
   return (
-    <section id="testimonials" className="py-20 md:py-28 bg-bg-alt border-t border-border">
+    <section id="testimonials" className="py-14 md:py-20 bg-bg-alt border-t border-border">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
-        <SectionLabel num="02" title="Testimonials" />
-        
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-          <div className="max-w-xl">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-text uppercase leading-tight mb-2">
+        <div className="mb-8 sm:mb-12">
+          <SectionLabel num="02" title="Endorsements" />
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2.5">
+            <h2 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-text leading-tight">
               Recommendations & Feedback
             </h2>
-            <p className="text-xs sm:text-sm text-text-muted leading-relaxed">
-              Endorsements from team leaders, architects, and product owners.
-            </p>
+            <span className="text-xs sm:text-sm text-text-muted font-normal">
+              Endorsements from engineering leads, architects & product owners
+            </span>
           </div>
         </div>
 

@@ -1,10 +1,10 @@
 {
   "developerName": "Matan Elmaliah",
-  "title": "Software Developer",
+  "title": "AI-Driven Software Developer",
   "location": "Tel Aviv, Israel",
-  "avatarUrl": "https://picsum.photos/seed/matandev/400/400",
+  "avatarUrl": "/profile.png",
   "heroBio": "Software developer specializing in React, TypeScript, and full-stack web applications with 4 years of experience building scalable systems.",
-  "aboutTitle": "Software Developer",
+  "aboutTitle": "AI-Driven Software Developer",
   "aboutBio1": "I build performant web applications, modern interfaces, and robust integrations with 4 years of professional experience across telecom systems.",
   "aboutBio2": "Tel Aviv, Israel · Available for hybrid or remote roles.",
   "contactEmail": "MaTaN2288@gmail.com",
@@ -18,6 +18,22 @@
     {
       "value": "Enterprise",
       "label": "Telecom scale"
+    },
+    {
+      "value": "Altice & Three UK",
+      "label": "Enterprise Delivery"
+    },
+    {
+      "value": "Full-Stack",
+      "label": "React, TypeScript & Node"
+    },
+    {
+      "value": "High Scale",
+      "label": "Distributed Systems"
+    },
+    {
+      "value": "Cloud & CI/CD",
+      "label": "Zero-Downtime Delivery"
     }
   ]
 }

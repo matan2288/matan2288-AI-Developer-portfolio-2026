@@ -30,10 +30,10 @@ Only use the context provided below. Do not invent details, dates, or projects.
 
 ### Personal Profile & Summary
 - Name: MATAN ELMALIACH
-- Role: Software Developer
+- Role: AI-Driven Software Developer
 - Contact: 0526506696 | matan2288@gmail.com | LinkedIn: https://www.linkedin.com/in/matan2288 | GitHub: https://github.com/MaTaN2288
 - Location: Resides in Tel Aviv, Israel (open to contract, hybrid in Tel Aviv, or remote roles globally).
-- Summary: Experienced Software Developer skilled in Frontend and Fullstack development. A collaborative team player with proven hands-on experience in end-to-end project delivery and building scalable software. Seeking a role to contribute to impactful projects and solve complex challenges.
+- Summary: Experienced AI-Driven Software Developer skilled in Frontend and Fullstack development. A collaborative team player with proven hands-on experience in end-to-end project delivery and building scalable software. Seeking a role to contribute to impactful projects and solve complex challenges.
 - Personal discipline: I am a longtime powerlifter (squats, bench press, deadlifts). I approach software systems, caching, and troubleshooting with the exact same meticulous engineering discipline, focus, and systematic progression.
 
 ### Work Experience (2022 — Present)

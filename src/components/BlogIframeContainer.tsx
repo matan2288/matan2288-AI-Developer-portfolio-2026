@@ -48,10 +48,6 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
           </button>
 
           <span className="text-border/80 text-xs">|</span>
-
-          <span className="text-xs font-semibold text-text truncate">
-            Engineering Blog & Notes
-          </span>
         </div>
 
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">

@@ -9,7 +9,8 @@ interface NavItem {
 }
 
 interface NavbarContainerProps {
-  portfolioName: string;
+  portfolioName?: string;
+  brandName?: string;
   navItems: NavItem[];
   activeSection: string;
   currentView: 'portfolio' | 'blog' | 'admin' | 'certifications';
@@ -21,7 +22,8 @@ interface NavbarContainerProps {
 }
 
 export const NavbarContainer: React.FC<NavbarContainerProps> = ({
-  portfolioName,
+  portfolioName = 'MATAN AI',
+  brandName = 'MATAN AI',
   navItems,
   activeSection,
   currentView,
@@ -31,8 +33,9 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
   onOpenTinaAdmin,
   onSelectView,
 }) => {
-  const firstName = portfolioName.split(' ')[0] || '';
-  const restName = portfolioName.split(' ').slice(1).join(' ') || '';
+  const brand = brandName || 'MATAN AI';
+  const firstName = brand.split(' ')[0] || 'MATAN';
+  const restName = brand.split(' ').slice(1).join(' ') || 'AI';
 
   const navRef = useRef<HTMLElement>(null);
   const [indicator, setIndicator] = useState<{ left: number; width: number; opacity: number }>({
@@ -187,20 +190,36 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
 
       {/* Mobile collapsible dropdown */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-border py-6 px-6 space-y-4 shadow-lg max-h-[85vh] overflow-y-auto">
-          <div className="flex flex-col gap-3">
+        <div className="md:hidden absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-border px-5 py-2.5 shadow-md max-h-[80vh] overflow-y-auto animate-fadeIn">
+          <div className="flex flex-col divide-y divide-border/40">
+            {navItems.map((item) => (
+              <a
+                key={item.num}
+                href={item.href}
+                onClick={(e) => onNavClick(e, item.href)}
+                className={`text-xs py-2 flex items-center justify-between transition-colors ${
+                  currentView === 'portfolio' && activeSection === item.num 
+                    ? 'text-text font-bold' 
+                    : 'text-text-muted hover:text-text'
+                }`}
+              >
+                <span>{item.label}</span>
+                <span className="text-[10px] text-text-subtle font-mono">{item.num}</span>
+              </a>
+            ))}
+
             <button
               onClick={() => {
                 onSelectView('certifications');
                 setIsMenuOpen(false);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className={`text-sm tracking-tight py-2.5 border-b border-neutral-100 flex items-center justify-between transition-colors ${
-                currentView === 'certifications' ? 'text-text font-semibold' : 'text-text-muted hover:text-text'
+              className={`text-xs py-2 flex items-center justify-between transition-colors cursor-pointer ${
+                currentView === 'certifications' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
               }`}
             >
               <span className="flex items-center gap-2">
-                <Award size={15} className={currentView === 'certifications' ? 'text-text' : 'text-text-muted'} />
+                <Award size={13} className={currentView === 'certifications' ? 'text-text' : 'text-text-muted'} />
                 <span>Certifications</span>
               </span>
             </button>
@@ -211,12 +230,12 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
                 setIsMenuOpen(false);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className={`text-sm tracking-tight py-2.5 border-b border-neutral-100 flex items-center justify-between transition-colors ${
-                currentView === 'blog' ? 'text-text font-semibold' : 'text-text-muted hover:text-text'
+              className={`text-xs py-2 flex items-center justify-between transition-colors cursor-pointer ${
+                currentView === 'blog' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
               }`}
             >
               <span className="flex items-center gap-2">
-                <BookOpen size={15} className={currentView === 'blog' ? 'text-text' : 'text-text-muted'} />
+                <BookOpen size={13} className={currentView === 'blog' ? 'text-text' : 'text-text-muted'} />
                 <span>Blog</span>
               </span>
             </button>
@@ -226,30 +245,15 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
                 onSelectView('admin');
                 setIsMenuOpen(false);
               }}
-              className={`text-sm tracking-tight py-2.5 border-b border-neutral-100 flex items-center justify-between transition-colors ${
-                currentView === 'admin' ? 'text-text font-semibold' : 'text-text-muted hover:text-text'
+              className={`text-xs py-2 flex items-center justify-between transition-colors cursor-pointer ${
+                currentView === 'admin' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
               }`}
             >
               <span className="flex items-center gap-2">
-                <Edit3 size={15} className={currentView === 'admin' ? 'text-text' : 'text-text-muted'} />
+                <Edit3 size={13} className={currentView === 'admin' ? 'text-text' : 'text-text-muted'} />
                 <span>Editor</span>
               </span>
             </button>
-
-            {navItems.map((item) => (
-              <a
-                key={item.num}
-                href={item.href}
-                onClick={(e) => onNavClick(e, item.href)}
-                className={`text-sm tracking-tight py-2.5 border-b border-neutral-50 last:border-0 transition-colors block ${
-                  currentView === 'portfolio' && activeSection === item.num 
-                    ? 'text-text font-bold border-b border-text' 
-                    : 'text-text-muted hover:text-text'
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
           </div>
         </div>
       )}

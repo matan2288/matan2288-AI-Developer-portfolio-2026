@@ -8,6 +8,7 @@ import { FooterContainer } from './containers/FooterContainer';
 import { BlogIframeContainer } from './components/BlogIframeContainer';
 import { AdminPageContainer } from './containers/AdminPageContainer';
 import { CertificationsContainer } from './containers/CertificationsContainer';
+import { PersonaChatProvider, AIFloatingWidget } from './features/dashboard';
 import { 
   useTinaPortfolio, 
   useTinaRecommendations,
@@ -158,81 +159,90 @@ export default function App() {
     setIsMenuOpen(false);
   };
 
-  // Dedicated Full-Page Admin Studio View
-  if (currentView === 'admin') {
-    return (
-      <AdminPageContainer 
-        onBackToPortfolio={() => handleSelectView('portfolio')} 
-      />
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-white text-text font-sans selection:bg-accent-soft selection:text-accent antialiased scroll-smooth">
-      
-      {/* Header / Navbar Container */}
-      <NavbarContainer 
-        portfolioName={portfolio.developerName}
-        navItems={navItems}
-        activeSection={activeSection}
-        currentView={currentView}
-        isMenuOpen={isMenuOpen}
-        setIsMenuOpen={setIsMenuOpen}
-        onNavClick={handleNavClick}
-        onOpenTinaAdmin={() => handleSelectView('admin')}
-        onSelectView={handleSelectView}
-      />
-
-      {/* Main View Switcher */}
-      {currentView === 'blog' ? (
-        <main className="pt-16 h-screen flex flex-col overflow-hidden">
-          <BlogIframeContainer 
-            onBackToPortfolio={() => {
-              handleSelectView('portfolio');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-          />
-        </main>
-      ) : currentView === 'certifications' ? (
-        <main>
-          <CertificationsContainer 
-            certifications={portfolioCertifications}
-            developerName={portfolio.developerName}
-            onBackToPortfolio={() => {
-              handleSelectView('portfolio');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-          />
-        </main>
+    <PersonaChatProvider>
+      {/* Dedicated Full-Page Admin Studio View */}
+      {currentView === 'admin' ? (
+        <AdminPageContainer 
+          onBackToPortfolio={() => handleSelectView('portfolio')} 
+        />
       ) : (
-        <main className="pt-16">
+        <div className="min-h-screen bg-white text-text font-sans selection:bg-neutral-100 selection:text-text antialiased scroll-smooth">
           
-          {/* Section 00 — Hero Container */}
-          <HeroContainer 
-            portfolio={portfolio}
+          {/* Header / Navbar Container */}
+          <NavbarContainer 
+            brandName="MATAN AI"
+            portfolioName={portfolio.developerName}
+            navItems={navItems}
+            activeSection={activeSection}
+            currentView={currentView}
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen}
             onNavClick={handleNavClick}
             onOpenTinaAdmin={() => handleSelectView('admin')}
+            onSelectView={handleSelectView}
           />
 
-          {/* Section 01 — Experience Timeline Container */}
-          <ExperienceContainer />
+          {/* Main View Switcher */}
+          {currentView === 'blog' ? (
+            <main className="pt-16 h-screen flex flex-col overflow-hidden">
+              <BlogIframeContainer 
+                onBackToPortfolio={() => {
+                  handleSelectView('portfolio');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
+            </main>
+          ) : currentView === 'certifications' ? (
+            <main>
+              <CertificationsContainer 
+                certifications={portfolioCertifications}
+                developerName={portfolio.developerName}
+                onBackToPortfolio={() => {
+                  handleSelectView('portfolio');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
+            </main>
+          ) : (
+            <main className="pt-16">
+              
+              {/* Section 00 — Hero Container */}
+              <HeroContainer 
+                portfolio={portfolio}
+                onNavClick={handleNavClick}
+                onOpenTinaAdmin={() => handleSelectView('admin')}
+              />
 
-          {/* Section 02 — Testimonials Container */}
-          <TestimonialsContainer 
-            recommendations={portfolioRecommendations}
-          />
+              {/* Section 01 — Experience Timeline Container */}
+              <ExperienceContainer />
 
-          {/* Section 03 — Contact Container */}
-          <ContactContainer 
-            portfolio={portfolio}
-          />
+              {/* Section 02 — Testimonials Container */}
+              <TestimonialsContainer 
+                recommendations={portfolioRecommendations}
+              />
 
-        </main>
+              {/* Section 03 — Contact Container */}
+              <ContactContainer 
+                portfolio={portfolio}
+              />
+
+            </main>
+          )}
+
+          {/* Sticky Bottom-Right Floating Agent Widget (accessible anywhere across the page) */}
+          {currentView === 'portfolio' && (
+            <AIFloatingWidget 
+              avatarUrl={portfolio.avatarUrl} 
+              developerName={portfolio.developerName} 
+            />
+          )}
+
+          {/* Footer Container */}
+          <FooterContainer developerName={portfolio.developerName} />
+
+        </div>
       )}
-
-      {/* Footer Container */}
-      <FooterContainer developerName={portfolio.developerName} />
-
-    </div>
+    </PersonaChatProvider>
   );
 }

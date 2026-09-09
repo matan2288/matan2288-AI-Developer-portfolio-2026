@@ -54,13 +54,20 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
         </div>
 
         {/* Minimalist Header */}
-        <div className="mb-4 sm:mb-5">
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-text">
-            Certifications
-          </h1>
-          <p className="text-xs sm:text-sm text-text-muted mt-1">
-            Official credentials & verified engineering documentation
-          </p>
+        <div className="mb-6 sm:mb-8">
+          <div className="flex items-center gap-2 mb-2.5 select-none text-[11px] font-mono tracking-widest text-text-muted">
+            <span className="font-semibold text-text">DOC</span>
+            <span className="text-neutral-300 font-light">/</span>
+            <span className="uppercase font-medium tracking-[0.16em] text-text-muted">Credentials</span>
+          </div>
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2.5">
+            <h1 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-text leading-tight">
+              Certifications
+            </h1>
+            <span className="text-xs sm:text-sm text-text-muted font-normal">
+              Official credentials & verified engineering documentation
+            </span>
+          </div>
         </div>
 
         {/* Full-width Certification Rows with Dividers */}
@@ -73,7 +80,7 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
             >
               {/* Certification Title & Issuer */}
               <div className="min-w-0 flex-1">
-                <h3 className="text-sm sm:text-base font-semibold text-text group-hover:text-accent transition-colors truncate">
+                <h3 className="text-sm sm:text-base font-semibold text-text group-hover:text-neutral-600 transition-colors truncate">
                   {cert.title}
                 </h3>
                 <div className="text-xs text-text-muted mt-0.5 flex items-center gap-2">

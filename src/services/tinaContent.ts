@@ -29,7 +29,7 @@ export interface PortfolioGeneralContent {
   stats: { value: string; label: string }[];
 }
 
-const LOCAL_STORAGE_KEY = 'tina_cms_portfolio_content_v2';
+const LOCAL_STORAGE_KEY = 'tina_cms_portfolio_content_v3';
 
 export const defaultTinaContent = {
   portfolio: mainPortfolioData as PortfolioGeneralContent,
@@ -46,12 +46,49 @@ let liveDraftContent: typeof defaultTinaContent | null = null;
 // Helper to get active Tina CMS content (live draft > localStorage > default JSON)
 export function getStoredTinaContent() {
   if (liveDraftContent) {
-    return liveDraftContent;
+    return {
+      ...defaultTinaContent,
+      ...liveDraftContent,
+      portfolio: {
+        ...defaultTinaContent.portfolio,
+        ...(liveDraftContent.portfolio || {}),
+        stats: Array.isArray(liveDraftContent.portfolio?.stats) ? liveDraftContent.portfolio.stats : defaultTinaContent.portfolio.stats,
+      },
+      pillars: Array.isArray(liveDraftContent.pillars) && liveDraftContent.pillars.length > 0 ? liveDraftContent.pillars : defaultTinaContent.pillars,
+      skills: Array.isArray(liveDraftContent.skills) && liveDraftContent.skills.length > 0 ? liveDraftContent.skills : defaultTinaContent.skills,
+      experiences: Array.isArray(liveDraftContent.experiences) && liveDraftContent.experiences.length > 0 ? liveDraftContent.experiences : defaultTinaContent.experiences,
+      recommendations: Array.isArray(liveDraftContent.recommendations) && liveDraftContent.recommendations.length > 0 ? liveDraftContent.recommendations : defaultTinaContent.recommendations,
+      certifications: Array.isArray(liveDraftContent.certifications) && liveDraftContent.certifications.length > 0 ? liveDraftContent.certifications : defaultTinaContent.certifications,
+    };
   }
   try {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (saved) {
-      return JSON.parse(saved);
+      const parsed = JSON.parse(saved);
+      const safeAvatarUrl = (!parsed.portfolio?.avatarUrl || parsed.portfolio.avatarUrl.includes('picsum.photos'))
+        ? defaultTinaContent.portfolio.avatarUrl
+        : parsed.portfolio.avatarUrl;
+      const title = (parsed.portfolio?.title === 'Software Developer' || !parsed.portfolio?.title)
+        ? defaultTinaContent.portfolio.title
+        : parsed.portfolio.title;
+      return {
+        ...defaultTinaContent,
+        ...parsed,
+        portfolio: {
+          ...defaultTinaContent.portfolio,
+          ...(parsed.portfolio || {}),
+          title,
+          avatarUrl: safeAvatarUrl,
+          stats: Array.isArray(parsed.portfolio?.stats) 
+            ? parsed.portfolio.stats 
+            : defaultTinaContent.portfolio.stats,
+        },
+        pillars: Array.isArray(parsed.pillars) && parsed.pillars.length > 0 ? parsed.pillars : defaultTinaContent.pillars,
+        skills: Array.isArray(parsed.skills) && parsed.skills.length > 0 ? parsed.skills : defaultTinaContent.skills,
+        experiences: Array.isArray(parsed.experiences) && parsed.experiences.length > 0 ? parsed.experiences : defaultTinaContent.experiences,
+        recommendations: Array.isArray(parsed.recommendations) && parsed.recommendations.length > 0 ? parsed.recommendations : defaultTinaContent.recommendations,
+        certifications: Array.isArray(parsed.certifications) && parsed.certifications.length > 0 ? parsed.certifications : defaultTinaContent.certifications,
+      };
     }
   } catch (e) {
     console.warn('Failed to load stored Tina CMS content:', e);
@@ -90,6 +127,20 @@ export function saveTinaContent(newContent: typeof defaultTinaContent) {
     console.error('Failed to save Tina CMS content:', e);
   }
 }
+
+export function updateAvatarUrl(newAvatarUrl: string) {
+  const current = getStoredTinaContent();
+  const updated = {
+    ...current,
+    portfolio: {
+      ...current.portfolio,
+      avatarUrl: newAvatarUrl,
+    },
+  };
+  saveTinaContent(updated);
+}
+
+export const getTinaContent = getStoredTinaContent;
 
 export function resetTinaContentToDefaults() {
   liveDraftContent = null;

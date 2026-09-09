@@ -39,7 +39,7 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
         {/* Timestamp header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-4 pb-3 border-b border-border/60">
           <div className="min-w-0 flex-1">
-            <span className="text-xs font-bold text-accent uppercase tracking-wider block mb-1 truncate">
+            <span className="text-xs font-bold text-text-muted uppercase tracking-wider block mb-1 truncate">
               {company} {location && `· ${location}`}
             </span>
             <h4 className="text-base sm:text-lg font-bold text-text uppercase break-words leading-tight">

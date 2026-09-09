@@ -16,7 +16,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({ recommendation
           {recommendation.author}
         </h5>
         <div className="text-xs text-text-muted break-words mt-0.5">
-          {recommendation.role} · <span className="font-semibold text-accent">{recommendation.company}</span>
+          {recommendation.role} · <span className="font-semibold text-text">{recommendation.company}</span>
         </div>
       </div>
     </div>

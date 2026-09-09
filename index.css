@@ -1,18 +1,18 @@
 :root {
   --color-bg: #FFFFFF;
-  --color-bg-alt: #FAFAFB;
+  --color-bg-alt: #F9FAFB;
   --color-surface: #FFFFFF;
-  --color-border: #EAEFF5;
-  --color-border-hover: #DCE3EB;
+  --color-border: #F0F2F5;
+  --color-border-hover: #E2E5E9;
   --color-text: #0F172A;
-  --color-text-muted: #64748B;
-  --color-text-subtle: #94A3B8;
+  --color-text-muted: #475569;
+  --color-text-subtle: #64748B;
   --color-accent: #0F172A;
-  --color-accent-hover: #1E293B;
-  --color-accent-soft: #F4F7FA;
-  --color-accent-muted: #EAEFF5;
-  --color-success: #334155;
-  --color-success-soft: #F4F7FA;
+  --color-accent-hover: #334155;
+  --color-accent-soft: #F5F6F8;
+  --color-accent-muted: #F0F2F5;
+  --color-success: #16A34A;
+  --color-success-soft: #F0FDF4;
 }
 
 body {
@@ -53,4 +53,36 @@ a, button {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Subtle, minimal indicator animation when AI has updates */
+@keyframes subtlePulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.animate-subtle-pulse {
+  animation: subtlePulse 2s ease-in-out infinite;
+}
+
+/* Minimalist blinking animation for Ask AI Matan (dim neutral-slate pulse) */
+@keyframes minimalButtonBlink {
+  0%, 100% {
+    border-color: #E2E5E9;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+  50% {
+    border-color: #94A3B8;
+    box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.22);
+  }
+}
+
+.animate-minimal-blink {
+  animation: minimalButtonBlink 2.4s ease-in-out infinite;
 }

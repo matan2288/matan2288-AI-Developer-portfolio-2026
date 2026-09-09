@@ -16,7 +16,8 @@ import {
   Sparkles,
   ChevronRight,
   Eye,
-  Globe
+  Globe,
+  Upload
 } from 'lucide-react';
 import { 
   getStoredTinaContent, 
@@ -99,6 +100,21 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
         [field]: val,
       },
     }));
+  };
+
+  const addStat = () => {
+    const current = cmsState.portfolio.stats || [];
+    updateGeneralField('stats', [...current, { value: '100%', label: 'Key Achievement' }]);
+  };
+
+  const deleteStat = (index: number) => {
+    const current = cmsState.portfolio.stats || [];
+    if (current.length <= 1) {
+      alert('You must keep at least one metric.');
+      return;
+    }
+    const updated = current.filter((_, i) => i !== index);
+    updateGeneralField('stats', updated);
   };
 
   // Pillar handlers
@@ -409,13 +425,37 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-medium text-text-muted mb-1.5">Avatar Image URL</label>
-                      <input
-                        type="text"
-                        value={cmsState.portfolio.avatarUrl}
-                        onChange={(e) => updateGeneralField('avatarUrl', e.target.value)}
-                        className="w-full px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all"
-                      />
+                      <label className="block text-[11px] font-medium text-text-muted mb-1.5">Avatar Image URL or Direct File Upload</label>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          value={cmsState.portfolio.avatarUrl}
+                          onChange={(e) => updateGeneralField('avatarUrl', e.target.value)}
+                          placeholder="/profile.png or paste image URL"
+                          className="flex-1 px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all"
+                        />
+                        <label className="px-3 py-2 border border-border hover:border-text rounded-lg text-xs font-medium cursor-pointer bg-neutral-50 hover:bg-white transition-colors shrink-0 flex items-center gap-1.5 text-text">
+                          <Upload className="w-3.5 h-3.5 text-text-muted" />
+                          <span>Upload File</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                const reader = new FileReader();
+                                reader.onload = (ev) => {
+                                  if (ev.target?.result) {
+                                    updateGeneralField('avatarUrl', ev.target.result as string);
+                                  }
+                                };
+                                reader.readAsDataURL(file);
+                              }
+                            }}
+                          />
+                        </label>
+                      </div>
                     </div>
                   </div>
 
@@ -491,7 +531,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
                       <label className="block text-[11px] font-medium text-text-muted">
                         Blog iFrame URL (Full-Screen View)
                       </label>
-                      <span className="text-[10px] text-accent font-medium">Editor Mode Only</span>
+                      <span className="text-[10px] text-text-subtle font-medium">Editor Mode Only</span>
                     </div>
                     <div className="flex gap-2 items-center">
                       <input
@@ -519,12 +559,36 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
                 {/* Quantitative Stats */}
                 <div className="p-5 bg-white border border-border/80 rounded-xl shadow-2xs space-y-3">
                   <div className="flex items-center justify-between pb-1 border-b border-border/60">
-                    <h4 className="text-xs font-semibold text-text">Hero Quantitative Stats</h4>
-                    <span className="text-[11px] text-text-muted">{cmsState.portfolio.stats?.length || 0} metrics</span>
+                    <div>
+                      <h4 className="text-xs font-semibold text-text">Hero Quantitative Stats</h4>
+                      <p className="text-[11px] text-text-muted mt-0.5">Metrics displayed in the experience highlight strip.</p>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-[11px] text-text-muted">{cmsState.portfolio.stats?.length || 0} metrics</span>
+                      <button
+                        type="button"
+                        onClick={addStat}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 bg-white hover:bg-neutral-50 border border-border text-text text-xs font-medium rounded-lg shadow-2xs transition-colors cursor-pointer"
+                      >
+                        <Plus size={12} />
+                        <span>Add Metric</span>
+                      </button>
+                    </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                     {cmsState.portfolio.stats?.map((st: { value: string; label: string }, idx: number) => (
-                      <div key={idx} className="p-3.5 bg-neutral-50/70 rounded-lg border border-border/70 space-y-2.5">
+                      <div key={idx} className="p-3.5 bg-neutral-50/70 rounded-lg border border-border/70 space-y-2.5 relative group">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-semibold text-text-muted uppercase tracking-wider">Metric #{idx + 1}</span>
+                          <button
+                            type="button"
+                            onClick={() => deleteStat(idx)}
+                            className="p-1 text-text-muted hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
+                            title="Delete metric"
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        </div>
                         <div>
                           <label className="block text-[10px] font-medium text-text-muted mb-1">Metric Value</label>
                           <input
@@ -1003,7 +1067,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
               <div className="space-y-5">
                 <div className="pb-3 border-b border-border/70">
                   <div className="flex items-center gap-2">
-                    <Globe size={15} className="text-accent" />
+                    <Globe size={15} className="text-text" />
                     <h3 className="text-xs font-semibold text-text">Blog iFrame Embed URL</h3>
                   </div>
                   <p className="text-[11px] text-text-muted mt-0.5 leading-relaxed">

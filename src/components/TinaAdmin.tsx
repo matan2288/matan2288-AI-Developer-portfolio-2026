@@ -383,7 +383,7 @@ export const TinaAdmin: React.FC<TinaAdminProps> = ({ isOpen, onClose }) => {
               {cmsState.pillars.map((pillar: PillarItem, idx: number) => (
                 <div key={idx} className="p-4 border border-border rounded-xl bg-bg-alt/50 space-y-3 relative group">
                   <div className="flex items-center justify-between border-b border-border pb-2">
-                    <span className="font-sans text-xs font-bold text-accent uppercase">
+                    <span className="font-sans text-xs font-bold text-text uppercase">
                       Pillar #{idx + 1}: {pillar.num}
                     </span>
                     <button
@@ -590,7 +590,7 @@ export const TinaAdmin: React.FC<TinaAdminProps> = ({ isOpen, onClose }) => {
               {cmsState.recommendations.map((rec: RecommendationItem, idx: number) => (
                 <div key={idx} className="p-4 border border-border rounded-xl bg-bg-alt/50 space-y-3">
                   <div className="flex items-center justify-between border-b border-border pb-2">
-                    <span className="font-sans text-xs font-bold text-accent uppercase">
+                    <span className="font-sans text-xs font-bold text-text uppercase">
                       Testimonial #{idx + 1} / {rec.company}
                     </span>
                     <button
@@ -649,12 +649,12 @@ export const TinaAdmin: React.FC<TinaAdminProps> = ({ isOpen, onClose }) => {
         {/* Footer info bar */}
         <div className="p-3 bg-bg-alt border-t border-border flex items-center justify-between text-[11px] font-sans text-text-muted">
           <div className="flex items-center gap-2">
-            <Sparkles size={13} className="text-accent" />
+            <Sparkles size={13} className="text-text-muted" />
             <span>Schema directory: `/tina/config.ts` &amp; `/content/*`</span>
           </div>
           <button
             onClick={handleSave}
-            className="text-accent hover:underline font-bold uppercase"
+            className="text-text hover:underline font-bold uppercase cursor-pointer"
           >
             Apply Changes
           </button>
