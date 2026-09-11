@@ -79,14 +79,21 @@ export function getStoredTinaContent() {
           ...(parsed.portfolio || {}),
           title,
           avatarUrl: safeAvatarUrl,
-          stats: Array.isArray(parsed.portfolio?.stats) 
+          stats: (Array.isArray(parsed.portfolio?.stats) && parsed.portfolio.stats.length === 4) 
             ? parsed.portfolio.stats 
             : defaultTinaContent.portfolio.stats,
         },
         pillars: Array.isArray(parsed.pillars) && parsed.pillars.length > 0 ? parsed.pillars : defaultTinaContent.pillars,
         skills: Array.isArray(parsed.skills) && parsed.skills.length > 0 ? parsed.skills : defaultTinaContent.skills,
         experiences: Array.isArray(parsed.experiences) && parsed.experiences.length > 0 ? parsed.experiences : defaultTinaContent.experiences,
-        recommendations: Array.isArray(parsed.recommendations) && parsed.recommendations.length > 0 ? parsed.recommendations : defaultTinaContent.recommendations,
+        recommendations: Array.isArray(parsed.recommendations) && parsed.recommendations.length > 0 
+          ? parsed.recommendations.map((r: RecommendationItem, idx: number) => ({
+              ...(defaultTinaContent.recommendations[idx] || {}),
+              ...r,
+              avatarUrl: r.avatarUrl || defaultTinaContent.recommendations[idx % defaultTinaContent.recommendations.length]?.avatarUrl,
+              linkedInUrl: r.linkedInUrl || defaultTinaContent.recommendations[idx % defaultTinaContent.recommendations.length]?.linkedInUrl,
+            }))
+          : defaultTinaContent.recommendations,
         certifications: Array.isArray(parsed.certifications) && parsed.certifications.length > 0 ? parsed.certifications : defaultTinaContent.certifications,
       };
     }

@@ -39,10 +39,13 @@ export interface SkillCategory {
 }
 
 export interface RecommendationItem {
+  id?: string;
   quote: string;
   author: string;
   role: string;
   company: string;
+  avatarUrl?: string;
+  linkedInUrl?: string;
 }
 
 export interface CertificationItem {

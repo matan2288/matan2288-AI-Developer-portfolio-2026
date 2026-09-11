@@ -60,13 +60,13 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
             <span className="text-neutral-300 font-light">/</span>
             <span className="uppercase font-medium tracking-[0.16em] text-text-muted">Credentials</span>
           </div>
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2.5">
+          <div>
             <h1 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-text leading-tight">
               Certifications
             </h1>
-            <span className="text-xs sm:text-sm text-text-muted font-normal">
+            <p className="text-xs sm:text-sm text-text-muted font-normal mt-1.5">
               Official credentials & verified engineering documentation
-            </span>
+            </p>
           </div>
         </div>
 

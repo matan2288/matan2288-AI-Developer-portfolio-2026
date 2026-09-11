@@ -69,7 +69,7 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
               onDragLeave={() => setIsDragging(false)}
               onDrop={handleDrop}
               title="Click or drag & drop to update profile photo"
-              className={`w-[15em] h-[15em] rounded-3xl overflow-hidden bg-neutral-100 text-left cursor-pointer shrink-0 shadow-2xs relative transition-all duration-200 ${
+              className={`w-[12em] h-[12em] rounded-3xl overflow-hidden bg-neutral-100 text-left cursor-pointer shrink-0 shadow-2xs relative transition-all duration-200 ${
                 isDragging 
                   ? 'ring-2 ring-text/30 scale-105' 
                   : 'hover:opacity-95'
@@ -123,22 +123,17 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
             </p>
           </div>
 
-          {/* Centered Bio Summary */}
-          <p className="text-sm sm:text-base text-neutral-600 leading-relaxed font-normal max-w-2xl mx-auto px-2">
-            {portfolio.heroBio}
-          </p>
-
           {/* Quantitative Stats Strip */}
           {portfolio.stats && portfolio.stats.length > 0 && (
-            <div className={`w-full max-w-5xl mx-auto py-5 my-1 border-y border-neutral-200/80 grid text-center ${
+            <div className={`w-full max-w-4xl mx-auto py-5 sm:py-6 my-1 border-y border-neutral-200/80 grid text-center ${
               portfolio.stats.length <= 2 
                 ? 'grid-cols-2' 
                 : portfolio.stats.length <= 4 
                   ? 'grid-cols-2 sm:grid-cols-4' 
                   : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-6'
-            } gap-6 sm:gap-6 text-left`}>
+            } gap-6 sm:gap-8`}>
               {portfolio.stats.map((stat, idx) => (
-                <div key={idx} className="space-y-0.5">
+                <div key={idx} className="space-y-1">
                   <span className="block text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight">
                     {stat.value}
                   </span>
@@ -150,62 +145,59 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
             </div>
           )}
 
-          {/* Centered AI Command Bar */}
-          <div className="w-full max-w-3xl mx-auto pt-2">
+          {/* Centered AI Command Bar / Chat */}
+          <div className="w-full max-w-2xl mx-auto pt-1">
             <AICommandBar />
           </div>
 
-          {/* Centered Action Links & Social Icons (Stacked) */}
-          <div className="flex flex-col items-center gap-3.5 pt-1">
-            {/* Primary Action Links */}
-            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-sm">
-              <a 
-                href="#experience"
-                onClick={(e) => onNavClick(e, '#experience')}
-                className="inline-flex items-center gap-1.5 font-medium text-neutral-900 hover:text-neutral-600 transition-colors cursor-pointer group"
-              >
-                <span>View Experience</span>
-                <ArrowRight size={14} className="text-neutral-500 transition-transform group-hover:translate-x-0.5" />
-              </a>
+          {/* Action Links (Below Chat) */}
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-sm pt-2">
+            <a 
+              href="#experience"
+              onClick={(e) => onNavClick(e, '#experience')}
+              className="inline-flex items-center gap-1.5 font-medium text-neutral-900 hover:text-neutral-600 transition-colors cursor-pointer group"
+            >
+              <span>View Experience</span>
+              <ArrowRight size={14} className="text-neutral-500 transition-transform group-hover:translate-x-0.5" />
+            </a>
 
-              <a 
-                href="#contact"
-                onClick={(e) => onNavClick(e, '#contact')}
-                className="inline-flex items-center gap-1.5 font-medium text-neutral-600 hover:text-neutral-900 transition-colors cursor-pointer"
-              >
-                <MessageSquare size={15} className="text-neutral-500" />
-                <span>Get in Touch</span>
-              </a>
-            </div>
+            <a 
+              href="#contact"
+              onClick={(e) => onNavClick(e, '#contact')}
+              className="inline-flex items-center gap-1.5 font-medium text-neutral-600 hover:text-neutral-900 transition-colors cursor-pointer"
+            >
+              <MessageSquare size={15} className="text-neutral-500" />
+              <span>Get in Touch</span>
+            </a>
+          </div>
 
-            {/* Social Icons (Below Links) */}
-            <div className="flex items-center justify-center gap-1 text-neutral-500">
-              <a
-                href="https://github.com/matan2288"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-neutral-500 hover:text-neutral-900 transition-colors p-1"
-                aria-label="GitHub Profile"
-              >
-                <Github size={16} />
-              </a>
-              <a
-                href={portfolio.linkedInUrl || "https://linkedin.com"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-neutral-500 hover:text-neutral-900 transition-colors p-1"
-                aria-label="LinkedIn Profile"
-              >
-                <Linkedin size={16} />
-              </a>
-              <a
-                href={`mailto:${portfolio.contactEmail || "MaTaN2288@gmail.com"}`}
-                className="text-neutral-500 hover:text-neutral-900 transition-colors p-1"
-                aria-label="Send Email"
-              >
-                <Mail size={16} />
-              </a>
-            </div>
+          {/* Social Icons (Centered below action links) */}
+          <div className="flex items-center justify-center gap-3 text-neutral-500 pt-1">
+            <a
+              href="https://github.com/matan2288"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-500 hover:text-neutral-900 transition-colors p-1 cursor-pointer"
+              aria-label="GitHub Profile"
+            >
+              <Github size={17} />
+            </a>
+            <a
+              href={portfolio.linkedInUrl || "https://linkedin.com"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-500 hover:text-neutral-900 transition-colors p-1 cursor-pointer"
+              aria-label="LinkedIn Profile"
+            >
+              <Linkedin size={17} />
+            </a>
+            <a
+              href={`mailto:${portfolio.contactEmail || "MaTaN2288@gmail.com"}`}
+              className="text-neutral-500 hover:text-neutral-900 transition-colors p-1 cursor-pointer"
+              aria-label="Send Email"
+            >
+              <Mail size={17} />
+            </a>
           </div>
 
         </div>

@@ -119,8 +119,10 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
           <span className="text-border/70 text-xs font-light select-none">|</span>
 
           {/* Navigation to Certification Page */}
-          <button
-            onClick={() => {
+          <a
+            href="#certifications"
+            onClick={(e) => {
+              e.preventDefault();
               onSelectView('certifications');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
@@ -132,11 +134,13 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
             }`}
           >
             <span>Certifications</span>
-          </button>
+          </a>
 
           {/* Navigation to Blog Page */}
-          <button
-            onClick={() => {
+          <a
+            href="#blog"
+            onClick={(e) => {
+              e.preventDefault();
               onSelectView('blog');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
@@ -148,7 +152,7 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
             }`}
           >
             <span>Blog</span>
-          </button>
+          </a>
 
           {/* Refined 1px minimalist sliding underline indicator */}
           <span 
@@ -208,8 +212,10 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
               </a>
             ))}
 
-            <button
-              onClick={() => {
+            <a
+              href="#certifications"
+              onClick={(e) => {
+                e.preventDefault();
                 onSelectView('certifications');
                 setIsMenuOpen(false);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -222,10 +228,12 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
                 <Award size={13} className={currentView === 'certifications' ? 'text-text' : 'text-text-muted'} />
                 <span>Certifications</span>
               </span>
-            </button>
+            </a>
 
-            <button
-              onClick={() => {
+            <a
+              href="#blog"
+              onClick={(e) => {
+                e.preventDefault();
                 onSelectView('blog');
                 setIsMenuOpen(false);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -238,7 +246,7 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
                 <BookOpen size={13} className={currentView === 'blog' ? 'text-text' : 'text-text-muted'} />
                 <span>Blog</span>
               </span>
-            </button>
+            </a>
 
             <button
               onClick={() => {

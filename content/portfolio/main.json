@@ -9,7 +9,7 @@
   "aboutBio2": "Tel Aviv, Israel · Available for hybrid or remote roles.",
   "contactEmail": "MaTaN2288@gmail.com",
   "linkedInUrl": "https://www.linkedin.com/in/matan2288",
-  "blogUrl": "https://ai.google/blog/",
+  "blogUrl": "https://blog.google/technology/ai/",
   "stats": [
     {
       "value": "4 Years",
@@ -20,20 +20,12 @@
       "label": "Telecom scale"
     },
     {
-      "value": "Altice & Three UK",
-      "label": "Enterprise Delivery"
+      "value": "100%",
+      "label": "Key Achievement"
     },
     {
-      "value": "Full-Stack",
-      "label": "React, TypeScript & Node"
-    },
-    {
-      "value": "High Scale",
-      "label": "Distributed Systems"
-    },
-    {
-      "value": "Cloud & CI/CD",
-      "label": "Zero-Downtime Delivery"
+      "value": "AI",
+      "label": "First"
     }
   ]
 }

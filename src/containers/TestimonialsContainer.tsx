@@ -15,13 +15,13 @@ export const TestimonialsContainer: React.FC<TestimonialsContainerProps> = ({
       <div className="max-w-6xl mx-auto px-6 md:px-8">
         <div className="mb-8 sm:mb-12">
           <SectionLabel num="02" title="Endorsements" />
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2.5">
+          <div>
             <h2 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-text leading-tight">
               Recommendations & Feedback
             </h2>
-            <span className="text-xs sm:text-sm text-text-muted font-normal">
+            <p className="text-xs sm:text-sm text-text-muted font-normal mt-1.5">
               Endorsements from engineering leads, architects & product owners
-            </span>
+            </p>
           </div>
         </div>
 

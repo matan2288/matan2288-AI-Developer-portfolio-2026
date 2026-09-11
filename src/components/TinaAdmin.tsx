@@ -353,7 +353,7 @@ export const TinaAdmin: React.FC<TinaAdminProps> = ({ isOpen, onClose }) => {
                 </label>
                 <input
                   type="url"
-                  placeholder="https://ai.google/blog/"
+                  placeholder="https://blog.google/technology/ai/"
                   value={cmsState.portfolio.blogUrl || ''}
                   onChange={(e) => updateGeneralField('blogUrl', e.target.value)}
                   className="w-full px-3 py-2 border border-border rounded-lg text-sm text-text bg-bg-alt focus:outline-none focus:border-text font-sans"

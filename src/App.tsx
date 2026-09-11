@@ -48,12 +48,40 @@ export default function App() {
       const url = new URL(window.location.href);
       if (view === 'portfolio') {
         url.searchParams.delete('view');
+        if (window.location.hash === '#blog' || window.location.hash === '#certifications' || window.location.hash === '#admin') {
+          url.hash = '';
+        }
       } else {
         url.searchParams.set('view', view);
+        url.hash = `#${view}`;
       }
-      window.history.replaceState({}, '', url.toString());
+      window.history.pushState({}, '', url.toString());
     }
   };
+
+  // Listen for browser forward/backward and direct hash changes (e.g. #blog)
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const params = new URLSearchParams(window.location.search);
+      const hash = window.location.hash.toLowerCase();
+      if (params.get('view') === 'blog' || hash === '#blog') {
+        setCurrentView('blog');
+      } else if (params.get('view') === 'certifications' || hash === '#certifications') {
+        setCurrentView('certifications');
+      } else if (params.get('view') === 'admin' || hash === '#admin') {
+        setCurrentView('admin');
+      } else if (params.get('view') === 'portfolio' || hash === '#home' || hash === '#experience' || hash === '#testimonials' || hash === '#contact') {
+        setCurrentView('portfolio');
+      }
+    };
+
+    window.addEventListener('popstate', handleUrlChange);
+    window.addEventListener('hashchange', handleUrlChange);
+    return () => {
+      window.removeEventListener('popstate', handleUrlChange);
+      window.removeEventListener('hashchange', handleUrlChange);
+    };
+  }, []);
 
   // Tina CMS content state hooks (reactive to live draft updates)
   const portfolio = useTinaPortfolio();
@@ -120,6 +148,18 @@ export default function App() {
   // Smooth scroll click handler
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
+    if (href === '#blog') {
+      handleSelectView('blog');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setIsMenuOpen(false);
+      return;
+    }
+    if (href === '#certifications') {
+      handleSelectView('certifications');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setIsMenuOpen(false);
+      return;
+    }
     const targetItem = navItems.find((n) => n.href === href);
     if (targetItem) {
       setActiveSection(targetItem.num);
@@ -239,7 +279,11 @@ export default function App() {
           )}
 
           {/* Footer Container */}
-          <FooterContainer developerName={portfolio.developerName} />
+          <FooterContainer 
+            developerName={portfolio.developerName} 
+            contactEmail={portfolio.contactEmail}
+            linkedInUrl={portfolio.linkedInUrl}
+          />
 
         </div>
       )}

@@ -5,7 +5,9 @@ export const routes = {
   about: '#about',
   experience: '#experience',
   testimonials: '#testimonials',
-  contact: '#contact'
+  contact: '#contact',
+  certifications: '#certifications',
+  blog: '#blog'
 };
 
 export const getRouteHash = (route: keyof typeof routes): string => {

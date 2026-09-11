@@ -19,37 +19,37 @@
 | Token | Variable | Hex Code | Purpose |
 | :--- | :--- | :--- | :--- |
 | **Canvas Background** | `--color-bg` | `#FFFFFF` | Primary section background |
-| **Secondary Background** | `--color-bg-alt` | `#F9FAFB` | Alternating section background |
+| **Secondary Background** | `--color-bg-alt` | `#FBFCFD` | Alternating section background |
 | **Surface** | `--color-surface` | `#FFFFFF` | Cards, modals, command inputs |
-| **Border Normal** | `--color-border` | `#F0F2F5` | Default dividers, borders, tab lines |
-| **Border Hover** | `--color-border-hover` | `#E2E5E9` | Interactive borders on hover |
+| **Border Normal** | `--color-border` | `#F1F3F6` | Default dividers, borders, tab lines |
+| **Border Hover** | `--color-border-hover` | `#E3E6EA` | Interactive borders on hover |
 | **Text Primary** | `--color-text` | `#0F172A` | Primary headings, titles, active labels |
 | **Text Muted** | `--color-text-muted` | `#475569` | Body text, dates, secondary labels |
 | **Text Subtle** | `--color-text-subtle` | `#64748B` | Footers, placeholders, meta tags |
 | **Accent Primary** | `--color-accent` | `#0F172A` | High-contrast emphasis, active state |
-| **Accent Soft** | `--color-accent-soft` | `#F5F6F8` | Hover fills, subtle chips |
+| **Accent Soft** | `--color-accent-soft` | `#F8F9FB` | Hover fills, subtle chips |
 | **Success** | `--color-success` | `#16A34A` | Online indicators, verified checks |
 
 ### Tailwind Color Mapping
 ```javascript
 colors: {
   bg: '#FFFFFF',
-  'bg-alt': '#F9FAFB',
+  'bg-alt': '#FBFCFD',
   surface: '#FFFFFF',
-  border: '#F0F2F5',
-  'border-hover': '#E2E5E9',
+  border: '#F1F3F6',
+  'border-hover': '#E3E6EA',
   text: '#0F172A',
   'text-muted': '#475569',
   'text-subtle': '#64748B',
   accent: '#0F172A',
   'accent-hover': '#334155',
-  'accent-soft': '#F5F6F8',
-  'accent-muted': '#F0F2F5',
+  'accent-soft': '#F8F9FB',
+  'accent-muted': '#F1F3F6',
   neutral: {
-    50: '#F9FAFB',
-    100: '#F3F4F6',
-    200: '#EEF0F3',
-    300: '#E2E5E9',
+    50: '#FBFCFD',
+    100: '#F6F7F9',
+    200: '#EFF1F4',
+    300: '#E3E6EA',
     400: '#94A3B8',
     500: '#64748B',
     600: '#475569',

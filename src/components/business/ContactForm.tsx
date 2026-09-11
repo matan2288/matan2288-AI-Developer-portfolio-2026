@@ -67,30 +67,26 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'MaTaN2
   };
 
   return (
-    <div className="bg-bg-alt p-6 md:p-8 rounded-2xl border border-border">
-      <h4 className="text-xs font-bold text-text uppercase tracking-wider mb-6 pb-2 border-b border-border">
-        Send a Message
-      </h4>
-
+    <div className="bg-bg-alt p-5 sm:p-6 rounded-2xl border border-border/90 shadow-2xs">
       {submitted ? (
-        <div className="p-7 sm:p-9 rounded-xl border border-border/90 bg-white text-text text-center space-y-4 shadow-2xs">
-          <div className="w-12 h-12 rounded-full bg-neutral-100 flex items-center justify-center text-text mx-auto border border-border/70">
-            <Check size={20} strokeWidth={2.2} />
+        <div className="p-6 sm:p-8 rounded-xl border border-border/90 bg-white text-text text-center space-y-3.5 shadow-2xs">
+          <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-text mx-auto border border-border/70">
+            <Check size={18} strokeWidth={2.2} />
           </div>
 
           <div className="space-y-1">
-            <h5 className="text-sm font-bold uppercase tracking-wider text-text">
+            <h5 className="text-xs font-bold uppercase tracking-wider text-text">
               Message Prepared
             </h5>
             <p className="text-xs text-text-muted max-w-sm mx-auto leading-relaxed">
-              Your inquiry has been recorded. If your email app did not open automatically, click below to send directly to <span className="font-semibold text-text">{contactEmail}</span>.
+              Your inquiry has been recorded. If your email app did not open automatically, send directly to <span className="font-semibold text-text">{contactEmail}</span>.
             </p>
           </div>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5">
             <a
               href={mailtoUrl}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-text hover:bg-neutral-800 text-white text-xs font-semibold rounded-lg shadow-2xs transition-all cursor-pointer w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-text hover:bg-neutral-800 text-white text-xs font-semibold rounded-lg shadow-2xs transition-all cursor-pointer w-full sm:w-auto"
             >
               <Mail size={13} />
               <span>Open in Email App</span>
@@ -100,55 +96,56 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'MaTaN2
             <button
               type="button"
               onClick={handleReset}
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-white hover:bg-neutral-50 text-text-muted hover:text-text border border-border rounded-lg text-xs font-medium transition-colors cursor-pointer w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-white hover:bg-neutral-50 text-text-muted hover:text-text border border-border rounded-lg text-xs font-medium transition-colors cursor-pointer w-full sm:w-auto"
             >
               <RotateCcw size={12} />
-              <span>Send another message</span>
+              <span>Send another</span>
             </button>
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Input 
-            label="Your Name (Optional)"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Jane Doe"
-          />
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <Input 
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Name (Optional)"
+            />
 
-          <Input 
-            label="Your Email"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@company.com"
-          />
+            <Input 
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email address *"
+            />
+          </div>
 
           <Textarea 
-            label="Message"
             required
-            rows={4}
+            rows={3}
             value={msg}
             onChange={(e) => setMsg(e.target.value)}
-            placeholder="Tell me about your team, project, or contract..."
+            placeholder="Write your message or inquiry..."
           />
 
-          <Button 
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full"
-          >
-            {isSubmitting ? (
-              <span>Preparing message...</span>
-            ) : (
-              <>
-                <span>Send Message</span>
-                <ArrowRight size={12} className="ml-1.5" />
-              </>
-            )}
-          </Button>
+          <div className="pt-1 flex justify-end">
+            <Button 
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full sm:w-auto px-5 py-2 text-xs"
+            >
+              {isSubmitting ? (
+                <span>Preparing message...</span>
+              ) : (
+                <>
+                  <span>Send Message</span>
+                  <ArrowRight size={12} className="ml-1.5" />
+                </>
+              )}
+            </Button>
+          </div>
         </form>
       )}
     </div>

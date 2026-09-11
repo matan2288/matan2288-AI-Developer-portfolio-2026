@@ -202,7 +202,9 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
       quote: 'Matan is an exceptional engineer who consistently ships reliable, high-performance web systems.',
       author: 'VP of Engineering',
       role: 'Technical Leadership',
-      company: 'Enterprise Partner'
+      company: 'Enterprise Partner',
+      avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=160&auto=format&fit=crop&q=80',
+      linkedInUrl: 'https://www.linkedin.com/in/matan2288'
     };
     handleStateChange(prev => ({ ...prev, recommendations: [...prev.recommendations, newRec] }));
   };
@@ -536,7 +538,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
                     <div className="flex gap-2 items-center">
                       <input
                         type="url"
-                        placeholder="https://ai.google/blog/"
+                        placeholder="https://blog.google/technology/ai/"
                         value={cmsState.portfolio.blogUrl || ''}
                         onChange={(e) => updateGeneralField('blogUrl', e.target.value)}
                         className="flex-1 px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all font-mono text-text"
@@ -941,6 +943,33 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
                         />
                       </div>
                     </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                      <div>
+                        <label className="block text-[11px] font-medium text-text-muted mb-1">
+                          Avatar Image URL (LinkedIn / API)
+                        </label>
+                        <input
+                          type="url"
+                          value={rec.avatarUrl || ''}
+                          onChange={(e) => updateRecommendation(idx, 'avatarUrl', e.target.value)}
+                          placeholder="https://... (LinkedIn profile photo / API)"
+                          className="w-full px-3 py-1.5 border border-border rounded-lg text-xs font-mono bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all text-text"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-medium text-text-muted mb-1">
+                          LinkedIn Profile URL
+                        </label>
+                        <input
+                          type="url"
+                          value={rec.linkedInUrl || ''}
+                          onChange={(e) => updateRecommendation(idx, 'linkedInUrl', e.target.value)}
+                          placeholder="https://www.linkedin.com/in/..."
+                          className="w-full px-3 py-1.5 border border-border rounded-lg text-xs font-mono bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all text-text"
+                        />
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1094,7 +1123,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
                   <div className="flex gap-2 items-center">
                     <input
                       type="url"
-                      placeholder="https://ai.google/blog/"
+                      placeholder="https://blog.google/technology/ai/"
                       value={cmsState.portfolio.blogUrl || ''}
                       onChange={(e) => updateGeneralField('blogUrl', e.target.value)}
                       className="flex-1 px-3.5 py-2 border border-border rounded-lg text-xs font-mono bg-neutral-50/50 focus:bg-white outline-none focus:border-text text-text"
@@ -1120,7 +1149,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {[
-                      { name: 'Google AI Blog', url: 'https://ai.google/blog/' },
+                      { name: 'Google AI Blog', url: 'https://blog.google/technology/ai/' },
                       { name: 'Dev.to Feed', url: 'https://dev.to' },
                       { name: 'Medium', url: 'https://medium.com' },
                       { name: 'Substack', url: 'https://substack.com' },
