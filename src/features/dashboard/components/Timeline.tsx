@@ -32,15 +32,17 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
       {/* Mobile timeline connecting line */}
       <div className="md:hidden absolute left-[7px] sm:left-[8px] top-0 bottom-0 pointer-events-none">
         {!isFirst && (
-          <div className="absolute top-0 h-6 w-px bg-neutral-200" />
+          <div className={`absolute top-0 w-px bg-neutral-200 ${isAmdocs ? 'h-5 sm:h-6' : 'h-5 sm:h-6'}`} />
         )}
         {!isLast && (
-          <div className="absolute top-6 bottom-0 w-px bg-neutral-200" />
+          <div className={`absolute bottom-0 w-px bg-neutral-200 ${isAmdocs ? 'top-5 sm:top-6' : 'top-5 sm:top-6'}`} />
         )}
       </div>
 
       {/* Mobile Dot */}
-      <div className="md:hidden absolute left-0 top-5 sm:top-6 z-10 flex items-center justify-center">
+      <div className={`md:hidden absolute left-0 z-10 flex items-center justify-center ${
+        isAmdocs ? 'top-3 sm:top-3.5' : 'top-5 sm:top-6'
+      }`}>
         {isLatest ? (
           <div className="w-4 h-4 rounded-full border border-neutral-700 bg-white flex items-center justify-center shadow-xs">
             <div className="w-1.5 h-1.5 rounded-full bg-neutral-900" />
@@ -53,82 +55,85 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
       {/* Desktop connecting line: continuous between dots */}
       <div className="hidden md:block absolute left-[210px] -translate-x-1/2 top-0 bottom-0 pointer-events-none">
         {!isFirst && (
-          <div className="absolute top-0 h-6 w-px bg-neutral-200" />
+          <div className="absolute top-0 h-[36px] w-px bg-neutral-200" />
         )}
         {!isLast && (
-          <div className="absolute top-6 bottom-0 w-px bg-neutral-200" />
+          <div className="absolute top-[36px] bottom-0 w-px bg-neutral-200" />
         )}
       </div>
 
       {/* Desktop Layout: Left Logo/Space + Center Line/Dot + Right Card */}
       <div className="md:grid md:grid-cols-[180px_28px_1fr] md:gap-x-4 items-start">
-        {/* Left Column: Logo if available */}
-        <div className="hidden md:flex justify-center items-start pt-1.5">
+        {/* Left Column: Logo and Location if available */}
+        <div className="hidden md:flex flex-col items-center justify-start pt-2">
           {isAmdocs && (
-            <img
-              src="/amdocs-logo.png"
-              alt="Amdocs Logo PNG Vector"
-              title="Amdocs Logo PNG Vector"
-              className="w-24 sm:w-28 object-contain select-none grayscale opacity-75 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "https://images.seeklogo.com/logo-png/35/1/amdocs-logo-png_seeklogo-355947.png";
-              }}
-            />
+            <div className="flex flex-col items-center">
+              <img
+                src="/amdocs-logo.png"
+                alt="Amdocs"
+                title="Amdocs"
+                className="w-14 sm:w-24 h-auto object-contain select-none grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+              />
+              {location && (
+                <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider text-center mt-2.5 select-none">
+                  {location}
+                </span>
+              )}
+            </div>
           )}
         </div>
 
         {/* Center Column: Dot aligned horizontally with card header */}
-        <div className="hidden md:flex justify-center items-center pt-5 sm:pt-6">
+        <div className="hidden md:flex justify-center items-start pt-[28px]">
           {isLatest ? (
             <div className="relative z-10 w-4 h-4 rounded-full border border-neutral-700 bg-white flex items-center justify-center shadow-xs transition-all duration-200 group-hover:ring-2 group-hover:ring-neutral-200">
               <div className="w-1.5 h-1.5 rounded-full bg-neutral-900" />
             </div>
           ) : (
-            <div className="relative z-10 w-2.5 h-2.5 rounded-full bg-neutral-400 ring-4 ring-white shadow-2xs transition-all duration-200 group-hover:bg-neutral-600" />
+            <div className="relative z-10 w-2.5 h-2.5 mt-[3px] rounded-full bg-neutral-400 ring-4 ring-white shadow-2xs transition-all duration-200 group-hover:bg-neutral-600" />
           )}
         </div>
 
         {/* Right Column: Experience Card */}
-        <div className="bg-bg-alt rounded-2xl p-5 sm:p-6 md:p-7 border border-border/80 hover:border-neutral-400 transition-colors duration-200 relative shadow-2xs">
-          {/* Mobile-only Amdocs logo */}
+        <div className="w-full">
+          {/* Mobile-only Amdocs logo & location OUTSIDE of the tile */}
           {isAmdocs && (
-            <div className="md:hidden mb-3.5">
+            <div className="md:hidden mb-3.5 flex items-center justify-between gap-3 px-0.5">
               <img
                 src="/amdocs-logo.png"
-                alt="Amdocs Logo PNG Vector"
-                title="Amdocs Logo PNG Vector"
-                className="h-8 object-contain grayscale opacity-75 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "https://images.seeklogo.com/logo-png/35/1/amdocs-logo-png_seeklogo-355947.png";
-                }}
+                alt="Amdocs"
+                title="Amdocs"
+                className="h-10 sm:h-11 w-auto max-w-[120px] object-contain select-none grayscale opacity-85 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
               />
+              {location && (
+                <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider select-none shrink-0">
+                  {location}
+                </span>
+              )}
             </div>
           )}
 
-          {/* Card Header matching image.png */}
-          <div className="mb-4 sm:mb-5">
-            <div className="flex items-baseline justify-between gap-4 mb-1">
-              <span className="text-xs font-bold text-text-muted uppercase tracking-wider truncate">
-                {company} {location && `· ${location}`}
+          <div className="bg-bg-alt rounded-2xl p-5 sm:p-6 md:p-7 border border-border/80 hover:border-neutral-400 transition-colors duration-200 relative shadow-2xs">
+            {/* Card Header matching image.png without h3 */}
+            <div className="flex items-baseline justify-between gap-4 mb-4 sm:mb-5">
+              <span className="text-xs sm:text-[13px] font-bold text-text uppercase tracking-wider truncate">
+                {company} {!isAmdocs && location && `· ${location}`}
               </span>
               <span className="text-xs text-text-muted shrink-0 font-medium tracking-wide">
                 {period}
               </span>
             </div>
-            <h3 className="text-base sm:text-lg font-bold text-text uppercase break-words leading-tight">
-              {role}
-            </h3>
-          </div>
 
-          {/* Detailed achievements bullets */}
-          <ul className="space-y-2.5 sm:space-y-3">
-            {bullets.map((bullet, idx) => (
-              <li key={idx} className="text-xs sm:text-sm text-text-muted leading-relaxed flex items-start gap-2.5">
-                <span className="text-text-subtle select-none text-xs mt-0.5">•</span>
-                <span className="break-words">{bullet}</span>
-              </li>
-            ))}
-          </ul>
+            {/* Detailed achievements bullets */}
+            <ul className="space-y-2.5 sm:space-y-3">
+              {bullets.map((bullet, idx) => (
+                <li key={idx} className="text-xs sm:text-sm text-text-muted leading-relaxed flex items-start gap-2.5">
+                  <span className="text-text-subtle select-none text-xs mt-0.5">•</span>
+                  <span className="break-words">{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

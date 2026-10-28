@@ -279,10 +279,6 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
             <span className="text-xs font-semibold tracking-tight text-text hidden sm:inline">
               Content Studio
             </span>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-medium bg-neutral-50 text-text-muted border border-border/60">
-              <span className={`w-1.5 h-1.5 rounded-full ${hasUnsavedChanges ? 'bg-amber-500' : 'bg-emerald-500 animate-pulse'}`} />
-              <span>{hasUnsavedChanges ? 'Unsaved edits' : 'Synced'}</span>
-            </span>
           </div>
         </div>
 
@@ -1249,13 +1245,8 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
               ))}
             </div>
 
-            {/* Right: Clean Live Preview Status Indicator */}
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/70">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Live Preview
-              </span>
-            </div>
+            {/* Right: Actions / Spacer */}
+            <div className="flex items-center gap-2 shrink-0" />
           </div>
 
           {/* Full Width Live Preview Container */}

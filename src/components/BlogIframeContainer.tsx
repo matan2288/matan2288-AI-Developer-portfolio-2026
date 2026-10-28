@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, ExternalLink, RefreshCw, ShieldAlert, Globe, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, ExternalLink, RefreshCw, ShieldAlert, Globe, ArrowUpRight, ChevronUp, ChevronDown } from 'lucide-react';
 import { useTinaPortfolio } from '../services/tinaContent';
 
 interface BlogIframeContainerProps {
@@ -9,6 +9,7 @@ interface BlogIframeContainerProps {
 export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBackToPortfolio }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [hasTimedOut, setHasTimedOut] = useState<boolean>(false);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const portfolio = useTinaPortfolio();
 
@@ -47,9 +48,15 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
   };
 
   return (
-    <div className="flex-1 w-full flex flex-col bg-white overflow-hidden">
-      {/* Sleek Utility Bar */}
-      <div className="h-12 px-4 sm:px-6 bg-white border-b border-border flex items-center justify-between gap-3 shrink-0 z-20">
+    <div className="flex-1 w-full flex flex-col bg-white overflow-hidden relative">
+      {/* Sleek Utility Bar (Collapsible) */}
+      <div 
+        className={`bg-white border-b border-border flex items-center justify-between gap-3 shrink-0 z-20 transition-all duration-300 ease-in-out ${
+          isCollapsed 
+            ? 'h-0 -translate-y-full opacity-0 overflow-hidden py-0 px-4 sm:px-6 border-transparent pointer-events-none' 
+            : 'h-12 px-4 sm:px-6 opacity-100 translate-y-0'
+        }`}
+      >
         <div className="flex items-center gap-3 min-w-0">
           <button
             onClick={onBackToPortfolio}
@@ -81,22 +88,50 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
             href={iframeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-text text-white hover:bg-neutral-800 text-xs font-semibold transition-all shadow-2xs cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-neutral-300 bg-white hover:bg-neutral-50 text-text text-xs font-medium transition-all shadow-2xs cursor-pointer hover:border-neutral-400 group"
             title="Open blog in new window"
           >
             <span>Open Blog in Tab</span>
-            <ArrowUpRight size={13} />
+            <ArrowUpRight size={13} className="text-text-subtle group-hover:text-text transition-colors" />
           </a>
+
+          <div className="h-4 w-px bg-border/80 mx-0.5" />
+
+          {/* Collapse / Hide in one click */}
+          <button
+            onClick={() => setIsCollapsed(true)}
+            title="Hide toolbar for full-screen reading"
+            aria-label="Hide toolbar"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border bg-white hover:bg-neutral-50 hover:border-neutral-300 text-text-muted hover:text-text text-xs font-medium transition-all cursor-pointer shadow-2xs"
+          >
+            <ChevronUp size={13} />
+            <span className="hidden sm:inline text-[11px]">Hide Toolbar</span>
+          </button>
         </div>
       </div>
 
       {/* Main Content Area */}
       <div className="flex-1 w-full h-full relative bg-neutral-50 overflow-hidden flex flex-col">
         
+        {/* Show Toolbar Button on Top-Right - Sleek floating pill without borders unless hovered */}
+        {isCollapsed && (
+          <div className="absolute top-3 right-4 z-30 animate-in fade-in duration-200">
+            <button
+              onClick={() => setIsCollapsed(false)}
+              title="Show toolbar"
+              aria-label="Show toolbar"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white backdrop-blur-md border border-transparent hover:border-neutral-200 text-xs font-medium text-text shadow-xs hover:shadow-sm transition-all duration-200 cursor-pointer group"
+            >
+              <span className="text-[11px] font-medium text-text-muted group-hover:text-text transition-colors">Show Toolbar</span>
+              <ChevronDown size={13} className="text-text-subtle group-hover:text-text transition-colors" />
+            </button>
+          </div>
+        )}
+        
         {/* Loading Spinner with early hint */}
         {!isLoaded && !hasTimedOut && (
           <div className="absolute inset-0 bg-white/95 backdrop-blur-xs flex flex-col items-center justify-center gap-3 z-20 p-6 text-center">
-            <div className="w-7 h-7 border-2 border-text border-t-transparent rounded-full animate-spin" />
+            <div className="w-7 h-7 border-2 border-neutral-400 border-t-neutral-800 rounded-full animate-spin" />
             <p className="text-xs font-medium text-text">
               Connecting to {displayHost}...
             </p>
@@ -107,10 +142,10 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
               href={iframeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-text text-white text-xs font-semibold hover:bg-neutral-800 transition-all shadow-2xs"
+              className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-neutral-300 bg-white hover:bg-neutral-50 text-text text-xs font-medium transition-all shadow-2xs hover:border-neutral-400"
             >
               <span>Open in New Window</span>
-              <ExternalLink size={12} />
+              <ExternalLink size={12} className="text-text-subtle" />
             </a>
           </div>
         )}
@@ -147,7 +182,7 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
                   href={iframeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-text text-white hover:bg-neutral-800 text-xs font-semibold transition-all shadow-2xs cursor-pointer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-neutral-300 bg-white hover:bg-neutral-100 text-xs font-semibold text-text transition-all shadow-2xs cursor-pointer hover:border-neutral-400"
                 >
                   <span>Open Blog in New Tab</span>
                   <ExternalLink size={13} />
