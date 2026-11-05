@@ -57,6 +57,9 @@ export interface CertificationItem {
   description: string;
   skills: string[];
   driveUrl: string;
+  verificationUrl?: string;
+  topic?: string;
+  category?: string;
 }
 
 export interface ChatMessage {

@@ -1013,18 +1013,44 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
                         </button>
                       </div>
 
-                      {/* File / Document Name */}
-                      <div>
-                        <label className="block text-[11px] font-medium text-text-muted mb-1">
-                          Document Name
-                        </label>
-                        <input
-                          type="text"
-                          value={cert.title}
-                          onChange={(e) => updateCertification(idx, 'title', e.target.value)}
-                          placeholder="e.g. Full-Stack Web Development Diploma"
-                          className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white font-medium text-text outline-none focus:border-text transition-all"
-                        />
+                      {/* Document Name, Category & Topic */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                          <label className="block text-[11px] font-medium text-text-muted mb-1">
+                            Document Name
+                          </label>
+                          <input
+                            type="text"
+                            value={cert.title}
+                            onChange={(e) => updateCertification(idx, 'title', e.target.value)}
+                            placeholder="e.g. Full-Stack Web Development Diploma"
+                            className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white font-medium text-text outline-none focus:border-text transition-all"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-medium text-text-muted mb-1">
+                            Category Label (Left)
+                          </label>
+                          <input
+                            type="text"
+                            value={cert.category || ''}
+                            onChange={(e) => updateCertification(idx, 'category', e.target.value)}
+                            placeholder="e.g. AI, Security, Full Stack"
+                            className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white font-medium text-text outline-none focus:border-text transition-all font-mono"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-medium text-text-muted mb-1">
+                            Topic / Domain
+                          </label>
+                          <input
+                            type="text"
+                            value={cert.topic || ''}
+                            onChange={(e) => updateCertification(idx, 'topic', e.target.value)}
+                            placeholder="e.g. Full-Stack Web Development"
+                            className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white font-medium text-text outline-none focus:border-text transition-all"
+                          />
+                        </div>
                       </div>
 
                       {/* Issuer & Year */}

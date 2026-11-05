@@ -23,9 +23,12 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
   const [selectedCert, setSelectedCert] = useState<CertificationItem | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // Convert Google Drive view or open URL to view-only preview URL for embed
-  const getGoogleDrivePreviewUrl = (url: string) => {
+  // Convert Google Drive view or open URL to view-only preview URL for embed, or return static PDF url
+  const getPreviewUrl = (url: string) => {
     if (!url) return '';
+    if (url.startsWith('/certifications/')) {
+      return url;
+    }
     if (url.includes('/preview')) return url;
     const fileIdMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
     if (fileIdMatch && fileIdMatch[1]) {
@@ -38,34 +41,38 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
     return url;
   };
 
+  // Helper to extract clean category label (e.g. AI, Security, Full Stack)
+  const getCategoryLabel = (cert: CertificationItem) => {
+    if (cert.category) return cert.category;
+    if (cert.topic) {
+      const topicLower = cert.topic.toLowerCase();
+      if (topicLower.includes('genai') || topicLower.includes('ai')) return 'AI';
+      if (topicLower.includes('security')) return 'Security';
+      if (topicLower.includes('web') || topicLower.includes('full-stack')) return 'Full Stack';
+      return cert.topic;
+    }
+    const titleLower = cert.title.toLowerCase();
+    if (titleLower.includes('cursor') || titleLower.includes('genai') || titleLower.includes('ai')) return 'AI';
+    if (titleLower.includes('security') || titleLower.includes('secure')) return 'Security';
+    if (titleLower.includes('web') || titleLower.includes('bootcamp') || titleLower.includes('full-stack')) return 'Full Stack';
+    return 'Engineering';
+  };
+
   return (
-    <div className="min-h-screen bg-white text-text font-sans antialiased pt-20 pb-20">
+    <div className="min-h-screen bg-white text-text font-sans antialiased pt-28 sm:pt-32 pb-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
         
-        {/* Navigation Back Button */}
-        <div className="mb-6">
-          <button
-            onClick={onBackToPortfolio}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium text-text-muted hover:text-text bg-white hover:bg-neutral-50 border border-border/80 hover:border-neutral-300 transition-all cursor-pointer shadow-2xs group"
-          >
-            <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
-            <span>Back to Portfolio</span>
-          </button>
-        </div>
-
         {/* Minimalist Header */}
-        <div className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-2 mb-2.5 select-none text-[11px] font-mono tracking-widest text-text-muted">
-            <span className="font-semibold text-text">DOC</span>
-            <span className="text-neutral-300 font-light">/</span>
-            <span className="uppercase font-medium tracking-[0.16em] text-text-muted">Credentials</span>
-          </div>
+        <div className="mb-8 sm:mb-10">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-text leading-tight">
+            <h1 className="text-lg sm:text-xl font-semibold uppercase tracking-wider text-text">
               Certifications
             </h1>
             <p className="text-xs sm:text-sm text-text-muted font-normal mt-1.5">
               Official credentials & verified engineering documentation
+            </p>
+            <p className="text-[10px] sm:text-[11px] text-text-muted/65 font-normal mt-2.5 sm:mt-3 tracking-wider select-none">
+              {certifications.length} {certifications.length === 1 ? 'certification' : 'certifications'}
             </p>
           </div>
         </div>
@@ -76,8 +83,13 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
             <div
               key={cert.id}
               onClick={() => setSelectedCert(cert)}
-              className="group py-3.5 sm:py-4 px-1 sm:px-2 flex items-center justify-between gap-4 hover:bg-neutral-50/60 transition-colors cursor-pointer w-full"
+              className="group py-3.5 sm:py-4 px-1 sm:px-2 flex items-center justify-between gap-6 sm:gap-10 hover:bg-neutral-50/60 transition-colors cursor-pointer w-full"
             >
+              {/* Category Label on the Left (Screenshot style) */}
+              <div className="w-20 sm:w-28 shrink-0 font-mono text-[11px] sm:text-xs text-neutral-400 font-normal tracking-wider select-none">
+                {getCategoryLabel(cert)}
+              </div>
+
               {/* Certification Title & Issuer */}
               <div className="min-w-0 flex-1">
                 <h3 className="text-sm sm:text-base font-semibold text-text group-hover:text-neutral-600 transition-colors truncate">
@@ -94,17 +106,30 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
                 </div>
               </div>
 
-              {/* Arrow Action indicator */}
-              <div className="shrink-0 text-text-muted group-hover:text-text transition-colors p-1">
-                <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              {/* View PDF Action Indicator */}
+              <div className="shrink-0 flex items-center gap-1.5 text-xs text-text-muted group-hover:text-text transition-colors font-medium">
+                <span className="hidden sm:inline">View PDF</span>
+                <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </div>
             </div>
           ))}
         </div>
 
+        {/* Bottom Back Navigation */}
+        <div className="mt-12 sm:mt-16 flex items-center justify-start">
+          <button
+            type="button"
+            onClick={onBackToPortfolio}
+            className="inline-flex items-center gap-2 text-xs text-text-muted hover:text-text transition-colors cursor-pointer group bg-transparent border-0 p-0 select-none"
+          >
+            <ArrowLeft size={13} className="text-neutral-400 group-hover:text-text group-hover:-translate-x-0.5 transition-all" />
+            <span className="font-normal tracking-wide">Back to Portfolio</span>
+          </button>
+        </div>
+
       </div>
 
-      {/* Show-Only Google Drive PDF Modal Viewer */}
+      {/* Show Google Drive & Local PDF Modal Viewer */}
       {selectedCert && (
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
           <div 
@@ -119,7 +144,7 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
               <div className="flex items-center gap-2.5 min-w-0">
                 <FileText size={16} className="text-text shrink-0" />
                 <div className="min-w-0">
-                  <h3 className="text-xs sm:text-sm font-medium text-text truncate">
+                  <h3 className="text-xs sm:text-sm font-semibold text-text truncate">
                     {selectedCert.title}
                   </h3>
                   <div className="flex items-center gap-2 text-[11px] text-text-muted">
@@ -134,17 +159,18 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
 
               <div className="flex items-center gap-1.5 shrink-0">
                 <a
-                  href={getGoogleDrivePreviewUrl(selectedCert.driveUrl)}
+                  href={getPreviewUrl(selectedCert.driveUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg border border-border/80 bg-white hover:bg-neutral-50 hover:border-neutral-300 text-xs text-text transition-all inline-flex items-center gap-1 shadow-2xs"
-                  title="Open on Google Drive"
+                  className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg border border-border/80 bg-white hover:bg-neutral-50 hover:border-neutral-300 text-xs text-text transition-all inline-flex items-center gap-1 shadow-2xs font-medium"
+                  title="Open document in new tab"
                 >
                   <ExternalLink size={13} className="text-text-muted" />
-                  <span className="hidden sm:inline">Drive View</span>
+                  <span className="hidden sm:inline">Open PDF</span>
                 </a>
 
                 <button
+                  type="button"
                   onClick={() => setIsFullscreen(!isFullscreen)}
                   className="p-1.5 rounded-lg border border-border/80 bg-white hover:bg-neutral-50 hover:border-neutral-300 text-text-muted hover:text-text transition-all cursor-pointer hidden sm:block shadow-2xs"
                   title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
@@ -153,6 +179,7 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
                 </button>
 
                 <button
+                  type="button"
                   onClick={() => {
                     setSelectedCert(null);
                     setIsFullscreen(false);
@@ -165,11 +192,11 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
               </div>
             </div>
 
-            {/* Embedded Google Drive PDF Viewer */}
+            {/* Embedded PDF Viewer */}
             <div className="flex-1 bg-neutral-100 relative overflow-hidden flex flex-col">
               <iframe
-                src={getGoogleDrivePreviewUrl(selectedCert.driveUrl)}
-                title={`${selectedCert.title} - Google Drive PDF`}
+                src={getPreviewUrl(selectedCert.driveUrl)}
+                title={`${selectedCert.title} - PDF Document`}
                 className="w-full h-full border-0 bg-white"
                 allow="autoplay"
               />
@@ -180,3 +207,5 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
     </div>
   );
 };
+
+

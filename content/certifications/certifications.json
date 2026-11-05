@@ -1,34 +1,56 @@
 {
   "certifications": [
     {
+      "id": "cursor-genai-sdlc",
+      "title": "Cursor: GenAI Driven SDLC",
+      "category": "AI",
+      "topic": "GenAI & SDLC Engineering",
+      "issuer": "Amdocs",
+      "issueDate": "Jun 2026",
+      "credentialId": "AMDOCS-CURSOR-2026",
+      "description": "Certificate of completion for the Amdocs learning plan in Cursor & GenAI-Driven Software Development Life Cycle (SDLC).",
+      "skills": ["Cursor", "GenAI", "SDLC", "Code Automation", "AI Engineering"],
+      "driveUrl": "/certifications/Cursor_Certification_Andics_ab86ae39.pdf",
+      "verificationUrl": "/certifications/Cursor_Certification_Andics_ab86ae39.pdf"
+    },
+    {
+      "id": "principles-secure-coding",
+      "title": "Principles of Secure Coding",
+      "category": "Security",
+      "topic": "Application Security",
+      "issuer": "Udemy",
+      "issueDate": "Aug 2026",
+      "credentialId": "UC-936ff33b-c9d1-40b2-8f2d-2435d5ee5c3c",
+      "description": "Certified training in secure coding fundamentals, application security principles, defensive architecture, and vulnerability prevention.",
+      "skills": ["Secure Coding", "AppSec", "Vulnerability Prevention", "OWASP"],
+      "driveUrl": "/certifications/Principles_of_Secure_Coding_certfication_da0fed44.pdf",
+      "verificationUrl": "https://ude.my/UC-936ff33b-c9d1-40b2-8f2d-2435d5ee5c3c"
+    },
+    {
+      "id": "securing-genai-systems",
+      "title": "Securing GenAI Systems",
+      "category": "AI Security",
+      "topic": "GenAI Security & Safety",
+      "issuer": "Udemy",
+      "issueDate": "Aug 2026",
+      "credentialId": "UC-1286298a-0720-4cf6-ae5a-956141931da7",
+      "description": "Specialized certification in securing generative AI architectures, prompt injection defenses, LLM guardrails, data leakage mitigation, and AI safety.",
+      "skills": ["GenAI Security", "LLM Guardrails", "Prompt Injection Defense", "AI Safety"],
+      "driveUrl": "/certifications/Securing_GenAI_Systems_certification_7039d733.pdf",
+      "verificationUrl": "https://ude.my/UC-1286298a-0720-4cf6-ae5a-956141931da7"
+    },
+    {
       "id": "etgar-bootcamp",
-      "title": "Full-Stack Web Development Diploma",
-      "issuer": "Etgar College",
+      "title": "Full-Stack Web Development Diploma (335h)",
+      "category": "Full Stack",
+      "topic": "Full-Stack Web Development",
+      "issuer": "Ministry of Labor & Etgar College",
       "issueDate": "2020",
-      "credentialId": "EC-WD-2020",
-      "description": "Full-stack web engineering certification covering modern JavaScript, React, Node.js, and relational database architecture.",
-      "skills": ["JavaScript", "React", "Node.js", "SQL"],
-      "driveUrl": "https://drive.google.com/file/d/1A_EtgarCollege_WebDev_Diploma_Matan/preview"
-    },
-    {
-      "id": "navy-tech-cert",
-      "title": "Naval Diving Systems & Technical Operations",
-      "issuer": "IDF Naval Command",
-      "issueDate": "2019",
-      "credentialId": "IDF-NAV-5192",
-      "description": "Certified technical operations and life-support equipment leadership under mission-critical safety protocols.",
-      "skills": ["Technical Protocols", "Equipment QA", "Team Leadership"],
-      "driveUrl": "https://drive.google.com/file/d/1B_IDF_Navy_Tech_Certification_Matan/preview"
-    },
-    {
-      "id": "gtm-ga4-cert",
-      "title": "Web Analytics & GA4 Telemetry",
-      "issuer": "Google Analytics Academy",
-      "issueDate": "2023",
-      "credentialId": "GTM-GA4-7742",
-      "description": "Measurement protocol, Google Tag Manager container architecture, and custom dataLayer telemetry.",
-      "skills": ["GTM", "GA4 dataLayer", "Telemetry"],
-      "driveUrl": "https://drive.google.com/file/d/1D_GTM_GA4_Telemetry_Cert_Matan/preview"
+      "credentialId": "1349438",
+      "description": "Official Israeli Ministry of Labor and Etgar College certification in Full Stack Web Technologies & Applications (335 accredited academic hours) covering JavaScript, React, Node.js, and SQL.",
+      "skills": ["JavaScript", "React", "Node.js", "SQL", "Web Applications"],
+      "driveUrl": "/certifications/Web_Dev_Bootcamp_Certification_24e0b667.pdf",
+      "verificationUrl": "/certifications/Web_Dev_Bootcamp_Certification_24e0b667.pdf"
     }
   ]
 }

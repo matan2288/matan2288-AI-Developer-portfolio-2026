@@ -29,7 +29,7 @@ export interface PortfolioGeneralContent {
   stats: { value: string; label: string }[];
 }
 
-const LOCAL_STORAGE_KEY = 'tina_cms_portfolio_content_v3';
+const LOCAL_STORAGE_KEY = 'tina_cms_portfolio_content_v6';
 
 export const defaultTinaContent = {
   portfolio: mainPortfolioData as PortfolioGeneralContent,
@@ -94,7 +94,16 @@ export function getStoredTinaContent() {
               linkedInUrl: r.linkedInUrl || defaultTinaContent.recommendations[idx % defaultTinaContent.recommendations.length]?.linkedInUrl,
             }))
           : defaultTinaContent.recommendations,
-        certifications: Array.isArray(parsed.certifications) && parsed.certifications.length > 0 ? parsed.certifications : defaultTinaContent.certifications,
+        certifications: Array.isArray(parsed.certifications) && parsed.certifications.length > 0 
+          ? parsed.certifications.map((c: CertificationItem) => {
+              const def = defaultTinaContent.certifications.find(dc => dc.id === c.id);
+              return {
+                ...(def || {}),
+                ...c,
+                category: c.category || def?.category,
+              };
+            })
+          : defaultTinaContent.certifications,
       };
     }
   } catch (e) {
