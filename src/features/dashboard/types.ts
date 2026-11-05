@@ -10,6 +10,7 @@ export interface PortfolioContent {
   contactEmail: string;
   linkedInUrl: string;
   blogUrl?: string;
+  showBlogTab?: boolean;
   stats: { value: string; label: string }[];
 }
 

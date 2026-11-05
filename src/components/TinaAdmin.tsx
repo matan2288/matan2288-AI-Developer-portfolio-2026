@@ -347,23 +347,47 @@ export const TinaAdmin: React.FC<TinaAdminProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-sans text-text-muted uppercase mb-1 font-bold">
-                  Blog iFrame URL (Full-Screen Blog View)
-                </label>
-                <input
-                  type="url"
-                  placeholder="https://blog.google/technology/ai/"
-                  value={cmsState.portfolio.blogUrl || ''}
-                  onChange={(e) => updateGeneralField('blogUrl', e.target.value)}
-                  className="w-full px-3 py-2 border border-border rounded-lg text-sm text-text bg-bg-alt focus:outline-none focus:border-text font-sans"
-                />
-                <p className="text-xs text-text-muted mt-1">
-                  Only you can configure this URL from Editor Mode. It embeds full-screen in the public Blog tab.
-                </p>
+                <div className="pt-2">
+                  <label className="block text-xs font-sans text-text-muted uppercase mb-1 font-bold">
+                    Blog iFrame URL (Full-Screen Blog View)
+                  </label>
+                  <input
+                    type="url"
+                    placeholder="https://blog.google/technology/ai/"
+                    value={cmsState.portfolio.blogUrl || ''}
+                    onChange={(e) => updateGeneralField('blogUrl', e.target.value)}
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm text-text bg-bg-alt focus:outline-none focus:border-text font-sans"
+                  />
+                  <p className="text-xs text-text-muted mt-1">
+                    Only you can configure this URL from Editor Mode. It embeds full-screen in the public Blog tab.
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-between p-3 bg-neutral-50 rounded-xl border border-border/80">
+                  <div>
+                    <span className="text-xs font-semibold text-text block">Show Blog Tab in Navbar</span>
+                    <span className="text-xs text-text-muted block">
+                      {cmsState.portfolio.showBlogTab !== false ? 'Blog tab is currently visible' : 'Blog tab is hidden from navbar'}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={cmsState.portfolio.showBlogTab !== false}
+                    onClick={() => updateGeneralField('showBlogTab', cmsState.portfolio.showBlogTab === false ? true : false)}
+                    className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out ${
+                      cmsState.portfolio.showBlogTab !== false ? 'bg-text' : 'bg-neutral-300'
+                    }`}
+                  >
+                    <span
+                      className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition duration-200 ease-in-out ${
+                        cmsState.portfolio.showBlogTab !== false ? 'translate-x-4' : 'translate-x-0'
+                      }`}
+                    />
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
           {/* Pillars Tab */}
           {activeTab === 'pillars' && (

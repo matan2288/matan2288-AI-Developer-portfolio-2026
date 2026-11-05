@@ -355,7 +355,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
               { id: 'experiences', label: `Experience (${cmsState.experiences.length})`, icon: Briefcase },
               { id: 'testimonials', label: `Testimonials (${cmsState.recommendations.length})`, icon: Award },
               { id: 'certifications', label: `Certs (${(cmsState.certifications || defaultTinaContent.certifications).length})`, icon: Award },
-              { id: 'blog', label: 'Blog Embed', icon: Globe },
+              { id: 'blog', label: cmsState.portfolio.showBlogTab !== false ? 'Blog Embed' : 'Blog (Hidden)', icon: Globe },
               { id: 'json', label: 'JSON', icon: Code },
             ].map((tab) => {
               const Icon = tab.icon;
@@ -523,33 +523,70 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
                     </div>
                   </div>
 
-                  {/* Blog iFrame URL Configuration */}
-                  <div className="pt-2 border-t border-border/60">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <label className="block text-[11px] font-medium text-text-muted">
-                        Blog iFrame URL (Full-Screen View)
-                      </label>
-                      <span className="text-[10px] text-text-subtle font-medium">Editor Mode Only</span>
+                  {/* Blog iFrame URL & Navigation Visibility */}
+                  <div className="pt-3 border-t border-border/60 space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-neutral-50/70 border border-border/70 rounded-xl">
+                      <div className="space-y-0.5">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-semibold text-text">Blog Navigation Tab</span>
+                          <span className={`text-[9px] font-medium px-2 py-0.5 rounded-full ${
+                            cmsState.portfolio.showBlogTab !== false 
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                              : 'bg-neutral-100 text-neutral-500 border border-neutral-200'
+                          }`}>
+                            {cmsState.portfolio.showBlogTab !== false ? 'Visible' : 'Hidden'}
+                          </span>
+                        </div>
+                        <span className="text-[11px] text-text-muted block">
+                          {cmsState.portfolio.showBlogTab !== false 
+                            ? 'The Blog tab is visible in the main navigation bar' 
+                            : 'The Blog tab is hidden from the main navigation bar'}
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        role="switch"
+                        aria-checked={cmsState.portfolio.showBlogTab !== false}
+                        onClick={() => updateGeneralField('showBlogTab', cmsState.portfolio.showBlogTab === false ? true : false)}
+                        className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                          cmsState.portfolio.showBlogTab !== false ? 'bg-text' : 'bg-neutral-300'
+                        }`}
+                      >
+                        <span
+                          className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition duration-200 ease-in-out ${
+                            cmsState.portfolio.showBlogTab !== false ? 'translate-x-4' : 'translate-x-0'
+                          }`}
+                        />
+                      </button>
                     </div>
-                    <div className="flex gap-2 items-center">
-                      <input
-                        type="url"
-                        placeholder="https://blog.google/technology/ai/"
-                        value={cmsState.portfolio.blogUrl || ''}
-                        onChange={(e) => updateGeneralField('blogUrl', e.target.value)}
-                        className="flex-1 px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all font-mono text-text"
-                      />
-                      {cmsState.portfolio.blogUrl && (
-                        <a
-                          href={cmsState.portfolio.blogUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 rounded-lg border border-border hover:bg-neutral-100 text-text-muted hover:text-text transition-colors shrink-0"
-                          title="Test URL in new tab"
-                        >
-                          <ExternalLink size={13} />
-                        </a>
-                      )}
+
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-[11px] font-medium text-text-muted">
+                          Blog iFrame URL (Full-Screen View)
+                        </label>
+                        <span className="text-[10px] text-text-subtle font-medium">Editor Mode Only</span>
+                      </div>
+                      <div className="flex gap-2 items-center">
+                        <input
+                          type="url"
+                          placeholder="https://blog.google/technology/ai/"
+                          value={cmsState.portfolio.blogUrl || ''}
+                          onChange={(e) => updateGeneralField('blogUrl', e.target.value)}
+                          className="flex-1 px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all font-mono text-text"
+                        />
+                        {cmsState.portfolio.blogUrl && (
+                          <a
+                            href={cmsState.portfolio.blogUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 rounded-lg border border-border hover:bg-neutral-100 text-text-muted hover:text-text transition-colors shrink-0"
+                            title="Test URL in new tab"
+                          >
+                            <ExternalLink size={13} />
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1135,6 +1172,41 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
                   <p className="text-text-muted text-[11px] leading-relaxed">
                     Public visitors to your portfolio cannot modify or see configuration controls on the blog page. They experience your embedded engineering articles cleanly and edge-to-edge.
                   </p>
+                </div>
+
+                {/* Blog Navigation Tab Visibility Toggle */}
+                <div className="p-4 bg-white border border-border/80 rounded-xl shadow-2xs flex items-center justify-between gap-4">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-text">Blog Tab in Navbar</span>
+                      <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
+                        cmsState.portfolio.showBlogTab !== false 
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                          : 'bg-neutral-100 text-neutral-500 border border-neutral-200'
+                      }`}>
+                        {cmsState.portfolio.showBlogTab !== false ? 'Active & Visible' : 'Hidden from Navbar'}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-text-muted leading-relaxed">
+                      Toggle whether the &quot;Blog&quot; tab appears in the main portfolio navigation bar for visitors.
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={cmsState.portfolio.showBlogTab !== false}
+                    onClick={() => updateGeneralField('showBlogTab', cmsState.portfolio.showBlogTab === false ? true : false)}
+                    className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                      cmsState.portfolio.showBlogTab !== false ? 'bg-text' : 'bg-neutral-300'
+                    }`}
+                  >
+                    <span
+                      className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${
+                        cmsState.portfolio.showBlogTab !== false ? 'translate-x-5' : 'translate-x-0'
+                      }`}
+                    />
+                  </button>
                 </div>
 
                 {/* Target URL Input */}

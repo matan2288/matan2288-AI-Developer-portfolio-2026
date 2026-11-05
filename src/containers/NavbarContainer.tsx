@@ -19,6 +19,7 @@ interface NavbarContainerProps {
   onNavClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
   onOpenTinaAdmin: () => void;
   onSelectView: (view: 'portfolio' | 'blog' | 'admin' | 'certifications') => void;
+  showBlogTab?: boolean;
 }
 
 export const NavbarContainer: React.FC<NavbarContainerProps> = ({
@@ -32,6 +33,7 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
   onNavClick,
   onOpenTinaAdmin,
   onSelectView,
+  showBlogTab = true,
 }) => {
   const brand = brandName || 'MATAN AI';
   const firstName = brand.split(' ')[0] || 'MATAN';
@@ -137,22 +139,24 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
           </a>
 
           {/* Navigation to Blog Page */}
-          <a
-            href="#blog"
-            onClick={(e) => {
-              e.preventDefault();
-              onSelectView('blog');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            data-active={currentView === 'blog'}
-            className={`relative text-xs tracking-tight py-1.5 transition-colors cursor-pointer ${
-              currentView === 'blog'
-                ? 'text-text font-semibold'
-                : 'text-text-muted hover:text-text'
-            }`}
-          >
-            <span>Blog</span>
-          </a>
+          {showBlogTab && (
+            <a
+              href="#blog"
+              onClick={(e) => {
+                e.preventDefault();
+                onSelectView('blog');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              data-active={currentView === 'blog'}
+              className={`relative text-xs tracking-tight py-1.5 transition-colors cursor-pointer ${
+                currentView === 'blog'
+                  ? 'text-text font-semibold'
+                  : 'text-text-muted hover:text-text'
+              }`}
+            >
+              <span>Blog</span>
+            </a>
+          )}
 
           {/* Refined 1px minimalist sliding underline indicator */}
           <span 
@@ -230,23 +234,25 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
               </span>
             </a>
 
-            <a
-              href="#blog"
-              onClick={(e) => {
-                e.preventDefault();
-                onSelectView('blog');
-                setIsMenuOpen(false);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className={`text-xs py-2 flex items-center justify-between transition-colors cursor-pointer ${
-                currentView === 'blog' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
-              }`}
-            >
-              <span className="flex items-center gap-2">
-                <BookOpen size={13} className={currentView === 'blog' ? 'text-text' : 'text-text-muted'} />
-                <span>Blog</span>
-              </span>
-            </a>
+            {showBlogTab && (
+              <a
+                href="#blog"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSelectView('blog');
+                  setIsMenuOpen(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={`text-xs py-2 flex items-center justify-between transition-colors cursor-pointer ${
+                  currentView === 'blog' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  <BookOpen size={13} className={currentView === 'blog' ? 'text-text' : 'text-text-muted'} />
+                  <span>Blog</span>
+                </span>
+              </a>
+            )}
 
             <button
               onClick={() => {

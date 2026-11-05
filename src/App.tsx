@@ -221,6 +221,7 @@ export default function App() {
             onNavClick={handleNavClick}
             onOpenTinaAdmin={() => handleSelectView('admin')}
             onSelectView={handleSelectView}
+            showBlogTab={portfolio.showBlogTab !== false}
           />
 
           {/* Main View Switcher */}
