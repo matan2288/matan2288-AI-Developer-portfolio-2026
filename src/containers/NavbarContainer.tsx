@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { Menu, X, Edit3, BookOpen, Award } from 'lucide-react';
+import { Menu, X, Edit3, BookOpen, Award, Lock } from 'lucide-react';
 
 interface NavItem {
   num: string;
@@ -20,6 +20,8 @@ interface NavbarContainerProps {
   onOpenTinaAdmin: () => void;
   onSelectView: (view: 'portfolio' | 'blog' | 'admin' | 'certifications') => void;
   showBlogTab?: boolean;
+  isEditorAuthenticated?: boolean;
+  onOpenEditorLogin?: () => void;
 }
 
 export const NavbarContainer: React.FC<NavbarContainerProps> = ({
@@ -34,10 +36,22 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
   onOpenTinaAdmin,
   onSelectView,
   showBlogTab = true,
+  isEditorAuthenticated = false,
+  onOpenEditorLogin,
 }) => {
   const brand = brandName || 'MATAN AI';
   const firstName = brand.split(' ')[0] || 'MATAN';
   const restName = brand.split(' ').slice(1).join(' ') || 'AI';
+
+  const handleEditorClick = () => {
+    if (isEditorAuthenticated) {
+      onSelectView('admin');
+    } else if (onOpenEditorLogin) {
+      onOpenEditorLogin();
+    } else {
+      onSelectView('admin');
+    }
+  };
 
   const navRef = useRef<HTMLElement>(null);
   const [indicator, setIndicator] = useState<{ left: number; width: number; opacity: number }>({
@@ -173,15 +187,19 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
 
           {/* Classy & Discreet Editor Trigger */}
           <button
-            onClick={() => onSelectView('admin')}
+            onClick={handleEditorClick}
             className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] tracking-wide transition-all cursor-pointer ${
               currentView === 'admin'
                 ? 'bg-white text-text font-medium border border-border/80 shadow-2xs'
                 : 'text-text-muted hover:text-text hover:bg-neutral-50 border border-transparent font-normal'
             }`}
-            title="Open Content Editor"
+            title={isEditorAuthenticated ? "Open Content Editor" : "Open Content Editor (Password Protected)"}
           >
-            <Edit3 size={11} className={currentView === 'admin' ? 'text-text' : 'text-text-muted'} />
+            {isEditorAuthenticated ? (
+              <Edit3 size={11} className={currentView === 'admin' ? 'text-text' : 'text-text-muted'} />
+            ) : (
+              <Lock size={10} className="text-text-subtle" />
+            )}
             <span>Editor</span>
           </button>
         </nav>
@@ -256,17 +274,24 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
 
             <button
               onClick={() => {
-                onSelectView('admin');
                 setIsMenuOpen(false);
+                handleEditorClick();
               }}
               className={`text-xs py-2 flex items-center justify-between transition-colors cursor-pointer ${
                 currentView === 'admin' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
               }`}
             >
               <span className="flex items-center gap-2">
-                <Edit3 size={13} className={currentView === 'admin' ? 'text-text' : 'text-text-muted'} />
+                {isEditorAuthenticated ? (
+                  <Edit3 size={13} className={currentView === 'admin' ? 'text-text' : 'text-text-muted'} />
+                ) : (
+                  <Lock size={12} className="text-text-subtle" />
+                )}
                 <span>Editor</span>
               </span>
+              {!isEditorAuthenticated && (
+                <span className="text-[10px] text-text-subtle">Protected</span>
+              )}
             </button>
           </div>
         </div>

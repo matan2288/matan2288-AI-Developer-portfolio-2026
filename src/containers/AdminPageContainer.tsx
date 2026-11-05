@@ -17,7 +17,8 @@ import {
   ChevronRight,
   Eye,
   Globe,
-  Upload
+  Upload,
+  LogOut
 } from 'lucide-react';
 import { 
   getStoredTinaContent, 
@@ -36,9 +37,13 @@ import { FooterContainer } from './FooterContainer';
 
 interface AdminPageContainerProps {
   onBackToPortfolio: () => void;
+  onLogout?: () => void;
 }
 
-export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackToPortfolio }) => {
+export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ 
+  onBackToPortfolio,
+  onLogout
+}) => {
   const [activeTab, setActiveTab] = useState<'general' | 'pillars' | 'skills' | 'experiences' | 'testimonials' | 'certifications' | 'blog' | 'json'>('general');
   const [cmsState, setCmsState] = useState(() => getStoredTinaContent());
   const [mobilePanel, setMobilePanel] = useState<'editor' | 'preview'>('editor');
@@ -280,6 +285,17 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
               Content Studio
             </span>
           </div>
+
+          {onLogout && (
+            <button
+              onClick={onLogout}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium text-red-600 hover:text-red-700 bg-red-50/60 hover:bg-red-50 border border-red-200/60 transition-all cursor-pointer shadow-2xs shrink-0"
+              title="Sign out of Content Editor"
+            >
+              <LogOut size={13} />
+              <span className="hidden sm:inline">Sign Out</span>
+            </button>
+          )}
         </div>
 
         {/* Mobile View Toggle (< md screens only) */}

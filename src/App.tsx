@@ -9,6 +9,8 @@ import { BlogIframeContainer } from './components/BlogIframeContainer';
 import { AdminPageContainer } from './containers/AdminPageContainer';
 import { CertificationsContainer } from './containers/CertificationsContainer';
 import { PersonaChatProvider, AIFloatingWidget } from './features/dashboard';
+import { EditorLoginModal } from './components/EditorLoginModal';
+import { isEditorAuthenticated, logoutEditor } from './services/editorAuth';
 import { 
   useTinaPortfolio, 
   useTinaRecommendations,
@@ -18,13 +20,17 @@ import {
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('00');
+  const [editorAuthenticated, setEditorAuthenticatedState] = useState<boolean>(() => isEditorAuthenticated());
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   
   // Detect initial view from URL params or hash
   const [currentView, setCurrentView] = useState<'portfolio' | 'blog' | 'admin' | 'certifications'>(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       if (params.get('view') === 'admin' || window.location.hash === '#admin') {
-        return 'admin';
+        if (isEditorAuthenticated()) {
+          return 'admin';
+        }
       }
       if (params.get('view') === 'blog' || window.location.hash === '#blog') {
         return 'blog';
@@ -43,6 +49,10 @@ export default function App() {
 
   // Sync view selection with browser URL history
   const handleSelectView = (view: 'portfolio' | 'blog' | 'admin' | 'certifications') => {
+    if (view === 'admin' && !editorAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
     setCurrentView(view);
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href);
@@ -59,6 +69,24 @@ export default function App() {
     }
   };
 
+  const handleLoginSuccess = () => {
+    setEditorAuthenticatedState(true);
+    setIsLoginModalOpen(false);
+    setCurrentView('admin');
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.set('view', 'admin');
+      url.hash = '#admin';
+      window.history.pushState({}, '', url.toString());
+    }
+  };
+
+  const handleEditorLogout = () => {
+    logoutEditor();
+    setEditorAuthenticatedState(false);
+    handleSelectView('portfolio');
+  };
+
   // Listen for browser forward/backward and direct hash changes (e.g. #blog)
   useEffect(() => {
     const handleUrlChange = () => {
@@ -69,7 +97,12 @@ export default function App() {
       } else if (params.get('view') === 'certifications' || hash === '#certifications') {
         setCurrentView('certifications');
       } else if (params.get('view') === 'admin' || hash === '#admin') {
-        setCurrentView('admin');
+        if (isEditorAuthenticated()) {
+          setCurrentView('admin');
+        } else {
+          setCurrentView('portfolio');
+          setIsLoginModalOpen(true);
+        }
       } else if (params.get('view') === 'portfolio' || hash === '#home' || hash === '#experience' || hash === '#testimonials' || hash === '#contact') {
         setCurrentView('portfolio');
       }
@@ -202,9 +235,10 @@ export default function App() {
   return (
     <PersonaChatProvider>
       {/* Dedicated Full-Page Admin Studio View */}
-      {currentView === 'admin' ? (
+      {currentView === 'admin' && editorAuthenticated ? (
         <AdminPageContainer 
           onBackToPortfolio={() => handleSelectView('portfolio')} 
+          onLogout={handleEditorLogout}
         />
       ) : (
         <div className="min-h-screen bg-white text-text font-sans selection:bg-neutral-100 selection:text-text antialiased scroll-smooth">
@@ -222,6 +256,8 @@ export default function App() {
             onOpenTinaAdmin={() => handleSelectView('admin')}
             onSelectView={handleSelectView}
             showBlogTab={portfolio.showBlogTab !== false}
+            isEditorAuthenticated={editorAuthenticated}
+            onOpenEditorLogin={() => setIsLoginModalOpen(true)}
           />
 
           {/* Main View Switcher */}
@@ -288,6 +324,13 @@ export default function App() {
 
         </div>
       )}
+
+      {/* Protected Editor Login Modal */}
+      <EditorLoginModal 
+        isOpen={isLoginModalOpen} 
+        onClose={() => setIsLoginModalOpen(false)} 
+        onSuccess={handleLoginSuccess} 
+      />
     </PersonaChatProvider>
   );
 }
