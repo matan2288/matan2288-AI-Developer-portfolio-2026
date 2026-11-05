@@ -23,19 +23,21 @@ export default function App() {
   const [editorAuthenticated, setEditorAuthenticatedState] = useState<boolean>(() => isEditorAuthenticated());
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   
-  // Detect initial view from URL params or hash
+  // Detect initial view from URL params, pathname, or hash
   const [currentView, setCurrentView] = useState<'portfolio' | 'blog' | 'admin' | 'certifications'>(() => {
     if (typeof window !== 'undefined') {
+      const pathname = window.location.pathname.replace(/\/+$/, '');
       const params = new URLSearchParams(window.location.search);
-      if (params.get('view') === 'admin' || window.location.hash === '#admin') {
+      const hash = window.location.hash.toLowerCase();
+      if (pathname === '/admin' || params.get('view') === 'admin' || hash === '#admin') {
         if (isEditorAuthenticated()) {
           return 'admin';
         }
       }
-      if (params.get('view') === 'blog' || window.location.hash === '#blog') {
+      if (pathname === '/blog' || params.get('view') === 'blog' || hash === '#blog') {
         return 'blog';
       }
-      if (params.get('view') === 'certifications' || window.location.hash === '#certifications') {
+      if (pathname === '/certifications' || params.get('view') === 'certifications' || hash === '#certifications') {
         return 'certifications';
       }
     }
@@ -47,6 +49,20 @@ export default function App() {
     window.self !== window.top
   );
 
+  // If directly navigating to /admin while unauthenticated, trigger login modal immediately
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const pathname = window.location.pathname.replace(/\/+$/, '');
+      const params = new URLSearchParams(window.location.search);
+      const hash = window.location.hash.toLowerCase();
+      if (pathname === '/admin' || params.get('view') === 'admin' || hash === '#admin') {
+        if (!isEditorAuthenticated()) {
+          setIsLoginModalOpen(true);
+        }
+      }
+    }
+  }, []);
+
   // Sync view selection with browser URL history
   const handleSelectView = (view: 'portfolio' | 'blog' | 'admin' | 'certifications') => {
     if (view === 'admin' && !editorAuthenticated) {
@@ -55,17 +71,16 @@ export default function App() {
     }
     setCurrentView(view);
     if (typeof window !== 'undefined') {
-      const url = new URL(window.location.href);
       if (view === 'portfolio') {
-        url.searchParams.delete('view');
-        if (window.location.hash === '#blog' || window.location.hash === '#certifications' || window.location.hash === '#admin') {
-          url.hash = '';
-        }
+        window.history.pushState({}, '', '/');
+      } else if (view === 'admin') {
+        window.history.pushState({}, '', '/admin');
       } else {
+        const url = new URL(window.location.href);
         url.searchParams.set('view', view);
         url.hash = `#${view}`;
+        window.history.pushState({}, '', url.toString());
       }
-      window.history.pushState({}, '', url.toString());
     }
   };
 
@@ -74,35 +89,36 @@ export default function App() {
     setIsLoginModalOpen(false);
     setCurrentView('admin');
     if (typeof window !== 'undefined') {
-      const url = new URL(window.location.href);
-      url.searchParams.set('view', 'admin');
-      url.hash = '#admin';
-      window.history.pushState({}, '', url.toString());
+      window.history.pushState({}, '', '/admin');
     }
   };
 
   const handleEditorLogout = () => {
     logoutEditor();
     setEditorAuthenticatedState(false);
-    handleSelectView('portfolio');
+    setCurrentView('portfolio');
+    if (typeof window !== 'undefined') {
+      window.history.pushState({}, '', '/');
+    }
   };
 
-  // Listen for browser forward/backward and direct hash changes (e.g. #blog)
+  // Listen for browser forward/backward and direct hash changes (e.g. /admin, #blog)
   useEffect(() => {
     const handleUrlChange = () => {
+      const pathname = window.location.pathname.replace(/\/+$/, '');
       const params = new URLSearchParams(window.location.search);
       const hash = window.location.hash.toLowerCase();
-      if (params.get('view') === 'blog' || hash === '#blog') {
-        setCurrentView('blog');
-      } else if (params.get('view') === 'certifications' || hash === '#certifications') {
-        setCurrentView('certifications');
-      } else if (params.get('view') === 'admin' || hash === '#admin') {
+      if (pathname === '/admin' || params.get('view') === 'admin' || hash === '#admin') {
         if (isEditorAuthenticated()) {
           setCurrentView('admin');
         } else {
           setCurrentView('portfolio');
           setIsLoginModalOpen(true);
         }
+      } else if (pathname === '/blog' || params.get('view') === 'blog' || hash === '#blog') {
+        setCurrentView('blog');
+      } else if (pathname === '/certifications' || params.get('view') === 'certifications' || hash === '#certifications') {
+        setCurrentView('certifications');
       } else if (params.get('view') === 'portfolio' || hash === '#home' || hash === '#experience' || hash === '#testimonials' || hash === '#contact') {
         setCurrentView('portfolio');
       }
@@ -253,11 +269,8 @@ export default function App() {
             isMenuOpen={isMenuOpen}
             setIsMenuOpen={setIsMenuOpen}
             onNavClick={handleNavClick}
-            onOpenTinaAdmin={() => handleSelectView('admin')}
             onSelectView={handleSelectView}
             showBlogTab={portfolio.showBlogTab !== false}
-            isEditorAuthenticated={editorAuthenticated}
-            onOpenEditorLogin={() => setIsLoginModalOpen(true)}
           />
 
           {/* Main View Switcher */}

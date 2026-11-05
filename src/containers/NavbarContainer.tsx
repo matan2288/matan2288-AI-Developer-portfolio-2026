@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { Menu, X, Edit3, BookOpen, Award, Lock } from 'lucide-react';
+import { Menu, X, BookOpen, Award } from 'lucide-react';
 
 interface NavItem {
   num: string;
@@ -17,11 +17,9 @@ interface NavbarContainerProps {
   isMenuOpen: boolean;
   setIsMenuOpen: (open: boolean) => void;
   onNavClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
-  onOpenTinaAdmin: () => void;
+  onOpenTinaAdmin?: () => void;
   onSelectView: (view: 'portfolio' | 'blog' | 'admin' | 'certifications') => void;
   showBlogTab?: boolean;
-  isEditorAuthenticated?: boolean;
-  onOpenEditorLogin?: () => void;
 }
 
 export const NavbarContainer: React.FC<NavbarContainerProps> = ({
@@ -36,22 +34,10 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
   onOpenTinaAdmin,
   onSelectView,
   showBlogTab = true,
-  isEditorAuthenticated = false,
-  onOpenEditorLogin,
 }) => {
   const brand = brandName || 'MATAN AI';
   const firstName = brand.split(' ')[0] || 'MATAN';
   const restName = brand.split(' ').slice(1).join(' ') || 'AI';
-
-  const handleEditorClick = () => {
-    if (isEditorAuthenticated) {
-      onSelectView('admin');
-    } else if (onOpenEditorLogin) {
-      onOpenEditorLogin();
-    } else {
-      onSelectView('admin');
-    }
-  };
 
   const navRef = useRef<HTMLElement>(null);
   const [indicator, setIndicator] = useState<{ left: number; width: number; opacity: number }>({
@@ -182,26 +168,6 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
               opacity: indicator.opacity,
             }}
           />
-
-          <span className="text-border/70 text-xs font-light select-none">|</span>
-
-          {/* Classy & Discreet Editor Trigger */}
-          <button
-            onClick={handleEditorClick}
-            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] tracking-wide transition-all cursor-pointer ${
-              currentView === 'admin'
-                ? 'bg-white text-text font-medium border border-border/80 shadow-2xs'
-                : 'text-text-muted hover:text-text hover:bg-neutral-50 border border-transparent font-normal'
-            }`}
-            title={isEditorAuthenticated ? "Open Content Editor" : "Open Content Editor (Password Protected)"}
-          >
-            {isEditorAuthenticated ? (
-              <Edit3 size={11} className={currentView === 'admin' ? 'text-text' : 'text-text-muted'} />
-            ) : (
-              <Lock size={10} className="text-text-subtle" />
-            )}
-            <span>Editor</span>
-          </button>
         </nav>
 
         {/* Mobile menu toggle */}
@@ -271,28 +237,6 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
                 </span>
               </a>
             )}
-
-            <button
-              onClick={() => {
-                setIsMenuOpen(false);
-                handleEditorClick();
-              }}
-              className={`text-xs py-2 flex items-center justify-between transition-colors cursor-pointer ${
-                currentView === 'admin' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
-              }`}
-            >
-              <span className="flex items-center gap-2">
-                {isEditorAuthenticated ? (
-                  <Edit3 size={13} className={currentView === 'admin' ? 'text-text' : 'text-text-muted'} />
-                ) : (
-                  <Lock size={12} className="text-text-subtle" />
-                )}
-                <span>Editor</span>
-              </span>
-              {!isEditorAuthenticated && (
-                <span className="text-[10px] text-text-subtle">Protected</span>
-              )}
-            </button>
           </div>
         </div>
       )}
