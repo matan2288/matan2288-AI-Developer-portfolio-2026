@@ -10,21 +10,21 @@ function getGeminiApiKey(): string {
     return process.env.API_KEY.trim();
   }
   try {
-    if (import.meta.env?.VITE_GEMINI_API_KEY) {
-      return import.meta.env.VITE_GEMINI_API_KEY.trim();
+    if (typeof import.meta !== "undefined" && import.meta.env) {
+      if (import.meta.env.VITE_GEMINI_API_KEY) {
+        return import.meta.env.VITE_GEMINI_API_KEY.trim();
+      }
+      if (import.meta.env.GEMINI_API_KEY) {
+        return import.meta.env.GEMINI_API_KEY.trim();
+      }
     }
-  } catch {}
+  } catch { }
   return "";
 }
 
-// In client-side browser environments, Google AI Studio internal AQ. proxy tokens
-// encounter PROXY_GENERATION_DISABLED on direct generative endpoints.
-// Standard client API keys start with AIza.
 function isValidClientApiKey(key: string): boolean {
   if (!key) return false;
-  // If it is an AI Studio sandbox proxy token, direct client generation is disabled
-  if (key.startsWith("AQ.")) return false;
-  return key.length > 10;
+  return key.trim().length > 10;
 }
 
 function getGeminiClient(): GoogleGenAI | null {
@@ -38,43 +38,99 @@ function getGeminiClient(): GoogleGenAI | null {
         headers: {
           "User-Agent": "aistudio-build",
         },
+        timeout: 7000,
+        retryOptions: {
+          attempts: 1,
+        },
       },
     });
-  } catch {
+  } catch (error) {
+    console.error("Failed to initialize GoogleGenAI:", error);
     return null;
   }
 }
 
 // System instruction detailing Matan's exact professional software developer CV
 const MATAN_SYSTEM_INSTRUCTION = `
-You are Matan — speaking as Matan himself in the first person. This is your interactive digital assistant twin.
+You are Matan Elmaliach — speaking as Matan himself in the first person ("I", "my"). You are an AI-driven digital assistant twin representing Matan to hiring managers, engineering managers (EMs), tech leads, and technical recruiters who visit his portfolio.
 
-## Your Personality and Vibe
-- Speak like an actual, real software developer in an organic conversation. Be professional, authentic, highly competent, and relaxed.
-- NEVER sound like a robotic AI reciting an official resume database or list of bullet points.
-- Talk like we are having a direct messaging conversation, a virtual coffee chat, or a casual technical discussion. Use natural phrasing, varied sentence lengths, and smooth transitions.
-- Speak in the first person ("I built", "I did", "when I worked at", "my experience").
+## Target Audience & Core Persona
+- **Engineering Managers / Tech Leads**: Value technical rigor, checkout flow scalability, architectural decisions, code quality, state management, and real production experience handling high-volume telecom clients at Amdocs.
+- **Technical Recruiters**: Value years of experience (4 years enterprise experience, 2022–present at Amdocs), core stack (React, TypeScript, Vue, Node.js), location (Tel Aviv; open to hybrid, remote globally, contract), and immediate direct reachability (052-6506696, matan2288@gmail.com, LinkedIn).
+- **Tone**: Authentic, professional, humble, highly competent, articulate, and relaxed software engineer. Never sound robotic or generic.
 
-## Knowledge base (Your real background)
-- Name: MATAN ELMALIACH
-- Role: AI-Driven Software Developer
-- Contact: 0526506696 | matan2288@gmail.com | LinkedIn: https://www.linkedin.com/in/matan2288 | GitHub: https://github.com/MaTaN2288
-- Location: Resides in Tel Aviv, Israel (open to contract, hybrid in Tel Aviv, or remote roles globally).
-- Summary: Experienced AI-Driven Software Developer skilled in Frontend and Fullstack development. A collaborative team player with proven hands-on experience in end-to-end project delivery and building scalable software.
-- Personal discipline: Longtime powerlifter (squats, bench press, deadlifts). I approach software systems, caching, and troubleshooting with the exact same meticulous engineering discipline, focus, and systematic progression.
-- Work Experience (2022 — Present): Software Developer at Amdocs (Delivery Unit). Developed scalable Frontend and Fullstack solutions for telecom clients such as Altice, 3UK, USCellular, and T-Mobile. Core Frontend features across eCommerce platforms, self-service portals, and mobile apps using React, TypeScript, and Redux-Saga. Site migration from React & Contentful to Vue, Drupal, PHP, and NodeJS. Led Adobe Analytics telemetry architecture and client support.
-- Military Service (2013 — 2019): IDF, Israeli Navy - Diving Gear Technician. Led a squad of 5 maintaining critical life-support apparatus under high pressure.
-- Education: Etgar College, Web Development Bootcamp (2020).
-- Tech Stack: React, React Native, Redux, Redux Toolkit, Vue, Vuex, Vite, TypeScript, JavaScript, SCSS, Tailwind, NodeJS, Java, MySQL, MongoDB, Docker, Git, Playwright, Vitest, AEM, Adobe Analytics, Agent Orchestration, MCP.
+## Strict Response Length & Formatting Rules (CRITICAL)
+1. **DEFAULT LENGTH**: Keep initial responses **short, focused, and punchy (2 to 4 sentences, roughly 40–75 words)**. Never provide massive text dumps upfront that overwhelm the reader or get clipped.
+2. **ALWAYS OFFER TO ELABORATE**: End EVERY response with a natural, organic follow-up question offering to elaborate on 1 or 2 specific technical or logistical areas.
+   - Example for technical questions: "Would you like me to elaborate on how we handled cart persistence at scale, or our state management pattern?"
+   - Example for background questions: "Would you like me to elaborate on my work with Altice/3UK, or my current availability for new roles?"
+3. **WHEN ASKED TO ELABORATE**: If the user explicitly asks to "elaborate", "tell me more", "how did you do that", or continues the topic:
+   - Provide the next layer of depth in **structured, crisp bullet points (under 120–150 words)**.
+   - Focus on practical architectural solutions, challenges solved, or measurable impact.
+   - Conclude with an invitation for next steps or sharing contact info.
+4. **NO CUT-OFFS**: Formulate complete, well-rounded sentences. Never trail off.
+
+## Knowledge Base (Matan's Verified Background)
+- **Identity**: Matan Elmaliach, AI-Driven Full-Stack & Frontend Software Developer.
+- **Location & Work Model**: Based in Tel Aviv, Israel. Actively open to Full-time, Hybrid (Tel Aviv area), Remote (worldwide), and Contract roles.
+- **Direct Contact**: 0526506696 | matan2288@gmail.com | LinkedIn: https://www.linkedin.com/in/matan2288 | GitHub: https://github.com/matan2288
+- **Enterprise Experience (2022 — Present)**: Software Developer at Amdocs (Delivery Unit).
+  - Built high-volume eCommerce checkout funnels, self-service portals, and mobile app flows for Tier-1 telecom operators: Altice, 3UK, USCellular, T-Mobile.
+  - Stack: React, TypeScript, Redux-Saga, Redux Toolkit, Vue, Vuex, Vite, SCSS, Node.js, Express, REST APIs, MySQL, MongoDB.
+  - Core site migration: Migrated enterprise client platform from React & Contentful to Vue, Drupal, PHP, and Node.js.
+  - Telemetry & Analytics: Led Adobe Analytics architecture, data layer instrumentation, and bi-weekly client stakeholder reviews.
+  - Quality & Mentorship: Comprehensive testing with Playwright and Vitest; mentored developers, conducted thorough code reviews.
+- **Military Background (2013 — 2019)**: Israeli Navy — Diving Gear Technician Squad Commander. Led a squad of 5 maintaining critical life-support apparatus under high pressure. Instilled relentless checklist discipline and composure.
+- **Discipline & Vibe**: Longtime competitive powerlifter (squat, bench, deadlift). Brings progressive overload, metric tracking, and systematic debugging to engineering.
+- **AI Acceleration**: Practical integration of GenAI tools (Cursor, Agent Orchestration, MCP, RAG, prompt engineering) into the daily software development lifecycle.
 `;
 
 /**
  * High-fidelity local intelligence engine for Matan's persona.
- * Provides authentic, rich, conversational first-person responses
- * when operating in pure client-side mode without a backend server.
+ * Tailored for Dev Managers and Recruiters with concise answers and elaboration hooks.
  */
-function generateOfflinePersonaResponse(query: string, _history?: ChatMessage[]): string {
+function generateOfflinePersonaResponse(query: string, history?: ChatMessage[]): string {
   const q = query.toLowerCase().trim();
+
+  // Elaboration request detection
+  const isElaboration =
+    q.includes("elaborat") ||
+    q.includes("tell me more") ||
+    q.includes("more detail") ||
+    q.includes("go deeper") ||
+    q.includes("explain in detail") ||
+    q.includes("expand on");
+
+  if (isElaboration) {
+    const lastUserQuery = (history && history.length > 1)
+      ? history[history.length - 2]?.text?.toLowerCase() || ""
+      : "";
+
+    if (lastUserQuery.includes("checkout") || lastUserQuery.includes("scale") || lastUserQuery.includes("amdocs")) {
+      return (
+        "Here's the technical breakdown of the checkout systems at Amdocs:\n\n" +
+        "• **State & Cart Resilience**: Used Redux-Saga to orchestrate multi-step checkout flows, syncing plan configurations and billing logic with optimistic UI updates and session recovery.\n" +
+        "• **Platform Migration**: Transitioned legacy React/Contentful flows into Vue & Drupal/Node.js microservices, cutting legacy bundle weight and boosting page speed.\n" +
+        "• **Telemetry Precision**: Built custom Adobe Analytics data layers tracking drop-offs across funnel stages to ensure 100% conversion visibility.\n\n" +
+        "Would you like to discuss how this fits your team's architecture, or should we set up a quick intro chat?"
+      );
+    }
+
+    if (lastUserQuery.includes("stack") || lastUserQuery.includes("skill") || lastUserQuery.includes("frontend")) {
+      return (
+        "Here is a deeper look at my engineering stack and workflow:\n\n" +
+        "• **Frontend**: React 18/19, TypeScript, Vue 3, Redux Toolkit, SCSS/Tailwind, Vite, and strict WCAG/ARIA accessibility standards.\n" +
+        "• **Backend & Data**: Node.js, Express, REST APIs, MySQL, MongoDB, and headless CMS integrations (Drupal, Contentful).\n" +
+        "• **Testing & Tooling**: Playwright for cross-browser E2E, Vitest for unit testing, Docker, Git/GitLab CI, and Cursor for AI-assisted SDLC.\n\n" +
+        "Would you like to review specific project repos or discuss how I structure scalable component libraries?"
+      );
+    }
+
+    return (
+      "I'd be glad to share more details. Over my 4 years at Amdocs, I've specialized in taking complex, high-concurrency frontend features from RFC to production, combining clean TypeScript patterns with automated E2E testing and continuous telemetry.\n\n" +
+      "Would you like to focus on my checkout engineering, telemetry work, or role availability?"
+    );
+  }
 
   // 1. Tech Stack & Frameworks
   if (
@@ -89,10 +145,8 @@ function generateOfflinePersonaResponse(query: string, _history?: ChatMessage[])
     q.includes("frontend")
   ) {
     return (
-      "My core stack is centered around **React**, **TypeScript**, and modern state management (**Redux Toolkit**, **Redux-Saga**, and **Vue / Vuex**). " +
-      "On the frontend, I build highly responsive, accessible (WCAG/ARIA) interfaces using **Vite**, **Tailwind**, and **SCSS**.\n\n" +
-      "On the backend, I work with **Node.js**, **Express**, **RESTful APIs**, and databases like **MySQL** and **MongoDB**. " +
-      "At Amdocs, I also specialize in enterprise **Adobe Analytics** data architecture and automated E2E testing with **Playwright** and **Vitest**."
+      "My core stack centers on **React**, **TypeScript**, and modern state management (**Redux Toolkit**, **Redux-Saga**, and **Vue / Vuex**), paired with **Node.js** and **Express** on the backend. At Amdocs, I also specialize in enterprise **Adobe Analytics** data architecture and automated E2E testing with **Playwright**.\n\n" +
+      "Would you like me to elaborate on my component architecture or our state management patterns in high-volume funnels?"
     );
   }
 
@@ -112,12 +166,8 @@ function generateOfflinePersonaResponse(query: string, _history?: ChatMessage[])
     q.includes("job")
   ) {
     return (
-      "Since 2022, I've been a Software Developer at **Amdocs** (Delivery Unit), delivering enterprise solutions for major telecom operators including **Altice**, **3UK**, **USCellular**, and **T-Mobile**.\n\n" +
-      "Key highlights of my work:\n" +
-      "• **eCommerce & Checkouts**: Built and maintained high-volume checkout funnels, self-service portals, and mobile app flows handling multi-tier plan selections and real-time cart persistence.\n" +
-      "• **Core Platform Migration**: Participated in migrating a legacy platform from React & Contentful to Vue, Drupal, PHP, and Node.js.\n" +
-      "• **Adobe Analytics & Telemetry**: Architected end-to-end data-tracking layers and managed client engagements with bi-weekly telemetry reviews.\n" +
-      "• **Team Mentorship**: Onboarded new developers, conducted pull request reviews, and championed code quality standards."
+      "For the past 4 years at Amdocs, I've built mission-critical eCommerce checkout funnels and self-service portals for tier-1 telecom operators like **Altice** and **3UK**. I also co-led a major site migration from React to Vue/Node.js and architected our analytics telemetry layers.\n\n" +
+      "Would you like me to elaborate on how we solved cart persistence at scale, or our automated E2E testing strategy?"
     );
   }
 
@@ -131,10 +181,8 @@ function generateOfflinePersonaResponse(query: string, _history?: ChatMessage[])
     q.includes("benefit")
   ) {
     return (
-      "I bring three distinct strengths to an engineering team:\n\n" +
-      "1. **Production Checkout & Scale Experience**: 4 years handling complex, transactional frontend flows for tier-1 telecom carriers where UX flaws directly hurt conversion.\n" +
-      "2. **End-to-End Ownership**: From pixel-perfect accessible UIs to telemetry pipelines (Adobe Analytics) and backend integrations, I take features across the finish line.\n" +
-      "3. **High Discipline Under Pressure**: Between competitive powerlifting and 6 years leading life-support gear squads in the Israeli Navy, I bring systematic progression, thorough testing, and zero panic during outages."
+      "I offer three direct advantages: 4 years of proven enterprise checkout experience handling high-conversion flows, end-to-end technical ownership (UI, state, APIs, telemetry), and high composure under pressure shaped by 6 years in the Israeli Navy.\n\n" +
+      "Would you like me to elaborate on how I approach code quality and code reviews, or my recent client projects?"
     );
   }
 
@@ -155,8 +203,8 @@ function generateOfflinePersonaResponse(query: string, _history?: ChatMessage[])
     q.includes("israel")
   ) {
     return (
-      "I'm based in **Tel Aviv, Israel**, and I'm actively open to **full-time**, **hybrid (Tel Aviv area)**, or **remote software developer roles worldwide** (as well as high-impact contract projects).\n\n" +
-      "You can connect with me directly at **matan2288@gmail.com**, give me a call at **052-6506696**, or find me on [LinkedIn](https://www.linkedin.com/in/matan2288)!"
+      "I'm based in **Tel Aviv, Israel**, and I'm actively open to **full-time**, **hybrid (Tel Aviv area)**, or **remote software developer roles worldwide**, as well as contract work. You can reach me directly at **052-6506696** or **matan2288@gmail.com**.\n\n" +
+      "Would you like me to share my LinkedIn profile or discuss your team's timeline and stack?"
     );
   }
 
@@ -172,12 +220,12 @@ function generateOfflinePersonaResponse(query: string, _history?: ChatMessage[])
     q.includes("call")
   ) {
     return (
-      "Here is how you can get in touch with me directly:\n\n" +
+      "You can reach me directly via:\n" +
       "• **Email**: [matan2288@gmail.com](mailto:matan2288@gmail.com)\n" +
       "• **Phone**: 052-6506696\n" +
       "• **LinkedIn**: [linkedin.com/in/matan2288](https://www.linkedin.com/in/matan2288)\n" +
-      "• **GitHub**: [github.com/MaTaN2288](https://github.com/MaTaN2288)\n\n" +
-      "I usually reply within a few hours!"
+      "• **GitHub**: [github.com/matan2288](https://github.com/matan2288)\n\n" +
+      "Would you like to schedule a brief introductory call to discuss an open role?"
     );
   }
 
@@ -191,9 +239,8 @@ function generateOfflinePersonaResponse(query: string, _history?: ChatMessage[])
     q.includes("service")
   ) {
     return (
-      "From 2013 to 2019, I served in the **Israeli Navy** as a **Diving Gear Technician**.\n\n" +
-      "I led a team of five responsible for inspecting, overhauling, and maintaining critical deep-diving and life-support equipment under demanding, high-pressure environments. " +
-      "That experience instilled a lifelong respect for checklist discipline, rigorous testing, and accountability—qualities I apply directly to writing fault-tolerant code and reviewing pull requests."
+      "Between 2013 and 2019, I served as a **Diving Gear Technician Squad Commander** in the Israeli Navy, leading five technicians maintaining critical life-support apparatus. It taught me unwavering checklist rigor, ownership, and zero panic during outages.\n\n" +
+      "Would you like me to elaborate on how that operational discipline translates into my code review and debugging process?"
     );
   }
 
@@ -213,9 +260,8 @@ function generateOfflinePersonaResponse(query: string, _history?: ChatMessage[])
     q.includes("mindset")
   ) {
     return (
-      "Outside of coding, I am a dedicated **competitive powerlifter** focused on heavy squats, bench press, and deadlifts.\n\n" +
-      "Powerlifting taught me the value of progressive overload: you don't jump to a 500lb deadlift overnight; you show up consistently, master technique, document metrics, and build brick by brick. " +
-      "I apply the exact same engineering mindset to codebases: clean modular architecture, steady optimization, and systematic root-cause troubleshooting."
+      "I'm a competitive powerlifter focused on heavy squats, bench press, and deadlifts. The sport demands consistent progressive overload and systematic technique refinement—the exact mindset I bring to refactoring codebases and profiling performance.\n\n" +
+      "Would you like to hear about my day-to-day engineering workflow or my recent full-stack projects?"
     );
   }
 
@@ -236,12 +282,8 @@ function generateOfflinePersonaResponse(query: string, _history?: ChatMessage[])
     q.includes("learn")
   ) {
     return (
-      "I hold verified engineering credentials and continuous learning diplomas:\n\n" +
-      "• **Cursor: GenAI Driven SDLC** (Amdocs)\n" +
-      "• **Principles of Secure Coding** (Udemy)\n" +
-      "• **Securing GenAI Systems** (Udemy)\n" +
-      "• **Full-Stack Web Development Diploma (335h)** (Ministry of Labor & Etgar College)\n\n" +
-      "You can inspect verified PDFs directly in the **Certifications** section in the navigation menu!"
+      "I hold credentials in **Principles of Secure Coding**, **Securing GenAI Systems**, **GenAI-Driven SDLC**, and a 335-hour Full-Stack Bootcamp diploma from Etgar College. You can review verified credentials directly in the Certifications tab.\n\n" +
+      "Would you like me to elaborate on how I apply secure coding practices in production applications?"
     );
   }
 
@@ -257,8 +299,8 @@ function generateOfflinePersonaResponse(query: string, _history?: ChatMessage[])
     q.includes("mcp")
   ) {
     return (
-      "I actively integrate AI acceleration into my development workflow, including **Context Engineering**, **Agent Orchestration**, **RAG pipelines**, and **Model Context Protocol (MCP)**. " +
-      "I use tools like Cursor, HuggingFace, and Gemini SDKs to automate repetitive workflows, speed up testing suites, and build intelligent features like this digital assistant twin."
+      "I integrate GenAI directly into daily development—using Cursor, Agent Orchestration, and the Model Context Protocol (MCP) to accelerate feature development, automate regression tests, and build intelligent features like this digital twin.\n\n" +
+      "Would you like me to elaborate on how I leverage AI workflows to speed up sprint delivery without compromising code quality?"
     );
   }
 
@@ -275,8 +317,8 @@ function generateOfflinePersonaResponse(query: string, _history?: ChatMessage[])
     q.startsWith("hey ")
   ) {
     return (
-      "Hey there! I'm Matan's digital assistant twin. I'm here to share details about my software engineering experience, telecom checkout projects at Amdocs, tech stack, or availability. " +
-      "What would you like to explore?"
+      "Hey there! I'm Matan's digital assistant twin. I can walk you through my 4 years of telecom checkout engineering at Amdocs, tech stack, or availability for new roles.\n\n" +
+      "Would you like to explore my frontend stack, or should we look at my checkout scale experience?"
     );
   }
 
@@ -290,16 +332,15 @@ function generateOfflinePersonaResponse(query: string, _history?: ChatMessage[])
     q.includes("intro")
   ) {
     return (
-      "I'm **Matan Elmaliah**, an AI-driven Frontend & Fullstack Developer based in Tel Aviv. " +
-      "Over the last 4 years at Amdocs, I've focused on building scalable web applications, telecom eCommerce checkouts, and analytics telemetry for clients like Altice and 3UK. " +
-      "I'm passionate about clean TypeScript architecture, performance optimization, and pragmatic engineering."
+      "I'm **Matan Elmaliah**, an AI-driven Full-Stack & Frontend Developer with 4 years of enterprise delivery experience at Amdocs building scalable web platforms, telecom checkout flows, and analytics architectures.\n\n" +
+      "Would you like me to elaborate on my core tech stack (React, TypeScript, Vue, Node.js), or my role availability?"
     );
   }
 
   // 12. Default organic response tailored to Matan's CV
   return (
-    `I'm Matan, an AI-driven Software Developer with 4 years of enterprise experience at Amdocs building scalable web platforms, telecom checkout flows, and analytics architectures.\n\n` +
-    `Feel free to ask me about my **tech stack** (React, Vue, TypeScript, Node.js), my work with **telecom clients (Altice, 3UK)**, or my **availability for new roles**. You can also reach me directly at **matan2288@gmail.com**!`
+    "I'm Matan, an AI-driven Software Developer with 4 years of enterprise experience at Amdocs building scalable telecom checkout systems, React/Vue applications, and analytics architectures.\n\n" +
+    "Would you like me to elaborate on my core tech stack, my checkout scale experience, or my availability for new roles?"
   );
 }
 
@@ -314,7 +355,7 @@ export const chatWithMatanPersona = async (
   const apiKey = getGeminiApiKey();
   const ai = getGeminiClient();
 
-  // If a valid client key is configured (AIza format), attempt generative call
+  // If a valid client key is configured, attempt generative call
   if (ai && isValidClientApiKey(apiKey)) {
     try {
       const contents = conversationHistory
@@ -329,23 +370,44 @@ export const chatWithMatanPersona = async (
         parts: [{ text: userMessage }],
       });
 
-      const response = await ai.models.generateContent({
-        model: "gemini-3.8-flash",
-        contents,
-        config: {
-          systemInstruction: MATAN_SYSTEM_INSTRUCTION,
-          maxOutputTokens: 500,
-        },
-      });
+      const configuredModel =
+        (typeof process !== "undefined" && process.env?.GEMINI_MODEL) ||
+        (typeof import.meta !== "undefined" && (import.meta.env?.VITE_GEMINI_MODEL || import.meta.env?.GEMINI_MODEL)) ||
+        "gemini-3.5-flash";
 
-      const reply = response.text?.trim();
-      if (reply) {
-        return reply;
+      // Candidate models: try configured model first, then resilient fallbacks
+      const candidateModels = Array.from(new Set([
+        configuredModel,
+        "gemini-3.5-flash",
+        "gemini-3.1-flash-lite",
+        "gemini-3.8-flash",
+      ])).filter(Boolean);
+
+      for (const model of candidateModels) {
+        try {
+          const response = await ai.models.generateContent({
+            model,
+            contents,
+            config: {
+              systemInstruction: MATAN_SYSTEM_INSTRUCTION,
+              maxOutputTokens: 1000,
+            },
+          });
+
+          const reply = response.text?.trim();
+          if (reply) {
+            return reply;
+          }
+        } catch (modelError) {
+          console.warn(
+            `Gemini generation failed for model ${model}:`,
+            modelError instanceof Error ? modelError.message : String(modelError)
+          );
+        }
       }
     } catch (error) {
-      // Gracefully catch any network or proxy issues without crashing or polluting console
       console.info(
-        "Using client persona engine (direct Gemini generation fallback activated):",
+        "Using client persona engine fallback:",
         error instanceof Error ? error.message : String(error)
       );
     }

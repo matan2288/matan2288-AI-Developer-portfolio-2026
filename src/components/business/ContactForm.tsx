@@ -7,7 +7,7 @@ interface ContactFormProps {
   contactEmail?: string;
 }
 
-export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'MaTaN2288@gmail.com' }) => {
+export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'matan2288@gmail.com' }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [msg, setMsg] = useState('');
@@ -106,14 +106,14 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'MaTaN2
       ) : (
         <form onSubmit={handleSubmit} className="space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Input 
+            <Input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Name (Optional)"
             />
 
-            <Input 
+            <Input
               type="email"
               required
               value={email}
@@ -122,7 +122,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'MaTaN2
             />
           </div>
 
-          <Textarea 
+          <Textarea
             required
             rows={3}
             value={msg}
@@ -131,7 +131,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'MaTaN2
           />
 
           <div className="pt-1 flex justify-end">
-            <Button 
+            <Button
               type="submit"
               disabled={isSubmitting}
               className="w-full sm:w-auto px-5 py-2 text-xs"

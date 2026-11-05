@@ -8,7 +8,7 @@ interface FooterContainerProps {
 }
 
 export const FooterContainer: React.FC<FooterContainerProps> = ({
-  contactEmail = "MaTaN2288@gmail.com",
+  contactEmail = "matan2288@gmail.com",
   linkedInUrl = "https://www.linkedin.com/in/matan2288"
 }) => {
   const scrollToTop = () => {

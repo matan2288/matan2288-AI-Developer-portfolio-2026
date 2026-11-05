@@ -48,14 +48,14 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
       <div className="max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 w-full">
         {/* Centered Structured Hero Content */}
         <div className="flex flex-col items-center text-center space-y-5 sm:space-y-6">
-          
+
           {/* Centered Profile Avatar with Direct Upload & Drag-and-Drop */}
           <div className="relative group shrink-0">
-            <input 
-              type="file" 
-              ref={fileInputRef} 
-              accept="image/*" 
-              className="hidden" 
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept="image/*"
+              className="hidden"
               onChange={(e) => {
                 if (e.target.files && e.target.files[0]) {
                   handleFileUpload(e.target.files[0]);
@@ -69,11 +69,10 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
               onDragLeave={() => setIsDragging(false)}
               onDrop={handleDrop}
               title="Click or drag & drop to update profile photo"
-              className={`w-[12em] h-[12em] rounded-3xl overflow-hidden bg-neutral-100 text-left cursor-pointer shrink-0 shadow-2xs relative transition-all duration-200 ${
-                isDragging 
-                  ? 'ring-2 ring-text/30 scale-105' 
+              className={`w-[12em] h-[12em] rounded-3xl overflow-hidden bg-neutral-100 text-left cursor-pointer shrink-0 shadow-2xs relative transition-all duration-200 ${isDragging
+                  ? 'ring-2 ring-text/30 scale-105'
                   : 'hover:opacity-95'
-              }`}
+                }`}
             >
               <img
                 src={portfolio.avatarUrl}
@@ -88,9 +87,8 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
                 className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
               />
               {/* Hover Overlay */}
-              <div className={`absolute inset-0 bg-black/45 backdrop-blur-[1px] flex flex-col items-center justify-center text-white transition-opacity duration-200 ${
-                isDragging ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-              }`}>
+              <div className={`absolute inset-0 bg-black/45 backdrop-blur-[1px] flex flex-col items-center justify-center text-white transition-opacity duration-200 ${isDragging ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                }`}>
                 <Camera className="w-5 h-5 mb-1" />
                 <span className="text-[10px] font-medium tracking-tight whitespace-nowrap">
                   {isDragging ? 'Drop photo' : 'Change photo'}
@@ -125,13 +123,12 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
 
           {/* Quantitative Stats Strip */}
           {portfolio.stats && portfolio.stats.length > 0 && (
-            <div className={`w-full max-w-4xl mx-auto py-5 sm:py-6 my-1 border-y border-neutral-200/80 grid text-center ${
-              portfolio.stats.length <= 2 
-                ? 'grid-cols-2' 
-                : portfolio.stats.length <= 4 
-                  ? 'grid-cols-2 sm:grid-cols-4' 
+            <div className={`w-full max-w-4xl mx-auto py-5 sm:py-6 my-1 border-y border-neutral-200/80 grid text-center ${portfolio.stats.length <= 2
+                ? 'grid-cols-2'
+                : portfolio.stats.length <= 4
+                  ? 'grid-cols-2 sm:grid-cols-4'
                   : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-6'
-            } gap-6 sm:gap-8`}>
+              } gap-6 sm:gap-8`}>
               {portfolio.stats.map((stat, idx) => (
                 <div key={idx} className="space-y-1">
                   <span className="block text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight">
@@ -152,7 +149,7 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
 
           {/* Action Links (Below Chat) */}
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-sm pt-2">
-            <a 
+            <a
               href="#experience"
               onClick={(e) => onNavClick(e, '#experience')}
               className="inline-flex items-center gap-1.5 font-medium text-neutral-900 hover:text-neutral-600 transition-colors cursor-pointer group"
@@ -161,7 +158,7 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
               <ArrowRight size={14} className="text-neutral-500 transition-transform group-hover:translate-x-0.5" />
             </a>
 
-            <a 
+            <a
               href="#contact"
               onClick={(e) => onNavClick(e, '#contact')}
               className="inline-flex items-center gap-1.5 font-medium text-neutral-600 hover:text-neutral-900 transition-colors cursor-pointer"
@@ -192,7 +189,7 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
               <Linkedin size={17} />
             </a>
             <a
-              href={`mailto:${portfolio.contactEmail || "MaTaN2288@gmail.com"}`}
+              href={`mailto:${portfolio.contactEmail || "matan2288@gmail.com"}`}
               className="text-neutral-500 hover:text-neutral-900 transition-colors p-1 cursor-pointer"
               aria-label="Send Email"
             >

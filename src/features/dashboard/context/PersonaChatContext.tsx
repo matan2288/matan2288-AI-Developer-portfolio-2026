@@ -8,10 +8,10 @@ export interface SuggestedQuestion {
 }
 
 export const DEFAULT_SUGGESTED_QUESTIONS: SuggestedQuestion[] = [
-  { label: "Tech Stack", text: "What is your core tech stack and strongest skills?" },
-  { label: "Amdocs Scale", text: "What high-impact systems did you build at Amdocs?" },
-  { label: "Engineering Vibe", text: "Tell me about your background and engineering philosophy." },
-  { label: "Availability", text: "Are you available for hybrid or remote software developer roles?" },
+  { label: "Tech Stack & Scale", text: "What is your core tech stack and checkout scale at Amdocs?" },
+  { label: "Architecture & Ownership", text: "How do you approach frontend architecture and code quality?" },
+  { label: "Role & Availability", text: "What roles and work arrangements are you open to right now?" },
+  { label: "Why Hire Matan", text: "What sets you apart from other full-stack software engineers?" },
 ];
 
 interface PersonaChatContextType {
@@ -39,7 +39,7 @@ export const PersonaChatProvider: React.FC<{ children: ReactNode }> = ({ childre
   const [lastQuestion, setLastQuestion] = useState<string | null>(null);
   const [lastAnswer, setLastAnswer] = useState<string | null>(null);
   const [isWidgetOpen, setIsWidgetOpen] = useState(false);
-  
+
   // Track whether the user has ever opened the AI assistant
   const [hasEverOpened, setHasEverOpened] = useState<boolean>(false);
 
@@ -52,7 +52,7 @@ export const PersonaChatProvider: React.FC<{ children: ReactNode }> = ({ childre
     setIsBlinking(false);
     try {
       sessionStorage.removeItem('ai_matan_opened_once');
-    } catch {}
+    } catch { }
   }, []);
 
   const handleSetIsWidgetOpen = useCallback((value: boolean | ((prev: boolean) => boolean)) => {
@@ -81,7 +81,7 @@ export const PersonaChatProvider: React.FC<{ children: ReactNode }> = ({ childre
       {
         id: 'welcome',
         role: 'model',
-        text: "Hi, I'm Matan's interactive digital twin! Ask me anything about my frontend & fullstack engineering work, telecom checkouts, or technical architecture.",
+        text: "Hi! I'm Matan's interactive twin. Whether you're an Engineering Manager evaluating checkout architecture and technical rigor, or a Recruiter reviewing fit and availability, feel free to ask me anything. What would you like to explore?",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       },
     ]);
@@ -114,7 +114,7 @@ export const PersonaChatProvider: React.FC<{ children: ReactNode }> = ({ childre
 
       setMessages((prev) => [...prev, modelMessage]);
       setLastAnswer(reply);
-      
+
       // Stop blinking if already open or if ever opened before
       if (!hasEverOpened && !isWidgetOpen) {
         setIsBlinking(true);
@@ -123,7 +123,7 @@ export const PersonaChatProvider: React.FC<{ children: ReactNode }> = ({ childre
       }
       return reply;
     } catch (err) {
-      const fallback = "Brief connection issue. Feel free to email me directly at MaTaN2288@gmail.com or connect via LinkedIn!";
+      const fallback = "Brief connection issue. Feel free to email me directly at matan2288@gmail.com or connect via LinkedIn!";
       const errorMessage: ChatMessage = {
         id: 'err-' + Math.random(),
         role: 'model',
@@ -241,12 +241,12 @@ export const usePersonaChat = () => {
       lastQuestion: null,
       lastAnswer: null,
       isWidgetOpen: false,
-      setIsWidgetOpen: () => {},
+      setIsWidgetOpen: () => { },
       isBlinking: false,
-      setIsBlinking: () => {},
-      toggleWidget: () => {},
+      setIsBlinking: () => { },
+      toggleWidget: () => { },
       handleSend: async () => null,
-      clearChat: () => {},
+      clearChat: () => { },
       suggestedQuestions: DEFAULT_SUGGESTED_QUESTIONS,
       renderFormattedContent: (text: string) => text,
     };
