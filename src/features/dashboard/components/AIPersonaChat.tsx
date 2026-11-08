@@ -78,7 +78,7 @@ export const AIPersonaChat: React.FC = () => {
                   {renderFormattedContent(m.text)}
                 </div>
               </div>
-              <span className="text-[10px] text-text-subtle px-1.5 py-0.2 rounded bg-[#FBFCFD] border border-border/60 font-mono">
+              <span className="text-[10px] text-neutral-400 font-mono select-none">
                 {m.timestamp}
               </span>
             </div>

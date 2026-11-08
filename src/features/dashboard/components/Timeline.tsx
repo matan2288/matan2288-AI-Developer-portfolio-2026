@@ -115,7 +115,7 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
               <span className="text-xs sm:text-[13px] font-bold text-text uppercase tracking-wider truncate">
                 {company.replace(/\s*·\s*Amdocs/gi, '').replace(/\s*-\s*Amdocs/gi, '')}
               </span>
-              <span className="px-2.5 py-0.5 rounded-md bg-white border border-border/80 text-[10px] sm:text-[11px] font-mono text-text-muted shrink-0 font-medium tracking-wider select-none shadow-2xs">
+              <span className="text-[11px] sm:text-xs font-mono text-neutral-400 font-normal shrink-0 tracking-normal select-none">
                 {period}
               </span>
             </div>

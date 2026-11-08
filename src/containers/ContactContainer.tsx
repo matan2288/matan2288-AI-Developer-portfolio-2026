@@ -11,15 +11,10 @@ export const ContactContainer: React.FC<ContactContainerProps> = ({ portfolio })
   return (
     <section id="contact" className="py-14 md:py-20 bg-white border-t border-border">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
-        <div className="mb-12 sm:mb-16">
-          <div>
-              <h2 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-neutral-700 leading-tight font-heading">
-                Get in Touch
-              </h2>
-              <p className="text-xs sm:text-sm text-text-muted font-normal mt-2">
-                Available for software engineering contracts, frontend leadership, and full-stack positions
-              </p>
-          </div>
+        <div className="mb-12 sm:mb-14">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-700 leading-tight font-heading">
+            Let's Talk
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">

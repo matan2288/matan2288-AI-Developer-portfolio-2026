@@ -76,6 +76,8 @@ colors: {
 - **Section Indicator:** `text-[11px] font-mono tracking-widest text-text-muted`  
   *Formatting Rule:* `<span className="font-semibold text-text">{num}</span> <span className="text-neutral-300">/</span> <span className="uppercase font-medium tracking-[0.16em]">{title}</span>`  
   *Negative Rule:* **NEVER** apply borders, background pills, or button styles to section numbers.
+- **Experience / Timeline Dates:** Borderless, background-free dimmed minimalist typography (`text-[11px] sm:text-xs font-mono text-neutral-400 font-normal tracking-normal`)  
+  *Negative Rule:* **NEVER** apply borders, background pills, or shadows to date labels.
 - **Card Titles:** `text-base sm:text-lg font-semibold text-text tracking-tight`
 - **Body Copy:** `text-sm sm:text-base text-text leading-relaxed`
 

@@ -6,7 +6,7 @@ interface AboutContainerProps {
 }
 
 export const AboutContainer: React.FC<AboutContainerProps> = ({
-  title = "Where Software Engineering Meets AI.",
+  title = "Where Software Engineering Meets AI",
   content = "I’m a AI-Driven Software Engineer with about ~5 years of experience building digital products, scalable applications, and user-focused experiences. My background spans frontend engineering, backend development, and enterprise digital platforms. Today, I’m expanding that foundation into AI engineering exploring LLMs, intelligent systems, and agent-based workflows to build smarter, more capable software."
 }) => {
   return (
@@ -16,9 +16,9 @@ export const AboutContainer: React.FC<AboutContainerProps> = ({
 
           {/* Title Aside */}
           <div className="lg:col-span-5">
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-700 leading-tight font-heading">
-                {title}
-              </h2>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-700 leading-tight font-heading">
+              {title}
+            </h2>
           </div>
 
           {/* Description with smaller, dimmed minimalist font */}

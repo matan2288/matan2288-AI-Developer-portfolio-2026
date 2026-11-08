@@ -106,9 +106,9 @@ export const TestimonialsContainer: React.FC<TestimonialsContainerProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12 sm:mb-16">
           <div>
             <div>
-                <h2 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-neutral-700 leading-tight font-heading">
-                  Recommendations &amp; Feedback
-                </h2>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-700 leading-tight font-heading">
+                What Colleagues has to say about me?
+              </h2>
             </div>
           </div>
 
@@ -179,6 +179,30 @@ export const TestimonialsContainer: React.FC<TestimonialsContainerProps> = ({
             ))}
           </div>
         )}
+
+        {/* Sourced from LinkedIn link matching design */}
+        <div className={`flex items-center justify-center ${totalPages > 1 ? 'mt-9 sm:mt-11' : 'mt-12 sm:mt-14'} pt-1`}>
+          <a
+            href="https://www.linkedin.com/in/matan-elmaliach/details/recommendations/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-1.5 font-mono text-[11px] sm:text-xs font-normal text-neutral-400 hover:text-neutral-700 transition-colors duration-200 select-none py-1"
+            title="View recommendations on LinkedIn"
+          >
+            <svg
+              className="w-3.5 h-3.5 text-[#0A66C2] shrink-0"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451c.979 0 1.778-.773 1.778-1.729V1.73C24 .774 23.205 0 22.225 0z" />
+            </svg>
+            <span className="relative inline-block pb-0.5">
+              Sourced from LinkedIn
+              <span className="absolute bottom-0 left-0 w-full h-[1px] bg-neutral-400 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out pointer-events-none" />
+            </span>
+          </a>
+        </div>
       </div>
     </section>
   );
