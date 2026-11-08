@@ -211,9 +211,23 @@ app.post('/api/content-commit', async (req: Request, res: Response) => {
         results.push({ path: file.path, sha: putData.commit?.sha });
       }
 
+      // Also ensure local disk files are kept in sync
+      for (const file of files) {
+        try {
+          const filePath = path.resolve(__dirname, file.path);
+          const dirPath = path.dirname(filePath);
+          if (!fs.existsSync(dirPath)) {
+            fs.mkdirSync(dirPath, { recursive: true });
+          }
+          fs.writeFileSync(filePath, file.content, 'utf-8');
+        } catch (localWriteErr) {
+          console.warn('Local disk sync warning:', localWriteErr);
+        }
+      }
+
       return res.json({
         success: true,
-        message: `Committed ${results.length} files to GitHub (${owner}/${repo}@${branch})`,
+        message: `Committed ${results.length} files to GitHub (${owner}/${repo}@${branch}) and synced local disk`,
         commitSha: results[0]?.sha,
         results,
       });
