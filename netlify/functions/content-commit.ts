@@ -45,10 +45,11 @@ interface CommitPayload {
     }
 
     try {
-      const token = process.env.GITHUB_TOKEN;
-      const owner = process.env.GITHUB_OWNER || process.env.VITE_GITHUB_OWNER || 'matan2288';
-      const repo = process.env.GITHUB_REPO || process.env.VITE_GITHUB_REPO || '';
-      const branch = process.env.GITHUB_BRANCH || process.env.VITE_GITHUB_BRANCH || 'main';
+      const rawToken = process.env.GITHUB_TOKEN || '';
+      const token = rawToken.trim().replace(/^["']|["']$/g, '').replace(/^Bearer\s+/i, '').replace(/^token\s+/i, '').trim();
+      const owner = (process.env.GITHUB_OWNER || process.env.VITE_GITHUB_OWNER || 'matan2288').trim().replace(/^["']|["']$/g, '');
+      const repo = (process.env.GITHUB_REPO || process.env.VITE_GITHUB_REPO || '').trim().replace(/^["']|["']$/g, '');
+      const branch = (process.env.GITHUB_BRANCH || process.env.VITE_GITHUB_BRANCH || 'main').trim().replace(/^["']|["']$/g, '');
 
       if (!token) {
         return {
@@ -81,8 +82,9 @@ interface CommitPayload {
       }
 
       const headers = {
-        Accept: 'application/vnd.github.v3+json',
+        Accept: 'application/vnd.github+json',
         Authorization: `Bearer ${token}`,
+        'X-GitHub-Api-Version': '2022-11-28',
         'User-Agent': 'Netlify-TinaCMS-Committer',
         'Content-Type': 'application/json',
       };
