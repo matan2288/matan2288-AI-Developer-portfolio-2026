@@ -69,30 +69,30 @@ export function getStoredTinaContent() {
           ...(parsed.portfolio || {}),
           title,
           avatarUrl: safeAvatarUrl,
-          stats: (Array.isArray(parsed.portfolio?.stats) && parsed.portfolio.stats.length === 4) 
-            ? parsed.portfolio.stats 
+          stats: (Array.isArray(parsed.portfolio?.stats) && parsed.portfolio.stats.length === 4)
+            ? parsed.portfolio.stats
             : defaultTinaContent.portfolio.stats,
         },
         pillars: Array.isArray(parsed.pillars) && parsed.pillars.length > 0 ? parsed.pillars : defaultTinaContent.pillars,
         skills: Array.isArray(parsed.skills) && parsed.skills.length > 0 ? parsed.skills : defaultTinaContent.skills,
         experiences: Array.isArray(parsed.experiences) && parsed.experiences.length > 0 ? parsed.experiences : defaultTinaContent.experiences,
-        recommendations: Array.isArray(parsed.recommendations) && parsed.recommendations.length > 0 
+        recommendations: Array.isArray(parsed.recommendations) && parsed.recommendations.length > 0
           ? parsed.recommendations.map((r: RecommendationItem, idx: number) => ({
-              ...(defaultTinaContent.recommendations[idx] || {}),
-              ...r,
-              avatarUrl: r.avatarUrl || defaultTinaContent.recommendations[idx % defaultTinaContent.recommendations.length]?.avatarUrl,
-              linkedInUrl: r.linkedInUrl || defaultTinaContent.recommendations[idx % defaultTinaContent.recommendations.length]?.linkedInUrl,
-            }))
+            ...(defaultTinaContent.recommendations[idx] || {}),
+            ...r,
+            avatarUrl: r.avatarUrl || defaultTinaContent.recommendations[idx % defaultTinaContent.recommendations.length]?.avatarUrl,
+            linkedInUrl: r.linkedInUrl || defaultTinaContent.recommendations[idx % defaultTinaContent.recommendations.length]?.linkedInUrl,
+          }))
           : defaultTinaContent.recommendations,
-        certifications: Array.isArray(parsed.certifications) && parsed.certifications.length > 0 
+        certifications: Array.isArray(parsed.certifications) && parsed.certifications.length > 0
           ? parsed.certifications.map((c: CertificationItem) => {
-              const def = defaultTinaContent.certifications.find(dc => dc.id === c.id);
-              return {
-                ...(def || {}),
-                ...c,
-                category: c.category || def?.category,
-              };
-            })
+            const def = defaultTinaContent.certifications.find(dc => dc.id === c.id);
+            return {
+              ...(def || {}),
+              ...c,
+              category: c.category || def?.category,
+            };
+          })
           : defaultTinaContent.certifications,
       };
     }
@@ -174,36 +174,69 @@ export async function persistTinaContentToServer(
   ];
 
   try {
-    const res = await fetch('/api/content-commit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+      const payload = JSON.stringify({
         files,
         message: commitMessage,
-      }),
-    });
+      });
 
-    const data = await res.json();
-    if (!res.ok || !data.success) {
-      throw new Error(data.error || `Server responded with status ${res.status}`);
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+
+      // Try primary endpoint /api/content-commit
+      let res = await fetch('/api/content-commit', {
+        method: 'POST',
+        headers,
+        body: payload,
+      });
+
+      // If 404 (e.g. Netlify rewrite not active), fallback to direct Netlify function path
+      if(res.status === 404) {
+        try {
+          const netlifyRes = await fetch('/.netlify/functions/content-commit', {
+            method: 'POST',
+            headers,
+            body: payload,
+          });
+    if (netlifyRes.status !== 404) {
+      res = netlifyRes;
     }
-
-    return {
-      success: true,
-      message: data.message || 'Saved successfully',
-      local: data.local,
-      commitSha: data.commitSha,
-      savedFiles: data.savedFiles || files.map(f => f.path),
-    };
-  } catch (err: any) {
-    console.error('Failed to commit content to backend:', err);
-    return {
-      success: false,
-      error: err?.message || 'Failed to persist content to backend API',
-    };
+  } catch (fallbackErr) {
+    console.warn('Netlify function direct fallback error:', fallbackErr);
   }
+}
+
+const contentType = res.headers.get('content-type') || '';
+let data: any = {};
+if (contentType.includes('application/json')) {
+  data = await res.json();
+} else {
+  const text = await res.text();
+  throw new Error(
+    res.status === 404
+      ? 'Content commit endpoint not found (404). Check Netlify function deployment and environment variables.'
+      : `Server responded with status ${res.status}`
+  );
+}
+
+if (!res.ok || !data.success) {
+  throw new Error(data.error || `Server responded with status ${res.status}`);
+}
+
+return {
+  success: true,
+  message: data.message || 'Saved successfully',
+  local: data.local,
+  commitSha: data.commitSha,
+  savedFiles: data.savedFiles || files.map(f => f.path),
+};
+  } catch (err: any) {
+  console.error('Failed to commit content to backend:', err);
+  return {
+    success: false,
+    error: err?.message || 'Failed to persist content to backend API',
+  };
+}
 }
 
 export function updateAvatarUrl(newAvatarUrl: string) {
