@@ -1,4 +1,5 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import type { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -34,7 +35,7 @@ const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
 
-const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY || '';
+const apiKey = process.env.GEMINI_API_KEY || '';
 
 // Server-side Gemini initialization with required User-Agent telemetry header
 const ai = apiKey

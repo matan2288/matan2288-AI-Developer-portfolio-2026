@@ -6,19 +6,6 @@ function getGeminiApiKey(): string {
   if (typeof process !== "undefined" && process.env?.GEMINI_API_KEY) {
     return process.env.GEMINI_API_KEY.trim();
   }
-  if (typeof process !== "undefined" && process.env?.API_KEY) {
-    return process.env.API_KEY.trim();
-  }
-  try {
-    if (typeof import.meta !== "undefined" && import.meta.env) {
-      if (import.meta.env.VITE_GEMINI_API_KEY) {
-        return import.meta.env.VITE_GEMINI_API_KEY.trim();
-      }
-      if (import.meta.env.GEMINI_API_KEY) {
-        return import.meta.env.GEMINI_API_KEY.trim();
-      }
-    }
-  } catch { }
   return "";
 }
 
@@ -372,8 +359,7 @@ export const chatWithMatanPersona = async (
 
       const configuredModel =
         (typeof process !== "undefined" && process.env?.GEMINI_MODEL) ||
-        (typeof import.meta !== "undefined" && (import.meta.env?.VITE_GEMINI_MODEL || import.meta.env?.GEMINI_MODEL)) ||
-        "gemini-3.5-flash";
+        "gemini-3.8-flash";
 
       // Candidate models: try configured model first, then resilient fallbacks
       const candidateModels = Array.from(new Set([

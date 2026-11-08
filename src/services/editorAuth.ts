@@ -2,13 +2,11 @@ const AUTH_STORAGE_KEY = 'editor_authenticated';
 
 export function getEditorCredentials() {
   const username =
-    (typeof process !== 'undefined' && process.env?.EDITOR_USERNAME) ||
-    (typeof import.meta !== 'undefined' && (import.meta.env?.VITE_EDITOR_USERNAME || import.meta.env?.EDITOR_USERNAME)) ||
+    (typeof import.meta !== 'undefined' && import.meta.env?.EDITOR_USERNAME) ||
     'admin';
 
   const password =
-    (typeof process !== 'undefined' && process.env?.EDITOR_PASSWORD) ||
-    (typeof import.meta !== 'undefined' && (import.meta.env?.VITE_EDITOR_PASSWORD || import.meta.env?.EDITOR_PASSWORD)) ||
+    (typeof import.meta !== 'undefined' && import.meta.env?.EDITOR_PASSWORD) ||
     '';
 
   return { username: username.trim(), password };
