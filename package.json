@@ -4,9 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx server.ts",
+    "dev": "vite",
     "build": "vite build",
-    "build:tina": "tinacms build",
     "preview": "vite preview"
   },
   "dependencies": {

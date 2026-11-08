@@ -31,7 +31,6 @@ export interface PortfolioGeneralContent {
 }
 
 const LOCAL_STORAGE_KEY = 'tina_cms_portfolio_content_v6';
-const RUNTIME_STORAGE_KEY = 'tina_cms_runtime_content_v1';
 
 export const defaultTinaContent = {
   portfolio: mainPortfolioData as PortfolioGeneralContent,
@@ -42,35 +41,11 @@ export const defaultTinaContent = {
   certifications: certificationsData.certifications as CertificationItem[],
 };
 
-// Global in-memory draft state (allows live real-time preview in editor)
+// Global in-memory draft state (allows live real-time preview without saving)
 let liveDraftContent: typeof defaultTinaContent | null = null;
-// In-memory runtime state fetched dynamically from TinaCloud or GitHub without rebuilding
-let runtimeFetchedContent: typeof defaultTinaContent | null = null;
 
-export function getGitHubContentConfig() {
-  const owner = 
-    (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GITHUB_OWNER) ||
-    (typeof process !== 'undefined' && (process.env?.VITE_GITHUB_OWNER || process.env?.GITHUB_OWNER)) ||
-    'matan2288';
-  const repo = 
-    (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GITHUB_REPO) ||
-    (typeof process !== 'undefined' && (process.env?.VITE_GITHUB_REPO || process.env?.GITHUB_REPO)) ||
-    '';
-  const branch = 
-    (typeof import.meta !== 'undefined' && (import.meta.env?.VITE_GITHUB_BRANCH || import.meta.env?.VITE_BRANCH)) ||
-    (typeof process !== 'undefined' && (process.env?.VITE_GITHUB_BRANCH || process.env?.HEAD || process.env?.BRANCH)) ||
-    'main';
-
-  return {
-    owner: String(owner).trim(),
-    repo: String(repo).trim(),
-    branch: String(branch).trim(),
-  };
-}
-
-// Helper to get active Tina CMS content:
-// Priority: 1. Live Editor Draft -> 2. In-Memory Runtime Content -> 3. Local Editor Saves -> 4. Cached Runtime Storage -> 5. Bundled Defaults
-export function getStoredTinaContent(): typeof defaultTinaContent {
+// Helper to get active Tina CMS content (live draft > localStorage > default JSON)
+export function getStoredTinaContent() {
   if (liveDraftContent) {
     return {
       ...defaultTinaContent,
@@ -87,14 +62,8 @@ export function getStoredTinaContent(): typeof defaultTinaContent {
       certifications: Array.isArray(liveDraftContent.certifications) && liveDraftContent.certifications.length > 0 ? liveDraftContent.certifications : defaultTinaContent.certifications,
     };
   }
-
-  if (runtimeFetchedContent) {
-    return runtimeFetchedContent;
-  }
-
   try {
-    // Check manual editor local storage override first
-    const saved = typeof window !== 'undefined' ? localStorage.getItem(LOCAL_STORAGE_KEY) : null;
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
       const safeAvatarUrl = (!parsed.portfolio?.avatarUrl || parsed.portfolio.avatarUrl.includes('picsum.photos'))
@@ -118,32 +87,29 @@ export function getStoredTinaContent(): typeof defaultTinaContent {
         pillars: Array.isArray(parsed.pillars) && parsed.pillars.length > 0 ? parsed.pillars : defaultTinaContent.pillars,
         skills: Array.isArray(parsed.skills) && parsed.skills.length > 0 ? parsed.skills : defaultTinaContent.skills,
         experiences: Array.isArray(parsed.experiences) && parsed.experiences.length > 0 ? parsed.experiences : defaultTinaContent.experiences,
-        recommendations: Array.isArray(parsed.recommendations) && parsed.recommendations.length > 0 ? parsed.recommendations : defaultTinaContent.recommendations,
-        certifications: Array.isArray(parsed.certifications) && parsed.certifications.length > 0 ? parsed.certifications : defaultTinaContent.certifications,
+        recommendations: Array.isArray(parsed.recommendations) && parsed.recommendations.length > 0 
+          ? parsed.recommendations.map((r: RecommendationItem, idx: number) => ({
+              ...(defaultTinaContent.recommendations[idx] || {}),
+              ...r,
+              avatarUrl: r.avatarUrl || defaultTinaContent.recommendations[idx % defaultTinaContent.recommendations.length]?.avatarUrl,
+              linkedInUrl: r.linkedInUrl || defaultTinaContent.recommendations[idx % defaultTinaContent.recommendations.length]?.linkedInUrl,
+            }))
+          : defaultTinaContent.recommendations,
+        certifications: Array.isArray(parsed.certifications) && parsed.certifications.length > 0 
+          ? parsed.certifications.map((c: CertificationItem) => {
+              const def = defaultTinaContent.certifications.find(dc => dc.id === c.id);
+              return {
+                ...(def || {}),
+                ...c,
+                category: c.category || def?.category,
+              };
+            })
+          : defaultTinaContent.certifications,
       };
-    }
-
-    // Check cached runtime storage
-    const runtimeSaved = typeof window !== 'undefined' ? localStorage.getItem(RUNTIME_STORAGE_KEY) : null;
-    if (runtimeSaved) {
-      const parsed = JSON.parse(runtimeSaved);
-      if (parsed && parsed.portfolio) {
-        return {
-          ...defaultTinaContent,
-          ...parsed,
-          portfolio: { ...defaultTinaContent.portfolio, ...(parsed.portfolio || {}) },
-          pillars: Array.isArray(parsed.pillars) && parsed.pillars.length > 0 ? parsed.pillars : defaultTinaContent.pillars,
-          skills: Array.isArray(parsed.skills) && parsed.skills.length > 0 ? parsed.skills : defaultTinaContent.skills,
-          experiences: Array.isArray(parsed.experiences) && parsed.experiences.length > 0 ? parsed.experiences : defaultTinaContent.experiences,
-          recommendations: Array.isArray(parsed.recommendations) && parsed.recommendations.length > 0 ? parsed.recommendations : defaultTinaContent.recommendations,
-          certifications: Array.isArray(parsed.certifications) && parsed.certifications.length > 0 ? parsed.certifications : defaultTinaContent.certifications,
-        };
-      }
     }
   } catch (e) {
     console.warn('Failed to load stored Tina CMS content:', e);
   }
-
   return defaultTinaContent;
 }
 
@@ -200,198 +166,10 @@ export function resetTinaContentToDefaults() {
   window.dispatchEvent(new Event('tina-content-updated'));
 }
 
-// Runtime Content Delivery Engine (Primary Source: GitHub Raw with SWR Caching & Cache-Busting)
-let isRevalidating = false;
-
-export async function fetchAllGitHubRawContent(): Promise<Partial<typeof defaultTinaContent> | null> {
-  const { owner, repo, branch } = getGitHubContentConfig();
-  if (!owner || !repo) {
-    return null;
-  }
-
-  const base = `https://raw.githubusercontent.com/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/${encodeURIComponent(branch)}/content`;
-  const cacheBuster = `?t=${Date.now()}`;
-
-  try {
-    const [portfolioRes, certsRes, amdocsRes, bootcampRes, navyRes, alticeRes, threeukRes, uscellularRes] = await Promise.allSettled([
-      fetch(`${base}/portfolio/main.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
-      fetch(`${base}/certifications/certifications.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
-      fetch(`${base}/experiences/amdocs.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
-      fetch(`${base}/experiences/bootcamp.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
-      fetch(`${base}/experiences/navy.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
-      fetch(`${base}/recommendations/altice.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
-      fetch(`${base}/recommendations/threeuk.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
-      fetch(`${base}/recommendations/uscellular.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
-    ]);
-
-    const portfolio = portfolioRes.status === 'fulfilled' && portfolioRes.value ? portfolioRes.value : null;
-    const certifications = certsRes.status === 'fulfilled' && certsRes.value?.certifications ? certsRes.value.certifications : null;
-
-    const experiences = [
-      amdocsRes.status === 'fulfilled' ? amdocsRes.value : null,
-      bootcampRes.status === 'fulfilled' ? bootcampRes.value : null,
-      navyRes.status === 'fulfilled' ? navyRes.value : null,
-    ].filter(Boolean);
-
-    const recommendations = [
-      alticeRes.status === 'fulfilled' ? alticeRes.value : null,
-      threeukRes.status === 'fulfilled' ? threeukRes.value : null,
-      uscellularRes.status === 'fulfilled' ? uscellularRes.value : null,
-    ].filter(Boolean);
-
-    if (!portfolio && !certifications && experiences.length === 0 && recommendations.length === 0) {
-      return null;
-    }
-
-    return {
-      portfolio: portfolio ? { ...defaultTinaContent.portfolio, ...portfolio } : undefined,
-      certifications: certifications || undefined,
-      experiences: experiences.length > 0 ? (experiences as ExperienceItem[]) : undefined,
-      recommendations: recommendations.length > 0 ? (recommendations as RecommendationItem[]) : undefined,
-    };
-  } catch (err) {
-    console.warn('GitHub Raw runtime fetch warning:', err);
-    return null;
-  }
-}
-
-export async function revalidateRuntimeContent(): Promise<boolean> {
-  if (typeof window === 'undefined' || isRevalidating) return false;
-  isRevalidating = true;
-
-  try {
-    const freshData = await fetchAllGitHubRawContent();
-    if (freshData) {
-      const current = getStoredTinaContent();
-      const updated: typeof defaultTinaContent = {
-        ...current,
-        portfolio: freshData.portfolio || current.portfolio,
-        experiences: freshData.experiences || current.experiences,
-        recommendations: freshData.recommendations || current.recommendations,
-        certifications: freshData.certifications || current.certifications,
-      };
-
-      runtimeFetchedContent = updated;
-      try {
-        localStorage.setItem(RUNTIME_STORAGE_KEY, JSON.stringify(updated));
-      } catch {}
-      notifySubscribers();
-      return true;
-    }
-  } catch (err) {
-    console.warn('Runtime content revalidation error:', err);
-  } finally {
-    isRevalidating = false;
-  }
-
-  return false;
-}
-
-export const refreshTinaContent = revalidateRuntimeContent;
-
-// Secure GitHub API Commit Dispatcher (via serverless Netlify function or server proxy)
-export async function commitTinaContentToGitHub(
-  newContent: typeof defaultTinaContent,
-  message?: string
-): Promise<{ success: boolean; commitSha?: string; error?: string; message?: string }> {
-  // Save locally in storage first for immediate optimistic update
-  saveTinaContent(newContent);
-
-  try {
-    const filesToCommit = [
-      {
-        path: 'content/portfolio/main.json',
-        content: JSON.stringify(newContent.portfolio, null, 2),
-      },
-      {
-        path: 'content/certifications/certifications.json',
-        content: JSON.stringify({ certifications: newContent.certifications }, null, 2),
-      },
-      {
-        path: 'content/experiences/amdocs.json',
-        content: JSON.stringify(newContent.experiences[0] || defaultTinaContent.experiences[0], null, 2),
-      },
-      {
-        path: 'content/experiences/bootcamp.json',
-        content: JSON.stringify(newContent.experiences[1] || defaultTinaContent.experiences[1], null, 2),
-      },
-      {
-        path: 'content/experiences/navy.json',
-        content: JSON.stringify(newContent.experiences[2] || defaultTinaContent.experiences[2], null, 2),
-      },
-      {
-        path: 'content/recommendations/altice.json',
-        content: JSON.stringify(newContent.recommendations[0] || defaultTinaContent.recommendations[0], null, 2),
-      },
-      {
-        path: 'content/recommendations/threeuk.json',
-        content: JSON.stringify(newContent.recommendations[1] || defaultTinaContent.recommendations[1], null, 2),
-      },
-      {
-        path: 'content/recommendations/uscellular.json',
-        content: JSON.stringify(newContent.recommendations[2] || defaultTinaContent.recommendations[2], null, 2),
-      },
-    ];
-
-    const res = await fetch('/api/content-commit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        files: filesToCommit,
-        message: message || `cms: update portfolio content via editor [${new Date().toISOString()}]`,
-      }),
-    });
-
-    const data = await res.json();
-    if (!res.ok || !data.success) {
-      return {
-        success: false,
-        error: data.error || `Commit failed with HTTP ${res.status}`,
-      };
-    }
-
-    // Trigger revalidation so runtime content cache immediately stays in sync
-    revalidateRuntimeContent();
-
-    return {
-      success: true,
-      commitSha: data.commitSha || data.sha,
-      message: data.message || 'Changes successfully committed to GitHub',
-    };
-  } catch (err: any) {
-    console.error('Failed to commit content to GitHub:', err);
-    return {
-      success: false,
-      error: err?.message || 'Network error communicating with commit service',
-    };
-  }
-}
-
-// Set up cross-window, postMessage, and background revalidation listeners
+// Set up cross-window and postMessage listeners for live iframe synchronization
 if (typeof window !== 'undefined') {
-  // Revalidate on page focus or when reconnecting
-  window.addEventListener('focus', () => {
-    revalidateRuntimeContent();
-  });
-
-  window.addEventListener('online', () => {
-    revalidateRuntimeContent();
-  });
-
-  // Background polling interval: check for commits every 60 seconds
-  setInterval(() => {
-    revalidateRuntimeContent();
-  }, 60000);
-
-  // Initial asynchronous check after first paint
-  setTimeout(() => {
-    revalidateRuntimeContent();
-  }, 200);
-
   window.addEventListener('storage', (e) => {
-    if (e.key === LOCAL_STORAGE_KEY || e.key === RUNTIME_STORAGE_KEY) {
+    if (e.key === LOCAL_STORAGE_KEY) {
       liveDraftContent = null;
       notifySubscribers();
     }

@@ -23,7 +23,6 @@ import {
 import { 
   getStoredTinaContent, 
   saveTinaContent, 
-  commitTinaContentToGitHub,
   resetTinaContentToDefaults, 
   defaultTinaContent,
   PortfolioGeneralContent 
@@ -63,34 +62,12 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
     });
   };
 
-  const [isSaving, setIsSaving] = useState(false);
-  const [commitMessage, setCommitMessage] = useState<string | null>(null);
-
-  // Save changes to persistent storage and commit to GitHub
-  const handleSave = async () => {
-    setIsSaving(true);
-    setCommitMessage('Committing...');
-    try {
-      const res = await commitTinaContentToGitHub(cmsState);
-      setHasUnsavedChanges(false);
-      setIsSaved(true);
-      if (res.success) {
-        setCommitMessage(res.commitSha ? `Committed (${res.commitSha.slice(0, 7)})` : 'Saved to GitHub');
-      } else {
-        setCommitMessage(res.error ? `Saved locally (Remote note: ${res.error.slice(0, 25)})` : 'Saved locally');
-      }
-    } catch {
-      saveTinaContent(cmsState);
-      setHasUnsavedChanges(false);
-      setIsSaved(true);
-      setCommitMessage('Saved locally');
-    } finally {
-      setIsSaving(false);
-      setTimeout(() => {
-        setIsSaved(false);
-        setCommitMessage(null);
-      }, 3500);
-    }
+  // Save changes to persistent storage
+  const handleSave = () => {
+    saveTinaContent(cmsState);
+    setHasUnsavedChanges(false);
+    setIsSaved(true);
+    setTimeout(() => setIsSaved(false), 2500);
   };
 
   // Reset to defaults
@@ -321,17 +298,14 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
 
           <button
             onClick={handleSave}
-            disabled={isSaving}
             className={`inline-flex items-center gap-2 px-4 sm:px-4.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-2xs cursor-pointer border ${
-              isSaving
-                ? 'bg-neutral-100 text-text-muted border-neutral-300 opacity-80 cursor-wait'
-                : isSaved
+              isSaved
                 ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-300 ring-2 ring-emerald-200/40'
                 : 'bg-white hover:bg-neutral-50 text-text border-border/80 hover:border-neutral-300 active:scale-[0.98]'
             }`}
           >
             {isSaved ? <Check size={13} className="text-emerald-600" /> : <Save size={13} className="text-text-muted" />}
-            <span>{isSaving ? 'Publishing...' : isSaved ? (commitMessage || 'Saved!') : 'Publish to GitHub'}</span>
+            <span>{isSaved ? 'Saved!' : 'Save Changes'}</span>
           </button>
         </div>
       </header>
