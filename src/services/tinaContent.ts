@@ -1,16 +1,5 @@
 import { useState, useEffect } from 'react';
-import mainPortfolioData from '../../content/portfolio/main.json';
-import buyflowPillar from '../../content/pillars/buyflow.json';
-import migrationsPillar from '../../content/pillars/migrations.json';
-import telemetryPillar from '../../content/pillars/telemetry.json';
-import skillCategoriesData from '../../content/skills/categories.json';
-import amdocsExp from '../../content/experiences/amdocs.json';
-import bootcampExp from '../../content/experiences/bootcamp.json';
-import navyExp from '../../content/experiences/navy.json';
-import alticeRec from '../../content/recommendations/altice.json';
-import threeukRec from '../../content/recommendations/threeuk.json';
-import uscellularRec from '../../content/recommendations/uscellular.json';
-import certificationsData from '../../content/certifications/certifications.json';
+import siteContent from '../../content/siteContent.json';
 
 import { PillarItem, SkillCategory, RecommendationItem, ExperienceItem, CertificationItem } from '../features/dashboard/types';
 
@@ -30,15 +19,15 @@ export interface PortfolioGeneralContent {
   stats: { value: string; label: string }[];
 }
 
-const LOCAL_STORAGE_KEY = 'tina_cms_portfolio_content_v6';
+const LOCAL_STORAGE_KEY = 'tina_cms_portfolio_content_v7';
 
 export const defaultTinaContent = {
-  portfolio: mainPortfolioData as PortfolioGeneralContent,
-  pillars: [buyflowPillar, migrationsPillar, telemetryPillar] as PillarItem[],
-  skills: skillCategoriesData.categories as SkillCategory[],
-  experiences: [amdocsExp, bootcampExp, navyExp] as ExperienceItem[],
-  recommendations: [alticeRec, threeukRec, uscellularRec] as RecommendationItem[],
-  certifications: certificationsData.certifications as CertificationItem[],
+  portfolio: siteContent.portfolio as PortfolioGeneralContent,
+  pillars: [] as PillarItem[],
+  skills: (siteContent.skills || []) as SkillCategory[],
+  experiences: siteContent.experiences as ExperienceItem[],
+  recommendations: siteContent.recommendations as RecommendationItem[],
+  certifications: siteContent.certifications as CertificationItem[],
 };
 
 // Global in-memory draft state (allows live real-time preview without saving)

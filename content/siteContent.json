@@ -1,0 +1,253 @@
+{
+  "portfolio": {
+    "developerName": "Matan Elmaliah",
+    "title": "AI-Driven Software Developer",
+    "location": "Tel Aviv, Israel",
+    "avatarUrl": "/profile.png",
+    "heroBio": "Software developer specializing in React, TypeScript, and full-stack web applications with 4 years of experience building scalable systems.",
+    "aboutTitle": "AI-Driven Software Developer",
+    "aboutBio1": "I build performant web applications, modern interfaces, and robust integrations with 4 years of professional experience across telecom systems.",
+    "aboutBio2": "Tel Aviv, Israel · Available for hybrid or remote roles.",
+    "contactEmail": "matan2288@gmail.com",
+    "linkedInUrl": "https://www.linkedin.com/in/matan2288",
+    "blogUrl": "https://blog.google/technology/ai/",
+    "showBlogTab": true,
+    "stats": [
+      {
+        "value": "4 Years",
+        "label": "Experience"
+      },
+      {
+        "value": "Enterprise",
+        "label": "Telecom scale"
+      },
+      {
+        "value": "100%",
+        "label": "Key Achievement"
+      },
+      {
+        "value": "AI",
+        "label": "First"
+      }
+    ]
+  },
+  "experiences": [
+    {
+      "id": "amdocs",
+      "company": "Amdocs",
+      "role": "Software Developer",
+      "location": "Tel Aviv, Israel",
+      "period": "2022 — PRESENT",
+      "isLatest": true,
+      "bullets": [
+        "Engineered core frontend features for enterprise eCommerce platforms and self-service portals using React, TypeScript, and Redux.",
+        "Contributed to full-scale platform migration to Vue and Node.js, building custom E2E features and admin tools.",
+        "Architected web telemetry and tracking integrations, implementing robust RESTful APIs and accessible UI systems."
+      ],
+      "skills": [
+        "React",
+        "TypeScript",
+        "Redux",
+        "Vue",
+        "Node.js",
+        "REST APIs"
+      ]
+    },
+    {
+      "id": "bootcamp",
+      "company": "Etgar College",
+      "role": "Full-Stack Development",
+      "location": "Israel",
+      "period": "2020",
+      "isLatest": false,
+      "bullets": [
+        "Full-stack engineering training focused on modern JavaScript, React, Node.js, and SQL architecture."
+      ],
+      "skills": [
+        "JavaScript",
+        "React",
+        "Node.js",
+        "SQL"
+      ]
+    },
+    {
+      "id": "navy",
+      "company": "IDF, Israeli Navy",
+      "role": "Diving Gear Technician · Team Lead",
+      "location": "Israel",
+      "period": "2013 — 2019",
+      "isLatest": false,
+      "bullets": [
+        "Led technical operations team maintaining mission-critical life-support and diving systems under strict protocols."
+      ],
+      "skills": [
+        "Leadership",
+        "Operations",
+        "Technical Protocols"
+      ]
+    }
+  ],
+  "recommendations": [
+    {
+      "quote": "Matan is a sharp, dedicated engineer with extreme attention to detail. He led our e-commerce subscriber checkout migration with clean, dependable architecture.",
+      "author": "Senior Delivery Director",
+      "role": "Telecom Delivery",
+      "company": "Altice",
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=160&auto=format&fit=crop&q=80",
+      "linkedInUrl": "https://www.linkedin.com/in/matan2288"
+    },
+    {
+      "quote": "Consistently delivers optimized, reliable solutions. During our broadband launch, Matan efficiently resolved complex state issues across our order funnel.",
+      "author": "Principal Architect",
+      "role": "Order Engineering",
+      "company": "Three UK",
+      "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=160&auto=format&fit=crop&q=80",
+      "linkedInUrl": "https://www.linkedin.com/in/matan2288"
+    },
+    {
+      "quote": "Working with Matan on the analytics dataLayer was seamless. He mapped complex interaction tags cleanly and delivered dependable tracking.",
+      "author": "Analytics Lead",
+      "role": "Digital Performance",
+      "company": "USCellular",
+      "avatarUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=160&auto=format&fit=crop&q=80",
+      "linkedInUrl": "https://www.linkedin.com/in/matan2288"
+    }
+  ],
+  "certifications": [
+    {
+      "id": "cursor-genai-sdlc",
+      "title": "Cursor: GenAI Driven SDLC",
+      "category": "AI",
+      "topic": "GenAI & SDLC Engineering",
+      "issuer": "Amdocs",
+      "issueDate": "Jun 2026",
+      "credentialId": "AMDOCS-CURSOR-2026",
+      "description": "Certificate of completion for the Amdocs learning plan in Cursor & GenAI-Driven Software Development Life Cycle (SDLC).",
+      "skills": [
+        "Cursor",
+        "GenAI",
+        "SDLC",
+        "Code Automation",
+        "AI Engineering"
+      ],
+      "driveUrl": "/certifications/Cursor_Certification_Andics_ab86ae39.pdf",
+      "verificationUrl": "/certifications/Cursor_Certification_Andics_ab86ae39.pdf"
+    },
+    {
+      "id": "principles-secure-coding",
+      "title": "Principles of Secure Coding",
+      "category": "Security",
+      "topic": "Application Security",
+      "issuer": "Udemy",
+      "issueDate": "Aug 2026",
+      "credentialId": "UC-936ff33b-c9d1-40b2-8f2d-2435d5ee5c3c",
+      "description": "Certified training in secure coding fundamentals, application security principles, defensive architecture, and vulnerability prevention.",
+      "skills": [
+        "Secure Coding",
+        "AppSec",
+        "Vulnerability Prevention",
+        "OWASP"
+      ],
+      "driveUrl": "/certifications/Principles_of_Secure_Coding_certfication_da0fed44.pdf",
+      "verificationUrl": "https://ude.my/UC-936ff33b-c9d1-40b2-8f2d-2435d5ee5c3c"
+    },
+    {
+      "id": "securing-genai-systems",
+      "title": "Securing GenAI Systems",
+      "category": "AI Security",
+      "topic": "GenAI Security & Safety",
+      "issuer": "Udemy",
+      "issueDate": "Aug 2026",
+      "credentialId": "UC-1286298a-0720-4cf6-ae5a-956141931da7",
+      "description": "Specialized certification in securing generative AI architectures, prompt injection defenses, LLM guardrails, data leakage mitigation, and AI safety.",
+      "skills": [
+        "GenAI Security",
+        "LLM Guardrails",
+        "Prompt Injection Defense",
+        "AI Safety"
+      ],
+      "driveUrl": "/certifications/Securing_GenAI_Systems_certification_7039d733.pdf",
+      "verificationUrl": "https://ude.my/UC-1286298a-0720-4cf6-ae5a-956141931da7"
+    },
+    {
+      "id": "etgar-bootcamp",
+      "title": "Full-Stack Web Development Diploma (335h)",
+      "category": "Full Stack",
+      "topic": "Full-Stack Web Development",
+      "issuer": "Ministry of Labor & Etgar College",
+      "issueDate": "2020",
+      "credentialId": "1349438",
+      "description": "Official Israeli Ministry of Labor and Etgar College certification in Full Stack Web Technologies & Applications (335 accredited academic hours) covering JavaScript, React, Node.js, and SQL.",
+      "skills": [
+        "JavaScript",
+        "React",
+        "Node.js",
+        "SQL",
+        "Web Applications"
+      ],
+      "driveUrl": "/certifications/Web_Dev_Bootcamp_Certification_24e0b667.pdf",
+      "verificationUrl": "/certifications/Web_Dev_Bootcamp_Certification_24e0b667.pdf"
+    }
+  ],
+  "skills": [
+    {
+      "title": "Core Frontend Frameworks",
+      "items": [
+        "React",
+        "React Native",
+        "Vue 3",
+        "Redux Toolkit",
+        "Redux-Saga",
+        "Vuex",
+        "TypeScript",
+        "JavaScript (ES6+)"
+      ]
+    },
+    {
+      "title": "Styling & UI Architecture",
+      "items": [
+        "Sass / SCSS",
+        "Tailwind CSS",
+        "Storybook",
+        "Framer Motion",
+        "Semantic HTML5",
+        "ARIA Accessibility"
+      ]
+    },
+    {
+      "title": "Backend & Databases",
+      "items": [
+        "Node.js",
+        "Java",
+        "Express.js",
+        "MySQL",
+        "MongoDB",
+        "RESTful APIs"
+      ]
+    },
+    {
+      "title": "CMS & Platforms",
+      "items": [
+        "Adobe Experience Manager (AEM)",
+        "Drupal",
+        "PHP",
+        "Contentful CMS",
+        "TinaCMS"
+      ]
+    },
+    {
+      "title": "Artificial Intelligence & Workspaces",
+      "items": [
+        "Agent Orchestration",
+        "Context Engineering",
+        "RAG pipelines",
+        "Semantic Embeddings",
+        "VectorDB",
+        "MCP Servers",
+        "Figma",
+        "Playwright automation",
+        "Vitest"
+      ]
+    }
+  ]
+}

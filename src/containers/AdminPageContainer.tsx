@@ -50,6 +50,10 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
   const [isSaved, setIsSaved] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [copiedJson, setCopiedJson] = useState(false);
+  const [isEditingJson, setIsEditingJson] = useState(false);
+  const [jsonInput, setJsonInput] = useState('');
+  const [jsonError, setJsonError] = useState<string | null>(null);
+  const [jsonSuccess, setJsonSuccess] = useState(false);
 
   const previewScrollRef = useRef<HTMLDivElement>(null);
 
@@ -79,6 +83,37 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
       setHasUnsavedChanges(false);
       setIsSaved(true);
       setTimeout(() => setIsSaved(false), 2500);
+    }
+  };
+
+  // Apply custom pasted JSON
+  const handleApplyJson = () => {
+    try {
+      const parsed = JSON.parse(jsonInput);
+      if (!parsed || typeof parsed !== 'object') {
+        throw new Error('Root JSON must be a valid object.');
+      }
+      const validatedState = {
+        ...defaultTinaContent,
+        ...parsed,
+        portfolio: {
+          ...defaultTinaContent.portfolio,
+          ...(parsed.portfolio || {}),
+        },
+        experiences: Array.isArray(parsed.experiences) ? parsed.experiences : defaultTinaContent.experiences,
+        recommendations: Array.isArray(parsed.recommendations) ? parsed.recommendations : defaultTinaContent.recommendations,
+        certifications: Array.isArray(parsed.certifications) ? parsed.certifications : defaultTinaContent.certifications,
+        skills: Array.isArray(parsed.skills) ? parsed.skills : defaultTinaContent.skills,
+      };
+      setCmsState(validatedState);
+      saveTinaContent(validatedState);
+      setJsonError(null);
+      setJsonSuccess(true);
+      setIsEditingJson(false);
+      setHasUnsavedChanges(false);
+      setTimeout(() => setJsonSuccess(false), 3000);
+    } catch (err: any) {
+      setJsonError(err.message || 'Invalid JSON syntax. Please check formatting.');
     }
   };
 
@@ -1072,27 +1107,105 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
             {/* JSON Tab */}
             {activeTab === 'json' && (
               <div className="space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-border/70">
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-border/70">
                   <div>
-                    <h3 className="text-xs font-semibold text-text">Raw TinaCMS JSON Snapshot</h3>
-                    <p className="text-[11px] text-text-muted mt-0.5">Live serializable state backing all portfolio schemas.</p>
+                    <h3 className="text-xs font-semibold text-text">Consolidated Site JSON</h3>
+                    <p className="text-[11px] text-text-muted mt-0.5">Live serializable state backing portfolio, experiences, recommendations, and certifications.</p>
                   </div>
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText(JSON.stringify(cmsState, null, 2));
-                      setCopiedJson(true);
-                      setTimeout(() => setCopiedJson(false), 2000);
-                    }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-border hover:border-text rounded-lg text-xs font-medium text-text cursor-pointer transition-colors shadow-2xs"
-                  >
-                    {copiedJson ? <Check size={13} className="text-emerald-600" /> : <FileText size={13} />}
-                    <span>{copiedJson ? 'Copied!' : 'Copy JSON'}</span>
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (!isEditingJson) {
+                          setJsonInput(JSON.stringify(cmsState, null, 2));
+                          setJsonError(null);
+                        }
+                        setIsEditingJson(!isEditingJson);
+                      }}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 border rounded-lg text-xs font-medium cursor-pointer transition-colors shadow-2xs ${
+                        isEditingJson
+                          ? 'bg-neutral-100 border-text text-text'
+                          : 'bg-white border-border hover:border-text text-text'
+                      }`}
+                    >
+                      <Code size={13} />
+                      <span>{isEditingJson ? 'Close Editor' : 'Paste / Edit JSON'}</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(JSON.stringify(cmsState, null, 2));
+                        setCopiedJson(true);
+                        setTimeout(() => setCopiedJson(false), 2000);
+                      }}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-border hover:border-text rounded-lg text-xs font-medium text-text cursor-pointer transition-colors shadow-2xs"
+                    >
+                      {copiedJson ? <Check size={13} className="text-emerald-600" /> : <FileText size={13} />}
+                      <span>{copiedJson ? 'Copied!' : 'Copy JSON'}</span>
+                    </button>
+                  </div>
                 </div>
 
-                <div className="bg-neutral-900 text-neutral-100 p-4 rounded-xl font-mono text-[11px] overflow-x-auto max-h-[500px] border border-neutral-800 leading-relaxed">
-                  <pre>{JSON.stringify(cmsState, null, 2)}</pre>
-                </div>
+                {jsonSuccess && (
+                  <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg text-xs flex items-center gap-2">
+                    <Check size={14} className="text-emerald-600 shrink-0" />
+                    <span>JSON successfully validated and applied to the entire app!</span>
+                  </div>
+                )}
+
+                {jsonError && (
+                  <div className="p-3 bg-red-50 border border-red-200 text-red-800 rounded-lg text-xs">
+                    <span className="font-semibold">JSON Parse Error: </span>
+                    {jsonError}
+                  </div>
+                )}
+
+                {isEditingJson ? (
+                  <div className="space-y-3">
+                    <div className="text-[11px] text-text-muted">
+                      Paste or edit your consolidated site JSON below. Pressing <strong>Apply JSON to App</strong> will update all sections instantly.
+                    </div>
+                    <textarea
+                      value={jsonInput}
+                      onChange={(e) => {
+                        setJsonInput(e.target.value);
+                        setJsonError(null);
+                      }}
+                      rows={18}
+                      className="w-full p-3.5 bg-neutral-900 text-emerald-400 rounded-xl font-mono text-[11px] border border-neutral-800 leading-relaxed outline-none focus:border-neutral-600 focus:ring-1 focus:ring-neutral-600"
+                      placeholder="Paste JSON here..."
+                    />
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] text-text-subtle font-mono">
+                        Validates: portfolio, experiences, recommendations, certifications, skills
+                      </span>
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsEditingJson(false);
+                            setJsonError(null);
+                          }}
+                          className="px-3 py-1.5 border border-border rounded-lg text-xs font-medium text-text-muted hover:text-text hover:bg-neutral-50 transition-colors cursor-pointer"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleApplyJson}
+                          className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-neutral-900 hover:bg-black text-white rounded-lg text-xs font-medium transition-colors cursor-pointer shadow-sm"
+                        >
+                          <Save size={13} />
+                          <span>Apply JSON to App</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-neutral-900 text-neutral-100 p-4 rounded-xl font-mono text-[11px] overflow-x-auto max-h-[500px] border border-neutral-800 leading-relaxed">
+                    <pre>{JSON.stringify(cmsState, null, 2)}</pre>
+                  </div>
+                )}
               </div>
             )}
 
