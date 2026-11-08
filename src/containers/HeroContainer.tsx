@@ -123,18 +123,13 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
 
           {/* Quantitative Stats Strip */}
           {portfolio.stats && portfolio.stats.length > 0 && (
-            <div className={`w-full max-w-4xl mx-auto py-5 sm:py-6 my-1 border-y border-neutral-200/80 grid text-center ${portfolio.stats.length <= 2
-                ? 'grid-cols-2'
-                : portfolio.stats.length <= 4
-                  ? 'grid-cols-2 sm:grid-cols-4'
-                  : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-6'
-              } gap-6 sm:gap-8`}>
+            <div className="w-full max-w-4xl mx-auto py-5 sm:py-6 my-1 border-y border-neutral-200/80 flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-14 md:gap-x-16 gap-y-5 sm:gap-y-6 text-center">
               {portfolio.stats.map((stat, idx) => (
-                <div key={idx} className="space-y-1">
+                <div key={idx} className="space-y-1 min-w-[90px] sm:min-w-[110px] px-2">
                   <span className="block text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight">
                     {stat.value}
                   </span>
-                  <span className="text-xs text-neutral-500 block font-medium">
+                  <span className="text-xs text-neutral-500 block font-medium whitespace-nowrap">
                     {stat.label}
                   </span>
                 </div>

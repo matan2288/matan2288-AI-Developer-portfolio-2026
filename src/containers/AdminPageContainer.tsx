@@ -470,7 +470,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-4">
                     <div>
                       <label className="block text-[11px] font-medium text-text-muted mb-1.5">Location</label>
                       <input
@@ -483,16 +483,16 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
 
                     <div>
                       <label className="block text-[11px] font-medium text-text-muted mb-1.5">Avatar Image URL or Direct File Upload</label>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 w-full min-w-0">
                         <input
                           type="text"
                           value={cmsState.portfolio.avatarUrl}
                           onChange={(e) => updateGeneralField('avatarUrl', e.target.value)}
                           placeholder="/profile.png or paste image URL"
-                          className="flex-1 px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all"
+                          className="min-w-0 flex-1 px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all"
                         />
-                        <label className="px-3 py-2 border border-border hover:border-text rounded-lg text-xs font-medium cursor-pointer bg-neutral-50 hover:bg-white transition-colors shrink-0 flex items-center gap-1.5 text-text">
-                          <Upload className="w-3.5 h-3.5 text-text-muted" />
+                        <label className="px-3 py-2 border border-border hover:border-text rounded-lg text-xs font-medium cursor-pointer bg-neutral-50 hover:bg-white transition-colors shrink-0 flex items-center gap-1.5 text-text whitespace-nowrap shadow-2xs">
+                          <Upload className="w-3.5 h-3.5 text-text-muted shrink-0" />
                           <span>Upload File</span>
                           <input
                             type="file"
