@@ -703,9 +703,10 @@ export const TinaAdmin: React.FC<TinaAdminProps> = ({ isOpen, onClose }) => {
           </div>
           <button
             onClick={handleSave}
-            className="text-text hover:underline font-bold uppercase cursor-pointer"
+            disabled={isSaving}
+            className="text-text hover:underline font-bold uppercase cursor-pointer disabled:opacity-50"
           >
-            Apply Changes
+            {isSaving ? 'Saving...' : 'Apply Changes'}
           </button>
         </div>
 
