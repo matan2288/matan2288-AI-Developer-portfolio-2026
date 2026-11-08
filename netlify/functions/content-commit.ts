@@ -1,4 +1,17 @@
-import type { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';
+interface HandlerEvent {
+  httpMethod: string;
+  headers: Record<string, string | undefined>;
+  body: string | null;
+  [key: string]: any;
+}
+
+interface HandlerResponse {
+  statusCode: number;
+  headers?: Record<string, string>;
+  body: string;
+}
+
+type Handler = (event: HandlerEvent, context?: any) => Promise<HandlerResponse>;
 
 interface FileToCommit {
   path: string;
