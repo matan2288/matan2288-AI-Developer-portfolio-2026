@@ -10,7 +10,7 @@ export const AboutContainer: React.FC<AboutContainerProps> = ({
   content = "I’m a AI-Driven Software Engineer with about ~5 years of experience building digital products, scalable applications, and user-focused experiences. My background spans frontend engineering, backend development, and enterprise digital platforms. Today, I’m expanding that foundation into AI engineering exploring LLMs, intelligent systems, and agent-based workflows to build smarter, more capable software."
 }) => {
   return (
-    <section id="about" className="py-16 md:py-24 bg-[#F9FAFB] border-t border-border">
+    <section id="about" className="py-16 md:py-24 bg-[#FBFCFD] border-t border-border">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
           

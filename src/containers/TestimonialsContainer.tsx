@@ -100,7 +100,7 @@ export const TestimonialsContainer: React.FC<TestimonialsContainerProps> = ({
   };
 
   return (
-    <section id="testimonials" className="py-14 md:py-20 bg-[#F9FAFB] border-t border-border">
+    <section id="testimonials" className="py-14 md:py-20 bg-[#FBFCFD] border-t border-border">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
         {/* Section Header with Slider Controls */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-12">

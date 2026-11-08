@@ -109,13 +109,13 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
             </div>
           )}
 
-          <div className="bg-bg-alt rounded-2xl p-5 sm:p-6 md:p-7 border border-border/80 hover:border-neutral-400 transition-colors duration-200 relative shadow-2xs">
+          <div className="bg-[#FBFCFD] rounded-2xl p-5 sm:p-6 md:p-7 border border-border/80 hover:border-neutral-400 transition-colors duration-200 relative shadow-2xs">
             {/* Card Header matching image.png without h3 */}
             <div className="flex items-baseline justify-between gap-4 mb-6 sm:mb-7">
               <span className="text-xs sm:text-[13px] font-bold text-text uppercase tracking-wider truncate">
                 {company.replace(/\s*·\s*Amdocs/gi, '').replace(/\s*-\s*Amdocs/gi, '')}
               </span>
-              <span className="text-[10px] sm:text-[11px] font-mono text-neutral-400 shrink-0 font-normal tracking-widest select-none">
+              <span className="px-2.5 py-0.5 rounded-md bg-white border border-border/80 text-[10px] sm:text-[11px] font-mono text-text-muted shrink-0 font-medium tracking-wider select-none shadow-2xs">
                 {period}
               </span>
             </div>
