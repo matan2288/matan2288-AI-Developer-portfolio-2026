@@ -19,7 +19,7 @@ export interface PortfolioGeneralContent {
   stats: { value: string; label: string }[];
 }
 
-const LOCAL_STORAGE_KEY = 'tina_cms_portfolio_content_v7';
+const LOCAL_STORAGE_KEY = 'tina_cms_portfolio_content_v9';
 
 export const defaultTinaContent = {
   portfolio: siteContent.portfolio as PortfolioGeneralContent,

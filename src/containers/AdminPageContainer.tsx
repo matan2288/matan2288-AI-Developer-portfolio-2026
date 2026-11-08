@@ -32,6 +32,7 @@ import {
 } from '../services/tinaContent';
 import { ExperienceItem, RecommendationItem, CertificationItem } from '../features/dashboard/types';
 import { HeroContainer } from './HeroContainer';
+import { AboutContainer } from './AboutContainer';
 import { ExperienceContainer } from './ExperienceContainer';
 import { TestimonialsContainer } from './TestimonialsContainer';
 import { ContactContainer } from './ContactContainer';
@@ -1297,6 +1298,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
               <span className="text-[11px] font-medium text-text-muted mr-1.5 hidden sm:inline">Jump:</span>
               {[
                 { id: 'home', label: 'Top' },
+                { id: 'about', label: 'About' },
                 { id: 'experience', label: 'Experience' },
                 { id: 'testimonials', label: 'Testimonials' },
                 { id: 'contact', label: 'Contact' },
@@ -1355,6 +1357,14 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                       scrollToSectionInPreview(href.replace('#', ''));
                     }}
                     onOpenTinaAdmin={() => { }}
+                  />
+                </div>
+
+                {/* About Section */}
+                <div id="preview-about">
+                  <AboutContainer
+                    title={cmsState.portfolio.aboutTitle}
+                    content={cmsState.portfolio.aboutBio1}
                   />
                 </div>
 

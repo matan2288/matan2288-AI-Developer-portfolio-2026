@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavbarContainer } from './containers/NavbarContainer';
 import { HeroContainer } from './containers/HeroContainer';
+import { AboutContainer } from './containers/AboutContainer';
 import { ExperienceContainer } from './containers/ExperienceContainer';
 import { TestimonialsContainer } from './containers/TestimonialsContainer';
 import { ContactContainer } from './containers/ContactContainer';
@@ -140,9 +141,10 @@ export default function App() {
   // Navigation config for scroll-spy and header links
   const navItems = [
     { num: '00', label: 'Home',         id: 'home',         href: '#home' },
-    { num: '01', label: 'Experience',   id: 'experience',   href: '#experience' },
-    { num: '02', label: 'Testimonials', id: 'testimonials', href: '#testimonials' },
-    { num: '03', label: 'Contact',      id: 'contact',      href: '#contact' },
+    { num: '01', label: 'About',        id: 'about',        href: '#about' },
+    { num: '02', label: 'Experience',   id: 'experience',   href: '#experience' },
+    { num: '03', label: 'Testimonials', id: 'testimonials', href: '#testimonials' },
+    { num: '04', label: 'Contact',      id: 'contact',      href: '#contact' },
   ];
 
   const isClickScrollingRef = useRef(false);
@@ -160,9 +162,9 @@ export default function App() {
       const scrollY = window.scrollY;
       const scrollHeight = document.documentElement.scrollHeight;
 
-      // Bottom of page: activate Contact section ('03') reliably
+      // Bottom of page: activate Contact section ('04') reliably
       if (scrollY + windowHeight >= scrollHeight - 60) {
-        setActiveSection('03');
+        setActiveSection('04');
         return;
       }
 
@@ -304,15 +306,21 @@ export default function App() {
                 onOpenTinaAdmin={() => handleSelectView('admin')}
               />
 
-              {/* Section 01 — Experience Timeline Container */}
+              {/* Section 01 — About Overview Container */}
+              <AboutContainer 
+                title={portfolio.aboutTitle}
+                content={portfolio.aboutBio1}
+              />
+
+              {/* Section 02 — Experience Timeline Container */}
               <ExperienceContainer />
 
-              {/* Section 02 — Testimonials Container */}
+              {/* Section 03 — Testimonials Container */}
               <TestimonialsContainer 
                 recommendations={portfolioRecommendations}
               />
 
-              {/* Section 03 — Contact Container */}
+              {/* Section 04 — Contact Container */}
               <ContactContainer 
                 portfolio={portfolio}
               />

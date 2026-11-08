@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { SectionLabel } from '../components/ui/SectionLabel';
 import { TestimonialCard } from '../components/business/TestimonialCard';
 import { RecommendationItem } from '../features/dashboard/types';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -106,14 +105,10 @@ export const TestimonialsContainer: React.FC<TestimonialsContainerProps> = ({
         {/* Section Header with Slider Controls */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-12">
           <div>
-            <SectionLabel num="02" title="Endorsements" />
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-text leading-tight">
                 Recommendations &amp; Feedback
               </h2>
-              <p className="text-xs sm:text-sm text-text-muted font-normal mt-1.5">
-                Endorsements from engineering leads, architects &amp; product owners
-              </p>
             </div>
           </div>
 

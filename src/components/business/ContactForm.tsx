@@ -67,26 +67,26 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'matan2
   };
 
   return (
-    <div className="bg-bg-alt p-5 sm:p-6 rounded-2xl border border-border/90 shadow-2xs">
+    <div className="bg-bg-alt p-5 sm:p-6 rounded-2xl">
       {submitted ? (
-        <div className="p-6 sm:p-8 rounded-xl border border-border/90 bg-white text-text text-center space-y-3.5 shadow-2xs">
-          <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-text mx-auto border border-border/70">
+        <div className="py-8 px-4 text-center space-y-4">
+          <div className="w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center mx-auto">
             <Check size={18} strokeWidth={2.2} />
           </div>
 
-          <div className="space-y-1">
-            <h5 className="text-xs font-bold uppercase tracking-wider text-text">
+          <div className="space-y-1.5">
+            <h5 className="text-base font-semibold text-text">
               Message Prepared
             </h5>
-            <p className="text-xs text-text-muted max-w-sm mx-auto leading-relaxed">
-              Your inquiry has been recorded. If your email app did not open automatically, send directly to <span className="font-semibold text-text">{contactEmail}</span>.
+            <p className="text-xs sm:text-sm text-text-muted max-w-sm mx-auto leading-relaxed">
+              Your inquiry has been opened in your email app. If it didn't open automatically, send directly to <span className="font-semibold text-text">{contactEmail}</span>.
             </p>
           </div>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5">
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
             <a
               href={mailtoUrl}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-text hover:bg-neutral-800 text-white text-xs font-semibold rounded-lg shadow-2xs transition-all cursor-pointer w-full sm:w-auto"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
             >
               <Mail size={13} />
               <span>Open in Email App</span>
@@ -96,9 +96,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'matan2
             <button
               type="button"
               onClick={handleReset}
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-white hover:bg-neutral-50 text-text-muted hover:text-text border border-border rounded-lg text-xs font-medium transition-colors cursor-pointer w-full sm:w-auto"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-white hover:bg-neutral-50 text-text font-medium text-xs rounded-lg transition-colors cursor-pointer"
             >
-              <RotateCcw size={12} />
+              <RotateCcw size={12} className="text-neutral-500" />
               <span>Send another</span>
             </button>
           </div>

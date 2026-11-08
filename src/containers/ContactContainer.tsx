@@ -1,6 +1,5 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import { SectionLabel } from '../components/ui/SectionLabel';
 import { ContactForm } from '../components/business/ContactForm';
 import { PortfolioContent } from '../features/dashboard/types';
 
@@ -13,7 +12,6 @@ export const ContactContainer: React.FC<ContactContainerProps> = ({ portfolio })
     <section id="contact" className="py-14 md:py-20 bg-white border-t border-border">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
         <div className="mb-8 sm:mb-12">
-          <SectionLabel num="03" title="Inquiries & Network" />
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-text leading-tight">
               Get in Touch
