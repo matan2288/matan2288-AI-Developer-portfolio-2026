@@ -27,13 +27,13 @@ import {
   defaultTinaContent,
   PortfolioGeneralContent 
 } from '../services/tinaContent';
-import { PillarItem, SkillCategory, ExperienceItem, RecommendationItem, CertificationItem } from '../features/dashboard/types';
+import { ExperienceItem, RecommendationItem, CertificationItem } from '../features/dashboard/types';
 import { HeroContainer } from './HeroContainer';
-import { AboutContainer } from './AboutContainer';
 import { ExperienceContainer } from './ExperienceContainer';
 import { TestimonialsContainer } from './TestimonialsContainer';
 import { ContactContainer } from './ContactContainer';
 import { FooterContainer } from './FooterContainer';
+import { CertificationsContainer } from './CertificationsContainer';
 
 interface AdminPageContainerProps {
   onBackToPortfolio: () => void;
@@ -44,7 +44,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
   onBackToPortfolio,
   onLogout
 }) => {
-  const [activeTab, setActiveTab] = useState<'general' | 'pillars' | 'skills' | 'experiences' | 'testimonials' | 'certifications' | 'blog' | 'json'>('general');
+  const [activeTab, setActiveTab] = useState<'general' | 'experiences' | 'testimonials' | 'certifications' | 'blog' | 'json'>('general');
   const [cmsState, setCmsState] = useState(() => getStoredTinaContent());
   const [mobilePanel, setMobilePanel] = useState<'editor' | 'preview'>('editor');
   const [isSaved, setIsSaved] = useState(false);
@@ -120,52 +120,6 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
     }
     const updated = current.filter((_, i) => i !== index);
     updateGeneralField('stats', updated);
-  };
-
-  // Pillar handlers
-  const addPillar = () => {
-    const count = cmsState.pillars.length + 1;
-    const newPillar: PillarItem = {
-      id: `Pillar ${count}`,
-      num: `01.${count}X`,
-      title: 'New Architecture Pillar',
-      subtitle: 'Technical Domain',
-      desc: 'Describe this technical pillar or key domain capability here...',
-    };
-    handleStateChange(prev => ({ ...prev, pillars: [...prev.pillars, newPillar] }));
-  };
-
-  const updatePillar = (index: number, field: keyof PillarItem, val: string) => {
-    const updated = [...cmsState.pillars];
-    updated[index] = { ...updated[index], [field]: val };
-    handleStateChange(prev => ({ ...prev, pillars: updated }));
-  };
-
-  const deletePillar = (index: number) => {
-    if (cmsState.pillars.length <= 1) {
-      alert('You must keep at least one Pillar card.');
-      return;
-    }
-    const updated = cmsState.pillars.filter((_, i) => i !== index);
-    handleStateChange(prev => ({ ...prev, pillars: updated }));
-  };
-
-  // Skill category handlers
-  const addSkillCategory = () => {
-    const newCat: SkillCategory = {
-      title: 'New Toolset Category',
-      items: ['Item 1', 'Item 2', 'Item 3'],
-    };
-    handleStateChange(prev => ({ ...prev, skills: [...prev.skills, newCat] }));
-  };
-
-  const deleteSkillCategory = (index: number) => {
-    if (cmsState.skills.length <= 1) {
-      alert('You must keep at least one Skill category.');
-      return;
-    }
-    const updated = cmsState.skills.filter((_, i) => i !== index);
-    handleStateChange(prev => ({ ...prev, skills: updated }));
   };
 
   // Experience handlers
@@ -366,8 +320,6 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
           <div className="px-3.5 py-2.5 border-b border-border bg-neutral-50/70 overflow-x-auto flex items-center gap-1.5 scrollbar-none shrink-0">
             {[
               { id: 'general', label: 'General', icon: FileText },
-              { id: 'pillars', label: `Pillars (${cmsState.pillars.length})`, icon: Layers },
-              { id: 'skills', label: `Skills (${cmsState.skills.length})`, icon: Database },
               { id: 'experiences', label: `Experience (${cmsState.experiences.length})`, icon: Briefcase },
               { id: 'testimonials', label: `Testimonials (${cmsState.recommendations.length})`, icon: Award },
               { id: 'certifications', label: `Certs (${(cmsState.certifications || defaultTinaContent.certifications).length})`, icon: Award },
@@ -484,37 +436,6 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                   </div>
                 </div>
 
-                <div className="p-5 bg-white border border-border/80 rounded-xl shadow-2xs space-y-4">
-                  <div>
-                    <label className="block text-[11px] font-medium text-text-muted mb-1.5">About Section Headline</label>
-                    <input
-                      type="text"
-                      value={cmsState.portfolio.aboutTitle}
-                      onChange={(e) => updateGeneralField('aboutTitle', e.target.value)}
-                      className="w-full px-3.5 py-2 border border-border rounded-lg text-xs font-semibold bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-medium text-text-muted mb-1.5">About Paragraph 1</label>
-                    <textarea
-                      rows={3}
-                      value={cmsState.portfolio.aboutBio1}
-                      onChange={(e) => updateGeneralField('aboutBio1', e.target.value)}
-                      className="w-full px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all leading-relaxed"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-medium text-text-muted mb-1.5">About Paragraph 2 (Philosophy)</label>
-                    <textarea
-                      rows={2}
-                      value={cmsState.portfolio.aboutBio2}
-                      onChange={(e) => updateGeneralField('aboutBio2', e.target.value)}
-                      className="w-full px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all leading-relaxed"
-                    />
-                  </div>
-                </div>
 
                 <div className="p-5 bg-white border border-border/80 rounded-xl shadow-2xs space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -673,150 +594,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
               </div>
             )}
 
-            {/* Pillars Tab */}
-            {activeTab === 'pillars' && (
-              <div className="space-y-5">
-                <div className="flex items-center justify-between pb-3 border-b border-border/70">
-                  <div>
-                    <h3 className="text-xs font-semibold text-text">
-                      Engineering Pillar Cards ({cmsState.pillars.length})
-                    </h3>
-                    <p className="text-[11px] text-text-muted mt-0.5">Core architectural pillars and interactive competencies.</p>
-                  </div>
-                  <button
-                    onClick={addPillar}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-neutral-50 border border-border text-text text-xs font-medium rounded-lg shadow-2xs transition-colors cursor-pointer"
-                  >
-                    <Plus size={13} />
-                    <span>Add Card</span>
-                  </button>
-                </div>
 
-                {cmsState.pillars.map((pillar: PillarItem, idx: number) => (
-                  <div key={pillar.id || idx} className="p-5 border border-border/80 rounded-xl bg-white shadow-2xs space-y-4 relative group">
-                    <div className="flex items-center justify-between border-b border-border/60 pb-2.5">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-semibold text-text">Pillar #{idx + 1}</span>
-                        <span className="text-[11px] font-mono text-text-muted px-1.5 py-0.5 bg-neutral-100 rounded border border-border/60">{pillar.num}</span>
-                      </div>
-                      <button
-                        onClick={() => deletePillar(idx)}
-                        title="Remove Card"
-                        className="text-text-muted hover:text-red-600 transition-colors cursor-pointer p-1.5 rounded-lg hover:bg-red-50"
-                      >
-                        <Trash2 size={13} />
-                      </button>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                      <div>
-                        <label className="block text-[11px] font-medium text-text-muted mb-1">Identifier / Num</label>
-                        <input
-                          type="text"
-                          value={pillar.num}
-                          onChange={(e) => updatePillar(idx, 'num', e.target.value)}
-                          className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all font-mono"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[11px] font-medium text-text-muted mb-1">Title</label>
-                        <input
-                          type="text"
-                          value={pillar.title}
-                          onChange={(e) => updatePillar(idx, 'title', e.target.value)}
-                          className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all font-medium"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[11px] font-medium text-text-muted mb-1">Subtitle</label>
-                        <input
-                          type="text"
-                          value={pillar.subtitle}
-                          onChange={(e) => updatePillar(idx, 'subtitle', e.target.value)}
-                          className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-[11px] font-medium text-text-muted mb-1">Description</label>
-                      <textarea
-                        rows={3}
-                        value={pillar.desc}
-                        onChange={(e) => updatePillar(idx, 'desc', e.target.value)}
-                        className="w-full px-3 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all leading-relaxed"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Skills Tab */}
-            {activeTab === 'skills' && (
-              <div className="space-y-5">
-                <div className="flex items-center justify-between pb-3 border-b border-border/70">
-                  <div>
-                    <h3 className="text-xs font-semibold text-text">
-                      Skill Toolset Categories ({cmsState.skills.length})
-                    </h3>
-                    <p className="text-[11px] text-text-muted mt-0.5">Categorized tech stacks and enterprise competencies.</p>
-                  </div>
-                  <button
-                    onClick={addSkillCategory}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-neutral-50 border border-border text-text text-xs font-medium rounded-lg shadow-2xs transition-colors cursor-pointer"
-                  >
-                    <Plus size={13} />
-                    <span>Add Category</span>
-                  </button>
-                </div>
-
-                {cmsState.skills.map((cat: SkillCategory, idx: number) => (
-                  <div key={idx} className="p-5 border border-border/80 rounded-xl bg-white shadow-2xs space-y-3.5">
-                    <div className="flex items-center justify-between border-b border-border/60 pb-2.5">
-                      <div className="flex items-center gap-2 w-full max-w-sm">
-                        <label className="text-[11px] font-medium text-text-muted shrink-0">Category Name:</label>
-                        <input
-                          type="text"
-                          value={cat.title}
-                          onChange={(e) => {
-                            const newSkills = [...cmsState.skills];
-                            newSkills[idx].title = e.target.value;
-                            handleStateChange(prev => ({ ...prev, skills: newSkills }));
-                          }}
-                          className="font-medium text-xs text-text border border-border rounded-lg px-3 py-1 bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all w-full"
-                        />
-                      </div>
-                      <button
-                        onClick={() => deleteSkillCategory(idx)}
-                        title="Remove Category"
-                        className="text-text-muted hover:text-red-600 transition-colors cursor-pointer p-1.5 rounded-lg hover:bg-red-50"
-                      >
-                        <Trash2 size={13} />
-                      </button>
-                    </div>
-
-                    <div>
-                      <label className="block text-[11px] font-medium text-text-muted mb-1.5">
-                        Skill Items (comma separated)
-                      </label>
-                      <input
-                        type="text"
-                        value={(cat.items || []).join(', ')}
-                        onChange={(e) => {
-                          const items = e.target.value.split(',').map(s => s.trim()).filter(Boolean);
-                          const newSkills = [...cmsState.skills];
-                          newSkills[idx].items = items;
-                          handleStateChange(prev => ({ ...prev, skills: newSkills }));
-                        }}
-                        className="w-full px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all"
-                        placeholder="React, TypeScript, GraphQL, Node.js..."
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
 
             {/* Experiences Tab */}
             {activeTab === 'experiences' && (
@@ -1344,7 +1122,6 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
               <span className="text-[11px] font-medium text-text-muted mr-1.5 hidden sm:inline">Jump:</span>
               {[
                 { id: 'home', label: 'Top' },
-                { id: 'about', label: 'About' },
                 { id: 'experience', label: 'Experience' },
                 { id: 'testimonials', label: 'Testimonials' },
                 { id: 'contact', label: 'Contact' },
@@ -1380,6 +1157,14 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                   className="w-full flex-1 border-0 bg-white"
                 />
               </div>
+            ) : activeTab === 'certifications' ? (
+              <div className="flex-1 min-h-0 overflow-y-auto bg-white text-text font-sans scroll-smooth">
+                <CertificationsContainer 
+                  certifications={cmsState.certifications || defaultTinaContent.certifications}
+                  developerName={cmsState.portfolio.developerName}
+                  onBackToPortfolio={() => setActiveTab('general')}
+                />
+              </div>
             ) : (
               <div 
                 ref={previewScrollRef}
@@ -1395,15 +1180,6 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                       scrollToSectionInPreview(href.replace('#', ''));
                     }}
                     onOpenTinaAdmin={() => {}}
-                  />
-                </div>
-
-                {/* About Section */}
-                <div id="preview-about">
-                  <AboutContainer 
-                    portfolio={cmsState.portfolio}
-                    pillars={cmsState.pillars}
-                    skills={cmsState.skills}
                   />
                 </div>
 
@@ -1431,6 +1207,8 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                 {/* Footer Section */}
                 <FooterContainer 
                   developerName={cmsState.portfolio.developerName} 
+                  contactEmail={cmsState.portfolio.contactEmail}
+                  linkedInUrl={cmsState.portfolio.linkedInUrl}
                 />
               </div>
             )}

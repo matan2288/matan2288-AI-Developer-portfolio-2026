@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
       strictPort: false,
     },
     envDir: '.',
-    envPrefix: ['VITE_', 'GEMINI_', 'EDITOR_'],
+    envPrefix: ['VITE_', 'GEMINI_', 'EDITOR_', 'TINA_'],
     plugins: [react()],
     define: {
       'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY || process.env.GEMINI_API_KEY || env.API_KEY || process.env.API_KEY || ''),
@@ -19,6 +19,9 @@ export default defineConfig(({ mode }) => {
       'process.env.GEMINI_MODEL': JSON.stringify(env.GEMINI_MODEL || process.env.GEMINI_MODEL || 'gemini-3.8-flash'),
       'process.env.EDITOR_USERNAME': JSON.stringify(env.EDITOR_USERNAME || process.env.EDITOR_USERNAME || 'admin'),
       'process.env.EDITOR_PASSWORD': JSON.stringify(env.EDITOR_PASSWORD || process.env.EDITOR_PASSWORD || ''),
+      'process.env.TINA_CLIENT_ID': JSON.stringify(env.TINA_CLIENT_ID || process.env.TINA_CLIENT_ID || env.VITE_TINA_CLIENT_ID || ''),
+      'process.env.TINA_TOKEN': JSON.stringify(env.TINA_TOKEN || process.env.TINA_TOKEN || env.VITE_TINA_TOKEN || ''),
+      'process.env.TINA_BRANCH': JSON.stringify(env.TINA_BRANCH || process.env.TINA_BRANCH || env.VITE_TINA_BRANCH || env.HEAD || 'main'),
       'import.meta.env.VITE_GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY || process.env.GEMINI_API_KEY || ''),
       'import.meta.env.VITE_GEMINI_MODEL': JSON.stringify(env.GEMINI_MODEL || process.env.GEMINI_MODEL || 'gemini-3.8-flash'),
       'import.meta.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY || process.env.GEMINI_API_KEY || ''),

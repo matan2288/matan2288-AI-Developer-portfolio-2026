@@ -1,0 +1,73 @@
+fragment PortfolioParts on Portfolio {
+  __typename
+  developerName
+  title
+  location
+  avatarUrl
+  heroBio
+  aboutTitle
+  aboutBio1
+  aboutBio2
+  contactEmail
+  linkedInUrl
+  blogUrl
+  showBlogTab
+  stats {
+    __typename
+    value
+    label
+  }
+}
+
+fragment PillarsParts on Pillars {
+  __typename
+  num
+  title
+  subtitle
+  desc
+}
+
+fragment ExperiencesParts on Experiences {
+  __typename
+  company
+  role
+  location
+  period
+  isLatest
+  bullets
+  skills
+}
+
+fragment SkillsParts on Skills {
+  __typename
+  title
+  items
+}
+
+fragment RecommendationsParts on Recommendations {
+  __typename
+  quote
+  author
+  role
+  company
+  avatarUrl
+  linkedInUrl
+}
+
+fragment CertificationsParts on Certifications {
+  __typename
+  certifications {
+    __typename
+    id
+    title
+    category
+    topic
+    issuer
+    issueDate
+    credentialId
+    description
+    skills
+    driveUrl
+    verificationUrl
+  }
+}
