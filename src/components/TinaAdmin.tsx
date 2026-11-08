@@ -189,15 +189,25 @@ export const TinaAdmin: React.FC<TinaAdminProps> = ({ isOpen, onClose }) => {
           <div className="flex items-center gap-2">
             {savedSuccess && (
               <span className="text-xs text-emerald-600 font-sans flex items-center gap-1 font-bold">
-                <Check size={14} /> Saved to Tina State
+                <Check size={14} /> Saved to siteContent.json!
+              </span>
+            )}
+            {saveError && (
+              <span className="text-xs text-red-600 font-sans flex items-center gap-1 font-semibold" title={saveError}>
+                <AlertCircle size={14} /> Save error
               </span>
             )}
             <button
               onClick={handleSave}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-white hover:bg-neutral-50 text-text border border-border/80 hover:border-neutral-300 text-xs font-sans uppercase font-bold rounded-lg shadow-2xs transition-all cursor-pointer"
+              disabled={isSaving}
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-white hover:bg-neutral-50 text-text border border-border/80 hover:border-neutral-300 text-xs font-sans uppercase font-bold rounded-lg shadow-2xs transition-all cursor-pointer disabled:opacity-60"
             >
-              <Save size={14} className="text-text-muted" />
-              <span>Save Changes</span>
+              {isSaving ? (
+                <Loader2 size={14} className="text-text-muted animate-spin" />
+              ) : (
+                <Save size={14} className="text-text-muted" />
+              )}
+              <span>{isSaving ? 'Saving...' : 'Save Changes'}</span>
             </button>
             <button
               onClick={handleReset}
