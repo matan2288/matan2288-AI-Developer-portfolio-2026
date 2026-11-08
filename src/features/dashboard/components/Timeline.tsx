@@ -25,7 +25,7 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
   isFirst,
   isLast
 }) => {
-  const isAmdocs = id === 'amdocs' || company.toLowerCase().includes('amdocs');
+  const isAmdocs = id.includes('amdocs') || company.toLowerCase().includes('amdocs');
 
   return (
     <div className="relative pl-7 sm:pl-9 md:pl-0 pb-8 sm:pb-10 last:pb-0 group">
@@ -113,9 +113,9 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
             {/* Card Header matching image.png without h3 */}
             <div className="flex items-baseline justify-between gap-4 mb-4 sm:mb-5">
               <span className="text-xs sm:text-[13px] font-bold text-text uppercase tracking-wider truncate">
-                {company}
+                {company.replace(/\s*·\s*Amdocs/gi, '').replace(/\s*-\s*Amdocs/gi, '')}
               </span>
-              <span className="text-xs text-text-muted shrink-0 font-medium tracking-wide">
+              <span className="text-[10px] sm:text-[11px] font-mono text-neutral-400 shrink-0 font-normal tracking-widest select-none">
                 {period}
               </span>
             </div>

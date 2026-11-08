@@ -34,7 +34,7 @@
   "experiences": [
     {
       "id": "amdocs-us-cellular",
-      "company": "U.S. Cellular · Amdocs",
+      "company": "U.S. Cellular",
       "role": "Software Developer",
       "location": "Raanana, IL",
       "period": "2025 — PRESENT",
@@ -54,7 +54,7 @@
     },
     {
       "id": "amdocs-altice-usa",
-      "company": "Altice USA · Amdocs",
+      "company": "Altice USA",
       "role": "Software Developer",
       "location": "Raanana, IL",
       "period": "2023 — 2025",
@@ -76,7 +76,7 @@
     },
     {
       "id": "amdocs-three-uk",
-      "company": "Three UK · Amdocs",
+      "company": "Three UK",
       "role": "Software Developer",
       "location": "Sderot, IL",
       "period": "2023",
@@ -96,7 +96,7 @@
     },
     {
       "id": "amdocs-altice-migration",
-      "company": "Altice USA · Amdocs",
+      "company": "Altice USA",
       "role": "Software Developer",
       "location": "Sderot, IL",
       "period": "2022 — 2023",
