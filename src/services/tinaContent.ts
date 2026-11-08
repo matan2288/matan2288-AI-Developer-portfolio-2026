@@ -75,7 +75,7 @@ export function getStoredTinaContent() {
         },
         pillars: Array.isArray(parsed.pillars) && parsed.pillars.length > 0 ? parsed.pillars : defaultTinaContent.pillars,
         skills: Array.isArray(parsed.skills) && parsed.skills.length > 0 ? parsed.skills : defaultTinaContent.skills,
-        experiences: (Array.isArray(parsed.experiences) && parsed.experiences.length === defaultTinaContent.experiences.length && !parsed.experiences.some((e: any) => e.id === 'bootcamp' || e.id === 'navy' || (e.id === 'amdocs-altice-usa' && !e.bullets?.[1]?.includes('frontend infrastructure'))))
+        experiences: (Array.isArray(parsed.experiences) && parsed.experiences.length === defaultTinaContent.experiences.length && !parsed.experiences.some((e: any) => e.id === 'bootcamp' || e.id === 'navy' || e.period?.includes('/')))
           ? parsed.experiences
           : defaultTinaContent.experiences,
         recommendations: (Array.isArray(parsed.recommendations) && parsed.recommendations.length >= defaultTinaContent.recommendations.length && !parsed.recommendations.some((r: any) => r.author === 'Senior Delivery Director'))
