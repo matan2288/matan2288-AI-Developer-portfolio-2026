@@ -13,12 +13,12 @@ export const TechStackGrid: React.FC<TechStackGridProps> = ({ skills }) => {
           <span className="text-xs uppercase tracking-wider text-text-muted block mb-1 font-semibold">
             Technical Toolsets
           </span>
-          <h3 className="text-xl font-bold uppercase text-text tracking-tight mb-2 sm:mb-3 break-words font-heading">
-            Core Tech Stack
-          </h3>
-          <p className="text-xs text-text-muted leading-relaxed">
-            Technologies, frameworks, and tools used across production environments.
-          </p>
+            <h3 className="text-xl font-bold uppercase text-neutral-700 tracking-tight mb-2 sm:mb-3 break-words font-heading">
+              Core Tech Stack
+            </h3>
+            <p className="text-xs text-text-muted leading-relaxed">
+              Technologies, frameworks, and tools used across production environments.
+            </p>
         </div>
         <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           {skills.map((cat, idx) => (
@@ -28,7 +28,7 @@ export const TechStackGrid: React.FC<TechStackGridProps> = ({ skills }) => {
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {cat.items.map((skill) => (
-                  <span 
+                  <span
                     key={skill}
                     className="px-2.5 py-1 rounded-md text-[11px] font-medium text-text bg-white border border-border/80 hover:border-neutral-300 transition-colors cursor-default select-none break-words shadow-2xs"
                   >

@@ -70,8 +70,8 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
               onDrop={handleDrop}
               title="Click or drag & drop to update profile photo"
               className={`w-[12em] h-[12em] rounded-3xl overflow-hidden bg-neutral-100 text-left cursor-pointer shrink-0 shadow-2xs relative transition-all duration-200 ${isDragging
-                  ? 'ring-2 ring-text/30 scale-105'
-                  : 'hover:opacity-95'
+                ? 'ring-2 ring-text/30 scale-105'
+                : 'hover:opacity-95'
                 }`}
             >
               <img
@@ -107,11 +107,11 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
 
           {/* Name & Title & Location Stack */}
           <div className="space-y-1 max-w-xl mx-auto">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-neutral-900 font-heading">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-neutral-700 font-heading">
               {portfolio.developerName}
             </h1>
 
-            <p className="text-base sm:text-lg font-medium text-neutral-800 tracking-tight pt-0.5">
+            <p className="text-base sm:text-lg font-medium text-neutral-500 tracking-tight pt-0.5">
               {portfolio.title}
             </p>
 
@@ -123,13 +123,13 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
 
           {/* Quantitative Stats Strip */}
           {portfolio.stats && portfolio.stats.length > 0 && (
-            <div className="w-full max-w-4xl mx-auto py-5 sm:py-6 my-1 border-y border-neutral-200/80 flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-14 md:gap-x-16 gap-y-5 sm:gap-y-6 text-center">
+            <div className="w-full max-w-3xl mx-auto py-3.5 sm:py-4.5 my-1 flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-12 md:gap-x-14 gap-y-3.5 text-center">
               {portfolio.stats.map((stat, idx) => (
-                <div key={idx} className="space-y-1 min-w-[90px] sm:min-w-[110px] px-2">
-                  <span className="block text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight font-heading">
+                <div key={idx} className="space-y-1 min-w-[80px] sm:min-w-[100px] px-2">
+                  <span className="block text-base sm:text-lg font-medium text-neutral-500 tracking-tight">
                     {stat.value}
                   </span>
-                  <span className="text-xs text-neutral-500 block font-medium whitespace-nowrap">
+                  <span className="text-xs text-neutral-400 block font-normal whitespace-nowrap">
                     {stat.label}
                   </span>
                 </div>

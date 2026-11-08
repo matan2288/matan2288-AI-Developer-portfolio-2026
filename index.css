@@ -27,6 +27,7 @@ body {
 h1, h2, .font-heading, .font-display {
   font-family: 'DM Sans', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   letter-spacing: -0.025em;
+  color: #334155;
 }
 
 /* Enforce clean typography sitewide */

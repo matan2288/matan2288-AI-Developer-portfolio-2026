@@ -68,9 +68,10 @@ colors: {
 **Display & Heading Font Family (Big Headers & Section Titles):** `'DM Sans', 'Plus Jakarta Sans', system-ui, sans-serif`
 
 ### Structural Typography Hierarchy
-- **Hero Title:** `text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-text font-heading`
-- **Hero Metrics / Quantitative Stats:** `text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 font-heading`
-- **Section Headers:** `text-2xl sm:text-3xl font-bold uppercase tracking-tight text-text leading-tight font-heading`
+- **Hero Title (Name):** `text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-neutral-700 font-heading`
+- **Hero Subtitle (Role):** `text-base sm:text-lg font-medium text-neutral-500 tracking-tight`
+- **Hero Metrics / Quantitative Stats:** Borderless, dimmed minimalist typography (`text-base sm:text-lg font-medium text-neutral-500`)
+- **Section Headers:** `text-2xl sm:text-3xl font-bold uppercase tracking-tight text-neutral-700 leading-tight font-heading`
 - **Section Sub-Labels:** `text-xs sm:text-sm text-text-muted font-normal`
 - **Section Indicator:** `text-[11px] font-mono tracking-widest text-text-muted`  
   *Formatting Rule:* `<span className="font-semibold text-text">{num}</span> <span className="text-neutral-300">/</span> <span className="uppercase font-medium tracking-[0.16em]">{title}</span>`  

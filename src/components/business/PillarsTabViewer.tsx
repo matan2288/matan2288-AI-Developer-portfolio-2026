@@ -26,11 +26,10 @@ export const PillarsTabViewer: React.FC<PillarsTabViewerProps> = ({ pillars }) =
             <button
               key={p.id}
               onClick={() => setSelectedPillarId(p.id)}
-              className={`relative shrink-0 px-3.5 py-2 text-xs uppercase tracking-wider rounded-lg border transition-all cursor-pointer whitespace-nowrap outline-none font-medium ${
-                isActive 
-                  ? 'bg-white text-text font-semibold border-border/80 shadow-2xs' 
+              className={`relative shrink-0 px-3.5 py-2 text-xs uppercase tracking-wider rounded-lg border transition-all cursor-pointer whitespace-nowrap outline-none font-medium ${isActive
+                  ? 'bg-white text-text font-semibold border-border/80 shadow-2xs'
                   : 'bg-transparent text-text-muted hover:text-text hover:bg-neutral-50 border-transparent'
-              }`}
+                }`}
             >
               <span>
                 {p.num} / {p.title}
@@ -52,12 +51,12 @@ export const PillarsTabViewer: React.FC<PillarsTabViewerProps> = ({ pillars }) =
           <span className="text-xs text-text-muted uppercase tracking-wider block mb-1 font-semibold">
             {selectedPillar.subtitle}
           </span>
-          <h4 className="text-base font-bold text-text uppercase mb-2 break-words font-heading">
-            {selectedPillar.title}
-          </h4>
-          <p className="text-xs sm:text-sm text-[#4B5563] leading-relaxed max-w-3xl break-words">
-            {selectedPillar.desc}
-          </p>
+            <h4 className="text-base font-bold text-neutral-700 uppercase mb-2 break-words font-heading">
+              {selectedPillar.title}
+            </h4>
+            <p className="text-xs sm:text-sm text-[#4B5563] leading-relaxed max-w-3xl break-words">
+              {selectedPillar.desc}
+            </p>
         </motion.div>
       </AnimatePresence>
     </div>

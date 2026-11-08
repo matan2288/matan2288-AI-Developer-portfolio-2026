@@ -16,8 +16,8 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
   const DEFAULT_BLOG_URL = 'https://blog.google/technology/ai/';
   const rawUrl = portfolio.blogUrl?.trim() || DEFAULT_BLOG_URL;
   // Ensure valid HTTPS protocol
-  const iframeUrl = rawUrl.startsWith('http://') || rawUrl.startsWith('https://') 
-    ? rawUrl 
+  const iframeUrl = rawUrl.startsWith('http://') || rawUrl.startsWith('https://')
+    ? rawUrl
     : `https://${rawUrl}`;
 
   let displayHost = 'blog.google';
@@ -50,12 +50,11 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
   return (
     <div className="flex-1 w-full flex flex-col bg-white overflow-hidden relative">
       {/* Sleek Utility Bar (Collapsible) */}
-      <div 
-        className={`bg-white border-b border-border flex items-center justify-between gap-3 shrink-0 z-20 transition-all duration-300 ease-in-out ${
-          isCollapsed 
-            ? 'h-0 -translate-y-full opacity-0 overflow-hidden py-0 px-4 sm:px-6 border-transparent pointer-events-none' 
+      <div
+        className={`bg-white border-b border-border flex items-center justify-between gap-3 shrink-0 z-20 transition-all duration-300 ease-in-out ${isCollapsed
+            ? 'h-0 -translate-y-full opacity-0 overflow-hidden py-0 px-4 sm:px-6 border-transparent pointer-events-none'
             : 'h-12 px-4 sm:px-6 opacity-100 translate-y-0'
-        }`}
+          }`}
       >
         <div className="flex items-center gap-3 min-w-0">
           <button
@@ -112,7 +111,7 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
 
       {/* Main Content Area */}
       <div className="flex-1 w-full h-full relative bg-neutral-50 overflow-hidden flex flex-col">
-        
+
         {/* Show Toolbar Button on Top-Right - Sleek floating pill without borders unless hovered */}
         {isCollapsed && (
           <div className="absolute top-3 right-4 z-30 animate-in fade-in duration-200">
@@ -127,7 +126,7 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
             </button>
           </div>
         )}
-        
+
         {/* Loading Spinner with early hint */}
         {!isLoaded && !hasTimedOut && (
           <div className="absolute inset-0 bg-white/95 backdrop-blur-xs flex flex-col items-center justify-center gap-3 z-20 p-6 text-center">
@@ -159,12 +158,12 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
               </div>
 
               <div className="space-y-1.5">
-                <h3 className="text-base sm:text-lg font-bold text-text uppercase tracking-tight font-heading">
-                  External Engineering Blog
-                </h3>
-                <p className="text-xs text-text-muted leading-relaxed font-mono break-all">
-                  {iframeUrl}
-                </p>
+                  <h3 className="text-base sm:text-lg font-bold text-neutral-700 uppercase tracking-tight font-heading">
+                    External Engineering Blog
+                  </h3>
+                  <p className="text-xs text-text-muted leading-relaxed font-mono break-all">
+                    {iframeUrl}
+                  </p>
               </div>
 
               <div className="p-3 bg-white rounded-xl border border-border/70 text-left text-xs text-text-muted space-y-1">
