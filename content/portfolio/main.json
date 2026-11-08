@@ -1,0 +1,32 @@
+{
+  "developerName": "Matan Elmaliah",
+  "title": "AI-Driven Software Developertesttt",
+  "location": "Tel Aviv, Israel",
+  "avatarUrl": "/profile.png",
+  "heroBio": "Software developer specializing in React, TypeScript, and full-stack web applications with 4 years of experience building scalable systems.",
+  "aboutTitle": "AI-Driven Software Developer",
+  "aboutBio1": "I build performant web applications, modern interfaces, and robust integrations with 4 years of professional experience across telecom systems.",
+  "aboutBio2": "Tel Aviv, Israel · Available for hybrid or remote roles.",
+  "contactEmail": "matan2288@gmail.com",
+  "linkedInUrl": "https://www.linkedin.com/in/matan2288",
+  "blogUrl": "https://blog.google/technology/ai/",
+  "showBlogTab": true,
+  "stats": [
+    {
+      "value": "4 Years",
+      "label": "Experience"
+    },
+    {
+      "value": "Enterprise",
+      "label": "Telecom scale"
+    },
+    {
+      "value": "100%",
+      "label": "Key Achievement"
+    },
+    {
+      "value": "AI",
+      "label": "First"
+    }
+  ]
+}

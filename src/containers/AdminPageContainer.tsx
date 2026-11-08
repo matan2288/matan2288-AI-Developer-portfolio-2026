@@ -1,31 +1,34 @@
 import React, { useState, useRef } from 'react';
-import { 
-  Save, 
-  RotateCcw, 
-  ArrowLeft, 
-  ExternalLink, 
-  Check, 
-  FileText, 
-  Layers, 
-  Briefcase, 
-  Award, 
-  Database, 
-  Plus, 
-  Trash2, 
+import {
+  Save,
+  RotateCcw,
+  ArrowLeft,
+  ExternalLink,
+  Check,
+  FileText,
+  Layers,
+  Briefcase,
+  Award,
+  Database,
+  Plus,
+  Trash2,
   Code,
   Sparkles,
   ChevronRight,
   Eye,
   Globe,
   Upload,
-  LogOut
+  LogOut,
+  Loader2,
+  AlertCircle
 } from 'lucide-react';
-import { 
-  getStoredTinaContent, 
-  saveTinaContent, 
-  resetTinaContentToDefaults, 
+import {
+  getStoredTinaContent,
+  saveTinaContent,
+  persistTinaContentToServer,
+  resetTinaContentToDefaults,
   defaultTinaContent,
-  PortfolioGeneralContent 
+  PortfolioGeneralContent
 } from '../services/tinaContent';
 import { ExperienceItem, RecommendationItem, CertificationItem } from '../features/dashboard/types';
 import { HeroContainer } from './HeroContainer';
@@ -40,7 +43,7 @@ interface AdminPageContainerProps {
   onLogout?: () => void;
 }
 
-export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ 
+export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
   onBackToPortfolio,
   onLogout
 }) => {
@@ -48,6 +51,9 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
   const [cmsState, setCmsState] = useState(() => getStoredTinaContent());
   const [mobilePanel, setMobilePanel] = useState<'editor' | 'preview'>('editor');
   const [isSaved, setIsSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveStatusMessage, setSaveStatusMessage] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [copiedJson, setCopiedJson] = useState(false);
   const [isEditingJson, setIsEditingJson] = useState(false);
@@ -66,12 +72,30 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
     });
   };
 
-  // Save changes to persistent storage
-  const handleSave = () => {
-    saveTinaContent(cmsState);
-    setHasUnsavedChanges(false);
-    setIsSaved(true);
-    setTimeout(() => setIsSaved(false), 2500);
+  // Save changes to persistent storage and physical JSON files
+  const handleSave = async () => {
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      const result = await persistTinaContentToServer(cmsState, 'cms: update site content via admin');
+      if (result.success) {
+        setHasUnsavedChanges(false);
+        setIsSaved(true);
+        const destination = result.local
+          ? 'Saved to content/siteContent.json (local disk)'
+          : result.commitSha
+            ? `Committed to GitHub (${result.commitSha.slice(0, 7)})`
+            : 'Saved to content/siteContent.json';
+        setSaveStatusMessage(destination);
+        setTimeout(() => setIsSaved(false), 3500);
+      } else {
+        setSaveError(result.error || 'Failed to save content to backend');
+      }
+    } catch (err: any) {
+      setSaveError(err.message || 'An unexpected error occurred while saving.');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // Reset to defaults
@@ -82,12 +106,13 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
       setCmsState(defaults);
       setHasUnsavedChanges(false);
       setIsSaved(true);
+      setSaveStatusMessage('Reset to defaults');
       setTimeout(() => setIsSaved(false), 2500);
     }
   };
 
   // Apply custom pasted JSON
-  const handleApplyJson = () => {
+  const handleApplyJson = async () => {
     try {
       const parsed = JSON.parse(jsonInput);
       if (!parsed || typeof parsed !== 'object') {
@@ -106,14 +131,27 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
         skills: Array.isArray(parsed.skills) ? parsed.skills : defaultTinaContent.skills,
       };
       setCmsState(validatedState);
-      saveTinaContent(validatedState);
-      setJsonError(null);
-      setJsonSuccess(true);
-      setIsEditingJson(false);
-      setHasUnsavedChanges(false);
-      setTimeout(() => setJsonSuccess(false), 3000);
+      setIsSaving(true);
+      const result = await persistTinaContentToServer(validatedState, 'cms: update siteContent.json from JSON editor');
+      if (result.success) {
+        setJsonError(null);
+        setJsonSuccess(true);
+        setIsEditingJson(false);
+        setHasUnsavedChanges(false);
+        const destination = result.local
+          ? 'Saved to content/siteContent.json (local disk)'
+          : result.commitSha
+            ? `Committed to GitHub (${result.commitSha.slice(0, 7)})`
+            : 'Saved to content/siteContent.json';
+        setSaveStatusMessage(destination);
+        setTimeout(() => setJsonSuccess(false), 3500);
+      } else {
+        setJsonError(result.error || 'Failed to persist to file');
+      }
     } catch (err: any) {
       setJsonError(err.message || 'Invalid JSON syntax. Please check formatting.');
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -252,7 +290,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
 
   return (
     <div className="h-screen h-[100dvh] max-h-screen bg-bg-alt flex flex-col font-sans text-text antialiased overflow-hidden">
-      
+
       {/* Studio Header Bar - Spacious, Air-Gapped & Classy */}
       <header className="bg-white/95 backdrop-blur-md border-b border-border/80 px-4 sm:px-7 min-h-[64px] h-16 sm:h-18 pt-2 sm:pt-2.5 pb-2 sm:pb-2.5 flex items-center justify-between z-30 shrink-0 shadow-2xs">
         {/* Left: Back & Context */}
@@ -291,21 +329,19 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
         <div className="flex md:hidden items-center p-1 bg-neutral-50 rounded-xl border border-border/70 shadow-2xs">
           <button
             onClick={() => setMobilePanel('editor')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
-              mobilePanel === 'editor'
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${mobilePanel === 'editor'
                 ? 'bg-white text-text font-semibold shadow-2xs border border-border/40'
                 : 'text-text-muted hover:text-text'
-            }`}
+              }`}
           >
             Editor
           </button>
           <button
             onClick={() => setMobilePanel('preview')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
-              mobilePanel === 'preview'
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${mobilePanel === 'preview'
                 ? 'bg-white text-text font-semibold shadow-2xs border border-border/40'
                 : 'text-text-muted hover:text-text'
-            }`}
+              }`}
           >
             Preview
           </button>
@@ -333,24 +369,44 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
 
           <button
             onClick={handleSave}
-            className={`inline-flex items-center gap-2 px-4 sm:px-4.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-2xs cursor-pointer border ${
-              isSaved
-                ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-300 ring-2 ring-emerald-200/40'
-                : 'bg-white hover:bg-neutral-50 text-text border-border/80 hover:border-neutral-300 active:scale-[0.98]'
-            }`}
+            disabled={isSaving}
+            className={`inline-flex items-center gap-2 px-4 sm:px-4.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-2xs cursor-pointer border ${isSaving
+                ? 'bg-neutral-100 text-text-muted border-neutral-300 cursor-not-allowed opacity-80'
+                : isSaved
+                  ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-300 ring-2 ring-emerald-200/40'
+                  : saveError
+                    ? 'bg-red-50 hover:bg-red-100 text-red-700 border-red-300'
+                    : 'bg-white hover:bg-neutral-50 text-text border-border/80 hover:border-neutral-300 active:scale-[0.98]'
+              }`}
           >
-            {isSaved ? <Check size={13} className="text-emerald-600" /> : <Save size={13} className="text-text-muted" />}
-            <span>{isSaved ? 'Saved!' : 'Save Changes'}</span>
+            {isSaving ? (
+              <Loader2 size={13} className="text-text-muted animate-spin" />
+            ) : isSaved ? (
+              <Check size={13} className="text-emerald-600" />
+            ) : saveError ? (
+              <AlertCircle size={13} className="text-red-600" />
+            ) : (
+              <Save size={13} className="text-text-muted" />
+            )}
+            <span>
+              {isSaving
+                ? 'Saving...'
+                : isSaved
+                  ? 'Saved to JSON!'
+                  : saveError
+                    ? 'Retry Save'
+                    : 'Save Changes'}
+            </span>
           </button>
         </div>
       </header>
 
       {/* Studio Workspace Main Split View */}
       <div className="flex-1 flex flex-col md:flex-row overflow-hidden min-h-0">
-        
+
         {/* Left Side: Headless Content Schema Form Inspector */}
         <div className={`${mobilePanel === 'editor' ? 'flex' : 'hidden md:flex'} w-full md:w-[460px] lg:w-[490px] xl:w-[530px] 2xl:w-[570px] bg-white border-r border-border/80 flex-col shrink-0 h-full min-h-0 overflow-hidden`}>
-          
+
           {/* Schema Category Tabs */}
           <div className="px-3.5 py-2.5 border-b border-border bg-neutral-50/70 overflow-x-auto flex items-center gap-1.5 scrollbar-none shrink-0">
             {[
@@ -367,11 +423,10 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer whitespace-nowrap shrink-0 ${
-                    isActive
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer whitespace-nowrap shrink-0 ${isActive
                       ? 'bg-white text-text font-semibold shadow-2xs border border-border/80'
                       : 'text-text-muted hover:text-text hover:bg-neutral-100/70'
-                  }`}
+                    }`}
                 >
                   <Icon size={13} className={isActive ? 'text-text' : 'text-text-muted'} />
                   <span>{tab.label}</span>
@@ -382,7 +437,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
 
           {/* Tab Content Form Fields */}
           <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
-            
+
             {/* General Tab */}
             {activeTab === 'general' && (
               <div className="space-y-6">
@@ -501,17 +556,16 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                       <div className="space-y-0.5">
                         <div className="flex items-center gap-2">
                           <span className="text-xs font-semibold text-text">Blog Navigation Tab</span>
-                          <span className={`text-[9px] font-medium px-2 py-0.5 rounded-full ${
-                            cmsState.portfolio.showBlogTab !== false 
-                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                          <span className={`text-[9px] font-medium px-2 py-0.5 rounded-full ${cmsState.portfolio.showBlogTab !== false
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                               : 'bg-neutral-100 text-neutral-500 border border-neutral-200'
-                          }`}>
+                            }`}>
                             {cmsState.portfolio.showBlogTab !== false ? 'Visible' : 'Hidden'}
                           </span>
                         </div>
                         <span className="text-[11px] text-text-muted block">
-                          {cmsState.portfolio.showBlogTab !== false 
-                            ? 'The Blog tab is visible in the main navigation bar' 
+                          {cmsState.portfolio.showBlogTab !== false
+                            ? 'The Blog tab is visible in the main navigation bar'
                             : 'The Blog tab is hidden from the main navigation bar'}
                         </span>
                       </div>
@@ -520,14 +574,12 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                         role="switch"
                         aria-checked={cmsState.portfolio.showBlogTab !== false}
                         onClick={() => updateGeneralField('showBlogTab', cmsState.portfolio.showBlogTab === false ? true : false)}
-                        className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                          cmsState.portfolio.showBlogTab !== false ? 'bg-text' : 'bg-neutral-300'
-                        }`}
+                        className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${cmsState.portfolio.showBlogTab !== false ? 'bg-text' : 'bg-neutral-300'
+                          }`}
                       >
                         <span
-                          className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition duration-200 ease-in-out ${
-                            cmsState.portfolio.showBlogTab !== false ? 'translate-x-4' : 'translate-x-0'
-                          }`}
+                          className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition duration-200 ease-in-out ${cmsState.portfolio.showBlogTab !== false ? 'translate-x-4' : 'translate-x-0'
+                            }`}
                         />
                       </button>
                     </div>
@@ -856,8 +908,8 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
 
                 <div className="space-y-3.5">
                   {(cmsState.certifications || defaultTinaContent.certifications).map((cert, idx) => (
-                    <div 
-                      key={cert.id || idx} 
+                    <div
+                      key={cert.id || idx}
                       className="p-4 bg-white border border-border/80 rounded-xl space-y-3 shadow-2xs hover:border-text/40 transition-colors"
                     >
                       {/* Top Bar: Row # and Delete */}
@@ -1008,11 +1060,10 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-semibold text-text">Blog Tab in Navbar</span>
-                      <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
-                        cmsState.portfolio.showBlogTab !== false 
-                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                      <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${cmsState.portfolio.showBlogTab !== false
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                           : 'bg-neutral-100 text-neutral-500 border border-neutral-200'
-                      }`}>
+                        }`}>
                         {cmsState.portfolio.showBlogTab !== false ? 'Active & Visible' : 'Hidden from Navbar'}
                       </span>
                     </div>
@@ -1026,14 +1077,12 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                     role="switch"
                     aria-checked={cmsState.portfolio.showBlogTab !== false}
                     onClick={() => updateGeneralField('showBlogTab', cmsState.portfolio.showBlogTab === false ? true : false)}
-                    className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                      cmsState.portfolio.showBlogTab !== false ? 'bg-text' : 'bg-neutral-300'
-                    }`}
+                    className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${cmsState.portfolio.showBlogTab !== false ? 'bg-text' : 'bg-neutral-300'
+                      }`}
                   >
                     <span
-                      className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${
-                        cmsState.portfolio.showBlogTab !== false ? 'translate-x-5' : 'translate-x-0'
-                      }`}
+                      className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${cmsState.portfolio.showBlogTab !== false ? 'translate-x-5' : 'translate-x-0'
+                        }`}
                     />
                   </button>
                 </div>
@@ -1081,11 +1130,10 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                         key={preset.name}
                         type="button"
                         onClick={() => updateGeneralField('blogUrl', preset.url)}
-                        className={`p-3 rounded-xl border text-left text-xs transition-all cursor-pointer ${
-                          cmsState.portfolio.blogUrl === preset.url
+                        className={`p-3 rounded-xl border text-left text-xs transition-all cursor-pointer ${cmsState.portfolio.blogUrl === preset.url
                             ? 'border-text bg-neutral-100/80 font-medium text-text shadow-2xs'
                             : 'border-border/80 bg-white text-text-muted hover:text-text hover:bg-neutral-50'
-                        }`}
+                          }`}
                       >
                         <div className="font-semibold text-xs text-text">{preset.name}</div>
                         <div className="text-[10px] text-text-muted font-mono truncate mt-0.5">{preset.url}</div>
@@ -1122,11 +1170,10 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                         }
                         setIsEditingJson(!isEditingJson);
                       }}
-                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 border rounded-lg text-xs font-medium cursor-pointer transition-colors shadow-2xs ${
-                        isEditingJson
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 border rounded-lg text-xs font-medium cursor-pointer transition-colors shadow-2xs ${isEditingJson
                           ? 'bg-neutral-100 border-text text-text'
                           : 'bg-white border-border hover:border-text text-text'
-                      }`}
+                        }`}
                     >
                       <Code size={13} />
                       <span>{isEditingJson ? 'Close Editor' : 'Paste / Edit JSON'}</span>
@@ -1213,12 +1260,27 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
 
           {/* Subtle Form Status Strip */}
           <div className="px-5 py-3 border-t border-border/80 bg-neutral-50/60 flex items-center justify-between text-[11px] text-text-muted shrink-0">
-            <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              <span>Auto-syncing to live preview</span>
+            <span className="flex items-center gap-2 truncate max-w-[70%]">
+              <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isSaving
+                  ? 'bg-amber-500 animate-pulse'
+                  : saveError
+                    ? 'bg-red-500'
+                    : 'bg-emerald-500'
+                }`} />
+              <span className="truncate">
+                {isSaving
+                  ? 'Persisting to content/siteContent.json...'
+                  : saveError
+                    ? `Save issue: ${saveError}`
+                    : saveStatusMessage
+                      ? saveStatusMessage
+                      : hasUnsavedChanges
+                        ? 'Unsaved changes (click Save Changes to write to JSON)'
+                        : 'Synced with content/siteContent.json'}
+              </span>
             </span>
-            <span className="font-mono text-[10px] text-text-subtle">
-              TinaCMS Local Storage
+            <span className="font-mono text-[10px] text-text-subtle shrink-0">
+              content/siteContent.json
             </span>
           </div>
 
@@ -1226,10 +1288,10 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
 
         {/* Right Side: Interactive Real-Time Live Preview Pane */}
         <div className={`${mobilePanel === 'preview' ? 'flex' : 'hidden md:flex'} flex-1 bg-white flex-col overflow-hidden min-h-0 h-full`}>
-          
+
           {/* Canvas Sub-Header Bar */}
           <div className="h-11 bg-white border-b border-border/70 px-4 sm:px-6 flex items-center justify-between gap-3 shrink-0 z-10">
-            
+
             {/* Left: Section Jump Shortcuts */}
             <div className="flex items-center gap-1 overflow-x-auto scrollbar-none py-0.5 min-w-0">
               <span className="text-[11px] font-medium text-text-muted mr-1.5 hidden sm:inline">Jump:</span>
@@ -1272,54 +1334,54 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
               </div>
             ) : activeTab === 'certifications' ? (
               <div className="flex-1 min-h-0 overflow-y-auto bg-white text-text font-sans scroll-smooth">
-                <CertificationsContainer 
+                <CertificationsContainer
                   certifications={cmsState.certifications || defaultTinaContent.certifications}
                   developerName={cmsState.portfolio.developerName}
                   onBackToPortfolio={() => setActiveTab('general')}
                 />
               </div>
             ) : (
-              <div 
+              <div
                 ref={previewScrollRef}
                 className="flex-1 min-h-0 overflow-y-auto bg-white text-text font-sans scroll-smooth"
                 style={{ WebkitOverflowScrolling: 'touch' }}
               >
                 {/* Hero Section */}
                 <div id="preview-home">
-                  <HeroContainer 
+                  <HeroContainer
                     portfolio={cmsState.portfolio}
                     onNavClick={(e, href) => {
                       e.preventDefault();
                       scrollToSectionInPreview(href.replace('#', ''));
                     }}
-                    onOpenTinaAdmin={() => {}}
+                    onOpenTinaAdmin={() => { }}
                   />
                 </div>
 
                 {/* Experience Section */}
                 <div id="preview-experience">
-                  <ExperienceContainer 
+                  <ExperienceContainer
                     experiences={cmsState.experiences}
                   />
                 </div>
 
                 {/* Testimonials Section */}
                 <div id="preview-testimonials">
-                  <TestimonialsContainer 
+                  <TestimonialsContainer
                     recommendations={cmsState.recommendations}
                   />
                 </div>
 
                 {/* Contact Section */}
                 <div id="preview-contact">
-                  <ContactContainer 
+                  <ContactContainer
                     portfolio={cmsState.portfolio}
                   />
                 </div>
 
                 {/* Footer Section */}
-                <FooterContainer 
-                  developerName={cmsState.portfolio.developerName} 
+                <FooterContainer
+                  developerName={cmsState.portfolio.developerName}
                   contactEmail={cmsState.portfolio.contactEmail}
                   linkedInUrl={cmsState.portfolio.linkedInUrl}
                 />

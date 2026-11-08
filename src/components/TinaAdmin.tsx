@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Save, RotateCcw, Edit3, X, Check, FileText, Layers, Briefcase, Award, Database, Sparkles, Plus, Trash2 } from 'lucide-react';
+import { Save, RotateCcw, Edit3, X, Check, FileText, Layers, Briefcase, Award, Database, Sparkles, Plus, Trash2, Loader2, AlertCircle } from 'lucide-react';
 import { 
   getStoredTinaContent, 
   saveTinaContent, 
+  persistTinaContentToServer,
   resetTinaContentToDefaults, 
   PortfolioGeneralContent 
 } from '../services/tinaContent';
@@ -17,13 +18,27 @@ export const TinaAdmin: React.FC<TinaAdminProps> = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState<'general' | 'pillars' | 'skills' | 'experiences' | 'testimonials'>('general');
   const [cmsState, setCmsState] = useState(() => getStoredTinaContent());
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
-  const handleSave = () => {
-    saveTinaContent(cmsState);
-    setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 3000);
+  const handleSave = async () => {
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      const res = await persistTinaContentToServer(cmsState, 'cms: update content from admin modal');
+      if (res.success) {
+        setSavedSuccess(true);
+        setTimeout(() => setSavedSuccess(false), 3000);
+      } else {
+        setSaveError(res.error || 'Failed to save to backend');
+      }
+    } catch (err: any) {
+      setSaveError(err.message || 'Error saving content');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleReset = () => {

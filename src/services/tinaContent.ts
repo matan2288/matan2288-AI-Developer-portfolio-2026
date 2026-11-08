@@ -134,6 +134,78 @@ export function saveTinaContent(newContent: typeof defaultTinaContent) {
   }
 }
 
+export interface ContentCommitResponse {
+  success: boolean;
+  message?: string;
+  error?: string;
+  local?: boolean;
+  commitSha?: string;
+  savedFiles?: string[];
+}
+
+/**
+ * Persists content both to localStorage (instant client feedback)
+ * AND to the physical JSON files on disk (local development) or GitHub (production).
+ */
+export async function persistTinaContentToServer(
+  newContent: typeof defaultTinaContent,
+  commitMessage: string = 'cms: update site content via admin'
+): Promise<ContentCommitResponse> {
+  // Always update local cache & listeners first for instant reactive UI updates
+  saveTinaContent(newContent);
+
+  const siteContentPayload = {
+    portfolio: newContent.portfolio,
+    experiences: newContent.experiences,
+    recommendations: newContent.recommendations,
+    certifications: newContent.certifications,
+    skills: newContent.skills,
+  };
+
+  const files = [
+    {
+      path: 'content/siteContent.json',
+      content: JSON.stringify(siteContentPayload, null, 2) + '\n',
+    },
+    {
+      path: 'content/portfolio/main.json',
+      content: JSON.stringify(newContent.portfolio, null, 2) + '\n',
+    },
+  ];
+
+  try {
+    const res = await fetch('/api/content-commit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        files,
+        message: commitMessage,
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      throw new Error(data.error || `Server responded with status ${res.status}`);
+    }
+
+    return {
+      success: true,
+      message: data.message || 'Saved successfully',
+      local: data.local,
+      commitSha: data.commitSha,
+      savedFiles: data.savedFiles || files.map(f => f.path),
+    };
+  } catch (err: any) {
+    console.error('Failed to commit content to backend:', err);
+    return {
+      success: false,
+      error: err?.message || 'Failed to persist content to backend API',
+    };
+  }
+}
+
 export function updateAvatarUrl(newAvatarUrl: string) {
   const current = getStoredTinaContent();
   const updated = {
