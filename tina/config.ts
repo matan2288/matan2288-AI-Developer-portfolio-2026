@@ -2,9 +2,7 @@ import { defineConfig } from 'tinacms';
 
 // TinaCMS Schema Configuration for Portfolio Static Site
 export default defineConfig({
-  branch: process.env.TINA_BRANCH || process.env.HEAD || 'main',
-  clientId: process.env.TINA_CLIENT_ID || process.env.VITE_TINA_CLIENT_ID || '',
-  token: process.env.TINA_TOKEN || process.env.VITE_TINA_TOKEN || '',
+  branch: process.env.GITHUB_BRANCH || process.env.VITE_GITHUB_BRANCH || 'main',
 
   build: {
     outputFolder: 'admin',

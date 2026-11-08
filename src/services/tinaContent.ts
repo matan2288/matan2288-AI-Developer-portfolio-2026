@@ -47,34 +47,24 @@ let liveDraftContent: typeof defaultTinaContent | null = null;
 // In-memory runtime state fetched dynamically from TinaCloud or GitHub without rebuilding
 let runtimeFetchedContent: typeof defaultTinaContent | null = null;
 
-export function getTinaEnv() {
-  const clientId = 
-    (typeof import.meta !== 'undefined' && (import.meta.env?.VITE_TINA_CLIENT_ID || import.meta.env?.TINA_CLIENT_ID)) ||
-    (typeof process !== 'undefined' && process.env?.TINA_CLIENT_ID) ||
-    '';
-  const token = 
-    (typeof import.meta !== 'undefined' && (import.meta.env?.VITE_TINA_TOKEN || import.meta.env?.TINA_TOKEN)) ||
-    (typeof process !== 'undefined' && process.env?.TINA_TOKEN) ||
+export function getGitHubContentConfig() {
+  const owner = 
+    (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GITHUB_OWNER) ||
+    (typeof process !== 'undefined' && (process.env?.VITE_GITHUB_OWNER || process.env?.GITHUB_OWNER)) ||
+    'matan2288';
+  const repo = 
+    (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GITHUB_REPO) ||
+    (typeof process !== 'undefined' && (process.env?.VITE_GITHUB_REPO || process.env?.GITHUB_REPO)) ||
     '';
   const branch = 
-    (typeof import.meta !== 'undefined' && (import.meta.env?.VITE_TINA_BRANCH || import.meta.env?.VITE_GITHUB_BRANCH || import.meta.env?.TINA_BRANCH)) ||
-    (typeof process !== 'undefined' && (process.env?.TINA_BRANCH || process.env?.HEAD)) ||
+    (typeof import.meta !== 'undefined' && (import.meta.env?.VITE_GITHUB_BRANCH || import.meta.env?.VITE_BRANCH)) ||
+    (typeof process !== 'undefined' && (process.env?.VITE_GITHUB_BRANCH || process.env?.HEAD || process.env?.BRANCH)) ||
     'main';
-  const githubOwner = 
-    (typeof import.meta !== 'undefined' && (import.meta.env?.VITE_GITHUB_OWNER || import.meta.env?.GITHUB_OWNER)) ||
-    (typeof process !== 'undefined' && process.env?.GITHUB_OWNER) ||
-    '';
-  const githubRepo = 
-    (typeof import.meta !== 'undefined' && (import.meta.env?.VITE_GITHUB_REPO || import.meta.env?.GITHUB_REPO)) ||
-    (typeof process !== 'undefined' && process.env?.GITHUB_REPO) ||
-    '';
 
   return {
-    clientId: String(clientId).trim(),
-    token: String(token).trim(),
+    owner: String(owner).trim(),
+    repo: String(repo).trim(),
     branch: String(branch).trim(),
-    githubOwner: String(githubOwner).trim(),
-    githubRepo: String(githubRepo).trim(),
   };
 }
 
@@ -210,138 +200,67 @@ export function resetTinaContentToDefaults() {
   window.dispatchEvent(new Event('tina-content-updated'));
 }
 
-// Runtime Content Delivery Engine (TinaCloud GraphQL & GitHub Raw with SWR caching)
+// Runtime Content Delivery Engine (Primary Source: GitHub Raw with SWR Caching & Cache-Busting)
 let isRevalidating = false;
+
+export async function fetchAllGitHubRawContent(): Promise<Partial<typeof defaultTinaContent> | null> {
+  const { owner, repo, branch } = getGitHubContentConfig();
+  if (!owner || !repo) {
+    return null;
+  }
+
+  const base = `https://raw.githubusercontent.com/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/${encodeURIComponent(branch)}/content`;
+  const cacheBuster = `?t=${Date.now()}`;
+
+  try {
+    const [portfolioRes, certsRes, amdocsRes, bootcampRes, navyRes, alticeRes, threeukRes, uscellularRes] = await Promise.allSettled([
+      fetch(`${base}/portfolio/main.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
+      fetch(`${base}/certifications/certifications.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
+      fetch(`${base}/experiences/amdocs.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
+      fetch(`${base}/experiences/bootcamp.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
+      fetch(`${base}/experiences/navy.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
+      fetch(`${base}/recommendations/altice.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
+      fetch(`${base}/recommendations/threeuk.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
+      fetch(`${base}/recommendations/uscellular.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
+    ]);
+
+    const portfolio = portfolioRes.status === 'fulfilled' && portfolioRes.value ? portfolioRes.value : null;
+    const certifications = certsRes.status === 'fulfilled' && certsRes.value?.certifications ? certsRes.value.certifications : null;
+
+    const experiences = [
+      amdocsRes.status === 'fulfilled' ? amdocsRes.value : null,
+      bootcampRes.status === 'fulfilled' ? bootcampRes.value : null,
+      navyRes.status === 'fulfilled' ? navyRes.value : null,
+    ].filter(Boolean);
+
+    const recommendations = [
+      alticeRes.status === 'fulfilled' ? alticeRes.value : null,
+      threeukRes.status === 'fulfilled' ? threeukRes.value : null,
+      uscellularRes.status === 'fulfilled' ? uscellularRes.value : null,
+    ].filter(Boolean);
+
+    if (!portfolio && !certifications && experiences.length === 0 && recommendations.length === 0) {
+      return null;
+    }
+
+    return {
+      portfolio: portfolio ? { ...defaultTinaContent.portfolio, ...portfolio } : undefined,
+      certifications: certifications || undefined,
+      experiences: experiences.length > 0 ? (experiences as ExperienceItem[]) : undefined,
+      recommendations: recommendations.length > 0 ? (recommendations as RecommendationItem[]) : undefined,
+    };
+  } catch (err) {
+    console.warn('GitHub Raw runtime fetch warning:', err);
+    return null;
+  }
+}
 
 export async function revalidateRuntimeContent(): Promise<boolean> {
   if (typeof window === 'undefined' || isRevalidating) return false;
-  const { clientId, token, branch, githubOwner, githubRepo } = getTinaEnv();
-
-  // If neither TinaCloud nor GitHub credentials/repo are available, rely on bundled defaults
-  if (!clientId && !githubOwner) {
-    return false;
-  }
-
   isRevalidating = true;
+
   try {
-    let freshData: Partial<typeof defaultTinaContent> | null = null;
-
-    // Strategy A: TinaCloud Read-Only GraphQL Content API
-    if (clientId && token) {
-      try {
-        const url = `https://content.tinajs.io/content/${encodeURIComponent(clientId)}/github/${encodeURIComponent(branch)}`;
-        const query = `
-          query GetProductionPortfolioContent {
-            portfolio(relativePath: "main.json") {
-              developerName
-              title
-              location
-              avatarUrl
-              heroBio
-              aboutTitle
-              aboutBio1
-              aboutBio2
-              contactEmail
-              linkedInUrl
-              blogUrl
-              showBlogTab
-              stats {
-                value
-                label
-              }
-            }
-            experiencesConnection {
-              edges {
-                node {
-                  id
-                  company
-                  role
-                  location
-                  period
-                  isLatest
-                  bullets
-                  skills
-                }
-              }
-            }
-            recommendationsConnection {
-              edges {
-                node {
-                  quote
-                  author
-                  role
-                  company
-                  avatarUrl
-                  linkedInUrl
-                }
-              }
-            }
-            certifications(relativePath: "certifications.json") {
-              certifications {
-                id
-                title
-                category
-                topic
-                issuer
-                issueDate
-                credentialId
-                description
-                skills
-                driveUrl
-                verificationUrl
-              }
-            }
-          }
-        `;
-
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-API-KEY': token,
-          },
-          body: JSON.stringify({ query }),
-        });
-
-        if (res.ok) {
-          const gqlRes = await res.json();
-          if (gqlRes?.data) {
-            const d = gqlRes.data;
-            const expList = d.experiencesConnection?.edges?.map((e: any) => e.node) || [];
-            const recList = d.recommendationsConnection?.edges?.map((e: any) => e.node) || [];
-            freshData = {
-              portfolio: d.portfolio ? { ...defaultTinaContent.portfolio, ...d.portfolio } : undefined,
-              experiences: expList.length > 0 ? expList : undefined,
-              recommendations: recList.length > 0 ? recList : undefined,
-              certifications: d.certifications?.certifications || undefined,
-            };
-          }
-        }
-      } catch (tinaErr) {
-        console.warn('TinaCloud runtime fetch note:', tinaErr);
-      }
-    }
-
-    // Strategy B: GitHub Raw JSON Fallback
-    if (!freshData && githubOwner && githubRepo) {
-      try {
-        const base = `https://raw.githubusercontent.com/${encodeURIComponent(githubOwner)}/${encodeURIComponent(githubRepo)}/${encodeURIComponent(branch)}/content`;
-        const cacheBuster = `?t=${Date.now()}`;
-        
-        const [portfolioRes, certsRes] = await Promise.allSettled([
-          fetch(`${base}/portfolio/main.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
-          fetch(`${base}/certifications/certifications.json${cacheBuster}`).then(r => r.ok ? r.json() : null),
-        ]);
-
-        freshData = {
-          portfolio: portfolioRes.status === 'fulfilled' && portfolioRes.value ? { ...defaultTinaContent.portfolio, ...portfolioRes.value } : undefined,
-          certifications: certsRes.status === 'fulfilled' && certsRes.value?.certifications ? certsRes.value.certifications : undefined,
-        };
-      } catch (ghErr) {
-        console.warn('GitHub Raw runtime fetch note:', ghErr);
-      }
-    }
-
+    const freshData = await fetchAllGitHubRawContent();
     if (freshData) {
       const current = getStoredTinaContent();
       const updated: typeof defaultTinaContent = {
@@ -369,6 +288,86 @@ export async function revalidateRuntimeContent(): Promise<boolean> {
 }
 
 export const refreshTinaContent = revalidateRuntimeContent;
+
+// Secure GitHub API Commit Dispatcher (via serverless Netlify function or server proxy)
+export async function commitTinaContentToGitHub(
+  newContent: typeof defaultTinaContent,
+  message?: string
+): Promise<{ success: boolean; commitSha?: string; error?: string; message?: string }> {
+  // Save locally in storage first for immediate optimistic update
+  saveTinaContent(newContent);
+
+  try {
+    const filesToCommit = [
+      {
+        path: 'content/portfolio/main.json',
+        content: JSON.stringify(newContent.portfolio, null, 2),
+      },
+      {
+        path: 'content/certifications/certifications.json',
+        content: JSON.stringify({ certifications: newContent.certifications }, null, 2),
+      },
+      {
+        path: 'content/experiences/amdocs.json',
+        content: JSON.stringify(newContent.experiences[0] || defaultTinaContent.experiences[0], null, 2),
+      },
+      {
+        path: 'content/experiences/bootcamp.json',
+        content: JSON.stringify(newContent.experiences[1] || defaultTinaContent.experiences[1], null, 2),
+      },
+      {
+        path: 'content/experiences/navy.json',
+        content: JSON.stringify(newContent.experiences[2] || defaultTinaContent.experiences[2], null, 2),
+      },
+      {
+        path: 'content/recommendations/altice.json',
+        content: JSON.stringify(newContent.recommendations[0] || defaultTinaContent.recommendations[0], null, 2),
+      },
+      {
+        path: 'content/recommendations/threeuk.json',
+        content: JSON.stringify(newContent.recommendations[1] || defaultTinaContent.recommendations[1], null, 2),
+      },
+      {
+        path: 'content/recommendations/uscellular.json',
+        content: JSON.stringify(newContent.recommendations[2] || defaultTinaContent.recommendations[2], null, 2),
+      },
+    ];
+
+    const res = await fetch('/api/content-commit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        files: filesToCommit,
+        message: message || `cms: update portfolio content via editor [${new Date().toISOString()}]`,
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      return {
+        success: false,
+        error: data.error || `Commit failed with HTTP ${res.status}`,
+      };
+    }
+
+    // Trigger revalidation so runtime content cache immediately stays in sync
+    revalidateRuntimeContent();
+
+    return {
+      success: true,
+      commitSha: data.commitSha || data.sha,
+      message: data.message || 'Changes successfully committed to GitHub',
+    };
+  } catch (err: any) {
+    console.error('Failed to commit content to GitHub:', err);
+    return {
+      success: false,
+      error: err?.message || 'Network error communicating with commit service',
+    };
+  }
+}
 
 // Set up cross-window, postMessage, and background revalidation listeners
 if (typeof window !== 'undefined') {

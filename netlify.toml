@@ -1,10 +1,15 @@
 [build]
-  command = "if [ -n \"$TINA_CLIENT_ID\" ]; then npx tinacms build; fi && npm run build"
+  command = "npm run build"
   publish = "dist"
   ignore = "bash -c 'if [ -z \"$CACHED_COMMIT_REF\" ] || [ \"$CACHED_COMMIT_REF\" = \"$COMMIT_REF\" ]; then exit 1; fi; git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . \":(exclude)content\"'"
 
 [build.environment]
   SECRETS_SCAN_ENABLED = "false"
+
+[[redirects]]
+  from = "/api/content-commit"
+  to = "/.netlify/functions/content-commit"
+  status = 200
 
 [[redirects]]
   from = "/admin"
