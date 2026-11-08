@@ -111,7 +111,7 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
 
           <div className="bg-bg-alt rounded-2xl p-5 sm:p-6 md:p-7 border border-border/80 hover:border-neutral-400 transition-colors duration-200 relative shadow-2xs">
             {/* Card Header matching image.png without h3 */}
-            <div className="flex items-baseline justify-between gap-4 mb-4 sm:mb-5">
+            <div className="flex items-baseline justify-between gap-4 mb-6 sm:mb-7">
               <span className="text-xs sm:text-[13px] font-bold text-text uppercase tracking-wider truncate">
                 {company.replace(/\s*·\s*Amdocs/gi, '').replace(/\s*-\s*Amdocs/gi, '')}
               </span>

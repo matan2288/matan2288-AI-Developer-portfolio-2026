@@ -37,7 +37,7 @@
       "company": "U.S. Cellular",
       "role": "Software Developer",
       "location": "Raanana, IL",
-      "period": "2025 — PRESENT",
+      "period": "05/2025 — PRESENT",
       "isLatest": true,
       "bullets": [
         "Developed custom AEM components & modular JS for a high-traffic eCommerce platform, ensuring reusable, high-performance UI delivery.",
@@ -57,7 +57,7 @@
       "company": "Altice USA",
       "role": "Software Developer",
       "location": "Raanana, IL",
-      "period": "2023 — 2025",
+      "period": "01/2024 — 05/2025",
       "isLatest": false,
       "bullets": [
         "Architected Adobe Analytics infrastructure across eCommerce and self-service apps, leading client requirement reviews and tracking governance.",
@@ -79,7 +79,7 @@
       "company": "Three UK",
       "role": "Software Developer",
       "location": "Sderot, IL",
-      "period": "2023",
+      "period": "01/2023 — 01/2024",
       "isLatest": false,
       "bullets": [
         "Built core eCommerce, retail, and mobile flows using React, TypeScript, Redux-Saga, Material UI, and SCSS in an Agile framework.",
@@ -99,7 +99,7 @@
       "company": "Altice USA",
       "role": "Software Developer",
       "location": "Sderot, IL",
-      "period": "2022 — 2023",
+      "period": "06/2022 — 01/2023",
       "isLatest": false,
       "bullets": [
         "Contributed to full-site migration from React/Contentful to Drupal, Vue, and PHP, rebuilding and optimizing the subscriber purchase funnel.",
