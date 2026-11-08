@@ -23,7 +23,13 @@ body {
   margin: 0;
 }
 
-/* Enforce sans-serif sitewide with zero monospace fallbacks */
+/* Sleek, professional architectural heading font for big section headers and display titles */
+h1, h2, .font-heading, .font-display {
+  font-family: 'DM Sans', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  letter-spacing: -0.025em;
+}
+
+/* Enforce clean typography sitewide */
 code, kbd, samp, pre, .font-mono, input, textarea, button {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
 }

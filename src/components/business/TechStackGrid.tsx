@@ -13,7 +13,7 @@ export const TechStackGrid: React.FC<TechStackGridProps> = ({ skills }) => {
           <span className="text-xs uppercase tracking-wider text-text-muted block mb-1 font-semibold">
             Technical Toolsets
           </span>
-          <h3 className="text-xl font-bold uppercase text-text tracking-tight mb-2 sm:mb-3 break-words">
+          <h3 className="text-xl font-bold uppercase text-text tracking-tight mb-2 sm:mb-3 break-words font-heading">
             Core Tech Stack
           </h3>
           <p className="text-xs text-text-muted leading-relaxed">

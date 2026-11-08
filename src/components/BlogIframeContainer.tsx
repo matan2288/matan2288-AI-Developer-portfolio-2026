@@ -159,7 +159,7 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
               </div>
 
               <div className="space-y-1.5">
-                <h3 className="text-base sm:text-lg font-bold text-text uppercase tracking-tight">
+                <h3 className="text-base sm:text-lg font-bold text-text uppercase tracking-tight font-heading">
                   External Engineering Blog
                 </h3>
                 <p className="text-xs text-text-muted leading-relaxed font-mono break-all">

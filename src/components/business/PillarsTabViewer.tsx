@@ -52,7 +52,7 @@ export const PillarsTabViewer: React.FC<PillarsTabViewerProps> = ({ pillars }) =
           <span className="text-xs text-text-muted uppercase tracking-wider block mb-1 font-semibold">
             {selectedPillar.subtitle}
           </span>
-          <h4 className="text-base font-bold text-text uppercase mb-2 break-words">
+          <h4 className="text-base font-bold text-text uppercase mb-2 break-words font-heading">
             {selectedPillar.title}
           </h4>
           <p className="text-xs sm:text-sm text-[#4B5563] leading-relaxed max-w-3xl break-words">

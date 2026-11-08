@@ -12,24 +12,24 @@ export const AboutContainer: React.FC<AboutContainerProps> = ({
   return (
     <section id="about" className="py-16 md:py-24 bg-[#FBFCFD] border-t border-border">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
-          
-          {/* Title Aside */}
-          <div className="lg:col-span-5">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-text leading-tight">
-              {title}
-            </h2>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-16 items-start">
 
-          {/* Description with smaller, dimmed minimalist font */}
-          <div className="lg:col-span-7">
-            <p className="text-sm sm:text-base text-neutral-500 font-normal leading-relaxed tracking-normal">
-              {content}
-            </p>
-          </div>
+            {/* Title Aside */}
+            <div className="lg:col-span-5">
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-text leading-tight font-heading">
+                  {title}
+                </h2>
+            </div>
 
+            {/* Description with smaller, dimmed minimalist font */}
+            <div className="lg:col-span-7">
+              <p className="text-sm sm:text-base text-neutral-500 font-normal leading-relaxed tracking-normal">
+                {content}
+              </p>
+            </div>
+
+          </div>
         </div>
-      </div>
     </section>
   );
 };
