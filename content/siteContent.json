@@ -18,15 +18,11 @@
         "label": "Experience"
       },
       {
-        "value": "Enterprise",
-        "label": "Telecom scale"
+        "value": "Applied GenAI",
+        "label": "LLMs & AI Agents"
       },
       {
-        "value": "100%",
-        "label": "Key Achievement"
-      },
-      {
-        "value": "FE + AI",
+        "value": "AI · FE",
         "label": "Focused"
       }
     ]
