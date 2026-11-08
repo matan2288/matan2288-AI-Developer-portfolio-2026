@@ -65,15 +65,15 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
         {/* Minimalist Header */}
         <div className="mb-12 sm:mb-16">
           <div>
-              <h1 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-neutral-700 leading-tight font-heading">
-                Certifications
-              </h1>
-              <p className="text-xs sm:text-sm text-text-muted font-normal mt-2">
-                Official credentials & verified engineering documentation
-              </p>
-              <p className="text-[10px] sm:text-[11px] text-text-muted/65 font-normal mt-2 tracking-wider select-none">
-                {certifications.length} {certifications.length === 1 ? 'certification' : 'certifications'}
-              </p>
+            <h1 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-neutral-700 leading-tight font-heading">
+              Certifications
+            </h1>
+            <p className="text-xs sm:text-sm text-text-muted font-normal mt-2">
+              Official credentials & verified engineering documentation
+            </p>
+            <p className="text-[10px] sm:text-[11px] text-text-muted/65 font-normal mt-2 tracking-wider select-none">
+              {certifications.length} {certifications.length === 1 ? 'certification' : 'certifications'}
+            </p>
           </div>
         </div>
 
@@ -148,10 +148,6 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
                   </h3>
                   <div className="flex items-center gap-2 text-[11px] text-text-muted">
                     <span>{selectedCert.issuer}</span>
-                    <span>•</span>
-                    <span className="text-emerald-700 font-medium inline-flex items-center gap-1">
-                      <Lock size={10} /> Verified PDF
-                    </span>
                   </div>
                 </div>
               </div>
