@@ -66,7 +66,7 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
       <div className="md:grid md:grid-cols-[180px_28px_1fr] md:gap-x-4 items-start">
         {/* Left Column: Logo and Location if available */}
         <div className="hidden md:flex flex-col items-center justify-start pt-2">
-          {isAmdocs && (
+          {isAmdocs && isFirst && (
             <div className="flex flex-col items-center">
               <img
                 src="/amdocs-logo.png"
@@ -74,11 +74,9 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
                 title="Amdocs"
                 className="w-14 sm:w-24 h-auto object-contain select-none grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
               />
-              {location && (
-                <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider text-center mt-2.5 select-none">
-                  {location}
-                </span>
-              )}
+              <span className="text-[10px] font-mono text-text-subtle/70 tracking-wider text-center mt-2 select-none">
+                Raanana, IL
+              </span>
             </div>
           )}
         </div>
@@ -96,8 +94,8 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
 
         {/* Right Column: Experience Card */}
         <div className="w-full">
-          {/* Mobile-only Amdocs logo & location OUTSIDE of the tile */}
-          {isAmdocs && (
+          {/* Mobile-only Amdocs logo & location OUTSIDE of the tile on first card */}
+          {isAmdocs && isFirst && (
             <div className="md:hidden mb-3.5 flex items-center justify-between gap-3 px-0.5">
               <img
                 src="/amdocs-logo.png"
@@ -105,11 +103,9 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
                 title="Amdocs"
                 className="h-10 sm:h-11 w-auto max-w-[120px] object-contain select-none grayscale opacity-85 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
               />
-              {location && (
-                <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider select-none shrink-0">
-                  {location}
-                </span>
-              )}
+              <span className="text-[10px] font-mono text-text-subtle/70 tracking-wider select-none shrink-0">
+                Raanana, IL
+              </span>
             </div>
           )}
 
@@ -117,7 +113,7 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
             {/* Card Header matching image.png without h3 */}
             <div className="flex items-baseline justify-between gap-4 mb-4 sm:mb-5">
               <span className="text-xs sm:text-[13px] font-bold text-text uppercase tracking-wider truncate">
-                {company} {!isAmdocs && location && `· ${location}`}
+                {company}
               </span>
               <span className="text-xs text-text-muted shrink-0 font-medium tracking-wide">
                 {period}

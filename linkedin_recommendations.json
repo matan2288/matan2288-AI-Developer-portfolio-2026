@@ -1,0 +1,336 @@
+{
+  "success": true,
+  "platform": "linkedin",
+  "endpoint": "/v1/linkedin/profile/recommendations",
+  "credits_used": 5,
+  "cached": false,
+  "credits_remaining": 90,
+  "data": {
+    "total": 7,
+    "items": [
+      {
+        "text": "I had the pleasure of working with Matan, and he is a highly responsible and dedicated developer. He’s a great team player, reliable, supportive, and always willing to help. Matan is the kind of person who can make a real impact and be a valuable part of any team. I highly recommend him.",
+        "date": "November 8, 2026",
+        "type": "Ehud worked with Matan on the same team",
+        "recommender": {
+          "url": "https://www.linkedin.com/in/ehud-marchi",
+          "urn": "ACoAAC2oikEB_TRbiTHtDmmFfxlK2WWPy-MsfUQ",
+          "public_identifier": "ehud-marchi",
+          "first_name": "Ehud",
+          "last_name": "Marchi",
+          "full_name": "Ehud Marchi",
+          "description": "Software Engineer at Amdocs",
+          "is_premium": false,
+          "avatar": [
+            {
+              "width": 100,
+              "height": 100,
+              "url": "https://media.licdn.com/dms/image/v2/C5603AQFnZQZMPxDhEA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1607446226341?e=1795651200&v=beta&t=SY3JAY1zOmX3ZsQ_4pX-yosNkIAdx0s9yKUQzh9iTOA",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 200,
+              "height": 200,
+              "url": "https://media.licdn.com/dms/image/v2/C5603AQFnZQZMPxDhEA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1607446226341?e=1795651200&v=beta&t=oEMEK5xYoSMD8SpS5DZ0BXjlx6HO1f2FBfsvI1oDDT4",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 400,
+              "height": 400,
+              "url": "https://media.licdn.com/dms/image/v2/C5603AQFnZQZMPxDhEA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1607446226341?e=1795651200&v=beta&t=3eUqKeWQe0tghT_6Km0EZyibOeWHgqWjmrQ_r3enVyQ",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 800,
+              "height": 800,
+              "url": "https://media.licdn.com/dms/image/v2/C5603AQFnZQZMPxDhEA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1607446226341?e=1795651200&v=beta&t=s_cTn3EUc6jlIEH5cYYqcdkB3NG6wcMrzwJzuT7ItQE",
+              "expires_at": 1795651200000
+            }
+          ]
+        },
+        "updated_at": null,
+        "recipient": null
+      },
+      {
+        "text": "I had a great experience working with Matan, his frontend technical skills and collaborative approach make him a wonderful team player. I'd highly recommend him and wish him a very good luck.",
+        "date": "November 8, 2026",
+        "type": "Adarsh worked with Matan on the same team",
+        "recommender": {
+          "url": "https://www.linkedin.com/in/adarsh-singh-b651b71b4",
+          "urn": "ACoAADHc_L0Ba4mUeZ6oH0UAzQVq-gcVJehGGOU",
+          "public_identifier": "adarsh-singh-b651b71b4",
+          "first_name": "Adarsh",
+          "last_name": "Singh",
+          "full_name": "Adarsh Singh",
+          "description": "Software QA Engineer at Siemens",
+          "is_premium": false,
+          "avatar": [
+            {
+              "width": 200,
+              "height": 200,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQGiax7VRW5ZKg/profile-displayphoto-scale_200_200/B4DZqtPL1aGgAY-/0/1763843031987?e=1795651200&v=beta&t=AUl0HDlBBbNG2_o02DagSbv93wOtXrw6jbh53qfvWxo",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 800,
+              "height": 800,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQGiax7VRW5ZKg/profile-displayphoto-crop_800_800/B4DZqtPL1aGgAI-/0/1763843031895?e=1795651200&v=beta&t=i8Hj1g1MbdOJ6cqAfDREjLBi8xgD7YMq0GcpA4Hk2dc",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 100,
+              "height": 100,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQGiax7VRW5ZKg/profile-displayphoto-scale_100_100/B4DZqtPL1aGgAc-/0/1763843031987?e=1795651200&v=beta&t=qlekk8k5kK3mZaxNuv2FExJBQ13Zf9z2voLxYIyllbo",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 400,
+              "height": 400,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQGiax7VRW5ZKg/profile-displayphoto-scale_400_400/B4DZqtPL1aGgAg-/0/1763843031987?e=1795651200&v=beta&t=NH_F64x_sEcCbSpe88hpRPVxqWY7oxEt3Fi95G3oSBg",
+              "expires_at": 1795651200000
+            }
+          ]
+        },
+        "updated_at": null,
+        "recipient": null
+      },
+      {
+        "text": "It was a true pleasure working alongside Matan. He is an exceptionally precise and thoughtful software engineer who approaches every problem with high attention to detail.\n\nBeyond his technical sharpness, Matan is the ultimate team player - always willing to jump in to assist teammates, review code thoroughly, and contribute constructively to team discussions. \nI’d welcome the chance to work with him again without hesitation",
+        "date": "November 4, 2026",
+        "type": "Noam worked with Matan on the same team",
+        "recommender": {
+          "url": "https://www.linkedin.com/in/noam-shmueli",
+          "urn": "ACoAADD78dsBLI_OvVgmIlFAwEwT1s08oDdwkcM",
+          "public_identifier": "noam-shmueli",
+          "first_name": "Noam",
+          "last_name": "Shmueli",
+          "full_name": "Noam Shmueli",
+          "description": "Product Owner | B2B SaaS · Backlog · User Stories · Agile · API Integrations",
+          "is_premium": true,
+          "avatar": [
+            {
+              "width": 100,
+              "height": 100,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQED8GBUweMlsQ/profile-displayphoto-scale_100_100/B4DZ3Y2WFHJsAc-/0/1777459619068?e=1795651200&v=beta&t=zzWDd70TrB35iPpP7yGVR1K4NXExUf8lbGB5mTYDSvw",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 200,
+              "height": 200,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQED8GBUweMlsQ/profile-displayphoto-scale_200_200/B4DZ3Y2WFHJsAY-/0/1777459619068?e=1795651200&v=beta&t=iSFMXMKY5652LhqIctFErlMeqkZsbFP-A_yWPP_cxjo",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 800,
+              "height": 800,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQED8GBUweMlsQ/profile-displayphoto-crop_800_800/B4DZ3Y2WFHJsAI-/0/1777459618968?e=1795651200&v=beta&t=_fFF0pntI_ZrhXlANxWcikVaUjbqglKlLSFgGtb-Hck",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 400,
+              "height": 400,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQED8GBUweMlsQ/profile-displayphoto-scale_400_400/B4DZ3Y2WFHJsAg-/0/1777459619068?e=1795651200&v=beta&t=EI4uNpNUUut89m2vQvlsJKTdwnRKQFNCNZe6k_gZPs0",
+              "expires_at": 1795651200000
+            }
+          ]
+        },
+        "updated_at": null,
+        "recipient": null
+      },
+      {
+        "text": "I highly recommend Matan. He is an incredibly hardworking professional who always tackles challenges head-on. He consistently goes above and beyond, taking full ownership of his projects. He is a natural leader who knows how to step up and drive things forward, maintaining the highest level of professionalism in everything he does. Any team would be lucky to have him on board.",
+        "date": "November 4, 2026",
+        "type": "John worked with Matan on the same team",
+        "recommender": {
+          "url": "https://www.linkedin.com/in/john-yaghobieh-4baa93107",
+          "urn": "ACoAABsI2A4BDkvzluvN5JvUsmbFohLmsRH0csg",
+          "public_identifier": "john-yaghobieh-4baa93107",
+          "first_name": "John",
+          "last_name": "Yaghobieh",
+          "full_name": "John Yaghobieh",
+          "description": "Agentic AI & Full-Stack Development | Tech Lead",
+          "is_premium": false,
+          "avatar": [
+            {
+              "width": 100,
+              "height": 100,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQEX-1AvyayRTw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1619541513083?e=1795651200&v=beta&t=tl_zsqc8raMbNihRbrJiI6nHKYyYZbXEFwGlFyK0UN8",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 200,
+              "height": 200,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQEX-1AvyayRTw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1619541513083?e=1795651200&v=beta&t=EkrJOEMXOWGOlET9KRoRS4xNFJKQy86nsyCh-olDaSQ",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 400,
+              "height": 400,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQEX-1AvyayRTw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1619541513083?e=1795651200&v=beta&t=5GV3q8DGJidSdXg3d8mdVi_Un-g9vFoxebHu4QWRfss",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 800,
+              "height": 800,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQEX-1AvyayRTw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1619541513083?e=1795651200&v=beta&t=68S8W3OIcGZwZvfVRf8w81hvI1W8WWwFM9-cBIRo4uM",
+              "expires_at": 1795651200000
+            }
+          ]
+        },
+        "updated_at": null,
+        "recipient": null
+      },
+      {
+        "text": "It was an absolute pleasure working with Matan on our software engineering project. Matan is a highly talented, dedicated, and detail-oriented developer who consistently delivers high-quality code and robust solutions.\n\nThroughout our collaboration, he demonstrated exceptional problem-solving skills, a deep understanding of software architecture, and the ability to tackle complex technical challenges efficiently. Beyond his technical prowess, Matan is a fantastic team player-collaborative, communicative, and always willing to support his peers. Any development team would be lucky to have him.\"",
+        "date": "November 3, 2026",
+        "type": "Refael worked with Matan on the same team",
+        "recommender": {
+          "url": "https://www.linkedin.com/in/refael-huri-0a8b48168",
+          "urn": "ACoAACgJPoABOiAYZCpq-kr_Ibk0wmfFI4gm9t4",
+          "public_identifier": "refael-huri-0a8b48168",
+          "first_name": "Refael",
+          "last_name": "Huri",
+          "full_name": "Refael Huri",
+          "description": "Software Engineer at Amdocs",
+          "is_premium": false,
+          "avatar": [
+            {
+              "width": 100,
+              "height": 100,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQHpAvHrz7-csQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1538035308394?e=1795651200&v=beta&t=7J5jOTHkmOP76Lu3s621P7v2tdwGpS-6C_5ADF2wE3A",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 200,
+              "height": 200,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQHpAvHrz7-csQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1538035308457?e=1795651200&v=beta&t=7smmR0EqdhsQCVONnSUyiUv6gPJE9OOYVvl3_FVqNWs",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 307,
+              "height": 307,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQHpAvHrz7-csQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1538035308448?e=1795651200&v=beta&t=7OGpSlLXn5h5OKJzyFoKRa8bqPoy16B4wkMXA-3sY64",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 307,
+              "height": 307,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQHpAvHrz7-csQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1538035308408?e=1795651200&v=beta&t=IpT7vSBEaRU9kOVj4MP1vYPAeadeMoIttlVuDsGaMK0",
+              "expires_at": 1795651200000
+            }
+          ]
+        },
+        "updated_at": null,
+        "recipient": null
+      },
+      {
+        "text": "I had the pleasure of working with Matan at Amdocs, where we were part of the same team, collaborating on the development of our project's website.\n\nMatan is an excellent UI Developer with strong expertise in React and modern front-end technologies. He consistently demonstrated great technical skills, attention to detail, and the ability to deliver high-quality, clean, and maintainable code.\n\nBeyond his technical abilities, Matan is a great team player, always willing to collaborate, share knowledge, and help others. He is professional, dedicated, and brings a positive attitude to the team.\n\nI highly recommend Matan to any team looking for a talented and reliable Front-End Developer.",
+        "date": "November 3, 2026",
+        "type": "Tomer worked with Matan on the same team",
+        "recommender": {
+          "url": "https://www.linkedin.com/in/tomer-steiner-full-stack",
+          "urn": "ACoAACJYRmMBxkrHf2ZOwlFS8YRzjajzv2kAs1s",
+          "public_identifier": "tomer-steiner-full-stack",
+          "first_name": "Tomer",
+          "last_name": "Steiner",
+          "full_name": "Tomer Steiner",
+          "description": "Senior Software Engineer at Amdocs",
+          "is_premium": false,
+          "avatar": [
+            {
+              "width": 100,
+              "height": 100,
+              "url": "https://media.licdn.com/dms/image/v2/C5603AQFG-yXGoJoJ2w/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1545034444320?e=1795651200&v=beta&t=pEiyRHd0ve6309roThFq-NcyclqhWZaCRIm8VTfS9G8",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 200,
+              "height": 200,
+              "url": "https://media.licdn.com/dms/image/v2/C5603AQFG-yXGoJoJ2w/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1545034444388?e=1795651200&v=beta&t=7YLj_8SFB6BUK62xWsWOn-bgwLmOLXX1vqQrCHESBNI",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 400,
+              "height": 400,
+              "url": "https://media.licdn.com/dms/image/v2/C5603AQFG-yXGoJoJ2w/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1545034444673?e=1795651200&v=beta&t=cLxI0sSiSUYtyHEDug51XluXIdp6jhODdZI0EpVnDfc",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 500,
+              "height": 500,
+              "url": "https://media.licdn.com/dms/image/v2/C5603AQFG-yXGoJoJ2w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1545034444391?e=1795651200&v=beta&t=mN2JpW9xzYAoYhFmOy9fG8Gh5x-0ae8OJSQjDzZzXJg",
+              "expires_at": 1795651200000
+            }
+          ]
+        },
+        "updated_at": null,
+        "recipient": null
+      },
+      {
+        "text": "I had the pleasure of working alongside Matan at Amdocs on the Digital UI program for Altice, where we were both frontend developers on the same customer-facing platform.\n\nMatan is a strong full-stack developer with deep frontend skills. He's highly proficient in React, JavaScript and modern UI tooling. What stands out most is his curiosity and drive to keep improving. He's always among the first to explore new technologies, whether that's upgrading our component tooling or adopting AI-assisted development tools early and showing the team how much time they can save. He did all this while pursuing his degree, which says a lot about his discipline and work ethic.\n\nHe contributed to successful deliveries, including an Okta integration demo that was well received. He's also a great teammate. He's generous with his knowledge, always ready to discuss an architecture idea or help debug a tricky configuration, and he's honest and practical when giving advice.\n\nAny team would be lucky to have Matan. I highly recommend him.",
+        "date": "November 2, 2026",
+        "type": "Omri worked with Matan on the same team",
+        "recommender": {
+          "url": "https://www.linkedin.com/in/omri-biton-04369b147",
+          "urn": "ACoAACOE23MBpb0kDdjHZxIHOQgKSvFhMLf0Pfg",
+          "public_identifier": "omri-biton-04369b147",
+          "first_name": "Omri",
+          "last_name": "Biton",
+          "full_name": "Omri Biton",
+          "description": "Software Developer",
+          "is_premium": false,
+          "avatar": [
+            {
+              "width": 100,
+              "height": 100,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQGNAkgrnvW8Qw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1687553332033?e=1795651200&v=beta&t=jhu53Z3WvWkrueRuVTdeXiyrZz7V6MIayxfygCVNPlY",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 200,
+              "height": 200,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQGNAkgrnvW8Qw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1687553332034?e=1795651200&v=beta&t=7boYG0oAs9ZsgdveXRfT3TQ1zk95gHkl8NJHXlDk0Dw",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 400,
+              "height": 400,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQGNAkgrnvW8Qw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1687553332034?e=1795651200&v=beta&t=Ehj9snbI49g1FqauWB9rN2AUCuw-xv4zLJ1rRywD2Jw",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 800,
+              "height": 800,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQGNAkgrnvW8Qw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1687553332034?e=1795651200&v=beta&t=utWZ-KktG6s6TL2QhTS9xbH-yHIk_rthxsX11xgRBmA",
+              "expires_at": 1795651200000
+            }
+          ]
+        },
+        "updated_at": null,
+        "recipient": null
+      }
+    ],
+    "dropped": 0,
+    "walk": {
+      "pages": 1,
+      "stopped": "end",
+      "rows_fetched": 7,
+      "rows_returned": 7,
+      "credits": {
+        "pages": 5,
+        "refunded": 0
+      },
+      "request_ids": [
+        "req-aB1a2mYt6tlygrYT"
+      ]
+    }
+  },
+  "pagination": {
+    "next_cursor": null,
+    "has_more": false,
+    "page_size": 7,
+    "typical_page_size": null,
+    "next_page_credits": null
+  },
+  "request_id": "req-A4KWYcVXh2ac17ny"
+}

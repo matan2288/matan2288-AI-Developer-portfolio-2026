@@ -11,7 +11,7 @@
     "contactEmail": "matan2288@gmail.com",
     "linkedInUrl": "https://www.linkedin.com/in/matan2288",
     "blogUrl": "https://blog.google/technology/ai/",
-    "showBlogTab": true,
+    "showBlogTab": false,
     "stats": [
       {
         "value": "4 Years",
@@ -33,84 +33,151 @@
   },
   "experiences": [
     {
-      "id": "amdocs",
-      "company": "Amdocs",
+      "id": "amdocs-us-cellular",
+      "company": "U.S. Cellular · Amdocs",
       "role": "Software Developer",
-      "location": "Tel Aviv, Israel",
-      "period": "2022 — PRESENT",
+      "location": "Raanana, IL",
+      "period": "05/2025 — PRESENT",
       "isLatest": true,
       "bullets": [
-        "Engineered core frontend features for enterprise eCommerce platforms and self-service portals using React, TypeScript, and Redux.",
-        "Contributed to full-scale platform migration to Vue and Node.js, building custom E2E features and admin tools.",
-        "Architected web telemetry and tracking integrations, implementing robust RESTful APIs and accessible UI systems."
+        "Developed custom AEM components & modular JS for a high-traffic eCommerce platform, ensuring reusable, high-performance UI delivery.",
+        "Authored technical Confluence documentation and led Knowledge Transfer (KT) sessions for engineering onboarding and alignment.",
+        "Built automation scripts for mobile event tracking and route management, significantly reducing hardcoded manual overhead."
+      ],
+      "skills": [
+        "AEM",
+        "JavaScript (ES6+)",
+        "eCommerce",
+        "Analytics Automation",
+        "Confluence"
+      ]
+    },
+    {
+      "id": "amdocs-altice-usa",
+      "company": "Altice USA · Amdocs",
+      "role": "Software Developer",
+      "location": "Raanana, IL",
+      "period": "11/2023 — 05/2025",
+      "isLatest": false,
+      "bullets": [
+        "Architected Adobe Analytics infrastructure across eCommerce and self-service apps, leading client requirement reviews and tracking governance.",
+        "Set up the frontend infrastructure and engineered Okta Single Sign-On (SSO) authentication, automated deep-link logins, and secure checkout flow continuity.",
+        "Drove high-impact Proof of Concepts (POCs) from initial validation into enterprise production deployments.",
+        "Conducted rigorous code reviews ensuring architecture standards, code health, and maintainability."
+      ],
+      "skills": [
+        "Frontend Infrastructure",
+        "Adobe Analytics",
+        "Okta / SSO",
+        "JavaScript",
+        "REST APIs",
+        "Code Reviews"
+      ]
+    },
+    {
+      "id": "amdocs-three-uk",
+      "company": "Three UK · Amdocs",
+      "role": "Software Developer",
+      "location": "Sderot, IL",
+      "period": "01/2023 — 11/2023",
+      "isLatest": false,
+      "bullets": [
+        "Built core eCommerce, retail, and mobile flows using React, TypeScript, Redux-Saga, Material UI, and SCSS in an Agile framework.",
+        "Designed and delivered the end-to-end Home Broadband checkout funnel from architectural design to production launch.",
+        "Provided onsite technical release support in the UK, resolving live production blockers during mission-critical go-live windows."
       ],
       "skills": [
         "React",
         "TypeScript",
-        "Redux",
+        "Redux-Saga",
+        "SCSS",
+        "Checkout Funnels"
+      ]
+    },
+    {
+      "id": "amdocs-altice-migration",
+      "company": "Altice USA · Amdocs",
+      "role": "Software Developer",
+      "location": "Sderot, IL",
+      "period": "06/2022 — 01/2023",
+      "isLatest": false,
+      "bullets": [
+        "Contributed to full-site migration from React/Contentful to Drupal, Vue, and PHP, rebuilding and optimizing the subscriber purchase funnel.",
+        "Implemented custom CMS components and admin tooling utilizing Vue, GraphQL, PHP, and Twig.",
+        "Partnered with product, design, and QA leads across Jira, Bitbucket, and Acquia to accelerate release delivery."
+      ],
+      "skills": [
         "Vue",
-        "Node.js",
-        "REST APIs"
-      ]
-    },
-    {
-      "id": "bootcamp",
-      "company": "Etgar College",
-      "role": "Full-Stack Development",
-      "location": "Israel",
-      "period": "2020",
-      "isLatest": false,
-      "bullets": [
-        "Full-stack engineering training focused on modern JavaScript, React, Node.js, and SQL architecture."
-      ],
-      "skills": [
-        "JavaScript",
-        "React",
-        "Node.js",
-        "SQL"
-      ]
-    },
-    {
-      "id": "navy",
-      "company": "IDF, Israeli Navy",
-      "role": "Diving Gear Technician · Team Lead",
-      "location": "Israel",
-      "period": "2013 — 2019",
-      "isLatest": false,
-      "bullets": [
-        "Led technical operations team maintaining mission-critical life-support and diving systems under strict protocols."
-      ],
-      "skills": [
-        "Leadership",
-        "Operations",
-        "Technical Protocols"
+        "Drupal",
+        "GraphQL",
+        "PHP",
+        "Migration"
       ]
     }
   ],
   "recommendations": [
     {
-      "quote": "Matan is a sharp, dedicated engineer with extreme attention to detail. He led our e-commerce subscriber checkout migration with clean, dependable architecture.",
-      "author": "Senior Delivery Director",
-      "role": "Telecom Delivery",
-      "company": "Altice",
-      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=160&auto=format&fit=crop&q=80",
-      "linkedInUrl": "https://www.linkedin.com/in/matan2288"
+      "id": "rec-ehud-marchi",
+      "author": "Ehud Marchi",
+      "role": "Software Engineer",
+      "company": "Amdocs",
+      "quote": "I had the pleasure of working with Matan, and he is a highly responsible and dedicated developer. He’s a great team player, reliable, supportive, and always willing to help. Matan is the kind of person who can make a real impact and be a valuable part of any team. I highly recommend him.",
+      "avatarUrl": "https://media.licdn.com/dms/image/v2/C5603AQFnZQZMPxDhEA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1607446226341?e=1795651200&v=beta&t=3eUqKeWQe0tghT_6Km0EZyibOeWHgqWjmrQ_r3enVyQ",
+      "linkedInUrl": "https://www.linkedin.com/in/ehud-marchi"
     },
     {
-      "quote": "Consistently delivers optimized, reliable solutions. During our broadband launch, Matan efficiently resolved complex state issues across our order funnel.",
-      "author": "Principal Architect",
-      "role": "Order Engineering",
-      "company": "Three UK",
-      "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=160&auto=format&fit=crop&q=80",
-      "linkedInUrl": "https://www.linkedin.com/in/matan2288"
+      "id": "rec-adarsh-singh-b651b71b4",
+      "author": "Adarsh Singh",
+      "role": "Software QA Engineer",
+      "company": "Siemens",
+      "quote": "I had a great experience working with Matan, his frontend technical skills and collaborative approach make him a wonderful team player. I'd highly recommend him and wish him a very good luck.",
+      "avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGiax7VRW5ZKg/profile-displayphoto-scale_400_400/B4DZqtPL1aGgAg-/0/1763843031987?e=1795651200&v=beta&t=NH_F64x_sEcCbSpe88hpRPVxqWY7oxEt3Fi95G3oSBg",
+      "linkedInUrl": "https://www.linkedin.com/in/adarsh-singh-b651b71b4"
     },
     {
-      "quote": "Working with Matan on the analytics dataLayer was seamless. He mapped complex interaction tags cleanly and delivered dependable tracking.",
-      "author": "Analytics Lead",
-      "role": "Digital Performance",
-      "company": "USCellular",
-      "avatarUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=160&auto=format&fit=crop&q=80",
-      "linkedInUrl": "https://www.linkedin.com/in/matan2288"
+      "id": "rec-noam-shmueli",
+      "author": "Noam Shmueli",
+      "role": "Product Owner",
+      "company": "B2B SaaS",
+      "quote": "It was a true pleasure working alongside Matan. He is an exceptionally precise and thoughtful software engineer who approaches every problem with high attention to detail. Beyond his technical sharpness, Matan is the ultimate team player - always willing to jump in to assist teammates, review code thoroughly, and contribute constructively to team discussions. I’d welcome the chance to work with him again without hesitation.",
+      "avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQED8GBUweMlsQ/profile-displayphoto-scale_400_400/B4DZ3Y2WFHJsAg-/0/1777459619068?e=1795651200&v=beta&t=EI4uNpNUUut89m2vQvlsJKTdwnRKQFNCNZe6k_gZPs0",
+      "linkedInUrl": "https://www.linkedin.com/in/noam-shmueli"
+    },
+    {
+      "id": "rec-john-yaghobieh-4baa93107",
+      "author": "John Yaghobieh",
+      "role": "Tech Lead",
+      "company": "Agentic AI & Full-Stack",
+      "quote": "I highly recommend Matan. He is an incredibly hardworking professional who always tackles challenges head-on. He consistently goes above and beyond, taking full ownership of his projects. He is a natural leader who knows how to step up and drive things forward, maintaining the highest level of professionalism in everything he does. Any team would be lucky to have him on board.",
+      "avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQEX-1AvyayRTw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1619541513083?e=1795651200&v=beta&t=5GV3q8DGJidSdXg3d8mdVi_Un-g9vFoxebHu4QWRfss",
+      "linkedInUrl": "https://www.linkedin.com/in/john-yaghobieh-4baa93107"
+    },
+    {
+      "id": "rec-refael-huri-0a8b48168",
+      "author": "Refael Huri",
+      "role": "Software Engineer",
+      "company": "Amdocs",
+      "quote": "It was an absolute pleasure working with Matan on our software engineering project. Matan is a highly talented, dedicated, and detail-oriented developer who consistently delivers high-quality code and robust solutions. Throughout our collaboration, he demonstrated exceptional problem-solving skills, a deep understanding of software architecture, and the ability to tackle complex technical challenges efficiently. Beyond his technical prowess, Matan is a fantastic team player-collaborative, communicative, and always willing to support his peers. Any development team would be lucky to have him.",
+      "avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQHpAvHrz7-csQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1538035308448?e=1795651200&v=beta&t=7OGpSlLXn5h5OKJzyFoKRa8bqPoy16B4wkMXA-3sY64",
+      "linkedInUrl": "https://www.linkedin.com/in/refael-huri-0a8b48168"
+    },
+    {
+      "id": "rec-tomer-steiner-full-stack",
+      "author": "Tomer Steiner",
+      "role": "Senior Software Engineer",
+      "company": "Amdocs",
+      "quote": "I had the pleasure of working with Matan at Amdocs, where we were part of the same team, collaborating on the development of our project's website. Matan is an excellent UI Developer with strong expertise in React and modern front-end technologies. He consistently demonstrated great technical skills, attention to detail, and the ability to deliver high-quality, clean, and maintainable code. Beyond his technical abilities, Matan is a great team player, always willing to collaborate, share knowledge, and help others. He is professional, dedicated, and brings a positive attitude to the team. I highly recommend Matan to any team looking for a talented and reliable Front-End Developer.",
+      "avatarUrl": "https://media.licdn.com/dms/image/v2/C5603AQFG-yXGoJoJ2w/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1545034444673?e=1795651200&v=beta&t=cLxI0sSiSUYtyHEDug51XluXIdp6jhODdZI0EpVnDfc",
+      "linkedInUrl": "https://www.linkedin.com/in/tomer-steiner-full-stack"
+    },
+    {
+      "id": "rec-omri-biton-04369b147",
+      "author": "Omri Biton",
+      "role": "Software Developer",
+      "company": "Amdocs",
+      "quote": "I had the pleasure of working alongside Matan at Amdocs on the Digital UI program for Altice, where we were both frontend developers on the same customer-facing platform. Matan is a strong full-stack developer with deep frontend skills. He's highly proficient in React, JavaScript and modern UI tooling. What stands out most is his curiosity and drive to keep improving. He's always among the first to explore new technologies, whether that's upgrading our component tooling or adopting AI-assisted development tools early and showing the team how much time they can save. He contributed to successful deliveries, including an Okta integration demo that was well received. He's also a great teammate. He's generous with his knowledge, always ready to discuss an architecture idea or help debug a tricky configuration, and he's honest and practical when giving advice. Any team would be lucky to have Matan. I highly recommend him.",
+      "avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGNAkgrnvW8Qw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1687553332034?e=1795651200&v=beta&t=Ehj9snbI49g1FqauWB9rN2AUCuw-xv4zLJ1rRywD2Jw",
+      "linkedInUrl": "https://www.linkedin.com/in/omri-biton-04369b147"
     }
   ],
   "certifications": [

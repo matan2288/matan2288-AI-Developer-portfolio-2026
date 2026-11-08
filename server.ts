@@ -157,6 +157,99 @@ app.post('/api/chat', async (req: Request, res: Response) => {
   }
 });
 
+// Recommendations API Endpoint (serving verified LinkedIn recommendations via SocialCrawl data)
+app.get('/api/recommendations', async (req: Request, res: Response) => {
+  try {
+    const shouldRefresh = req.query.refresh === 'true';
+    const apiKey = process.env.SOCIALCRAWL_API_KEY;
+
+    if (shouldRefresh && apiKey) {
+      try {
+        const fetchUrl = 'https://www.socialcrawl.dev/v1/linkedin/profile/recommendations?url=https://www.linkedin.com/in/matan-elmaliach/&type=received&max_credits=10';
+        const scRes = await fetch(fetchUrl, {
+          headers: {
+            'x-api-key': apiKey,
+            'Accept': 'application/json',
+          },
+        });
+        if (scRes.ok) {
+          const freshData = await scRes.json();
+          fs.writeFileSync(path.resolve(__dirname, 'linkedin_recommendations.json'), JSON.stringify(freshData, null, 2), 'utf-8');
+        }
+      } catch (refreshErr) {
+        console.warn('SocialCrawl refresh error:', refreshErr);
+      }
+    }
+
+    // Read stored JSON
+    const jsonPath = path.resolve(__dirname, 'linkedin_recommendations.json');
+    if (fs.existsSync(jsonPath)) {
+      const raw = JSON.parse(fs.readFileSync(jsonPath, 'utf-8'));
+      const items = raw.data?.items || raw.items || (Array.isArray(raw) ? raw : []);
+
+      const mapped = items.map((item: any) => {
+        const recommender = item.recommender || {};
+        const desc = recommender.description || '';
+        let role = 'Software Engineer';
+        let company = 'Tech';
+
+        if (desc.includes(' at ')) {
+          const parts = desc.split(' at ');
+          role = parts[0].trim();
+          company = parts[1].trim();
+        } else if (desc.includes(' | ')) {
+          const parts = desc.split(' | ');
+          role = parts[0].trim();
+          company = parts[1].trim().split(' · ')[0].trim();
+        } else if (desc) {
+          role = desc.trim();
+        }
+
+        if (item.text?.includes('Amdocs') && (company === 'Tech' || company === 'Software Developer')) {
+          company = 'Amdocs';
+        }
+
+        const avatars = Array.isArray(recommender.avatar) ? recommender.avatar : [];
+        const preferredAvatar = avatars.find((a: any) => a.width === 400 || a.height === 400) || avatars[avatars.length - 1];
+
+        return {
+          id: recommender.public_identifier ? `rec-${recommender.public_identifier}` : undefined,
+          author: recommender.full_name || `${recommender.first_name || ''} ${recommender.last_name || ''}`.trim(),
+          role,
+          company,
+          quote: item.text?.trim() || '',
+          avatarUrl: preferredAvatar?.url,
+          linkedInUrl: recommender.url || (recommender.public_identifier ? `https://www.linkedin.com/in/${recommender.public_identifier}` : undefined),
+        };
+      });
+
+      return res.json({
+        success: true,
+        source: 'linkedin_socialcrawl',
+        count: mapped.length,
+        data: mapped,
+      });
+    }
+
+    // Fallback to siteContent.json
+    const siteContentPath = path.resolve(__dirname, 'content/siteContent.json');
+    if (fs.existsSync(siteContentPath)) {
+      const siteContent = JSON.parse(fs.readFileSync(siteContentPath, 'utf-8'));
+      return res.json({
+        success: true,
+        source: 'site_content',
+        count: siteContent.recommendations?.length || 0,
+        data: siteContent.recommendations || [],
+      });
+    }
+
+    return res.status(404).json({ success: false, error: 'No recommendations found' });
+  } catch (err: any) {
+    console.error('Error serving recommendations API:', err);
+    return res.status(500).json({ success: false, error: err?.message || 'Failed to fetch recommendations' });
+  }
+});
+
 // Secure Content Commit Endpoint (commits to GitHub API or local fs if token is not configured)
 app.post('/api/content-commit', async (req: Request, res: Response) => {
   try {

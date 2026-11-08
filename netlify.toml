@@ -10,6 +10,12 @@
   SECRETS_SCAN_ENABLED = "false"
 
 [[redirects]]
+  from = "/api/recommendations"
+  to = "/.netlify/functions/recommendations"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/api/content-commit"
   to = "/.netlify/functions/content-commit"
   status = 200
