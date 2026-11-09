@@ -118,38 +118,43 @@ app.post('/api/chat', async (req: Request, res: Response) => {
       parts: [{ text: userMessage }],
     });
 
-    const configuredModel = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+    const configuredModel = process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite';
     const candidateModels = Array.from(new Set([
       configuredModel,
-    'gemini-2.5-flash',
-      'gemini-2.0-flash',
-      'gemini-1.5-flash',
+      'gemini-3.1-flash-lite',
+      'gemini-3.5-flash',
+      'gemini-3.8-flash',
     ])).filter(Boolean);
 
-let reply = '';
-for (const model of candidateModels) {
-  try {
-    const response = await ai.models.generateContent({
-      model,
-      contents,
-      config: {
-        systemInstruction: MATAN_SYSTEM_INSTRUCTION,
-        maxOutputTokens: 1000,
-      },
-    });
-    if (response.text) {
-      reply = response.text;
-      break;
+    let reply = '';
+    let lastError: string | null = null;
+    for (const model of candidateModels) {
+      try {
+        const response = await ai.models.generateContent({
+          model,
+          contents,
+          config: {
+            systemInstruction: MATAN_SYSTEM_INSTRUCTION,
+            maxOutputTokens: 1000,
+          },
+        });
+        if (response.text) {
+          reply = response.text;
+          break;
+        }
+      } catch (err: any) {
+        lastError = err?.message || String(err);
+        console.warn(`Server Gemini model ${model} failed, trying next fallback:`, lastError);
+      }
     }
-  } catch (err) {
-    console.warn(`Server Gemini model ${model} failed, trying next fallback:`, err instanceof Error ? err.message : String(err));
-  }
-}
 
-if (!reply) {
-  reply = 'I was unable to formulate a response. Please try again.';
-}
-return res.json({ reply });
+    if (!reply) {
+      return res.status(502).json({
+        error: 'Model generation failed across candidate models',
+        details: lastError,
+      });
+    }
+    return res.json({ reply });
   } catch (error: any) {
   console.error('Gemini API Error:', error);
   return res.status(500).json({

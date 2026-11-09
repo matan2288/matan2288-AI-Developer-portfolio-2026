@@ -61,12 +61,12 @@ export default defineConfig(({ mode }) => {
 
                 contents.push({ role: 'user', parts: [{ text: userMessage }] });
 
-                const configuredModel = env.GEMINI_MODEL || process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+                const configuredModel = env.GEMINI_MODEL || process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite';
                 const candidateModels = Array.from(new Set([
                   configuredModel,
-                  'gemini-2.5-flash',
-                  'gemini-2.0-flash',
-                  'gemini-1.5-flash',
+                  'gemini-3.1-flash-lite',
+                  'gemini-3.5-flash',
+                  'gemini-3.8-flash',
                 ])).filter(Boolean);
 
                 let reply = '';
@@ -87,7 +87,11 @@ export default defineConfig(({ mode }) => {
                     console.warn(`Dev Gemini model ${model} failed:`, err?.message || err);
                   }
                 }
-                res.end(JSON.stringify({ reply: reply || 'I was unable to formulate a response. Please try again.' }));
+                if (!reply) {
+                  res.statusCode = 502;
+                  return res.end(JSON.stringify({ error: 'Chat generation failed across models' }));
+                }
+                res.end(JSON.stringify({ reply }));
               } catch (err: any) {
                 res.statusCode = 500;
                 res.end(JSON.stringify({ error: err?.message || 'Chat generation failed' }));

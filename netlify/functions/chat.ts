@@ -95,7 +95,7 @@ export const handler: Handler = async (event: HandlerEvent, _context?: any) => {
         headers: {
           'User-Agent': 'aistudio-build',
         },
-        timeout: 10000,
+        timeout: 15000,
         retryOptions: {
           attempts: 1,
         },
@@ -125,15 +125,16 @@ export const handler: Handler = async (event: HandlerEvent, _context?: any) => {
       parts: [{ text: userMessage }],
     });
 
-    const configuredModel = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+    const configuredModel = process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite';
     const candidateModels = Array.from(new Set([
       configuredModel,
-      'gemini-2.5-flash',
-      'gemini-2.0-flash',
-      'gemini-1.5-flash',
+      'gemini-3.1-flash-lite',
+      'gemini-3.5-flash',
+      'gemini-3.8-flash',
     ])).filter(Boolean);
 
     let reply = '';
+    let lastError: string | null = null;
     for (const model of candidateModels) {
       try {
         const response = await ai.models.generateContent({
@@ -148,13 +149,21 @@ export const handler: Handler = async (event: HandlerEvent, _context?: any) => {
           reply = response.text;
           break;
         }
-      } catch (err) {
-        console.warn(`Netlify Gemini model ${model} failed, trying fallback:`, err instanceof Error ? err.message : String(err));
+      } catch (err: any) {
+        lastError = err?.message || String(err);
+        console.warn(`Netlify Gemini model ${model} failed, trying fallback:`, lastError);
       }
     }
 
     if (!reply) {
-      reply = 'I was unable to formulate a response. Please try again.';
+      return {
+        statusCode: 502,
+        headers: corsHeaders,
+        body: JSON.stringify({
+          error: 'Model generation failed across candidate models',
+          details: lastError,
+        }),
+      };
     }
 
     return {
