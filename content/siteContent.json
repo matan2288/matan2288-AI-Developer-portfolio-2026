@@ -113,6 +113,15 @@
   ],
   "recommendations": [
     {
+      "id": "rec-marios-panteli-88b69b198",
+      "author": "Marios Panteli",
+      "role": "Senior Tech Project Manager",
+      "company": "Fayara",
+      "quote": "I had the pleasure of working with Matan and can confidently say that he is a highly dedicated, professional, and talented individual.\n\nThroughout our collaboration, he consistently demonstrated strong technical skills, a proactive attitude, and a genuine commitment to delivering high-quality results. His ability to take ownership, collaborate effectively with colleagues, and approach challenges with a solution-oriented mindset made him a valuable member of the team.\n\nBeyond his professional capabilities, he bring a positive attitude, reliability, and a strong team spirit to everything he does.\n\nI truly enjoyed working with him and would highly recommend him to any team or organization looking for a skilled and committed professional. I wish him continued success in their career!",
+      "avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQHuEshoT2kZaQ/profile-displayphoto-scale_400_400/B4DZ5LgLUIJ4Ag-/0/1779383188265?e=1795651200&v=beta&t=Ldd5C-OsZXVNSpcxI0QIfhf8rTMr14-wILCDSbrTh2s",
+      "linkedInUrl": "https://www.linkedin.com/in/marios-panteli-88b69b198"
+    },
+    {
       "id": "rec-ehud-marchi",
       "author": "Ehud Marchi",
       "role": "Software Engineer",
@@ -135,7 +144,7 @@
       "author": "Noam Shmueli",
       "role": "Product Owner",
       "company": "B2B SaaS",
-      "quote": "It was a true pleasure working alongside Matan. He is an exceptionally precise and thoughtful software engineer who approaches every problem with high attention to detail. Beyond his technical sharpness, Matan is the ultimate team player - always willing to jump in to assist teammates, review code thoroughly, and contribute constructively to team discussions. I’d welcome the chance to work with him again without hesitation.",
+      "quote": "It was a true pleasure working alongside Matan. He is an exceptionally precise and thoughtful software engineer who approaches every problem with high attention to detail.\n\nBeyond his technical sharpness, Matan is the ultimate team player - always willing to jump in to assist teammates, review code thoroughly, and contribute constructively to team discussions. \nI’d welcome the chance to work with him again without hesitation",
       "avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQED8GBUweMlsQ/profile-displayphoto-scale_400_400/B4DZ3Y2WFHJsAg-/0/1777459619068?e=1795651200&v=beta&t=EI4uNpNUUut89m2vQvlsJKTdwnRKQFNCNZe6k_gZPs0",
       "linkedInUrl": "https://www.linkedin.com/in/noam-shmueli"
     },
@@ -153,8 +162,8 @@
       "author": "Refael Huri",
       "role": "Software Engineer",
       "company": "Amdocs",
-      "quote": "It was an absolute pleasure working with Matan on our software engineering project. Matan is a highly talented, dedicated, and detail-oriented developer who consistently delivers high-quality code and robust solutions. Throughout our collaboration, he demonstrated exceptional problem-solving skills, a deep understanding of software architecture, and the ability to tackle complex technical challenges efficiently. Beyond his technical prowess, Matan is a fantastic team player-collaborative, communicative, and always willing to support his peers. Any development team would be lucky to have him.",
-      "avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQHpAvHrz7-csQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1538035308448?e=1795651200&v=beta&t=7OGpSlLXn5h5OKJzyFoKRa8bqPoy16B4wkMXA-3sY64",
+      "quote": "It was an absolute pleasure working with Matan on our software engineering project. Matan is a highly talented, dedicated, and detail-oriented developer who consistently delivers high-quality code and robust solutions.\n\nThroughout our collaboration, he demonstrated exceptional problem-solving skills, a deep understanding of software architecture, and the ability to tackle complex technical challenges efficiently. Beyond his technical prowess, Matan is a fantastic team player-collaborative, communicative, and always willing to support his peers. Any development team would be lucky to have him.\"",
+      "avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQHpAvHrz7-csQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1538035308408?e=1795651200&v=beta&t=IpT7vSBEaRU9kOVj4MP1vYPAeadeMoIttlVuDsGaMK0",
       "linkedInUrl": "https://www.linkedin.com/in/refael-huri-0a8b48168"
     },
     {
@@ -162,7 +171,7 @@
       "author": "Tomer Steiner",
       "role": "Senior Software Engineer",
       "company": "Amdocs",
-      "quote": "I had the pleasure of working with Matan at Amdocs, where we were part of the same team, collaborating on the development of our project's website. Matan is an excellent UI Developer with strong expertise in React and modern front-end technologies. He consistently demonstrated great technical skills, attention to detail, and the ability to deliver high-quality, clean, and maintainable code. Beyond his technical abilities, Matan is a great team player, always willing to collaborate, share knowledge, and help others. He is professional, dedicated, and brings a positive attitude to the team. I highly recommend Matan to any team looking for a talented and reliable Front-End Developer.",
+      "quote": "I had the pleasure of working with Matan at Amdocs, where we were part of the same team, collaborating on the development of our project's website.\n\nMatan is an excellent UI Developer with strong expertise in React and modern front-end technologies. He consistently demonstrated great technical skills, attention to detail, and the ability to deliver high-quality, clean, and maintainable code.\n\nBeyond his technical abilities, Matan is a great team player, always willing to collaborate, share knowledge, and help others. He is professional, dedicated, and brings a positive attitude to the team.\n\nI highly recommend Matan to any team looking for a talented and reliable Front-End Developer.",
       "avatarUrl": "https://media.licdn.com/dms/image/v2/C5603AQFG-yXGoJoJ2w/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1545034444673?e=1795651200&v=beta&t=cLxI0sSiSUYtyHEDug51XluXIdp6jhODdZI0EpVnDfc",
       "linkedInUrl": "https://www.linkedin.com/in/tomer-steiner-full-stack"
     },
@@ -171,7 +180,7 @@
       "author": "Omri Biton",
       "role": "Software Developer",
       "company": "Amdocs",
-      "quote": "I had the pleasure of working alongside Matan at Amdocs on the Digital UI program for Altice, where we were both frontend developers on the same customer-facing platform. Matan is a strong full-stack developer with deep frontend skills. He's highly proficient in React, JavaScript and modern UI tooling. What stands out most is his curiosity and drive to keep improving. He's always among the first to explore new technologies, whether that's upgrading our component tooling or adopting AI-assisted development tools early and showing the team how much time they can save. He contributed to successful deliveries, including an Okta integration demo that was well received. He's also a great teammate. He's generous with his knowledge, always ready to discuss an architecture idea or help debug a tricky configuration, and he's honest and practical when giving advice. Any team would be lucky to have Matan. I highly recommend him.",
+      "quote": "I had the pleasure of working alongside Matan at Amdocs on the Digital UI program for Altice, where we were both frontend developers on the same customer-facing platform.\n\nMatan is a strong full-stack developer with deep frontend skills. He's highly proficient in React, JavaScript and modern UI tooling. What stands out most is his curiosity and drive to keep improving. He's always among the first to explore new technologies, whether that's upgrading our component tooling or adopting AI-assisted development tools early and showing the team how much time they can save. He did all this while pursuing his degree, which says a lot about his discipline and work ethic.\n\nHe contributed to successful deliveries, including an Okta integration demo that was well received. He's also a great teammate. He's generous with his knowledge, always ready to discuss an architecture idea or help debug a tricky configuration, and he's honest and practical when giving advice.\n\nAny team would be lucky to have Matan. I highly recommend him.",
       "avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGNAkgrnvW8Qw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1687553332034?e=1795651200&v=beta&t=Ehj9snbI49g1FqauWB9rN2AUCuw-xv4zLJ1rRywD2Jw",
       "linkedInUrl": "https://www.linkedin.com/in/omri-biton-04369b147"
     }

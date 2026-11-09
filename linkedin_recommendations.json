@@ -4,10 +4,53 @@
   "endpoint": "/v1/linkedin/profile/recommendations",
   "credits_used": 5,
   "cached": false,
-  "credits_remaining": 90,
+  "credits_remaining": 85,
   "data": {
-    "total": 7,
+    "total": 8,
     "items": [
+      {
+        "text": "I had the pleasure of working with Matan and can confidently say that he is a highly dedicated, professional, and talented individual.\n\nThroughout our collaboration, he consistently demonstrated strong technical skills, a proactive attitude, and a genuine commitment to delivering high-quality results. His ability to take ownership, collaborate effectively with colleagues, and approach challenges with a solution-oriented mindset made him a valuable member of the team.\n\nBeyond his professional capabilities, he bring a positive attitude, reliability, and a strong team spirit to everything he does.\n\nI truly enjoyed working with him and would highly recommend him to any team or organization looking for a skilled and committed professional. I wish him continued success in their career!",
+        "date": "November 9, 2026",
+        "type": "Marios managed Matan directly",
+        "recommender": {
+          "url": "https://www.linkedin.com/in/marios-panteli-88b69b198",
+          "urn": "ACoAAC5gMCsBa5e9Fq8TsnDM4O1SC63zsG39vjk",
+          "public_identifier": "marios-panteli-88b69b198",
+          "first_name": "Marios",
+          "last_name": "Panteli",
+          "full_name": "Marios Panteli",
+          "description": "Senior Tech Project Manager at Fayara ",
+          "is_premium": false,
+          "avatar": [
+            {
+              "width": 400,
+              "height": 400,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQHuEshoT2kZaQ/profile-displayphoto-scale_400_400/B4DZ5LgLUIJ4Ag-/0/1779383188265?e=1795651200&v=beta&t=Ldd5C-OsZXVNSpcxI0QIfhf8rTMr14-wILCDSbrTh2s",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 100,
+              "height": 100,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQHuEshoT2kZaQ/profile-displayphoto-scale_100_100/B4DZ5LgLUIJ4AY-/0/1779383188266?e=1795651200&v=beta&t=IK-YkluuARqqLwcfR3NwZJt94ydEFTYNQbdEiUMEUrI",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 800,
+              "height": 800,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQHuEshoT2kZaQ/profile-displayphoto-crop_800_800/B4DZ5LgLUIJ4AI-/0/1779383188266?e=1795651200&v=beta&t=B6nyoksKfYAIyq2KwvuEImXYiE8xZECNAmfl-fvNXOo",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 200,
+              "height": 200,
+              "url": "https://media.licdn.com/dms/image/v2/D4D03AQHuEshoT2kZaQ/profile-displayphoto-scale_200_200/B4DZ5LgLUIJ4Ac-/0/1779383188266?e=1795651200&v=beta&t=dR2lXTdSj5u9fyQtPHzAHTmIhCxhOYhTTQ3hBq6LKZc",
+              "expires_at": 1795651200000
+            }
+          ]
+        },
+        "updated_at": null,
+        "recipient": null
+      },
       {
         "text": "I had the pleasure of working with Matan, and he is a highly responsible and dedicated developer. He’s a great team player, reliable, supportive, and always willing to help. Matan is the kind of person who can make a real impact and be a valuable part of any team. I highly recommend him.",
         "date": "November 8, 2026",
@@ -105,7 +148,7 @@
           "first_name": "Noam",
           "last_name": "Shmueli",
           "full_name": "Noam Shmueli",
-          "description": "Product Owner | B2B SaaS · Backlog · User Stories · Agile · API Integrations",
+          "description": "Customer Service Manager at OFIL Systems",
           "is_premium": true,
           "avatar": [
             {
@@ -314,23 +357,23 @@
     "walk": {
       "pages": 1,
       "stopped": "end",
-      "rows_fetched": 7,
-      "rows_returned": 7,
+      "rows_fetched": 8,
+      "rows_returned": 8,
       "credits": {
         "pages": 5,
         "refunded": 0
       },
       "request_ids": [
-        "req-aB1a2mYt6tlygrYT"
+        "req-bu9v3WxxaeFsoXHB"
       ]
     }
   },
   "pagination": {
     "next_cursor": null,
     "has_more": false,
-    "page_size": 7,
+    "page_size": 8,
     "typical_page_size": null,
     "next_page_credits": null
   },
-  "request_id": "req-A4KWYcVXh2ac17ny"
+  "request_id": "req-xXQITcUVQr25wqJY"
 }
