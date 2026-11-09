@@ -28,6 +28,11 @@ export const TestimonialsContainer: React.FC<TestimonialsContainerProps> = ({
       try {
         const res = await fetch('/api/recommendations');
         if (!res.ok) return;
+        const contentType = res.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+          // Response is not JSON (e.g. static host served index.html SPA fallback)
+          return;
+        }
         const json = await res.json();
         const apiData = json.data || json.recommendations || [];
         if (isMounted && Array.isArray(apiData) && apiData.length > 0) {

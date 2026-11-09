@@ -1,3 +1,4 @@
+/api/recommendations  /.netlify/functions/recommendations  200!
 /api/content-commit   /.netlify/functions/content-commit   200!
 /*                    /index.html                          200
 

@@ -12,10 +12,12 @@
   },
   "dependencies": {
     "@google/genai": "^2.32.0",
+    "@tailwindcss/vite": "^4.3.5",
     "lucide-react": "^0.561.0",
     "motion": "^12.42.2",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "tailwindcss": "^4.3.5",
     "tinacms": "^3.11.0"
   },
   "devDependencies": {
