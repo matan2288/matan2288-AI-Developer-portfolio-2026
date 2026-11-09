@@ -32,17 +32,15 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
       {/* Mobile timeline connecting line */}
       <div className="md:hidden absolute left-[7px] sm:left-[8px] top-0 bottom-0 pointer-events-none">
         {!isFirst && (
-          <div className={`absolute top-0 w-px bg-neutral-200 ${isAmdocs ? 'h-5 sm:h-6' : 'h-5 sm:h-6'}`} />
+          <div className="absolute top-0 h-5 sm:h-6 w-px bg-neutral-200" />
         )}
         {!isLast && (
-          <div className={`absolute bottom-0 w-px bg-neutral-200 ${isAmdocs ? 'top-5 sm:top-6' : 'top-5 sm:top-6'}`} />
+          <div className="absolute top-5 sm:top-6 bottom-0 w-px bg-neutral-200" />
         )}
       </div>
 
       {/* Mobile Dot */}
-      <div className={`md:hidden absolute left-0 z-10 flex items-center justify-center ${
-        isAmdocs ? 'top-3 sm:top-3.5' : 'top-5 sm:top-6'
-      }`}>
+      <div className="md:hidden absolute left-0 top-5 sm:top-6 z-10 flex items-center justify-center">
         {isLatest ? (
           <div className="w-4 h-4 rounded-full border border-neutral-700 bg-white flex items-center justify-center shadow-xs">
             <div className="w-1.5 h-1.5 rounded-full bg-neutral-900" />
@@ -75,7 +73,7 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
                 className="w-14 sm:w-24 h-auto object-contain select-none grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
               />
               <span className="text-[10px] font-mono text-text-subtle/70 tracking-wider text-center mt-2 select-none">
-                Raanana, IL
+                {location || 'Raanana, IL'}
               </span>
             </div>
           )}
@@ -94,21 +92,6 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
 
         {/* Right Column: Experience Card */}
         <div className="w-full">
-          {/* Mobile-only Amdocs logo & location OUTSIDE of the tile on first card */}
-          {isAmdocs && isFirst && (
-            <div className="md:hidden mb-3.5 flex items-center justify-between gap-3 px-0.5">
-              <img
-                src="/amdocs-logo.png"
-                alt="Amdocs"
-                title="Amdocs"
-                className="h-10 sm:h-11 w-auto max-w-[120px] object-contain select-none grayscale opacity-85 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-              />
-              <span className="text-[10px] font-mono text-text-subtle/70 tracking-wider select-none shrink-0">
-                Raanana, IL
-              </span>
-            </div>
-          )}
-
           <div className="bg-[#FBFCFD] rounded-2xl p-5 sm:p-6 md:p-7 border border-border/80 hover:border-neutral-400 transition-colors duration-200 relative shadow-2xs">
             {/* Card Header matching image.png without h3 */}
             <div className="flex items-baseline justify-between gap-4 mb-6 sm:mb-7">
