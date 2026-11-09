@@ -28,29 +28,31 @@ try {
       }
     }
   }
-} catch {}
+} catch { }
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
 
-const apiKey = process.env.GEMINI_API_KEY || '';
+// Lazy server-side Gemini initialization
+function getGeminiClient(): GoogleGenAI | null {
+  const rawApiKey = process.env.GEMINI_API_KEY || '';
+  const apiKey = rawApiKey.trim().replace(/^["']|["']$/g, '');
+  if (!apiKey) return null;
 
-// Server-side Gemini initialization with required User-Agent telemetry header
-const ai = apiKey
-  ? new GoogleGenAI({
-    apiKey,
-    httpOptions: {
-      headers: {
-        'User-Agent': 'aistudio-build',
-      },
-      retryOptions: {
-        attempts: 1,
-      },
-    },
-  })
-  : null;
+      return new GoogleGenAI({
+        apiKey,
+        httpOptions: {
+          headers: {
+            'User-Agent': 'aistudio-build',
+          },
+          retryOptions: {
+            attempts: 1,
+          },
+        },
+});
+}
 
 const MATAN_SYSTEM_INSTRUCTION = `
 You are Matan Elmaliach — speaking as Matan himself in the first person ("I", "my"). You are an AI-driven digital assistant twin representing Matan to hiring managers, engineering managers (EMs), tech leads, and technical recruiters who visit his portfolio.
@@ -89,6 +91,7 @@ You are Matan Elmaliach — speaking as Matan himself in the first person ("I", 
 // Gemini Chat Endpoint
 app.post('/api/chat', async (req: Request, res: Response) => {
   try {
+    const ai = getGeminiClient();
     if (!ai) {
       return res.status(503).json({
         noKey: true,
@@ -103,7 +106,7 @@ app.post('/api/chat', async (req: Request, res: Response) => {
     }
 
     const contents = (Array.isArray(conversationHistory) ? conversationHistory : [])
-      .filter((m: any) => m && m.text)
+      .filter((m: any) => m && m.text && m.id !== 'welcome')
       .map((m: { role: string; text: string }) => ({
         role: m.role === 'model' ? 'model' : 'user',
         parts: [{ text: m.text }],
@@ -115,44 +118,75 @@ app.post('/api/chat', async (req: Request, res: Response) => {
       parts: [{ text: userMessage }],
     });
 
-    const configuredModel = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
+    const configuredModel = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
     const candidateModels = Array.from(new Set([
       configuredModel,
-      'gemini-3.5-flash',
-      'gemini-3.1-flash-lite',
-      'gemini-3.8-flash',
-    ]));
+    'gemini-2.5-flash',
+      'gemini-2.0-flash',
+      'gemini-1.5-flash',
+    ])).filter(Boolean);
 
-    let reply = '';
-    for (const model of candidateModels) {
-      try {
-        const response = await ai.models.generateContent({
-          model,
-          contents,
-          config: {
-            systemInstruction: MATAN_SYSTEM_INSTRUCTION,
-            maxOutputTokens: 1000,
-          },
-        });
-        if (response.text) {
-          reply = response.text;
-          break;
-        }
-      } catch (err) {
-        console.warn(`Server Gemini model ${model} failed, trying next fallback:`, err instanceof Error ? err.message : String(err));
-      }
+let reply = '';
+for (const model of candidateModels) {
+  try {
+    const response = await ai.models.generateContent({
+      model,
+      contents,
+      config: {
+        systemInstruction: MATAN_SYSTEM_INSTRUCTION,
+        maxOutputTokens: 1000,
+      },
+    });
+    if (response.text) {
+      reply = response.text;
+      break;
     }
+  } catch (err) {
+    console.warn(`Server Gemini model ${model} failed, trying next fallback:`, err instanceof Error ? err.message : String(err));
+  }
+}
 
-    if (!reply) {
-      reply = 'I was unable to formulate a response. Please try again.';
-    }
-    return res.json({ reply });
+if (!reply) {
+  reply = 'I was unable to formulate a response. Please try again.';
+}
+return res.json({ reply });
   } catch (error: any) {
-    console.error('Gemini API Error:', error);
-    return res.status(500).json({
-      error: error?.message || 'Error communicating with Gemini model',
-      reply:
-        'Hey there! I hit a minor connection bump talking to my API right now, but feel free to check out my experience timeline below or email me directly at matan2288@gmail.com!',
+  console.error('Gemini API Error:', error);
+  return res.status(500).json({
+    error: error?.message || 'Error communicating with Gemini model',
+    reply:
+      'Hey there! I hit a minor connection bump talking to my API right now, but feel free to check out my experience timeline below or email me directly at matan2288@gmail.com!',
+  });
+}
+});
+
+// Editor Authentication Endpoint
+app.post('/api/editor-auth', (req: Request, res: Response) => {
+  try {
+    const { username = '', password = '' } = req.body || {};
+    const expectedUser = (process.env.EDITOR_USERNAME || 'admin').trim();
+    const rawExpectedPass = process.env.EDITOR_PASSWORD || '';
+    const expectedPass = rawExpectedPass.trim().replace(/^["']|["']$/g, '');
+
+    if (!expectedPass) {
+      return res.status(500).json({
+        success: false,
+        error: 'EDITOR_PASSWORD is not configured on the server.',
+      });
+    }
+
+    if (username.trim() === expectedUser && password === expectedPass) {
+      return res.json({ success: true });
+    }
+
+    return res.status(401).json({
+      success: false,
+      error: 'Invalid username or password',
+    });
+  } catch (err: any) {
+    return res.status(400).json({
+      success: false,
+      error: err?.message || 'Bad Request',
     });
   }
 });

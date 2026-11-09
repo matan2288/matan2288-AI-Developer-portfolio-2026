@@ -10,6 +10,18 @@
   SECRETS_SCAN_ENABLED = "false"
 
 [[redirects]]
+  from = "/api/chat"
+  to = "/.netlify/functions/chat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/editor-auth"
+  to = "/.netlify/functions/editor-auth"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/api/recommendations"
   to = "/.netlify/functions/recommendations"
   status = 200

@@ -1,17 +1,5 @@
 const AUTH_STORAGE_KEY = 'editor_authenticated';
 
-export function getEditorCredentials() {
-  const username =
-    (typeof import.meta !== 'undefined' && import.meta.env?.EDITOR_USERNAME) ||
-    'admin';
-
-  const password =
-    (typeof import.meta !== 'undefined' && import.meta.env?.EDITOR_PASSWORD) ||
-    '';
-
-  return { username: username.trim(), password };
-}
-
 export function isEditorAuthenticated(): boolean {
   if (typeof window === 'undefined') return false;
   try {
@@ -29,19 +17,49 @@ export function setEditorAuthenticated(authenticated: boolean): void {
     } else {
       sessionStorage.removeItem(AUTH_STORAGE_KEY);
     }
-  } catch {}
+  } catch { }
 }
 
-export function verifyEditorCredentials(inputUser: string, inputPass: string): boolean {
-  const { username, password } = getEditorCredentials();
-  if (!password) {
-    console.warn('EDITOR_PASSWORD is not configured in environment variables.');
-    return false;
-  }
-  return inputUser.trim() === username && inputPass === password;
-}
+    export async function verifyEditorCredentials(inputUser: string, inputPass: string): Promise<boolean> {
+      try {
+        const payload = JSON.stringify({
+          username: inputUser,
+          password: inputPass,
+        });
+        const headers = { 'Content-Type': 'application/json' };
 
-export function logoutEditor(): void {
-  setEditorAuthenticated(false);
-}
+        let res = await fetch('/api/editor-auth', {
+          method: 'POST',
+          headers,
+          body: payload,
+        });
 
+        if (res.status === 404) {
+          try {
+            const netlifyRes = await fetch('/.netlify/functions/editor-auth', {
+              method: 'POST',
+              headers,
+              body: payload,
+            });
+            if (netlifyRes.status !== 404) {
+              res = netlifyRes;
+            }
+          } catch (fallbackErr) {
+            console.warn('Netlify editor-auth function fallback error:', fallbackErr);
+          }
+        }
+
+        if (res.ok) {
+          const data = await res.json();
+          return !!data.success;
+        }
+        return false;
+      } catch (err) {
+        console.error('Editor authentication request failed:', err);
+        return false;
+      }
+    }
+
+    export function logoutEditor(): void {
+      setEditorAuthenticated(false);
+    }

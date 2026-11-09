@@ -1,41 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
 import { ChatMessage } from "../features/dashboard/types";
-
-// Helper to retrieve Gemini API key from environment
-function getGeminiApiKey(): string {
-  if (typeof process !== "undefined" && process.env?.GEMINI_API_KEY) {
-    return process.env.GEMINI_API_KEY.trim();
-  }
-  return "";
-}
-
-function isValidClientApiKey(key: string): boolean {
-  if (!key) return false;
-  return key.trim().length > 10;
-}
-
-function getGeminiClient(): GoogleGenAI | null {
-  const apiKey = getGeminiApiKey();
-  if (!isValidClientApiKey(apiKey)) return null;
-
-  try {
-    return new GoogleGenAI({
-      apiKey,
-      httpOptions: {
-        headers: {
-          "User-Agent": "aistudio-build",
-        },
-        timeout: 7000,
-        retryOptions: {
-          attempts: 1,
-        },
-      },
-    });
-  } catch (error) {
-    console.error("Failed to initialize GoogleGenAI:", error);
-    return null;
-  }
-}
 
 // System instruction detailing Matan's exact professional software developer CV
 const MATAN_SYSTEM_INSTRUCTION = `
@@ -333,74 +296,61 @@ function generateOfflinePersonaResponse(query: string, history?: ChatMessage[]):
 
 /**
  * Main chat handler for Matan's digital assistant twin.
- * Operates purely on the client side without requiring an Express server.
+ * Calls secure server-side endpoint (/api/chat -> Netlify Function) keeping API keys safe.
+ * Resiliently falls back to local persona engine if offline or server is unavailable.
  */
 export const chatWithMatanPersona = async (
   conversationHistory: ChatMessage[],
   userMessage: string
 ): Promise<string> => {
-  const apiKey = getGeminiApiKey();
-  const ai = getGeminiClient();
+  try {
+    const payload = JSON.stringify({
+      conversationHistory,
+      userMessage,
+    });
+    const headers = {
+      'Content-Type': 'application/json',
+    };
 
-  // If a valid client key is configured, attempt generative call
-  if (ai && isValidClientApiKey(apiKey)) {
-    try {
-      const contents = conversationHistory
-        .filter((m) => m.text && m.text.trim() && m.id !== "welcome")
-        .map((m) => ({
-          role: m.role === "model" ? "model" : "user",
-          parts: [{ text: m.text }],
-        }));
+        // Primary endpoint: /api/chat (rewritten to /.netlify/functions/chat on prod or served by dev server)
+        let res = await fetch('/api/chat', {
+          method: 'POST',
+          headers,
+          body: payload,
+        });
 
-      contents.push({
-        role: "user",
-        parts: [{ text: userMessage }],
-      });
+            // Netlify fallback if direct rewrite wasn't applied
+            if (res.status === 404) {
+              try {
+                const netlifyRes = await fetch('/.netlify/functions/chat', {
+                  method: 'POST',
+                  headers,
+                  body: payload,
+                });
+                if (netlifyRes.status !== 404) {
+                  res = netlifyRes;
+                }
+              } catch (fallbackErr) {
+                console.warn('Netlify function direct fallback error:', fallbackErr);
+              }
+            }
 
-      const configuredModel =
-        (typeof process !== "undefined" && process.env?.GEMINI_MODEL) ||
-        "gemini-3.8-flash";
-
-      // Candidate models: try configured model first, then resilient fallbacks
-      const candidateModels = Array.from(new Set([
-        configuredModel,
-        "gemini-3.5-flash",
-        "gemini-3.1-flash-lite",
-        "gemini-3.8-flash",
-      ])).filter(Boolean);
-
-      for (const model of candidateModels) {
-        try {
-          const response = await ai.models.generateContent({
-            model,
-            contents,
-            config: {
-              systemInstruction: MATAN_SYSTEM_INSTRUCTION,
-              maxOutputTokens: 1000,
-            },
-          });
-
-          const reply = response.text?.trim();
-          if (reply) {
-            return reply;
+            const contentType = res.headers.get('content-type') || '';
+            if (res.ok && contentType.includes('application/json')) {
+              const data = await res.json();
+              if (data.reply) {
+                return data.reply;
+              }
+            }
+          } catch (error) {
+            console.info(
+              'Server chat unavailable, using client persona engine fallback:',
+              error instanceof Error ? error.message : String(error)
+            );
           }
-        } catch (modelError) {
-          console.warn(
-            `Gemini generation failed for model ${model}:`,
-            modelError instanceof Error ? modelError.message : String(modelError)
-          );
-        }
-      }
-    } catch (error) {
-      console.info(
-        "Using client persona engine fallback:",
-        error instanceof Error ? error.message : String(error)
-      );
-    }
-  }
 
-  // Use the comprehensive local persona engine (smooth, instant, zero server dependencies)
-  return generateOfflinePersonaResponse(userMessage, conversationHistory);
-};
+          // Use the comprehensive local persona engine (smooth, instant, zero server dependencies)
+          return generateOfflinePersonaResponse(userMessage, conversationHistory);
+        };
 
 

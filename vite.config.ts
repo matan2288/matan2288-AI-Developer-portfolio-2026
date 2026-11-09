@@ -13,10 +13,126 @@ export default defineConfig(({ mode }) => {
       strictPort: false,
     },
     envDir: '.',
-    envPrefix: ['VITE_', 'GEMINI_', 'EDITOR_'],
+    envPrefix: ['VITE_'],
     plugins: [
       tailwindcss(),
       react(),
+      {
+        name: 'dev-api-chat',
+        configureServer(server) {
+          server.middlewares.use('/api/chat', async (req, res) => {
+            if (req.method !== 'POST') {
+              res.statusCode = 405;
+              return res.end(JSON.stringify({ error: 'Method Not Allowed' }));
+            }
+            res.setHeader('Content-Type', 'application/json');
+
+            let body = '';
+            req.on('data', chunk => { body += chunk; });
+            req.on('end', async () => {
+              try {
+                const { GoogleGenAI } = await import('@google/genai');
+                const rawKey = env.GEMINI_API_KEY || process.env.GEMINI_API_KEY || '';
+                const apiKey = rawKey.trim().replace(/^["']|["']$/g, '');
+                if (!apiKey) {
+                  res.statusCode = 503;
+                  return res.end(JSON.stringify({
+                    noKey: true,
+                    reply: 'The Gemini API key is currently not configured in .env',
+                  }));
+                }
+
+                const ai = new GoogleGenAI({
+                  apiKey,
+                  httpOptions: {
+                    headers: { 'User-Agent': 'aistudio-build' },
+                    retryOptions: { attempts: 1 },
+                  },
+                });
+
+                const parsed = JSON.parse(body || '{}');
+                const { conversationHistory = [], userMessage = '' } = parsed;
+                const contents = (Array.isArray(conversationHistory) ? conversationHistory : [])
+                  .filter((m: any) => m && m.text && m.id !== 'welcome')
+                  .map((m: { role: string; text: string }) => ({
+                    role: m.role === 'model' ? 'model' : 'user',
+                    parts: [{ text: m.text }],
+                  }));
+
+                contents.push({ role: 'user', parts: [{ text: userMessage }] });
+
+                const configuredModel = env.GEMINI_MODEL || process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+                const candidateModels = Array.from(new Set([
+                  configuredModel,
+                  'gemini-2.5-flash',
+                  'gemini-2.0-flash',
+                  'gemini-1.5-flash',
+                ])).filter(Boolean);
+
+                let reply = '';
+                for (const model of candidateModels) {
+                  try {
+                    const response = await ai.models.generateContent({
+                      model,
+                      contents,
+                      config: {
+                        maxOutputTokens: 1000,
+                      },
+                    });
+                    if (response.text) {
+                      reply = response.text;
+                      break;
+                    }
+                  } catch (err: any) {
+                    console.warn(`Dev Gemini model ${model} failed:`, err?.message || err);
+                  }
+                }
+                res.end(JSON.stringify({ reply: reply || 'I was unable to formulate a response. Please try again.' }));
+              } catch (err: any) {
+                res.statusCode = 500;
+                res.end(JSON.stringify({ error: err?.message || 'Chat generation failed' }));
+              }
+            });
+          });
+        },
+      },
+      {
+        name: 'dev-api-editor-auth',
+        configureServer(server) {
+          server.middlewares.use('/api/editor-auth', (req, res) => {
+            if (req.method !== 'POST') {
+              res.statusCode = 405;
+              return res.end(JSON.stringify({ error: 'Method Not Allowed' }));
+            }
+            res.setHeader('Content-Type', 'application/json');
+            let body = '';
+            req.on('data', chunk => { body += chunk; });
+            req.on('end', () => {
+              try {
+                const parsed = JSON.parse(body || '{}');
+                const { username = '', password = '' } = parsed;
+                const expectedUser = (env.EDITOR_USERNAME || process.env.EDITOR_USERNAME || 'admin').trim();
+                const expectedPass = (env.EDITOR_PASSWORD || process.env.EDITOR_PASSWORD || '').trim().replace(/^["']|["']$/g, '');
+
+                if (!expectedPass) {
+                  res.statusCode = 500;
+                  return res.end(JSON.stringify({ success: false, error: 'EDITOR_PASSWORD not configured' }));
+                }
+
+                if (username.trim() === expectedUser && password === expectedPass) {
+                  return res.end(JSON.stringify({ success: true }));
+                }
+
+                res.statusCode = 401;
+                res.end(JSON.stringify({ success: false, error: 'Invalid username or password' }));
+              } catch (err: any) {
+                res.statusCode = 400;
+                res.end(JSON.stringify({ success: false, error: err?.message || 'Bad Request' }));
+              }
+            });
+          });
+        },
+      },
       {
         name: 'dev-api-recommendations',
         configureServer(server) {
@@ -80,10 +196,7 @@ export default defineConfig(({ mode }) => {
       },
     ],
     define: {
-      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY || process.env.GEMINI_API_KEY || ''),
-      'process.env.GEMINI_MODEL': JSON.stringify(env.GEMINI_MODEL || process.env.GEMINI_MODEL || 'gemini-3.8-flash'),
       'import.meta.env.EDITOR_USERNAME': JSON.stringify(env.EDITOR_USERNAME || process.env.EDITOR_USERNAME || 'admin'),
-      'import.meta.env.EDITOR_PASSWORD': JSON.stringify(env.EDITOR_PASSWORD || process.env.EDITOR_PASSWORD || ''),
     },
     resolve: {
       alias: {

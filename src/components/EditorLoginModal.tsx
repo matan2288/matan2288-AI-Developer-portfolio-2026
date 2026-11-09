@@ -43,34 +43,37 @@ export const EditorLoginModal: React.FC<EditorLoginModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setIsSubmitting(true);
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setError(null);
+      setIsSubmitting(true);
 
-    setTimeout(() => {
-      const isValid = verifyEditorCredentials(username, password);
-      if (isValid) {
-        setEditorAuthenticated(true);
-        setIsSubmitting(false);
-        onSuccess();
-      } else {
-        setError('Invalid username or password. Check your environment configuration.');
-        setIsSubmitting(false);
-      }
-    }, 200);
+        try {
+          const isValid = await verifyEditorCredentials(username, password);
+          if (isValid) {
+            setEditorAuthenticated(true);
+            setIsSubmitting(false);
+            onSuccess();
+          } else {
+            setError('Invalid username or password. Check your environment configuration.');
+            setIsSubmitting(false);
+          }
+    } catch {
+      setError('Authentication request failed. Please try again.');
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-xs transition-opacity" 
-        onClick={onClose} 
+      <div
+        className="absolute inset-0 bg-black/50 backdrop-blur-xs transition-opacity"
+        onClick={onClose}
       />
 
       {/* Modal Dialog */}
-      <div 
+      <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="editor-login-title"
