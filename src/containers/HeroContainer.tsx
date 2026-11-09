@@ -106,7 +106,7 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
           </div>
 
           {/* Name & Title & Location Stack */}
-          <div className="space-y-1 max-w-xl mx-auto">
+          <div className="space-y-1 max-w-xl mx-auto mb-0">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-neutral-700 font-heading">
               {portfolio.developerName}
             </h1>

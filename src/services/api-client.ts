@@ -11,9 +11,15 @@ You are Matan Elmaliach — speaking as Matan himself in the first person ("I", 
 
 ## Strict Response Length & Formatting Rules (CRITICAL)
 1. **DEFAULT LENGTH**: Keep initial responses **short, focused, and punchy (2 to 4 sentences, roughly 40–75 words)**. Never provide massive text dumps upfront that overwhelm the reader or get clipped.
-2. **ALWAYS OFFER TO ELABORATE**: End EVERY response with a natural, organic follow-up question offering to elaborate on 1 or 2 specific technical or logistical areas.
-   - Example for technical questions: "Would you like me to elaborate on how we handled cart persistence at scale, or our state management pattern?"
-   - Example for background questions: "Would you like me to elaborate on my work with Altice/3UK, or my current availability for new roles?"
+2. **SELECTIVE ELABORATION ONLY (CRITICAL)**:
+   - Do NOT offer to elaborate on every topic or generic questions.
+   - NEVER suggest to elaborate on personal background, hobbies, powerlifting, military service, bootcamps, or generic trivia.
+   - ONLY suggest to elaborate on topics that are genuinely high-priority for an Engineering Manager or Recruiter:
+     * **High-scale telecom checkout architecture & state resilience** (e.g., cart persistence, Redux-Saga/Toolkit, checkout funnels at Amdocs).
+     * **Platform migrations & tech stack depth** (e.g., React to Vue/Node.js migration, component design, TypeScript patterns).
+     * **Telemetry & analytics architecture** (e.g., Adobe Analytics data layers, conversion drop-off tracking).
+     * **Hiring logistics & availability** (e.g., Tel Aviv hybrid, remote worldwide, contract, next interview steps).
+   - For all other questions (contact info, hobbies, military service, bootcamps, or when already elaborating in depth), give a direct, clean, and complete response without forcing an elaboration question.
 3. **WHEN ASKED TO ELABORATE**: If the user explicitly asks to "elaborate", "tell me more", "how did you do that", or continues the topic:
    - Provide the next layer of depth in **structured, crisp bullet points (under 120–150 words)**.
    - Focus on practical architectural solutions, challenges solved, or measurable impact.
@@ -189,8 +195,7 @@ function generateOfflinePersonaResponse(query: string, history?: ChatMessage[]):
     q.includes("service")
   ) {
     return (
-      "Between 2013 and 2019, I served as a **Diving Gear Technician Squad Commander** in the Israeli Navy, leading five technicians maintaining critical life-support apparatus. It taught me unwavering checklist rigor, ownership, and zero panic during outages.\n\n" +
-      "Would you like me to elaborate on how that operational discipline translates into my code review and debugging process?"
+      "Between 2013 and 2019, I served as a **Diving Gear Technician Squad Commander** in the Israeli Navy, leading a squad of five maintaining critical life-support apparatus. It instilled in me unwavering checklist discipline, composure under high pressure, and relentless ownership of mission-critical systems."
     );
   }
 
@@ -210,8 +215,7 @@ function generateOfflinePersonaResponse(query: string, history?: ChatMessage[]):
     q.includes("mindset")
   ) {
     return (
-      "I'm a competitive powerlifter focused on heavy squats, bench press, and deadlifts. The sport demands consistent progressive overload and systematic technique refinement—the exact mindset I bring to refactoring codebases and profiling performance.\n\n" +
-      "Would you like to hear about my day-to-day engineering workflow or my recent full-stack projects?"
+      "I'm a longtime competitive powerlifter focused on heavy squats, bench press, and deadlifts. The sport demands progressive overload, metrics tracking, and continuous technical refinement—the exact principles I bring to debugging, profiling, and engineering reliable code."
     );
   }
 
@@ -232,8 +236,7 @@ function generateOfflinePersonaResponse(query: string, history?: ChatMessage[]):
     q.includes("learn")
   ) {
     return (
-      "I hold credentials in **Principles of Secure Coding**, **Securing GenAI Systems**, **GenAI-Driven SDLC**, and a 335-hour Full-Stack Bootcamp diploma from Etgar College. You can review verified credentials directly in the Certifications tab.\n\n" +
-      "Would you like me to elaborate on how I apply secure coding practices in production applications?"
+      "I hold verified industry credentials in **Principles of Secure Coding**, **Securing GenAI Systems**, **GenAI-Driven SDLC**, along with a 335-hour Full-Stack Bootcamp diploma from Etgar College. You can review all certificates directly in the Certifications tab below."
     );
   }
 
@@ -312,45 +315,45 @@ export const chatWithMatanPersona = async (
       'Content-Type': 'application/json',
     };
 
-        // Primary endpoint: /api/chat (rewritten to /.netlify/functions/chat on prod or served by dev server)
-        let res = await fetch('/api/chat', {
+    // Primary endpoint: /api/chat (rewritten to /.netlify/functions/chat on prod or served by dev server)
+    let res = await fetch('/api/chat', {
+      method: 'POST',
+      headers,
+      body: payload,
+    });
+
+    // Netlify fallback if direct rewrite wasn't applied
+    if (res.status === 404) {
+      try {
+        const netlifyRes = await fetch('/.netlify/functions/chat', {
           method: 'POST',
           headers,
           body: payload,
         });
+        if (netlifyRes.status !== 404) {
+          res = netlifyRes;
+        }
+      } catch (fallbackErr) {
+        console.warn('Netlify function direct fallback error:', fallbackErr);
+      }
+    }
 
-            // Netlify fallback if direct rewrite wasn't applied
-            if (res.status === 404) {
-              try {
-                const netlifyRes = await fetch('/.netlify/functions/chat', {
-                  method: 'POST',
-                  headers,
-                  body: payload,
-                });
-                if (netlifyRes.status !== 404) {
-                  res = netlifyRes;
-                }
-              } catch (fallbackErr) {
-                console.warn('Netlify function direct fallback error:', fallbackErr);
-              }
-            }
+    const contentType = res.headers.get('content-type') || '';
+    if (res.ok && contentType.includes('application/json')) {
+      const data = await res.json();
+      if (data.reply) {
+        return data.reply;
+      }
+    }
+  } catch (error) {
+    console.info(
+      'Server chat unavailable, using client persona engine fallback:',
+      error instanceof Error ? error.message : String(error)
+    );
+  }
 
-            const contentType = res.headers.get('content-type') || '';
-            if (res.ok && contentType.includes('application/json')) {
-              const data = await res.json();
-              if (data.reply) {
-                return data.reply;
-              }
-            }
-          } catch (error) {
-            console.info(
-              'Server chat unavailable, using client persona engine fallback:',
-              error instanceof Error ? error.message : String(error)
-            );
-          }
-
-          // Use the comprehensive local persona engine (smooth, instant, zero server dependencies)
-          return generateOfflinePersonaResponse(userMessage, conversationHistory);
-        };
+  // Use the comprehensive local persona engine (smooth, instant, zero server dependencies)
+  return generateOfflinePersonaResponse(userMessage, conversationHistory);
+};
 
 
