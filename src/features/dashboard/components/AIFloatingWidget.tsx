@@ -10,7 +10,7 @@ interface AIFloatingWidgetProps {
 
 export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
   avatarUrl = '/profile.png',
-  developerName = 'Matan Elmaliah',
+  developerName = "Hi I'm Matan",
 }) => {
   const {
     messages,
@@ -75,9 +75,9 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
             initial={{ opacity: 0, scale: 0.92, y: 20, transformOrigin: 'bottom right' }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.93, y: 16, transition: { duration: 0.18, ease: 'easeInOut' } }}
-            transition={{ 
-              type: 'spring', 
-              stiffness: 360, 
+            transition={{
+              type: 'spring',
+              stiffness: 360,
               damping: 27,
               mass: 0.8
             }}
@@ -152,11 +152,10 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
                     className={`flex flex-col ${isModel ? 'items-start' : 'items-end'} space-y-1 w-full`}
                   >
                     <div
-                      className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed break-words ${
-                        isModel
+                      className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed break-words ${isModel
                           ? 'bg-neutral-50 text-text border border-border rounded-tl-xs'
                           : 'bg-text text-white rounded-tr-xs shadow-2xs font-normal'
-                      }`}
+                        }`}
                     >
                       <div className="whitespace-pre-wrap">{renderFormattedContent(m.text)}</div>
                     </div>
@@ -234,11 +233,10 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
         whileTap={{ scale: 0.98 }}
         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
         onClick={toggleChat}
-        className={`pointer-events-auto relative inline-flex items-center justify-center gap-2 h-10 sm:h-11 min-w-[148px] sm:min-w-[156px] px-4 sm:px-5 rounded-full transition-all cursor-pointer bg-white text-text border ${
-          shouldBlink
+        className={`pointer-events-auto relative inline-flex items-center justify-center gap-2 h-10 sm:h-11 min-w-[148px] sm:min-w-[156px] px-4 sm:px-5 rounded-full transition-all cursor-pointer bg-white text-text border ${shouldBlink
             ? 'animate-minimal-blink border-neutral-300 font-medium'
             : 'hover:bg-neutral-50 border-border/80 hover:border-neutral-300 shadow-2xs hover:shadow-xs font-medium'
-        }`}
+          }`}
         aria-label="Toggle AI Assistant"
       >
         <Sparkles size={14} className="text-text-muted" />

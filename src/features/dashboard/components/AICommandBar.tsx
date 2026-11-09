@@ -51,7 +51,7 @@ export const AICommandBar: React.FC = () => {
           value={inputQuery}
           onChange={(e) => setInputQuery(e.target.value)}
           disabled={loading}
-          placeholder="Ask anything about Matan's experience, stack, or projects..."
+          placeholder="Ask me anything about my experience, stack, or projects..."
           className="w-full bg-transparent px-1 py-1.5 text-sm text-text placeholder:text-text-muted/70 focus:outline-none font-sans"
         />
 

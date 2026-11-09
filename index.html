@@ -1,89 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Matan Elmaliah | AI-Driven Software Developer</title>
-    <meta name="description" content="Portfolio of Matan Elmaliah, AI-Driven Software Developer specializing in React, TypeScript, and full-stack web applications." />
-    <meta property="og:title" content="Matan Elmaliah | AI-Driven Software Developer" />
-    <meta property="og:description" content="Portfolio of Matan Elmaliah, AI-Driven Software Developer specializing in React, TypeScript, and full-stack web applications." />
-    <link rel="icon" type="image/png" href="/matan.png" />
-    <link rel="apple-touch-icon" href="/matan.png" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-              display: ['"DM Sans"', '"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-              heading: ['"DM Sans"', '"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-              mono: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-            },
-            colors: {
-              bg: '#FFFFFF',
-              'bg-alt': '#FBFCFD',
-              surface: '#FFFFFF',
-              border: '#F1F3F6',
-              'border-hover': '#E3E6EA',
-              text: '#0F172A',
-              'text-muted': '#475569',
-              'text-subtle': '#64748B',
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matan Elmaliah | AI-Developer</title>
+  <meta name="description"
+    content="Portfolio of Matan Elmaliah, AI-Driven Software Developer specializing in React, TypeScript, and full-stack web applications." />
+  <meta property="og:title" content="Matan Elmaliah | AI-Driven Software Developer" />
+  <meta property="og:description"
+    content="Portfolio of Matan Elmaliah, AI-Driven Software Developer specializing in React, TypeScript, and full-stack web applications." />
+  <link rel="icon" type="image/png" href="/matan.png" />
+  <link rel="apple-touch-icon" href="/matan.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['"DM Sans"', '"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            heading: ['"DM Sans"', '"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            bg: '#FFFFFF',
+            'bg-alt': '#FBFCFD',
+            surface: '#FFFFFF',
+            border: '#F1F3F6',
+            'border-hover': '#E3E6EA',
+            text: '#0F172A',
+            'text-muted': '#475569',
+            'text-subtle': '#64748B',
+            accent: '#0F172A',
+            'accent-hover': '#334155',
+            'accent-soft': '#F8F9FB',
+            'accent-muted': '#F1F3F6',
+            success: '#16A34A',
+            'success-soft': '#F0FDF4',
+            brand: {
+              dark: '#0F172A',
               accent: '#0F172A',
-              'accent-hover': '#334155',
-              'accent-soft': '#F8F9FB',
-              'accent-muted': '#F1F3F6',
-              success: '#16A34A',
-              'success-soft': '#F0FDF4',
-              brand: {
-                dark: '#0F172A',
-                accent: '#0F172A',
-                accentHover: '#334155',
-                surface: '#FBFCFD',
-                border: '#F1F3F6',
-              },
-              neutral: {
-                50: '#FBFCFD',
-                100: '#F6F7F9',
-                200: '#EFF1F4',
-                300: '#E3E6EA',
-                400: '#94A3B8',
-                500: '#64748B',
-                600: '#475569',
-                700: '#334155',
-                800: '#1E293B',
-                900: '#0F172A',
-              }
+              accentHover: '#334155',
+              surface: '#FBFCFD',
+              border: '#F1F3F6',
+            },
+            neutral: {
+              50: '#FBFCFD',
+              100: '#F6F7F9',
+              200: '#EFF1F4',
+              300: '#E3E6EA',
+              400: '#94A3B8',
+              500: '#64748B',
+              600: '#475569',
+              700: '#334155',
+              800: '#1E293B',
+              900: '#0F172A',
             }
           }
         }
       }
-    </script>
-    <style>
-      body {
-        background-color: #ffffff;
-        color: #0f172a;
-        scroll-behavior: smooth;
-      }
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #ffffff;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #DDE2E7;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #CBD5E1;
-      }
-    </style>
+    }
+  </script>
+  <style>
+    body {
+      background-color: #ffffff;
+      color: #0f172a;
+      scroll-behavior: smooth;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #ffffff;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #DDE2E7;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #CBD5E1;
+    }
+  </style>
   <script type="importmap">
 {
   "imports": {
@@ -95,10 +104,12 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body>
-    <div id="root"></div>
+
+<body>
+  <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>
+
 </html>
