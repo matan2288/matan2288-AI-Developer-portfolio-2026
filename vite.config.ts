@@ -161,9 +161,20 @@ export default defineConfig(({ mode }) => {
                     role = parts[0].trim();
                     company = parts[1].trim();
                   } else if (desc.includes(' | ')) {
-                    const parts = desc.split(' | ');
+                    const parts = desc.split(' | ').map((p: string) => p.trim());
+                    const atSegment = parts.find((p: string) => p.includes('@'));
+                    if (atSegment) {
+                      const atParts = atSegment.split('@');
+                      role = atParts[0].trim();
+                      company = atParts[1].trim();
+                    } else {
+                      role = parts[0];
+                      company = parts[1].split(' · ')[0].trim();
+                    }
+                  } else if (desc.includes('@')) {
+                    const parts = desc.split('@');
                     role = parts[0].trim();
-                    company = parts[1].trim().split(' · ')[0].trim();
+                    company = parts[1].trim();
                   } else if (desc) {
                     role = desc.trim();
                   }

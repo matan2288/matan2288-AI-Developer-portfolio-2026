@@ -4,10 +4,96 @@
   "endpoint": "/v1/linkedin/profile/recommendations",
   "credits_used": 5,
   "cached": false,
-  "credits_remaining": 85,
+  "credits_remaining": 80,
   "data": {
-    "total": 8,
+    "total": 10,
     "items": [
+      {
+        "text": "Matan and I worked together on the same team, and it was a great experience. He is very professional, reliable, and takes real responsibility for his work. Collaborating with him was always easy and pleasant because of his positive attitude and great teamwork.",
+        "date": "November 9, 2026",
+        "type": "Yasmin worked with Matan on the same team",
+        "recommender": {
+          "url": "https://www.linkedin.com/in/yasmin-avraham",
+          "urn": "ACoAAC8sJKMBCueuj513EGF4fPbdAnqHyz8UxR4",
+          "public_identifier": "yasmin-avraham",
+          "first_name": "Yasmin",
+          "last_name": "Avraham",
+          "full_name": "Yasmin Avraham",
+          "description": "Software Developer at Amdocs",
+          "is_premium": false,
+          "avatar": [
+            {
+              "width": 100,
+              "height": 100,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQHS457yVUEBzw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1613906863914?e=1795651200&v=beta&t=d3pGAZJwkAhXiBiPb9N1vV0eb-Q-bEdV7HRKFwm-pBQ",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 200,
+              "height": 200,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQHS457yVUEBzw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1613906863914?e=1795651200&v=beta&t=FBCI4E05dJDJI_MphgXwTaADawKGglICcx3VcIztU5k",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 400,
+              "height": 400,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQHS457yVUEBzw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1613906863914?e=1795651200&v=beta&t=57s4EU3j21tlRHbDYKbsKRnBeljfGnAVWgRxNjUsTFc",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 800,
+              "height": 800,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQHS457yVUEBzw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1613906863914?e=1795651200&v=beta&t=Av9vq79udGeqj3PPlQElcjhK_vnAAaLz-kzH7ZSgb74",
+              "expires_at": 1795651200000
+            }
+          ]
+        },
+        "updated_at": null,
+        "recipient": null
+      },
+      {
+        "text": "I had the pleasure of working with Matan on the same project, where I was the Product Owner and he worked as a developer.\n\nWhat I appreciated most about Matan was his willingness to collaborate and find the best solution for both the product and the technical implementation. He was always open to discussing requirements, clarifying details, and working through challenges together.\n\nMatan is a dedicated and reliable professional, with a positive attitude and a strong sense of ownership. Beyond his technical skills, he is someone who is easy to work with and who genuinely contributes to a healthy and productive team environment.\n\nI really enjoyed working with Matan and would be happy to work with him again. I highly recommend him and wish him all the best in his next professional challenge.",
+        "date": "November 9, 2026",
+        "type": "Eloisa worked with Matan on the same team",
+        "recommender": {
+          "url": "https://www.linkedin.com/in/eloisacssantos",
+          "urn": "ACoAAArN_SgBq3Gm7nfITECOIvLVYk5BCQVQksw",
+          "public_identifier": "eloisacssantos",
+          "first_name": "Eloisa",
+          "last_name": "Santos",
+          "full_name": "Eloisa Santos",
+          "description": "MSc. Software Engineering | Business Analyst @Amdocs",
+          "is_premium": false,
+          "avatar": [
+            {
+              "width": 100,
+              "height": 100,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQF75yhO58TlJQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1634927036590?e=1795651200&v=beta&t=wJZLYZrvO4X6vDDpx3WDUrhI8ITeI2CO6gYmaI5F5Cg",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 200,
+              "height": 200,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQF75yhO58TlJQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1634927036590?e=1795651200&v=beta&t=zcT2Qi4N6X9HYp4PoYGR4er4jfrvGcyIQ_qd22Xx8lM",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 400,
+              "height": 400,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQF75yhO58TlJQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1634927036590?e=1795651200&v=beta&t=ddLXHyiK_UhYfzkg0x7MoeLs4VpFF1A9N7_UMu8uspQ",
+              "expires_at": 1795651200000
+            },
+            {
+              "width": 750,
+              "height": 750,
+              "url": "https://media.licdn.com/dms/image/v2/C4D03AQF75yhO58TlJQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1634927036590?e=1795651200&v=beta&t=6XFaZZ0R1ig9LtS2Rwy5jdcJFEMrIKKX9t6KP5PtlQM",
+              "expires_at": 1795651200000
+            }
+          ]
+        },
+        "updated_at": null,
+        "recipient": null
+      },
       {
         "text": "I had the pleasure of working with Matan and can confidently say that he is a highly dedicated, professional, and talented individual.\n\nThroughout our collaboration, he consistently demonstrated strong technical skills, a proactive attitude, and a genuine commitment to delivering high-quality results. His ability to take ownership, collaborate effectively with colleagues, and approach challenges with a solution-oriented mindset made him a valuable member of the team.\n\nBeyond his professional capabilities, he bring a positive attitude, reliability, and a strong team spirit to everything he does.\n\nI truly enjoyed working with him and would highly recommend him to any team or organization looking for a skilled and committed professional. I wish him continued success in their career!",
         "date": "November 9, 2026",
@@ -357,23 +443,23 @@
     "walk": {
       "pages": 1,
       "stopped": "end",
-      "rows_fetched": 8,
-      "rows_returned": 8,
+      "rows_fetched": 10,
+      "rows_returned": 10,
       "credits": {
         "pages": 5,
         "refunded": 0
       },
       "request_ids": [
-        "req-bu9v3WxxaeFsoXHB"
+        "req-5Jik6EGlLseWaMGM"
       ]
     }
   },
   "pagination": {
     "next_cursor": null,
     "has_more": false,
-    "page_size": 8,
+    "page_size": 10,
     "typical_page_size": null,
     "next_page_credits": null
   },
-  "request_id": "req-xXQITcUVQr25wqJY"
+  "request_id": "req-DrogkpPvg9aYkgYM"
 }

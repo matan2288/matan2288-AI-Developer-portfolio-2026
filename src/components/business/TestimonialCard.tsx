@@ -73,7 +73,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({ recommendation
     <motion.div
       layout
       transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-      className="bg-white/70 backdrop-blur-xs border border-border/80 p-5 sm:p-6 rounded-2xl shadow-2xs hover:shadow-xs transition-colors duration-200 flex flex-col justify-between h-full group overflow-hidden"
+      className="bg-white/70 backdrop-blur-xs border border-border/80 py-[25px] px-[30px] rounded-2xl shadow-2xs hover:shadow-xs transition-colors duration-200 flex flex-col justify-between h-full group overflow-hidden"
     >
       {/* Quote text with smooth height layout animation and overflow protection */}
       <motion.div layout="position" className="mb-6 flex-1 flex flex-col justify-start overflow-hidden">
@@ -87,7 +87,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({ recommendation
                 handleToggle();
               }
             }}
-            className={`text-[14px] text-text-muted leading-relaxed font-normal transition-opacity duration-300 ${
+            className={`text-[15px] tracking-[0.2px] leading-[24px] [word-spacing:0.1px] text-text-muted font-normal transition-opacity duration-300 ${
               !showFullText ? 'line-clamp-6 cursor-pointer' : 'opacity-100'
             }`}
             title={!isExpanded && canExpand ? 'Click to read full recommendation' : undefined}

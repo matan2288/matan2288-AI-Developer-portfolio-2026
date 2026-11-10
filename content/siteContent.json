@@ -31,16 +31,15 @@
     {
       "id": "amdocs-us-cellular",
       "company": "UScellular / T-Mobile",
-      "role": "Software Engineer — Agentic AI Workflows & Frontend Platform",
+      "role": "AI Engineer - Agentic AI Workflows & Frontend Platform",
       "location": "Raanana, IL",
       "period": "Jun 2025 – Present",
       "isLatest": true,
       "bullets": [
-        "Accelerated engineering velocity across a 10-developer team by architecting AI-native workflows with custom agent rules, MCP toolchains, and context engineering (Cursor, GitHub Copilot).",
-        "Drove internal AI and RAG prototypes from experimental proof of concepts to standardized team workflows, establishing repeatable agentic context pipelines across shared repositories.",
-        "Eliminated repetitive analytics and AEM asset boilerplate across weekly releases (10–55+ peak tickets) by engineering 3 platform-wide JS automation libraries, approved by the client's Lead Web Architect and adopted by all 10 developers.",
-        "Led GTM, GA4, and Firebase Analytics implementation across a Tier-1 US telecom platform (UScellular / T-Mobile) serving millions of subscribers, unifying desktop and mobile WebView tracking and resolving external consultancy defects.",
-        "Shipped custom-coded AEM experiences for flagship Apple, Samsung, and Google launches alongside the T-Mobile post-acquisition rebrand under tight weekly release milestones, while performing regular peer code reviews."
+        "Accelerated engineering velocity across a 10-developer team by architecting AI-native workflows with custom agent rules, MCP toolchains, and context engineering (Cursor, Copilot).",
+        "Evolved internal AI/RAG prototypes from concepts into standardized, repeatable agentic context pipelines across shared team repositories.",
+        "Engineered 3 platform-wide JS automation libraries (Lead Web Architect approved) eliminating AEM and analytics boilerplate, and shipped custom AEM experiences for flagship Apple, Samsung, Google launches and the T-Mobile rebrand.",
+        "Directed GTM, GA4, and Firebase Analytics across UScellular/T-Mobile serving millions of subscribers, unifying web and mobile WebView tracking and resolving external consultancy defects."
       ],
       "skills": [
         "Agentic AI & MCP",
@@ -95,7 +94,7 @@
     {
       "id": "amdocs-altice-migration",
       "company": "Altice USA",
-      "role": "Software Developer, E-Commerce & Platform Migration",
+      "role": "Frontend Developer, E-Commerce & Platform Migration",
       "location": "Sderot, IL",
       "period": "Jun 2022 – Jan 2023",
       "isLatest": false,
@@ -115,6 +114,24 @@
     }
   ],
   "recommendations": [
+    {
+      "id": "rec-yasmin-avraham",
+      "author": "Yasmin Avraham",
+      "role": "Software Developer",
+      "company": "Amdocs",
+      "quote": "Matan and I worked together on the same team, and it was a great experience. He is very professional, reliable, and takes real responsibility for his work. Collaborating with him was always easy and pleasant because of his positive attitude and great teamwork.",
+      "avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQHS457yVUEBzw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1613906863914?e=1795651200&v=beta&t=57s4EU3j21tlRHbDYKbsKRnBeljfGnAVWgRxNjUsTFc",
+      "linkedInUrl": "https://www.linkedin.com/in/yasmin-avraham"
+    },
+    {
+      "id": "rec-eloisacssantos",
+      "author": "Eloisa Santos",
+      "role": "Business Analyst",
+      "company": "Amdocs",
+      "quote": "I had the pleasure of working with Matan on the same project, where I was the Product Owner and he worked as a developer.\n\nWhat I appreciated most about Matan was his willingness to collaborate and find the best solution for both the product and the technical implementation. He was always open to discussing requirements, clarifying details, and working through challenges together.\n\nMatan is a dedicated and reliable professional, with a positive attitude and a strong sense of ownership. Beyond his technical skills, he is someone who is easy to work with and who genuinely contributes to a healthy and productive team environment.\n\nI really enjoyed working with Matan and would be happy to work with him again. I highly recommend him and wish him all the best in his next professional challenge.",
+      "avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQF75yhO58TlJQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1634927036590?e=1795651200&v=beta&t=ddLXHyiK_UhYfzkg0x7MoeLs4VpFF1A9N7_UMu8uspQ",
+      "linkedInUrl": "https://www.linkedin.com/in/eloisacssantos"
+    },
     {
       "id": "rec-marios-panteli-88b69b198",
       "author": "Marios Panteli",
