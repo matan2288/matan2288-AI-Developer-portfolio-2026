@@ -31,16 +31,16 @@
     {
       "id": "amdocs-us-cellular",
       "company": "UScellular / T-Mobile",
-      "role": "AI Engineer - Agentic AI Workflows & Frontend Platform",
+      "role": "AI Engineer — Agentic Workflows & Frontend Platform",
       "location": "Raanana, IL",
       "period": "Jun 2025 – Present",
       "isLatest": true,
       "bullets": [
-        "Accelerated engineering velocity across a 10-developer team by architecting AI-native workflows with custom agent rules, MCP toolchains, and context engineering (Cursor, GitHub Copilot).",
+        "Accelerated velocity across a 10-developer team by designing AI-native workflows with custom agent rules, MCP toolchains, and context engineering (Cursor, GitHub Copilot).",
         "Evolved internal AI and RAG prototypes from experimental POCs into standardized, repeatable agentic workflows across shared team repositories.",
-        "Engineered 3 platform-wide JS automation libraries approved by the client's Lead Web Architect and adopted by all 10 developers eliminating analytics and AEM asset boilerplate across weekly releases (10–55+ peak tickets).",
-        "Led GTM, GA4, and Firebase Analytics implementation for a Tier-1 US telecom platform (UScellular / T-Mobile) serving millions of subscribers, unifying web and mobile WebView tracking.",
-        "Shipped custom-coded AEM experiences for flagship Apple, Samsung, and Google launches alongside the T-Mobile post-acquisition rebrand on tight weekly milestones, while performing regular peer code reviews."
+        "Built 3 platform-wide JS automation libraries (Lead Web Architect approved, adopted by all 10 developers), eliminating analytics and AEM boilerplate across weekly releases (10–55+ peak tickets).",
+        "Led GTM, GA4, and Firebase Analytics implementation for a Tier-1 US telecom platform (UScellular / T-Mobile), unifying web and mobile WebView tracking for millions of subscribers.",
+        "Shipped custom AEM experiences for flagship Apple, Samsung, and Google launches alongside the T-Mobile rebrand on weekly milestones, while performing regular peer code reviews."
       ],
       "skills": [
         "Agentic AI & MCP",
@@ -60,7 +60,7 @@
       "bullets": [
         "Built Adobe Analytics infrastructure from scratch (20+ events) across e-commerce and Self-Care apps; led bi-weekly client syncs as SME.",
         "Developed frontend OKTA SSO authentication infrastructure across customer-facing e-commerce and self-service applications.",
-        "Shipped Drupal/AEM CMS modules, Consul feature flags, Google reCAPTCHA bot protection, Experian credit checks, and DPP flows.",
+        "Shipped Drupal CMS modules, feature-flag rollouts, and core e-commerce integrations (credit checks, device protection, Google reCAPTCHA bot mitigation).",
         "Mentored 2 engineers on analytics pipelines (3x team capacity) and enforced standards via peer code reviews."
       ],
       "skills": [
@@ -81,7 +81,7 @@
       "bullets": [
         "Owned core frontend delivery for the UK's Ofcom-mandated One Touch Switch system (ThreeUK), serving millions of subscribers.",
         "Shipped shared React/TypeScript (Redux-Saga, MUI) features across web, ARIM retail tablets, and mobile apps.",
-        "Delivered FCC broadband compliance, card-payment add-ons, and cart redesigns (eSIM, number allocation, spend caps).",
+        "Delivered broadband compliance, modernized buy-flow features, card-payment add-ons, and cart redesigns (eSIM, number allocation, spend caps).",
         "Provided on-site UK production support across 20+ release handovers, weekend task forces, and debugging guides."
       ],
       "skills": [
@@ -103,7 +103,7 @@
         "Contributed to storefront migration from React/Contentful to Vue.js, Drupal, and PHP on Acquia with zero disruption.",
         "Rebuilt core checkout, cart management, BYOD, and address validation flows with 100% functional parity.",
         "Delivered configurable CMS storefront modules and buy-flow UI redesigns within a PI-based Agile cadence.",
-        "Coordinated specs and QA validation directly with client teams and Adobe consultants across two production apps."
+        "Coordinated feature grooming, spec alignment, and QA validation directly with client stakeholders and Product Owners across two production apps."
       ],
       "skills": [
         "Vue.js",
