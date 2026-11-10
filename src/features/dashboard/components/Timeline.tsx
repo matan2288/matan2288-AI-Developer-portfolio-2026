@@ -28,7 +28,7 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
   const isAmdocs = id.includes('amdocs') || company.toLowerCase().includes('amdocs');
 
   return (
-    <div className="relative pl-7 sm:pl-9 md:pl-0 pb-8 sm:pb-10 last:pb-0 group">
+    <div className="relative pl-7 sm:pl-9 md:pl-0 pb-8 sm:pb-10 lg:pb-12 last:pb-0 group">
       {/* Mobile timeline connecting line */}
       <div className="md:hidden absolute left-[7px] sm:left-[8px] top-0 bottom-0 pointer-events-none">
         {!isFirst && (
@@ -53,10 +53,10 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
       {/* Desktop connecting line: continuous between dots */}
       <div className="hidden md:block absolute left-[210px] -translate-x-1/2 top-0 bottom-0 pointer-events-none">
         {!isFirst && (
-          <div className="absolute top-0 h-[36px] w-px bg-neutral-200" />
+          <div className="absolute top-0 h-[36px] lg:h-[40px] w-px bg-neutral-200" />
         )}
         {!isLast && (
-          <div className="absolute top-[36px] bottom-0 w-px bg-neutral-200" />
+          <div className="absolute top-[36px] lg:top-[40px] bottom-0 w-px bg-neutral-200" />
         )}
       </div>
 
@@ -80,7 +80,7 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
         </div>
 
         {/* Center Column: Dot aligned horizontally with card header */}
-        <div className="hidden md:flex justify-center items-start pt-[28px]">
+        <div className="hidden md:flex justify-center items-start pt-[28px] lg:pt-[32px]">
           {isLatest ? (
             <div className="relative z-10 w-4 h-4 rounded-full border border-neutral-700 bg-white flex items-center justify-center shadow-xs transition-all duration-200 group-hover:ring-2 group-hover:ring-neutral-200">
               <div className="w-1.5 h-1.5 rounded-full bg-neutral-900" />
@@ -92,22 +92,24 @@ const TimelineCard: React.FC<TimelineItemProps> = ({
 
         {/* Right Column: Experience Card */}
         <div className="w-full">
-          <div className="bg-[#FBFCFD] rounded-2xl p-5 sm:p-6 md:p-7 border border-border/80 hover:border-neutral-400 transition-colors duration-200 relative shadow-2xs">
-            {/* Card Header matching image.png without h3 */}
-            <div className="flex items-baseline justify-between gap-4 mb-6 sm:mb-7">
-              <span className="text-xs sm:text-[13px] font-bold text-text uppercase tracking-wider truncate">
-                {company.replace(/\s*·\s*Amdocs/gi, '').replace(/\s*-\s*Amdocs/gi, '')}
-              </span>
-              <span className="text-[11px] sm:text-xs font-mono text-neutral-400 font-normal shrink-0 tracking-normal select-none">
+          <div className="bg-[#FBFCFD]/65 backdrop-blur-xs rounded-2xl p-5 sm:p-6 md:p-7 lg:p-8 xl:p-9 border border-border/80 hover:border-neutral-400 transition-colors duration-200 relative shadow-2xs">
+            {/* Card Header */}
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 sm:gap-4 mb-5 sm:mb-6 lg:mb-7">
+              <div className="min-w-0 pr-2">
+                <h3 className="text-sm sm:text-base lg:text-[17px] font-bold text-neutral-800 tracking-tight leading-snug">
+                  {role || company}
+                </h3>
+              </div>
+              <span className="text-[11px] sm:text-xs lg:text-[13px] font-mono text-neutral-400 font-normal shrink-0 tracking-normal select-none">
                 {period}
               </span>
             </div>
 
             {/* Detailed achievements bullets */}
-            <ul className="space-y-2.5 sm:space-y-3">
+            <ul className="space-y-2.5 sm:space-y-3 lg:space-y-3.5">
               {bullets.map((bullet, idx) => (
-                <li key={idx} className="text-xs sm:text-sm text-text-muted leading-relaxed flex items-start gap-2.5">
-                  <span className="text-text-subtle select-none text-xs mt-0.5">•</span>
+                <li key={idx} className="text-xs sm:text-sm lg:text-[15px] text-text-muted leading-relaxed lg:leading-normal flex items-start gap-2.5 lg:gap-3">
+                  <span className="text-text-subtle select-none text-xs lg:text-sm mt-0.5 lg:mt-1">•</span>
                   <span className="break-words">{bullet}</span>
                 </li>
               ))}
@@ -128,7 +130,7 @@ export const Timeline: React.FC<TimelineProps> = ({ experiences: customExperienc
   const experiences = customExperiences || hookExperiences;
 
   return (
-    <div className="w-full max-w-5xl mx-auto">
+    <div className="w-full max-w-5xl lg:max-w-6xl mx-auto">
       <div className="relative">
         {experiences.map((exp, idx) => (
           <TimelineCard

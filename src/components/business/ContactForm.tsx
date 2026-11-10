@@ -67,7 +67,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'matan2
   };
 
   return (
-    <div className="bg-bg-alt p-5 sm:p-6 rounded-2xl">
+    <div className="bg-bg-alt/70 backdrop-blur-xs p-5 sm:p-6 rounded-2xl border border-border/60">
       {submitted ? (
         <div className="py-8 px-4 text-center space-y-4">
           <div className="w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center mx-auto">

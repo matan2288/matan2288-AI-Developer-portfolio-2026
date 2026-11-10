@@ -19,7 +19,7 @@ export interface PortfolioGeneralContent {
   stats: { value: string; label: string }[];
 }
 
-const LOCAL_STORAGE_KEY = 'tina_cms_portfolio_content_v9';
+const LOCAL_STORAGE_KEY = 'tina_cms_portfolio_content_v11';
 
 export const defaultTinaContent = {
   portfolio: siteContent.portfolio as PortfolioGeneralContent,
@@ -75,7 +75,7 @@ export function getStoredTinaContent() {
         },
         pillars: Array.isArray(parsed.pillars) && parsed.pillars.length > 0 ? parsed.pillars : defaultTinaContent.pillars,
         skills: Array.isArray(parsed.skills) && parsed.skills.length > 0 ? parsed.skills : defaultTinaContent.skills,
-        experiences: (Array.isArray(parsed.experiences) && parsed.experiences.length === defaultTinaContent.experiences.length && !parsed.experiences.some((e: any) => e.id === 'bootcamp' || e.id === 'navy' || (e.id === 'amdocs-three-uk' && e.period !== '01/2023 — 01/2024')))
+        experiences: (Array.isArray(parsed.experiences) && parsed.experiences.length === defaultTinaContent.experiences.length && !parsed.experiences.some((e: any) => e.id === 'bootcamp' || e.id === 'navy' || (e.id === 'amdocs-three-uk' && !e.period?.includes('2023'))))
           ? parsed.experiences
           : defaultTinaContent.experiences,
         recommendations: (Array.isArray(parsed.recommendations) && parsed.recommendations.length >= defaultTinaContent.recommendations.length && !parsed.recommendations.some((r: any) => r.author === 'Senior Delivery Director'))

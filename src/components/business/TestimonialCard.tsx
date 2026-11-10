@@ -73,7 +73,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({ recommendation
     <motion.div
       layout
       transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-      className="bg-white border border-border/80 p-5 sm:p-6 rounded-2xl shadow-2xs hover:shadow-xs transition-colors duration-200 flex flex-col justify-between h-full group overflow-hidden"
+      className="bg-white/70 backdrop-blur-xs border border-border/80 p-5 sm:p-6 rounded-2xl shadow-2xs hover:shadow-xs transition-colors duration-200 flex flex-col justify-between h-full group overflow-hidden"
     >
       {/* Quote text with smooth height layout animation and overflow protection */}
       <motion.div layout="position" className="mb-6 flex-1 flex flex-col justify-start overflow-hidden">
@@ -87,7 +87,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({ recommendation
                 handleToggle();
               }
             }}
-            className={`text-xs sm:text-[13px] text-text-muted leading-relaxed font-normal transition-opacity duration-300 ${
+            className={`text-[14px] text-text-muted leading-relaxed font-normal transition-opacity duration-300 ${
               !showFullText ? 'line-clamp-6 cursor-pointer' : 'opacity-100'
             }`}
             title={!isExpanded && canExpand ? 'Click to read full recommendation' : undefined}
@@ -128,7 +128,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({ recommendation
       <motion.div
         layout="position"
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 bg-white pt-4 border-t border-border/60 flex items-center justify-between gap-3 mt-auto"
+        className="relative z-10 bg-white/60 backdrop-blur-xs pt-4 border-t border-border/60 flex items-center justify-between gap-3 mt-auto"
       >
         <div className="flex items-center gap-3 min-w-0">
           <div className="relative shrink-0">
@@ -148,7 +148,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({ recommendation
           </div>
 
           <div className="min-w-0">
-            <h5 className="font-semibold text-xs sm:text-[13px] text-text truncate">
+            <h5 className="font-semibold text-[14px] text-text truncate">
               {recommendation.author}
             </h5>
             <div className="text-[11px] text-text-muted truncate mt-0.5">

@@ -18,7 +18,7 @@ export const PillarsTabViewer: React.FC<PillarsTabViewerProps> = ({ pillars }) =
   };
 
   return (
-    <div className="border border-border rounded-2xl p-4 sm:p-6 bg-white shadow-xs mb-12 sm:mb-16">
+    <div className="border border-border rounded-2xl p-4 sm:p-6 bg-white/70 backdrop-blur-xs shadow-xs mb-12 sm:mb-16">
       <div className="flex gap-2 overflow-x-auto pb-4 border-b border-border/70 scrollbar-none">
         {pillars.map((p) => {
           const isActive = selectedPillarId === p.id || (!selectedPillarId && p === pillars[0]);

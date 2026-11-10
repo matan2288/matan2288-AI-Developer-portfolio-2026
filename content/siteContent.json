@@ -30,84 +30,87 @@
   "experiences": [
     {
       "id": "amdocs-us-cellular",
-      "company": "U.S. Cellular",
-      "role": "Software Developer",
+      "company": "UScellular / T-Mobile",
+      "role": "Software Engineer — Agentic AI Workflows & Frontend Platform",
       "location": "Raanana, IL",
-      "period": "05/2025 — PRESENT",
+      "period": "Jun 2025 – Present",
       "isLatest": true,
       "bullets": [
-        "Developed custom AEM components & modular JS for a high-traffic eCommerce platform, ensuring reusable, high-performance UI delivery.",
-        "Authored technical Confluence documentation and led Knowledge Transfer (KT) sessions for engineering onboarding and alignment.",
-        "Built automation scripts for mobile event tracking and route management, significantly reducing hardcoded manual overhead."
+        "Accelerated engineering velocity across a 10-developer team by architecting AI-native workflows with custom agent rules, MCP toolchains, and context engineering (Cursor, GitHub Copilot).",
+        "Drove internal AI and RAG prototypes from experimental proof of concepts to standardized team workflows, establishing repeatable agentic context pipelines across shared repositories.",
+        "Eliminated repetitive analytics and AEM asset boilerplate across weekly releases (10–55+ peak tickets) by engineering 3 platform-wide JS automation libraries, approved by the client's Lead Web Architect and adopted by all 10 developers.",
+        "Led GTM, GA4, and Firebase Analytics implementation across a Tier-1 US telecom platform (UScellular / T-Mobile) serving millions of subscribers, unifying desktop and mobile WebView tracking and resolving external consultancy defects.",
+        "Shipped custom-coded AEM experiences for flagship Apple, Samsung, and Google launches alongside the T-Mobile post-acquisition rebrand under tight weekly release milestones, while performing regular peer code reviews."
       ],
       "skills": [
+        "Agentic AI & MCP",
+        "RAG & Workflows",
+        "JavaScript Automation",
         "AEM",
-        "JavaScript (ES6+)",
-        "eCommerce",
-        "Analytics Automation",
-        "Confluence"
+        "GA4 / Firebase Analytics"
       ]
     },
     {
       "id": "amdocs-altice-usa",
       "company": "Altice USA",
-      "role": "Software Developer",
+      "role": "Frontend Infrastructure Engineer",
       "location": "Raanana, IL",
-      "period": "01/2024 — 05/2025",
+      "period": "Jan 2024 – Jun 2025",
       "isLatest": false,
       "bullets": [
-        "Architected Adobe Analytics infrastructure across eCommerce and self-service apps, leading client requirement reviews and tracking governance.",
-        "Set up the frontend infrastructure and engineered Okta Single Sign-On (SSO) authentication, automated deep-link logins, and secure checkout flow continuity.",
-        "Drove high-impact Proof of Concepts (POCs) from initial validation into enterprise production deployments.",
-        "Conducted rigorous code reviews ensuring architecture standards, code health, and maintainability."
+        "Built Adobe Analytics infrastructure from scratch (20+ events) across e-commerce and Self-Care apps; led bi-weekly client syncs as SME.",
+        "Developed frontend OKTA SSO authentication infrastructure across customer-facing e-commerce and self-service applications.",
+        "Shipped Drupal/AEM CMS modules, Consul feature flags, Google reCAPTCHA bot protection, Experian credit checks, and DPP flows.",
+        "Mentored 2 engineers on analytics pipelines (3x team capacity) and enforced standards via peer code reviews."
       ],
       "skills": [
         "Frontend Infrastructure",
         "Adobe Analytics",
-        "Okta / SSO",
-        "JavaScript",
-        "REST APIs",
-        "Code Reviews"
+        "Okta SSO",
+        "Drupal / AEM",
+        "Code Reviews & Mentoring"
       ]
     },
     {
       "id": "amdocs-three-uk",
       "company": "Three UK",
-      "role": "Software Developer",
+      "role": "Frontend Engineer, E-Commerce & Regulated Systems",
       "location": "Sderot, IL",
-      "period": "01/2023 — 01/2024",
+      "period": "Jan 2023 – Jan 2024",
       "isLatest": false,
       "bullets": [
-        "Built core eCommerce, retail, and mobile flows using React, TypeScript, Redux-Saga, Material UI, and SCSS in an Agile framework.",
-        "Designed and delivered the end-to-end Home Broadband checkout funnel from architectural design to production launch.",
-        "Provided onsite technical release support in the UK, resolving live production blockers during mission-critical go-live windows."
+        "Owned core frontend delivery for the UK's Ofcom-mandated One Touch Switch system (ThreeUK), serving millions of subscribers.",
+        "Shipped shared React/TypeScript (Redux-Saga, MUI) features across web, ARIM retail tablets, and mobile apps.",
+        "Delivered FCC broadband compliance, card-payment add-ons, and cart redesigns (eSIM, number allocation, spend caps).",
+        "Provided on-site UK production support across 20+ release handovers, weekend task forces, and debugging guides."
       ],
       "skills": [
         "React",
         "TypeScript",
         "Redux-Saga",
-        "SCSS",
-        "Checkout Funnels"
+        "E-Commerce & Regulated Systems",
+        "On-Site UK Support"
       ]
     },
     {
       "id": "amdocs-altice-migration",
       "company": "Altice USA",
-      "role": "Software Developer",
+      "role": "Software Developer, E-Commerce & Platform Migration",
       "location": "Sderot, IL",
-      "period": "06/2022 — 01/2023",
+      "period": "Jun 2022 – Jan 2023",
       "isLatest": false,
       "bullets": [
-        "Contributed to full-site migration from React/Contentful to Drupal, Vue, and PHP, rebuilding and optimizing the subscriber purchase funnel.",
-        "Implemented custom CMS components and admin tooling utilizing Vue, GraphQL, PHP, and Twig.",
-        "Partnered with product, design, and QA leads across Jira, Bitbucket, and Acquia to accelerate release delivery."
+        "Contributed to storefront migration from React/Contentful to Vue.js, Drupal, and PHP on Acquia with zero disruption.",
+        "Rebuilt core checkout, cart management, BYOD, and address validation flows with 100% functional parity.",
+        "Delivered configurable CMS storefront modules and buy-flow UI redesigns within a PI-based Agile cadence.",
+        "Coordinated specs and QA validation directly with client teams and Adobe consultants across two production apps."
       ],
       "skills": [
-        "Vue",
-        "Drupal",
-        "GraphQL",
-        "PHP",
-        "Migration"
+        "Vue.js",
+        "Drupal & PHP",
+        "Storefront Migration",
+        "Checkout & Cart",
+        "Agile / Acquia"
       ]
     }
   ],
