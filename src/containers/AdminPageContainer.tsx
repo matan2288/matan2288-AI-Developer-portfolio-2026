@@ -20,7 +20,8 @@ import {
   Upload,
   LogOut,
   Loader2,
-  AlertCircle
+  AlertCircle,
+  RefreshCw
 } from 'lucide-react';
 import {
   getStoredTinaContent,
@@ -61,6 +62,9 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
   const [jsonInput, setJsonInput] = useState('');
   const [jsonError, setJsonError] = useState<string | null>(null);
   const [jsonSuccess, setJsonSuccess] = useState(false);
+  const [isRefreshingRecs, setIsRefreshingRecs] = useState(false);
+  const [recsRefreshStatus, setRecsRefreshStatus] = useState<string | null>(null);
+  const [recsRefreshError, setRecsRefreshError] = useState<string | null>(null);
 
   const previewScrollRef = useRef<HTMLDivElement>(null);
 
@@ -255,6 +259,60 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
     }
     const updated = cmsState.recommendations.filter((_, i) => i !== index);
     handleStateChange(prev => ({ ...prev, recommendations: updated }));
+  };
+
+  const handleSyncRecommendations = async () => {
+    setIsRefreshingRecs(true);
+    setRecsRefreshStatus(null);
+    setRecsRefreshError(null);
+
+    try {
+      let res = await fetch('/api/recommendations?refresh=true');
+      if (res.status === 404) {
+        const netlifyRes = await fetch('/.netlify/functions/recommendations?refresh=true');
+        if (netlifyRes.status !== 404) {
+          res = netlifyRes;
+        }
+      }
+
+      const contentType = res.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        throw new Error(`Unexpected response from server (status ${res.status})`);
+      }
+
+      const json = await res.json();
+      if (!res.ok || !json.success || !Array.isArray(json.data)) {
+        throw new Error(json.error || `Failed to fetch recommendations (status ${res.status})`);
+      }
+
+      const existingMap = new Map<string, RecommendationItem>();
+      (cmsState.recommendations || []).forEach((r: RecommendationItem) => {
+        if (r.id) existingMap.set(r.id, r);
+        if (r.author) existingMap.set(r.author, r);
+      });
+
+      let newCount = 0;
+      const synced: RecommendationItem[] = json.data.map((item: RecommendationItem) => {
+        const existing = (item.id && existingMap.get(item.id)) || existingMap.get(item.author);
+        if (!existing) newCount += 1;
+        return {
+          ...item,
+          role: existing?.role || item.role,
+          company: existing?.company || item.company,
+        };
+      });
+
+      handleStateChange(prev => ({ ...prev, recommendations: synced }));
+      setRecsRefreshStatus(
+        newCount > 0
+          ? `Synced ${synced.length} recommendations (${newCount} new). Click Save Changes to publish.`
+          : `Synced ${synced.length} recommendations from LinkedIn API. Click Save Changes to publish.`
+      );
+    } catch (err: any) {
+      setRecsRefreshError(err?.message || 'Failed to sync recommendations from external API.');
+    } finally {
+      setIsRefreshingRecs(false);
+    }
   };
 
   const updateCertification = (index: number, field: string, val: any) => {
@@ -788,21 +846,48 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
             {/* Testimonials Tab */}
             {activeTab === 'testimonials' && (
               <div className="space-y-5">
-                <div className="flex items-center justify-between pb-3 border-b border-border/70">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-border/70">
                   <div>
                     <h3 className="text-xs font-semibold text-text">
                       Client & Partner Endorsements ({cmsState.recommendations.length})
                     </h3>
                     <p className="text-[11px] text-text-muted mt-0.5">Testimonial quotes and author credentials.</p>
                   </div>
-                  <button
-                    onClick={addRecommendation}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-neutral-50 border border-border text-text text-xs font-medium rounded-lg shadow-2xs transition-colors cursor-pointer"
-                  >
-                    <Plus size={13} />
-                    <span>Add Testimonial</span>
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={handleSyncRecommendations}
+                      disabled={isRefreshingRecs}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-neutral-50 border border-border text-text text-xs font-medium rounded-lg shadow-2xs transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                      title="Fetch latest recommendations from SocialCrawl LinkedIn API"
+                    >
+                      <RefreshCw size={13} className={isRefreshingRecs ? 'animate-spin' : ''} />
+                      <span>{isRefreshingRecs ? 'Syncing...' : 'Sync from API'}</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={addRecommendation}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-neutral-50 border border-border text-text text-xs font-medium rounded-lg shadow-2xs transition-colors cursor-pointer"
+                    >
+                      <Plus size={13} />
+                      <span>Add Testimonial</span>
+                    </button>
+                  </div>
                 </div>
+
+                {recsRefreshStatus && (
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs">
+                    <Check size={14} className="shrink-0" />
+                    <span>{recsRefreshStatus}</span>
+                  </div>
+                )}
+
+                {recsRefreshError && (
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs">
+                    <AlertCircle size={14} className="shrink-0" />
+                    <span>{recsRefreshError}</span>
+                  </div>
+                )}
 
                 {cmsState.recommendations.map((rec: RecommendationItem, idx: number) => (
                   <div key={idx} className="p-5 border border-border/80 rounded-xl bg-white shadow-2xs space-y-4">

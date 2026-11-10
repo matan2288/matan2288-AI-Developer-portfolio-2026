@@ -140,11 +140,34 @@ export default defineConfig(({ mode }) => {
       {
         name: 'dev-api-recommendations',
         configureServer(server) {
-          server.middlewares.use('/api/recommendations', (_req, res) => {
+          server.middlewares.use('/api/recommendations', async (req, res) => {
             res.setHeader('Content-Type', 'application/json');
             try {
               const recPath = path.resolve(__dirname, 'linkedin_recommendations.json');
               const contentPath = path.resolve(__dirname, 'content/siteContent.json');
+              const url = new URL(req.url || '', 'http://localhost');
+              const shouldRefresh = url.searchParams.get('refresh') === 'true';
+
+              if (shouldRefresh) {
+                const rawKey = env.SOCIALCRAWL_API_KEY || process.env.SOCIALCRAWL_API_KEY || '';
+                const apiKey = rawKey.trim().replace(/^["']|["']$/g, '');
+                if (!apiKey) {
+                  res.statusCode = 503;
+                  return res.end(JSON.stringify({ success: false, error: 'SOCIALCRAWL_API_KEY is not configured in .env' }));
+                }
+                const fetchUrl = 'https://www.socialcrawl.dev/v1/linkedin/profile/recommendations?url=https://www.linkedin.com/in/matan-elmaliach/&type=received&max_credits=10';
+                const scRes = await fetch(fetchUrl, {
+                  headers: { 'x-api-key': apiKey, 'Accept': 'application/json' },
+                });
+                if (!scRes.ok) {
+                  const errText = await scRes.text();
+                  res.statusCode = scRes.status;
+                  return res.end(JSON.stringify({ success: false, error: `SocialCrawl API responded with ${scRes.status}: ${errText}` }));
+                }
+                const freshData = await scRes.json();
+                fs.writeFileSync(recPath, JSON.stringify(freshData, null, 2), 'utf-8');
+              }
+
               let data = [];
 
               if (fs.existsSync(recPath)) {

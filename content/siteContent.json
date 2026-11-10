@@ -36,10 +36,11 @@
       "period": "Jun 2025 – Present",
       "isLatest": true,
       "bullets": [
-        "Accelerated engineering velocity across a 10-developer team by architecting AI-native workflows with custom agent rules, MCP toolchains, and context engineering (Cursor, Copilot).",
-        "Evolved internal AI/RAG prototypes from concepts into standardized, repeatable agentic context pipelines across shared team repositories.",
-        "Engineered 3 platform-wide JS automation libraries (Lead Web Architect approved) eliminating AEM and analytics boilerplate, and shipped custom AEM experiences for flagship Apple, Samsung, Google launches and the T-Mobile rebrand.",
-        "Directed GTM, GA4, and Firebase Analytics across UScellular/T-Mobile serving millions of subscribers, unifying web and mobile WebView tracking and resolving external consultancy defects."
+        "Accelerated engineering velocity across a 10-developer team by architecting AI-native workflows with custom agent rules, MCP toolchains, and context engineering (Cursor, GitHub Copilot).",
+        "Evolved internal AI and RAG prototypes from experimental POCs into standardized, repeatable agentic workflows across shared team repositories.",
+        "Engineered 3 platform-wide JS automation libraries approved by the client's Lead Web Architect and adopted by all 10 developers eliminating analytics and AEM asset boilerplate across weekly releases (10–55+ peak tickets).",
+        "Led GTM, GA4, and Firebase Analytics implementation for a Tier-1 US telecom platform (UScellular / T-Mobile) serving millions of subscribers, unifying web and mobile WebView tracking.",
+        "Shipped custom-coded AEM experiences for flagship Apple, Samsung, and Google launches alongside the T-Mobile post-acquisition rebrand on tight weekly milestones, while performing regular peer code reviews."
       ],
       "skills": [
         "Agentic AI & MCP",

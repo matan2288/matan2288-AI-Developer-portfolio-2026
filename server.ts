@@ -205,24 +205,32 @@ app.post('/api/editor-auth', (req: Request, res: Response) => {
 app.get('/api/recommendations', async (req: Request, res: Response) => {
   try {
     const shouldRefresh = req.query.refresh === 'true';
-    const apiKey = process.env.SOCIALCRAWL_API_KEY;
+    const rawApiKey = process.env.SOCIALCRAWL_API_KEY || '';
+    const apiKey = rawApiKey.trim().replace(/^["']|["']$/g, '');
 
-    if (shouldRefresh && apiKey) {
-      try {
-        const fetchUrl = 'https://www.socialcrawl.dev/v1/linkedin/profile/recommendations?url=https://www.linkedin.com/in/matan-elmaliach/&type=received&max_credits=10';
-        const scRes = await fetch(fetchUrl, {
-          headers: {
-            'x-api-key': apiKey,
-            'Accept': 'application/json',
-          },
+    if (shouldRefresh) {
+      if (!apiKey) {
+        return res.status(503).json({
+          success: false,
+          error: 'SOCIALCRAWL_API_KEY is not configured in .env or server environment.',
         });
-        if (scRes.ok) {
-          const freshData = await scRes.json();
-          fs.writeFileSync(path.resolve(__dirname, 'linkedin_recommendations.json'), JSON.stringify(freshData, null, 2), 'utf-8');
-        }
-      } catch (refreshErr) {
-        console.warn('SocialCrawl refresh error:', refreshErr);
       }
+      const fetchUrl = 'https://www.socialcrawl.dev/v1/linkedin/profile/recommendations?url=https://www.linkedin.com/in/matan-elmaliach/&type=received&max_credits=10';
+      const scRes = await fetch(fetchUrl, {
+        headers: {
+          'x-api-key': apiKey,
+          'Accept': 'application/json',
+        },
+      });
+      if (!scRes.ok) {
+        const errText = await scRes.text();
+        return res.status(scRes.status).json({
+          success: false,
+          error: `SocialCrawl API responded with ${scRes.status}: ${errText}`,
+        });
+      }
+      const freshData = await scRes.json();
+      fs.writeFileSync(path.resolve(__dirname, 'linkedin_recommendations.json'), JSON.stringify(freshData, null, 2), 'utf-8');
     }
 
     // Read stored JSON
