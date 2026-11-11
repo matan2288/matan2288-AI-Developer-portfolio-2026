@@ -341,6 +341,16 @@ export const chatWithMatanPersona = async (
     if (res.ok && contentType.includes('application/json')) {
       const data = await res.json();
       if (data.reply) {
+        const source = data.source || res.headers.get('X-Chat-Source') || 'unknown';
+        if (source === 'rag') {
+          console.info('[Matan Twin] Source: rag', data.ragEndpoint ? `(${data.ragEndpoint})` : '');
+        } else {
+          console.info(
+            `[Matan Twin] Source: ${source}`,
+            data.model ? `(${data.model})` : '',
+            data.ragFallbackReason ? `— ${data.ragFallbackReason}` : ''
+          );
+        }
         return data.reply;
       }
     }
@@ -352,6 +362,7 @@ export const chatWithMatanPersona = async (
   }
 
   // Use the comprehensive local persona engine (smooth, instant, zero server dependencies)
+  console.info('[Matan Twin] Source: offline-fallback');
   return generateOfflinePersonaResponse(userMessage, conversationHistory);
 };
 

@@ -31,67 +31,48 @@ export default defineConfig(({ mode }) => {
             req.on('data', chunk => { body += chunk; });
             req.on('end', async () => {
               try {
-                const { GoogleGenAI } = await import('@google/genai');
-                const rawKey = env.GEMINI_API_KEY || process.env.GEMINI_API_KEY || '';
-                const apiKey = rawKey.trim().replace(/^["']|["']$/g, '');
-                if (!apiKey) {
-                  res.statusCode = 503;
-                  return res.end(JSON.stringify({
-                    noKey: true,
-                    reply: 'The Gemini API key is currently not configured in .env',
-                  }));
-                }
-
-                const ai = new GoogleGenAI({
-                  apiKey,
-                  httpOptions: {
-                    headers: { 'User-Agent': 'aistudio-build' },
-                    retryOptions: { attempts: 1 },
-                  },
-                });
-
+                const { executeChatPipeline } = await import('./src/server/chatPipeline.ts');
                 const parsed = JSON.parse(body || '{}');
                 const { conversationHistory = [], userMessage = '' } = parsed;
-                const contents = (Array.isArray(conversationHistory) ? conversationHistory : [])
-                  .filter((m: any) => m && m.text && m.id !== 'welcome')
-                  .map((m: { role: string; text: string }) => ({
-                    role: m.role === 'model' ? 'model' : 'user',
-                    parts: [{ text: m.text }],
+
+                if (!userMessage || typeof userMessage !== 'string') {
+                  res.statusCode = 400;
+                  return res.end(JSON.stringify({ error: 'userMessage is required' }));
+                }
+
+                const result = await executeChatPipeline({
+                  userMessage,
+                  conversationHistory,
+                  env: { ...process.env, ...env },
+                  noKeyReply: 'The Gemini API key is currently not configured in .env',
+                });
+
+                res.statusCode = result.statusCode;
+                if (result.statusCode === 200) {
+                  res.setHeader('X-Chat-Source', result.source);
+                  return res.end(JSON.stringify({
+                    reply: result.reply,
+                    source: result.source,
+                    model: result.model,
+                    ragEndpoint: result.ragEndpoint,
+                    healthEndpoint: result.healthEndpoint,
+                    ragFallbackReason: result.ragFallbackReason,
                   }));
-
-                contents.push({ role: 'user', parts: [{ text: userMessage }] });
-
-                const configuredModel = env.GEMINI_MODEL || process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite';
-                const candidateModels = Array.from(new Set([
-                  configuredModel,
-                  'gemini-3.1-flash-lite',
-                  'gemini-3.5-flash',
-                  'gemini-3.8-flash',
-                ])).filter(Boolean);
-
-                let reply = '';
-                for (const model of candidateModels) {
-                  try {
-                    const response = await ai.models.generateContent({
-                      model,
-                      contents,
-                      config: {
-                        maxOutputTokens: 1000,
-                      },
-                    });
-                    if (response.text) {
-                      reply = response.text;
-                      break;
-                    }
-                  } catch (err: any) {
-                    console.warn(`Dev Gemini model ${model} failed:`, err?.message || err);
-                  }
                 }
-                if (!reply) {
-                  res.statusCode = 502;
-                  return res.end(JSON.stringify({ error: 'Chat generation failed across models' }));
+
+                if (result.statusCode === 503) {
+                  return res.end(JSON.stringify({
+                    noKey: result.noKey,
+                    reply: result.reply,
+                    ragFallbackReason: result.ragFallbackReason,
+                  }));
                 }
-                res.end(JSON.stringify({ reply }));
+
+                return res.end(JSON.stringify({
+                  error: result.error,
+                  details: result.details,
+                  ragFallbackReason: result.ragFallbackReason,
+                }));
               } catch (err: any) {
                 res.statusCode = 500;
                 res.end(JSON.stringify({ error: err?.message || 'Chat generation failed' }));
