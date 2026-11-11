@@ -42,6 +42,10 @@ You are Matan Elmaliach — speaking as Matan himself in the first person ("I", 
 - **Technical Recruiters**: Value years of experience (4 years enterprise experience, 2022–present at Amdocs), core stack (React, TypeScript, Vue, Node.js), location (Tel Aviv; open to hybrid, remote globally, contract), and immediate direct reachability (052-6506696, matan2288@gmail.com, LinkedIn).
 - **Tone**: Authentic, professional, humble, highly competent, articulate, and relaxed software engineer. Never sound robotic or generic.
 
+## Grounding & Anti-Hallucination Rules (CRITICAL)
+- Only state facts, employers, projects, dates, metrics, certifications, skills, and links that appear explicitly in the Knowledge Base below.
+- Never invent or extrapolate details not listed below. If asked about something not covered in the Knowledge Base, clearly state that you don't have that verified detail on hand and offer to connect directly (matan2288@gmail.com).
+
 ## Strict Response Length & Formatting Rules (CRITICAL)
 1. **DEFAULT LENGTH**: Keep initial responses **short, focused, and punchy (2 to 4 sentences, roughly 40–75 words)**. Never provide massive text dumps upfront that overwhelm the reader or get clipped.
 2. **SELECTIVE ELABORATION ONLY (CRITICAL)**:
@@ -75,6 +79,15 @@ You are Matan Elmaliach — speaking as Matan himself in the first person ("I", 
 
 function cleanEnv(raw: string | undefined): string {
   return (raw || '').trim().replace(/^["']|["']$/g, '');
+}
+
+function isLoopbackUrl(urlStr: string): boolean {
+  try {
+    const { hostname } = new URL(urlStr);
+    return hostname === '127.0.0.1' || hostname === 'localhost' || hostname === '::1';
+  } catch {
+    return false;
+  }
 }
 
 function deriveHealthUrl(ragUrl: string): string {
@@ -149,11 +162,12 @@ async function tryRagPipeline(
   timeoutMs: number
 ): Promise<{ reply?: string; reason?: string }> {
   if (healthUrl) {
+    const healthTimeoutMs = isLoopbackUrl(healthUrl) ? 1500 : Math.min(timeoutMs, 5000);
     try {
       const healthRes = await fetch(healthUrl, {
         method: 'GET',
         headers: buildRagHeaders(authToken, false),
-        signal: AbortSignal.timeout(1500),
+        signal: AbortSignal.timeout(healthTimeoutMs),
       });
       if (!healthRes.ok) {
         return {
@@ -250,7 +264,10 @@ export async function executeChatPipeline({
   const authToken = cleanEnv(env.API_AUTH_TOKEN) || cleanEnv(env.RAG_AUTH_TOKEN);
 
   if (ragUrl) {
-    const healthUrl = cleanEnv(env.RAG_HEALTH_URL) || deriveHealthUrl(ragUrl);
+    // Run /health preflight for explicit RAG_HEALTH_URL or local loopback servers;
+    // remote serverless endpoints (e.g. Modal) go straight to /ask to avoid cold-start double latency.
+    const explicitHealthUrl = cleanEnv(env.RAG_HEALTH_URL);
+    const healthUrl = explicitHealthUrl || (isLoopbackUrl(ragUrl) ? deriveHealthUrl(ragUrl) : '');
     const ragResult = await tryRagPipeline(
       userMessage,
       history,
@@ -323,6 +340,7 @@ export async function executeChatPipeline({
         contents,
         config: {
           systemInstruction: MATAN_SYSTEM_INSTRUCTION,
+          temperature: 0.2,
           maxOutputTokens: 1000,
         },
       });
