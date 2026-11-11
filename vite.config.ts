@@ -54,9 +54,6 @@ export default defineConfig(({ mode }) => {
                     reply: result.reply,
                     source: result.source,
                     model: result.model,
-                    ragEndpoint: result.ragEndpoint,
-                    healthEndpoint: result.healthEndpoint,
-                    ragFallbackReason: result.ragFallbackReason,
                   }));
                 }
 
@@ -64,14 +61,12 @@ export default defineConfig(({ mode }) => {
                   return res.end(JSON.stringify({
                     noKey: result.noKey,
                     reply: result.reply,
-                    ragFallbackReason: result.ragFallbackReason,
                   }));
                 }
 
                 return res.end(JSON.stringify({
                   error: result.error,
                   details: result.details,
-                  ragFallbackReason: result.ragFallbackReason,
                 }));
               } catch (err: any) {
                 res.statusCode = 500;

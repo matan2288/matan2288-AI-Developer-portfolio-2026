@@ -343,12 +343,11 @@ export const chatWithMatanPersona = async (
       if (data.reply) {
         const source = data.source || res.headers.get('X-Chat-Source') || 'unknown';
         if (source === 'rag') {
-          console.info('[Matan Twin] Source: rag', data.ragEndpoint ? `(${data.ragEndpoint})` : '');
+          console.info('[Matan Twin] Source: rag');
         } else {
           console.info(
             `[Matan Twin] Source: ${source}`,
-            data.model ? `(${data.model})` : '',
-            data.ragFallbackReason ? `— ${data.ragFallbackReason}` : ''
+            data.model ? `(${data.model})` : ''
           );
         }
         return data.reply;

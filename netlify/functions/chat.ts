@@ -71,9 +71,6 @@ export const handler: Handler = async (event: HandlerEvent, _context?: any) => {
           reply: result.reply,
           source: result.source,
           model: result.model,
-          ragEndpoint: result.ragEndpoint,
-          healthEndpoint: result.healthEndpoint,
-          ragFallbackReason: result.ragFallbackReason,
         }),
       };
     }
@@ -85,7 +82,6 @@ export const handler: Handler = async (event: HandlerEvent, _context?: any) => {
         body: JSON.stringify({
           noKey: result.noKey,
           reply: result.reply,
-          ragFallbackReason: result.ragFallbackReason,
         }),
       };
     }
@@ -96,7 +92,6 @@ export const handler: Handler = async (event: HandlerEvent, _context?: any) => {
       body: JSON.stringify({
         error: result.error,
         details: result.details,
-        ragFallbackReason: result.ragFallbackReason,
       }),
     };
   } catch (error: any) {

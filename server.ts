@@ -57,9 +57,6 @@ app.post('/api/chat', async (req: Request, res: Response) => {
         reply: result.reply,
         source: result.source,
         model: result.model,
-        ragEndpoint: result.ragEndpoint,
-        healthEndpoint: result.healthEndpoint,
-        ragFallbackReason: result.ragFallbackReason,
       });
     }
 
@@ -67,14 +64,12 @@ app.post('/api/chat', async (req: Request, res: Response) => {
       return res.status(503).json({
         noKey: result.noKey,
         reply: result.reply,
-        ragFallbackReason: result.ragFallbackReason,
       });
     }
 
     return res.status(502).json({
       error: result.error,
       details: result.details,
-      ragFallbackReason: result.ragFallbackReason,
     });
   } catch (error: any) {
     console.error('Chat API Error:', error);

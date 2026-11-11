@@ -18,24 +18,21 @@ export interface ChatPipelineInput {
 
 export type ChatPipelineResult =
   | {
-    statusCode: 200;
-    reply: string;
-    source: ChatPipelineSource;
-    model?: string;
-    ragFallbackReason?: string;
-  }
+      statusCode: 200;
+      reply: string;
+      source: ChatPipelineSource;
+      model?: string;
+    }
   | {
-    statusCode: 503;
-    noKey: true;
-    reply: string;
-    ragFallbackReason?: string;
-  }
+      statusCode: 503;
+      noKey: true;
+      reply: string;
+    }
   | {
-    statusCode: 502;
-    error: string;
-    details: string | null;
-    ragFallbackReason?: string;
-  };
+      statusCode: 502;
+      error: string;
+      details: string | null;
+    };
 
 export const MATAN_SYSTEM_INSTRUCTION = `
 You are Matan Elmaliach — speaking as Matan himself in the first person ("I", "my"). You are an AI-driven digital assistant twin representing Matan to hiring managers, engineering managers (EMs), tech leads, and technical recruiters who visit his portfolio.
@@ -89,15 +86,6 @@ function deriveHealthUrl(ragUrl: string): string {
   }
 }
 
-function resolveRagConfig(env: Record<string, string | undefined>) {
-  const baseUrl = cleanEnv(env.RAG_API_URL).replace(/\/+$/, '');
-  const ragUrl = cleanEnv(env.RAG_URL) || (baseUrl ? `${baseUrl}/ask` : '');
-  const healthUrl =
-    cleanEnv(env.RAG_HEALTH_URL) || (baseUrl ? `${baseUrl}/health` : deriveHealthUrl(ragUrl));
-  const authToken = cleanEnv(env.API_AUTH_TOKEN || env.RAG_API_TOKEN);
-  return { ragUrl, healthUrl, authToken };
-}
-
 function extractRagReply(data: unknown): string {
   if (typeof data === 'string') {
     return data.trim();
@@ -114,6 +102,17 @@ function extractRagReply(data: unknown): string {
   return '';
 }
 
+function resolveRagEndpoint(env: Record<string, string | undefined>): string {
+  const directUrl = cleanEnv(env.RAG_URL);
+  if (directUrl) return directUrl;
+
+  const baseUrl = cleanEnv(env.RAG_API_URL);
+  if (!baseUrl) return '';
+
+  const trimmed = baseUrl.replace(/\/+$/, '');
+  return trimmed.endsWith('/ask') ? trimmed : `${trimmed}/ask`;
+}
+
 function buildRagHeaders(authToken: string, isPost: boolean): Record<string, string> {
   const headers: Record<string, string> = {
     Accept: 'application/json',
@@ -122,15 +121,15 @@ function buildRagHeaders(authToken: string, isPost: boolean): Record<string, str
     headers['Content-Type'] = 'application/json';
   }
   if (authToken) {
-    headers['Authorization'] = `Bearer ${authToken}`;
+    headers.Authorization = `Bearer ${authToken}`;
   }
   return headers;
 }
 
 async function postToRag(
   ragUrl: string,
-  authToken: string,
   payload: Record<string, unknown>,
+  authToken: string,
   timeoutMs: number
 ): Promise<globalThis.Response> {
   return fetch(ragUrl, {
@@ -148,7 +147,7 @@ async function tryRagPipeline(
   healthUrl: string,
   authToken: string,
   timeoutMs: number
-): Promise<{ reply?: string; publicReason?: string; internalReason?: string }> {
+): Promise<{ reply?: string; reason?: string }> {
   if (healthUrl) {
     try {
       const healthRes = await fetch(healthUrl, {
@@ -158,15 +157,13 @@ async function tryRagPipeline(
       });
       if (!healthRes.ok) {
         return {
-          publicReason: 'health_check_failed',
-          internalReason: `RAG health check (${healthUrl}) returned HTTP ${healthRes.status}`,
+          reason: `RAG health check (${healthUrl}) returned HTTP ${healthRes.status}`,
         };
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
       return {
-        publicReason: 'health_check_failed',
-        internalReason: `RAG health check (${healthUrl}) failed: ${msg}`,
+        reason: `RAG health check (${healthUrl}) failed: ${msg}`,
       };
     }
   }
@@ -175,33 +172,43 @@ async function tryRagPipeline(
     .filter((m) => m && m.text && m.id !== 'welcome')
     .map((m) => ({
       role: m.role === 'model' ? 'assistant' : 'user',
-      content: m.text,
+      text: m.text,
     }));
 
   try {
     let askRes = await postToRag(
       ragUrl,
-      authToken,
       {
         question: userMessage,
         history: sanitizedHistory,
+        query: userMessage,
+        userMessage,
+        conversationHistory: sanitizedHistory,
       },
+      authToken,
       timeoutMs
     );
 
-    // Retry with minimal payload if the RAG server validates a narrower schema (e.g. no history field)
+    // Retry with stricter schemas if the RAG server uses Pydantic extra='forbid'
     if (askRes.status === 422) {
-      askRes = await postToRag(ragUrl, authToken, { question: userMessage }, timeoutMs);
+      askRes = await postToRag(
+        ragUrl,
+        { question: userMessage, history: sanitizedHistory },
+        authToken,
+        timeoutMs
+      );
       if (askRes.status === 422) {
-        askRes = await postToRag(ragUrl, authToken, { query: userMessage }, timeoutMs);
+        askRes = await postToRag(ragUrl, { question: userMessage }, authToken, timeoutMs);
+      }
+      if (askRes.status === 422) {
+        askRes = await postToRag(ragUrl, { query: userMessage }, authToken, timeoutMs);
       }
     }
 
     if (!askRes.ok) {
       const errBody = await askRes.text().catch(() => '');
       return {
-        publicReason: `rag_http_${askRes.status}`,
-        internalReason: `RAG endpoint (${ragUrl}) returned HTTP ${askRes.status}${errBody ? `: ${errBody.slice(0, 200)}` : ''}`,
+        reason: `RAG endpoint (${ragUrl}) returned HTTP ${askRes.status}${errBody ? `: ${errBody.slice(0, 200)}` : ''}`,
       };
     }
 
@@ -213,8 +220,7 @@ async function tryRagPipeline(
     const reply = extractRagReply(parsedData);
     if (!reply) {
       return {
-        publicReason: 'empty_reply',
-        internalReason: `RAG endpoint (${ragUrl}) returned an empty reply`,
+        reason: `RAG endpoint (${ragUrl}) returned an empty reply`,
       };
     }
 
@@ -222,15 +228,15 @@ async function tryRagPipeline(
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     return {
-      publicReason: 'rag_unreachable',
-      internalReason: `RAG request (${ragUrl}) failed: ${msg}`,
+      reason: `RAG request (${ragUrl}) failed: ${msg}`,
     };
   }
 }
 
 /**
- * Executes the chat pipeline: proxies server-side to the configured RAG endpoint (hiding URL & bearer token
- * from browser clients), then falls back to Gemini if RAG is unconfigured or unavailable.
+ * Executes the chat pipeline via server-side BFF proxy: attempts the configured RAG endpoint first
+ * (with optional /health preflight and Bearer auth), then falls back to Gemini without exposing
+ * upstream RAG URLs or tokens to the browser.
  */
 export async function executeChatPipeline({
   userMessage,
@@ -240,11 +246,19 @@ export async function executeChatPipeline({
   noKeyReply,
 }: ChatPipelineInput): Promise<ChatPipelineResult> {
   const history = Array.isArray(conversationHistory) ? conversationHistory : [];
-  const { ragUrl, healthUrl, authToken } = resolveRagConfig(env);
-  let ragFallbackReason = 'not_configured';
+  const ragUrl = resolveRagEndpoint(env);
+  const authToken = cleanEnv(env.API_AUTH_TOKEN) || cleanEnv(env.RAG_AUTH_TOKEN);
 
   if (ragUrl) {
-    const ragResult = await tryRagPipeline(userMessage, history, ragUrl, healthUrl, authToken, timeoutMs);
+    const healthUrl = cleanEnv(env.RAG_HEALTH_URL) || deriveHealthUrl(ragUrl);
+    const ragResult = await tryRagPipeline(
+      userMessage,
+      history,
+      ragUrl,
+      healthUrl,
+      authToken,
+      timeoutMs
+    );
 
     if (ragResult.reply) {
       console.info(`[ChatPipeline] Answered via RAG (${ragUrl})`);
@@ -255,8 +269,9 @@ export async function executeChatPipeline({
       };
     }
 
-    ragFallbackReason = ragResult.publicReason || 'rag_unavailable';
-    console.warn(`[ChatPipeline] ${ragResult.internalReason || ragFallbackReason}; falling back to Gemini.`);
+    console.warn(
+      `[ChatPipeline] ${ragResult.reason || 'RAG pipeline unavailable'}; falling back to Gemini.`
+    );
   }
 
   const apiKey = cleanEnv(env.GEMINI_API_KEY);
@@ -264,7 +279,6 @@ export async function executeChatPipeline({
     return {
       statusCode: 503,
       noKey: true,
-      ragFallbackReason,
       reply:
         noKeyReply ||
         'The Gemini API key is currently not configured. Please set GEMINI_API_KEY in your environment variables.',
@@ -319,7 +333,6 @@ export async function executeChatPipeline({
           reply: response.text,
           source: 'gemini-fallback',
           model,
-          ragFallbackReason,
         };
       }
     } catch (err: unknown) {
@@ -332,7 +345,6 @@ export async function executeChatPipeline({
     statusCode: 502,
     error: 'Model generation failed across candidate models',
     details: lastError,
-    ragFallbackReason,
   };
 }
 
