@@ -215,7 +215,7 @@ export async function executeChatPipeline({
   userMessage,
   conversationHistory = [],
   env,
-  timeoutMs = 15000,
+  timeoutMs,
 }: ChatPipelineInput): Promise<ChatPipelineResult> {
   const history = Array.isArray(conversationHistory) ? conversationHistory : [];
   const ragUrl = resolveRagEndpoint(env);
@@ -224,6 +224,9 @@ export async function executeChatPipeline({
     cleanEnv(env.RAG_AUTH_TOKEN) ||
     cleanEnv(env.RAG_API_KEY) ||
     cleanEnv(env.API_KEY);
+  const envTimeout = Number(cleanEnv(env.RAG_TIMEOUT_MS));
+  const effectiveTimeoutMs =
+    timeoutMs ?? (Number.isFinite(envTimeout) && envTimeout > 0 ? envTimeout : 25000);
 
   if (!ragUrl) {
     console.warn('[ChatPipeline] Neither RAG_URL nor RAG_API_URL is configured.');
@@ -244,7 +247,7 @@ export async function executeChatPipeline({
     ragUrl,
     healthUrl,
     authToken,
-    timeoutMs
+    effectiveTimeoutMs
   );
 
   if (ragResult.reply) {

@@ -55,7 +55,6 @@ export const handler: Handler = async (event: HandlerEvent, _context?: any) => {
       userMessage,
       conversationHistory,
       env: process.env,
-      timeoutMs: 15000,
     });
 
     if (result.statusCode === 200) {
