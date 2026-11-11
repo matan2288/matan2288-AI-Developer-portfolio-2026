@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Bot, X, Minimize2, Send, RotateCcw } from 'lucide-react';
+import { Bot, X, Minimize2, Send, RotateCcw, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { usePersonaChat } from '../context/PersonaChatContext';
 
@@ -26,38 +26,56 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
   } = usePersonaChat();
 
   const [inputText, setInputText] = useState('');
+  const [showInquiries, setShowInquiries] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const prevMessagesCountRef = useRef(messages.length);
 
   // Blinking rule: stop permanently after opening for the first time, never blink if already open
   const shouldBlink = isBlinking && !isWidgetOpen && !hasEverOpened;
 
-  // Auto scroll to latest message when opened or new message arrives
-  useEffect(() => {
-    if (isWidgetOpen && messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages, loading, isWidgetOpen]);
-
-  // Focus input when opened
+  // Ensure scroll is at the top when chat opens
   useEffect(() => {
     if (isWidgetOpen) {
-      const timer = setTimeout(() => inputRef.current?.focus(), 150);
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTop = 0;
+      }
+      const timer = setTimeout(() => {
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.scrollTop = 0;
+        }
+        inputRef.current?.focus();
+      }, 50);
       return () => clearTimeout(timer);
     }
   }, [isWidgetOpen]);
+
+  // Auto scroll to latest message only when a new message arrives or during loading
+  useEffect(() => {
+    if (isWidgetOpen) {
+      if (messages.length > prevMessagesCountRef.current && prevMessagesCountRef.current > 0) {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      } else if (loading) {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    prevMessagesCountRef.current = messages.length;
+  }, [messages, loading, isWidgetOpen]);
 
   const onSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputText.trim() || loading) return;
     const text = inputText;
     setInputText('');
+    setShowInquiries(false);
     await handleSend(text);
   };
 
   const handleQuickQuestion = async (qText: string) => {
     if (loading) return;
     setInputText('');
+    setShowInquiries(false);
     await handleSend(qText);
   };
 
@@ -140,7 +158,7 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
             </div>
 
             {/* Messages Feed */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-white text-xs">
+            <div ref={scrollContainerRef} className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-white text-xs">
               {messages.map((m) => {
                 const isModel = m.role === 'model';
                 return (
@@ -166,26 +184,53 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
                 );
               })}
 
-              {/* Quick suggestions when conversation starts */}
-              {messages.length <= 1 && (
-                <div className="pt-2 pb-1 space-y-2">
+              {/* Inquiries Section - visible initially, collapsible and always accessible after first answer */}
+              <div className="pt-2 pb-1 space-y-2">
+                {messages.length > 1 ? (
+                  <div className="flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => setShowInquiries((prev) => !prev)}
+                      className="inline-flex items-center gap-1.5 text-[11px] font-medium text-text-muted hover:text-text px-2.5 py-1 rounded-lg border border-border/80 bg-neutral-50 hover:bg-neutral-100 transition-colors cursor-pointer select-none"
+                    >
+                      <span>{showInquiries ? 'Hide Inquiries' : 'Suggested Inquiries (8)'}</span>
+                      <ChevronDown
+                        size={12}
+                        className={`transition-transform duration-200 ${showInquiries ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+                  </div>
+                ) : (
                   <span className="text-[10px] uppercase font-semibold text-text-muted tracking-wider block">
                     Quick Inquiries
                   </span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {suggestedQuestions.map((sq, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => handleQuickQuestion(sq.text)}
-                        className="text-[11px] px-2.5 py-1 rounded-lg border border-border/80 bg-neutral-50 hover:bg-neutral-100 text-text transition-colors cursor-pointer text-left active:scale-95"
-                      >
-                        {sq.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
+                )}
+
+                <AnimatePresence initial={false}>
+                  {(messages.length <= 1 || showInquiries) && (
+                    <motion.div
+                      initial={messages.length > 1 ? { opacity: 0, height: 0 } : false}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="flex flex-wrap gap-1.5 pt-0.5">
+                        {suggestedQuestions.map((sq, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => handleQuickQuestion(sq.text)}
+                            className="text-[11px] px-2.5 py-1 rounded-lg border border-border/80 bg-neutral-50 hover:bg-neutral-100 hover:border-neutral-300 text-text transition-colors cursor-pointer text-left active:scale-95"
+                          >
+                            {sq.label}
+                          </button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               {loading && (
                 <div className="flex flex-col items-start space-y-1">
@@ -243,27 +288,23 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
           animate={
             loading
               ? {
-                  scale: [1, 1.25, 1],
-                  filter: [
-                    'drop-shadow(0 0 0px rgba(15,23,42,0))',
-                    'drop-shadow(0 0 5px rgba(15,23,42,0.4))',
-                    'drop-shadow(0 0 0px rgba(15,23,42,0))',
-                  ],
+                  scale: [1, 1.08, 1],
+                  opacity: [0.7, 1, 0.7],
                 }
-              : { scale: 1, filter: 'none' }
+              : { scale: 1, opacity: 1 }
           }
           transition={
             loading
               ? {
-                  duration: 1.4,
+                  duration: 1.2,
                   repeat: Infinity,
                   ease: 'easeInOut',
                 }
               : { duration: 0.2 }
           }
-          className="flex items-center justify-center shrink-0 origin-center"
+          className="flex items-center justify-center shrink-0 origin-center bg-transparent"
         >
-          <Bot size={15} className="text-text-muted" />
+          <Bot size={15} className="text-text-muted bg-transparent" />
         </motion.div>
         <span className="text-xs sm:text-[13px] font-medium select-none whitespace-nowrap text-text">Ask AI Matan</span>
         {shouldBlink && (

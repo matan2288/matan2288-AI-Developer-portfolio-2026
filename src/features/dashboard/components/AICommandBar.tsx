@@ -41,46 +41,42 @@ export const AICommandBar: React.FC = () => {
         onSubmit={onSubmit}
         className="relative flex items-center bg-white border border-border hover:border-neutral-400 focus-within:border-text rounded-xl p-1.5 shadow-2xs transition-colors"
       >
-        <div className="relative group pl-3 pr-2 text-text-muted shrink-0 select-none flex items-center cursor-help">
+        <div className="relative group pl-3 pr-2 text-text-muted shrink-0 select-none flex items-center cursor-help bg-transparent">
           <motion.div
             animate={
               loading
                 ? {
-                    scale: [1, 1.25, 1],
-                    filter: [
-                      'drop-shadow(0 0 0px rgba(15,23,42,0))',
-                      'drop-shadow(0 0 6px rgba(15,23,42,0.45))',
-                      'drop-shadow(0 0 0px rgba(15,23,42,0))',
-                    ],
+                    scale: [1, 1.08, 1],
+                    opacity: [0.7, 1, 0.7],
                   }
-                : { scale: 1, filter: 'drop-shadow(0 0 0px rgba(0,0,0,0))' }
+                : { scale: 1, opacity: 1 }
             }
             transition={
               loading
                 ? {
-                    duration: 1.4,
+                    duration: 1.2,
                     repeat: Infinity,
                     ease: 'easeInOut',
                   }
                 : { duration: 0.2 }
             }
-            className="flex items-center justify-center shrink-0 origin-center"
+            className="flex items-center justify-center shrink-0 origin-center bg-transparent"
           >
             <Bot
               size={16}
               className={`${
                 loading ? 'text-text' : 'text-text-muted group-hover:text-text'
-              } transition-colors`}
+              } transition-colors bg-transparent`}
             />
           </motion.div>
           {/* Tooltip: hovers from left on desktop so it doesn't cover input; floats above on mobile */}
           <div
             role="tooltip"
-            className="pointer-events-none absolute bottom-full left-0 mb-2.5 sm:bottom-auto sm:left-auto sm:right-full sm:top-1/2 sm:-translate-y-1/2 sm:mr-3 sm:mb-0 hidden group-hover:flex group-focus-within:flex flex-col items-start z-50 transition-all duration-150"
+            className="pointer-events-none absolute bottom-full left-0 mb-2.5 sm:bottom-auto sm:left-auto sm:right-full sm:top-1/2 sm:-translate-y-1/2 sm:mr-3 sm:mb-0 flex flex-col items-start z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 ease-out"
           >
-            <div className="relative w-64 max-w-[calc(100vw-3rem)] bg-white text-text border border-border rounded-xl p-3 shadow-md">
-              <p className="text-[11.5px] text-text-muted leading-relaxed font-normal m-0">
-                <span className="font-semibold text-text">RAG Knowledge Base:</span> Indexes public portfolio projects and professional experience. No private data.
+            <div className="relative w-64 max-w-[calc(100vw-3rem)] bg-white text-text border border-border rounded-xl p-3 shadow-md text-left transition-all duration-200 ease-out scale-95 group-hover:scale-100 group-focus-within:scale-100">
+              <p className="text-[11.5px] text-text-muted leading-relaxed font-normal m-0 text-left">
+                RAG Knowledge Base indexes public portfolio projects and professional experience. No private data.
               </p>
               {/* Pointer Arrow on Desktop (pointing right) */}
               <div className="hidden sm:block absolute top-1/2 -translate-y-1/2 -right-1 w-2 h-2 bg-white border-t border-r border-border rotate-45 transform" />
@@ -131,7 +127,7 @@ export const AICommandBar: React.FC = () => {
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <div className="rounded-xl border border-border/90 bg-neutral-50/60 p-3.5 sm:p-4 text-xs sm:text-[13px]">
+            <div className="rounded-xl border border-border/90 bg-neutral-50/60 p-3.5 sm:p-4 text-xs sm:text-[13px] text-left">
               <div className="flex items-center justify-between pb-2 border-b border-border/70 gap-2">
                 <span className="text-[11px] font-medium text-text-muted truncate">
                   {lastQuestion ? `"${lastQuestion}"` : 'AI Response'}
@@ -159,7 +155,7 @@ export const AICommandBar: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-2.5 text-text leading-relaxed">
+              <div className="pt-2.5 text-text leading-relaxed text-left">
                 {loading ? (
                   <div className="flex items-center gap-2 py-1 text-text-muted text-xs">
                     <div className="flex items-center gap-1.5 px-0.5 py-0.5">
@@ -170,8 +166,8 @@ export const AICommandBar: React.FC = () => {
                     <span className="text-[11px] text-text-muted font-sans select-none">Thinking...</span>
                   </div>
                 ) : (
-                  <div className="space-y-2">
-                    <div className="whitespace-pre-wrap">{renderFormattedContent(lastAnswer || '')}</div>
+                  <div className="space-y-2 text-left">
+                    <div className="whitespace-pre-wrap text-left leading-relaxed">{renderFormattedContent(lastAnswer || '')}</div>
                     <div className="flex items-center justify-end pt-0.5">
                       <button
                         type="button"

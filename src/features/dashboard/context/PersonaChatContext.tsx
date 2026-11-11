@@ -8,10 +8,14 @@ export interface SuggestedQuestion {
 }
 
 export const DEFAULT_SUGGESTED_QUESTIONS: SuggestedQuestion[] = [
+  { label: "Life Outside Tech", text: "What are your interests, hobbies, and life outside of tech?" },
   { label: "Tech Stack & Scale", text: "What is your core tech stack and checkout scale at Amdocs?" },
-  { label: "Architecture & Ownership", text: "How do you approach frontend architecture and code quality?" },
-  { label: "Role & Availability", text: "What roles and work arrangements are you open to right now?" },
-  { label: "Why Hire Matan", text: "What sets you apart from other full-stack software engineers?" },
+  { label: "Architecture & Ownership", text: "How do you approach frontend architecture, system design, and ownership?" },
+  { label: "Frontend Engineering", text: "What is your depth in frontend engineering, React, TypeScript, and modern web architectures?" },
+  { label: "Full-Stack Development", text: "What is your full-stack development experience across APIs, Node.js, and backend integrations?" },
+  { label: "Technical Problem Solving", text: "Can you describe a complex technical challenge you solved and how you tackled it?" },
+  { label: "AI Engineering & RAG", text: "How do you build AI-native agentic workflows, MCP toolchains, and RAG pipelines?" },
+  { label: "Why Hire Matan", text: "Why should a team hire Matan, and what unique value do you bring?" },
 ];
 
 interface PersonaChatContextType {
@@ -81,7 +85,7 @@ export const PersonaChatProvider: React.FC<{ children: ReactNode }> = ({ childre
       {
         id: 'welcome',
         role: 'model',
-        text: "Hi! I'm Matan's interactive twin, powered by real professional data through a RAG pipeline. Whether you're a Hiring Manager exploring my experience and engineering approach, a Recruiter looking into my background and potential fit, or simply curious about my work and projects, feel free to ask me anything. What would you like to explore?",
+        text: "Hi! I'm Matan's interactive twin, powered by real professional data through a RAG pipeline. Whether you’re here to learn more about my experience, explore my projects, understand my engineering approach, or simply have a conversation, feel free to ask me anything. Where would you like to start?",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       },
     ]);
@@ -148,7 +152,7 @@ export const PersonaChatProvider: React.FC<{ children: ReactNode }> = ({ childre
       {
         id: 'welcome-' + Date.now(),
         role: 'model',
-        text: "Hi! I'm Matan's interactive twin, powered by real professional data through a RAG pipeline. Whether you're a Hiring Manager exploring my experience and engineering approach, a Recruiter looking into my background and potential fit, or simply curious about my work and projects, feel free to ask me anything. What would you like to explore?",
+        text: "Hi! I'm Matan's interactive twin, powered by real professional data through a RAG pipeline. Whether you’re here to learn more about my experience, explore my projects, understand my engineering approach, or simply have a conversation, feel free to ask me anything. Where would you like to start?",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       },
     ]);
