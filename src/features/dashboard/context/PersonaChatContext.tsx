@@ -81,7 +81,7 @@ export const PersonaChatProvider: React.FC<{ children: ReactNode }> = ({ childre
       {
         id: 'welcome',
         role: 'model',
-        text: "Hi! I'm Matan's interactive twin. Whether you're an Engineering Manager evaluating checkout architecture and technical rigor, or a Recruiter reviewing fit and availability, feel free to ask me anything. What would you like to explore?",
+        text: "Hi! I'm Matan's interactive twin, powered by real professional data through a RAG pipeline. Whether you're a Hiring Manager exploring my experience and engineering approach, a Recruiter looking into my background and potential fit, or simply curious about my work and projects, feel free to ask me anything. What would you like to explore?",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       },
     ]);
@@ -148,7 +148,7 @@ export const PersonaChatProvider: React.FC<{ children: ReactNode }> = ({ childre
       {
         id: 'welcome-' + Date.now(),
         role: 'model',
-        text: "Hi, I'm Matan's interactive digital twin! Ask me anything about my frontend & fullstack engineering work, telecom checkouts, or technical architecture.",
+        text: "Hi! I'm Matan's interactive twin, powered by real professional data through a RAG pipeline. Whether you're a Hiring Manager exploring my experience and engineering approach, a Recruiter looking into my background and potential fit, or simply curious about my work and projects, feel free to ask me anything. What would you like to explore?",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       },
     ]);

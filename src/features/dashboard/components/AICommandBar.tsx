@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Sparkles, ArrowRight, X, Copy, Check } from 'lucide-react';
+import { Bot, ArrowRight, X, Copy, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { usePersonaChat } from '../context/PersonaChatContext';
 
@@ -41,8 +41,53 @@ export const AICommandBar: React.FC = () => {
         onSubmit={onSubmit}
         className="relative flex items-center bg-white border border-border hover:border-neutral-400 focus-within:border-text rounded-xl p-1.5 shadow-2xs transition-colors"
       >
-        <div className="pl-3 pr-2 text-text-muted shrink-0 select-none flex items-center">
-          <Sparkles size={16} className="text-text-muted" />
+        <div className="relative group pl-3 pr-2 text-text-muted shrink-0 select-none flex items-center cursor-help">
+          <motion.div
+            animate={
+              loading
+                ? {
+                    scale: [1, 1.25, 1],
+                    filter: [
+                      'drop-shadow(0 0 0px rgba(15,23,42,0))',
+                      'drop-shadow(0 0 6px rgba(15,23,42,0.45))',
+                      'drop-shadow(0 0 0px rgba(15,23,42,0))',
+                    ],
+                  }
+                : { scale: 1, filter: 'drop-shadow(0 0 0px rgba(0,0,0,0))' }
+            }
+            transition={
+              loading
+                ? {
+                    duration: 1.4,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }
+                : { duration: 0.2 }
+            }
+            className="flex items-center justify-center shrink-0 origin-center"
+          >
+            <Bot
+              size={16}
+              className={`${
+                loading ? 'text-text' : 'text-text-muted group-hover:text-text'
+              } transition-colors`}
+            />
+          </motion.div>
+          {/* Tooltip: hovers from left on desktop so it doesn't cover input; floats above on mobile */}
+          <div
+            role="tooltip"
+            className="pointer-events-none absolute bottom-full left-0 mb-2.5 sm:bottom-auto sm:left-auto sm:right-full sm:top-1/2 sm:-translate-y-1/2 sm:mr-3 sm:mb-0 hidden group-hover:flex group-focus-within:flex flex-col items-start z-50 transition-all duration-150"
+          >
+            <div className="relative w-64 max-w-[calc(100vw-3rem)] bg-white text-text border border-border rounded-xl p-3 shadow-md">
+              <p className="text-[11.5px] text-text-muted leading-relaxed font-normal m-0">
+                <span className="font-semibold text-text">RAG Knowledge Base:</span> Indexes public portfolio projects and professional experience. No private data.
+              </p>
+              {/* Pointer Arrow on Desktop (pointing right) */}
+              <div className="hidden sm:block absolute top-1/2 -translate-y-1/2 -right-1 w-2 h-2 bg-white border-t border-r border-border rotate-45 transform" />
+              {/* Pointer Arrow on Mobile (pointing down) */}
+              <div className="block sm:hidden absolute top-full left-4 -mt-1 w-2 h-2 bg-white border-r border-b border-border rotate-45 transform" />
+            </div>
+          </div>
         </div>
 
         <input
@@ -60,8 +105,18 @@ export const AICommandBar: React.FC = () => {
           disabled={!inputQuery.trim() || loading}
           className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-neutral-50 disabled:bg-neutral-100 text-text disabled:text-neutral-400 border border-border/80 hover:border-neutral-300 rounded-lg text-xs font-medium transition-all cursor-pointer disabled:cursor-not-allowed shrink-0 shadow-2xs active:scale-[0.98]"
         >
-          <span>{loading ? 'Thinking...' : 'Ask'}</span>
-          {!loading && <ArrowRight size={12} />}
+          {loading ? (
+            <div className="flex items-center gap-1 px-1 py-0.5" aria-label="Loading">
+              <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+              <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+              <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+            </div>
+          ) : (
+            <>
+              <span>Ask</span>
+              <ArrowRight size={12} />
+            </>
+          )}
         </button>
       </form>
 
@@ -106,9 +161,13 @@ export const AICommandBar: React.FC = () => {
 
               <div className="pt-2.5 text-text leading-relaxed">
                 {loading ? (
-                  <div className="flex items-center gap-2 py-0.5 text-text-muted text-xs">
-                    <span className="w-1.5 h-1.5 bg-text-muted rounded-full animate-pulse" />
-                    <span>Thinking...</span>
+                  <div className="flex items-center gap-2 py-1 text-text-muted text-xs">
+                    <div className="flex items-center gap-1.5 px-0.5 py-0.5">
+                      <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    </div>
+                    <span className="text-[11px] text-text-muted font-sans select-none">Thinking...</span>
                   </div>
                 ) : (
                   <div className="space-y-2">

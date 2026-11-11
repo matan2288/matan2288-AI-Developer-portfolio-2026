@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Sparkles, X, Minimize2, Send, RotateCcw } from 'lucide-react';
+import { Bot, X, Minimize2, Send, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { usePersonaChat } from '../context/PersonaChatContext';
 
@@ -226,21 +226,46 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
         )}
       </AnimatePresence>
 
-      {/* Floating Trigger Button with Fixed Sizing & Minimalist Blinking Indicator */}
+      {/* Floating Trigger Button with Clear, UX-Friendly Sizing */}
       <motion.button
         type="button"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
         onClick={toggleChat}
-        className={`pointer-events-auto relative inline-flex items-center justify-center gap-2 h-10 sm:h-11 min-w-[148px] sm:min-w-[156px] px-4 sm:px-5 rounded-full transition-all cursor-pointer bg-white text-text border ${shouldBlink
+        className={`pointer-events-auto relative inline-flex items-center justify-center gap-2 h-10 sm:h-10.5 px-4 sm:px-4.5 rounded-full transition-all cursor-pointer bg-white text-text border ${shouldBlink
             ? 'animate-minimal-blink border-neutral-300 font-medium'
-            : 'hover:bg-neutral-50 border-border/80 hover:border-neutral-300 shadow-2xs hover:shadow-xs font-medium'
+            : 'hover:bg-neutral-50 border-border/80 hover:border-neutral-300 shadow-sm hover:shadow-md font-medium'
           }`}
         aria-label="Toggle AI Assistant"
       >
-        <Sparkles size={14} className="text-text-muted" />
-        <span className="text-xs font-medium select-none">Ask AI Matan</span>
+        <motion.div
+          animate={
+            loading
+              ? {
+                  scale: [1, 1.25, 1],
+                  filter: [
+                    'drop-shadow(0 0 0px rgba(15,23,42,0))',
+                    'drop-shadow(0 0 5px rgba(15,23,42,0.4))',
+                    'drop-shadow(0 0 0px rgba(15,23,42,0))',
+                  ],
+                }
+              : { scale: 1, filter: 'none' }
+          }
+          transition={
+            loading
+              ? {
+                  duration: 1.4,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }
+              : { duration: 0.2 }
+          }
+          className="flex items-center justify-center shrink-0 origin-center"
+        >
+          <Bot size={15} className="text-text-muted" />
+        </motion.div>
+        <span className="text-xs sm:text-[13px] font-medium select-none whitespace-nowrap text-text">Ask AI Matan</span>
         {shouldBlink && (
           <span className="relative flex h-2 w-2 items-center justify-center shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neutral-300 opacity-40" />
