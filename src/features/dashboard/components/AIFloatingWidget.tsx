@@ -159,79 +159,83 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
 
             {/* Messages Feed */}
             <div ref={scrollContainerRef} className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-white text-xs">
-              {messages.map((m) => {
+              {messages.map((m, idx) => {
                 const isModel = m.role === 'model';
                 return (
-                  <motion.div
-                    key={m.id}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className={`flex flex-col ${isModel ? 'items-start' : 'items-end'} space-y-1 w-full`}
-                  >
-                    <div
-                      className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed break-words ${isModel
-                          ? 'bg-neutral-50 text-text border border-border rounded-tl-xs'
-                          : 'bg-text text-white rounded-tr-xs shadow-2xs font-normal'
-                        }`}
+                  <React.Fragment key={m.id}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className={`flex flex-col ${isModel ? 'items-start' : 'items-end'} space-y-1 w-full`}
                     >
-                      <div className="whitespace-pre-wrap">{renderFormattedContent(m.text)}</div>
-                    </div>
-                    <span className="text-[10px] text-neutral-400 font-mono select-none">
-                      {m.timestamp}
-                    </span>
-                  </motion.div>
+                      <div
+                        className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed break-words ${isModel
+                            ? 'bg-neutral-50 text-text border border-border rounded-tl-xs'
+                            : 'bg-text text-white rounded-tr-xs shadow-2xs font-normal'
+                          }`}
+                      >
+                        <div className="whitespace-pre-wrap">{renderFormattedContent(m.text)}</div>
+                      </div>
+                      <span className="text-[10px] text-neutral-400 font-mono select-none">
+                        {m.timestamp}
+                      </span>
+                    </motion.div>
+
+                    {/* Inquiries Section - associated directly with the welcome greeting at idx 0 */}
+                    {idx === 0 && (
+                      <div className="pt-1 pb-1 space-y-2">
+                        {messages.length > 1 ? (
+                          <div className="flex items-center justify-between">
+                            <button
+                              type="button"
+                              onClick={() => setShowInquiries((prev) => !prev)}
+                              className="inline-flex items-center gap-1.5 text-[11px] font-medium text-text-muted hover:text-text px-2.5 py-1 rounded-lg border border-border/80 bg-neutral-50 hover:bg-neutral-100 transition-colors cursor-pointer select-none"
+                            >
+                              <span>{showInquiries ? 'Hide Inquiries' : 'Suggested Inquiries (8)'}</span>
+                              <ChevronDown
+                                size={12}
+                                className={`transition-transform duration-200 ${showInquiries ? 'rotate-180' : ''}`}
+                              />
+                            </button>
+                          </div>
+                        ) : (
+                          <span className="text-[10px] uppercase font-semibold text-text-muted tracking-wider block">
+                            Quick Inquiries
+                          </span>
+                        )}
+
+                        <AnimatePresence initial={false}>
+                          {(messages.length <= 1 || showInquiries) && (
+                            <motion.div
+                              initial={messages.length > 1 ? { opacity: 0, height: 0 } : false}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="flex flex-wrap gap-1.5 pt-0.5">
+                                {suggestedQuestions.map((sq, sqIdx) => (
+                                  <button
+                                    key={sqIdx}
+                                    type="button"
+                                    onClick={() => handleQuickQuestion(sq.text)}
+                                    className="text-[11px] px-2.5 py-1 rounded-lg border border-border/80 bg-neutral-50 hover:bg-neutral-100 hover:border-neutral-300 text-text transition-colors cursor-pointer text-left active:scale-95"
+                                  >
+                                    {sq.label}
+                                  </button>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    )}
+                  </React.Fragment>
                 );
               })}
 
-              {/* Inquiries Section - visible initially, collapsible and always accessible after first answer */}
-              <div className="pt-2 pb-1 space-y-2">
-                {messages.length > 1 ? (
-                  <div className="flex items-center justify-between">
-                    <button
-                      type="button"
-                      onClick={() => setShowInquiries((prev) => !prev)}
-                      className="inline-flex items-center gap-1.5 text-[11px] font-medium text-text-muted hover:text-text px-2.5 py-1 rounded-lg border border-border/80 bg-neutral-50 hover:bg-neutral-100 transition-colors cursor-pointer select-none"
-                    >
-                      <span>{showInquiries ? 'Hide Inquiries' : 'Suggested Inquiries (8)'}</span>
-                      <ChevronDown
-                        size={12}
-                        className={`transition-transform duration-200 ${showInquiries ? 'rotate-180' : ''}`}
-                      />
-                    </button>
-                  </div>
-                ) : (
-                  <span className="text-[10px] uppercase font-semibold text-text-muted tracking-wider block">
-                    Quick Inquiries
-                  </span>
-                )}
-
-                <AnimatePresence initial={false}>
-                  {(messages.length <= 1 || showInquiries) && (
-                    <motion.div
-                      initial={messages.length > 1 ? { opacity: 0, height: 0 } : false}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="flex flex-wrap gap-1.5 pt-0.5">
-                        {suggestedQuestions.map((sq, idx) => (
-                          <button
-                            key={idx}
-                            type="button"
-                            onClick={() => handleQuickQuestion(sq.text)}
-                            className="text-[11px] px-2.5 py-1 rounded-lg border border-border/80 bg-neutral-50 hover:bg-neutral-100 hover:border-neutral-300 text-text transition-colors cursor-pointer text-left active:scale-95"
-                          >
-                            {sq.label}
-                          </button>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
+              {/* Loader: appears directly below the user's message */}
               {loading && (
                 <div className="flex flex-col items-start space-y-1">
                   <div className="bg-neutral-50 text-text border border-border rounded-2xl rounded-tl-xs px-4 py-2.5 text-xs flex items-center gap-1.5">
