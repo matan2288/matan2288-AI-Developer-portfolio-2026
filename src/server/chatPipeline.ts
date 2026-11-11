@@ -27,6 +27,7 @@ export type ChatPipelineResult =
   | {
       statusCode: 502;
       error: string;
+      code: string;
       reply: string;
     };
 
@@ -113,7 +114,7 @@ async function callRagPipeline(
   healthUrl: string,
   authToken: string,
   timeoutMs: number
-): Promise<{ reply?: string; reason?: string }> {
+): Promise<{ reply?: string; code?: string; reason?: string }> {
   if (healthUrl) {
     const healthTimeoutMs = isLoopbackUrl(healthUrl) ? 1500 : Math.min(timeoutMs, 5000);
     try {
@@ -124,12 +125,14 @@ async function callRagPipeline(
       });
       if (!healthRes.ok) {
         return {
+          code: `health_http_${healthRes.status}`,
           reason: `RAG health check (${healthUrl}) returned HTTP ${healthRes.status}`,
         };
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
       return {
+        code: 'health_error',
         reason: `RAG health check (${healthUrl}) failed: ${msg}`,
       };
     }
@@ -175,6 +178,7 @@ async function callRagPipeline(
     if (!askRes.ok) {
       const errBody = await askRes.text().catch(() => '');
       return {
+        code: `ask_http_${askRes.status}`,
         reason: `RAG endpoint (${ragUrl}) returned HTTP ${askRes.status}${errBody ? `: ${errBody.slice(0, 200)}` : ''}`,
       };
     }
@@ -187,6 +191,7 @@ async function callRagPipeline(
     const reply = extractRagReply(parsedData);
     if (!reply) {
       return {
+        code: 'ask_empty_reply',
         reason: `RAG endpoint (${ragUrl}) returned an empty reply`,
       };
     }
@@ -194,7 +199,9 @@ async function callRagPipeline(
     return { reply };
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
+    const isTimeout = err instanceof Error && err.name === 'TimeoutError';
     return {
+      code: isTimeout ? 'ask_timeout' : 'ask_error',
       reason: `RAG request (${ragUrl}) failed: ${msg}`,
     };
   }
@@ -212,7 +219,11 @@ export async function executeChatPipeline({
 }: ChatPipelineInput): Promise<ChatPipelineResult> {
   const history = Array.isArray(conversationHistory) ? conversationHistory : [];
   const ragUrl = resolveRagEndpoint(env);
-  const authToken = cleanEnv(env.API_AUTH_TOKEN) || cleanEnv(env.RAG_AUTH_TOKEN);
+  const authToken =
+    cleanEnv(env.API_AUTH_TOKEN) ||
+    cleanEnv(env.RAG_AUTH_TOKEN) ||
+    cleanEnv(env.RAG_API_KEY) ||
+    cleanEnv(env.API_KEY);
 
   if (!ragUrl) {
     console.warn('[ChatPipeline] Neither RAG_URL nor RAG_API_URL is configured.');
@@ -249,6 +260,7 @@ export async function executeChatPipeline({
   return {
     statusCode: 502,
     error: 'RAG pipeline unavailable',
+    code: ragResult.code || 'rag_unavailable',
     reply:
       'I could not reach my knowledge base right now. Please try again in a moment or email me directly at matan2288@gmail.com.',
   };

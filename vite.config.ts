@@ -57,6 +57,7 @@ export default defineConfig(({ mode }) => {
 
                 return res.end(JSON.stringify({
                   error: result.error,
+                  ...(result.statusCode === 502 ? { code: result.code } : {}),
                   reply: result.reply,
                 }));
               } catch (err: any) {

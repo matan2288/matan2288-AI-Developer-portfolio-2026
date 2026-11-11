@@ -77,6 +77,7 @@ export const handler: Handler = async (event: HandlerEvent, _context?: any) => {
       headers: corsHeaders,
       body: JSON.stringify({
         error: result.error,
+        ...(result.statusCode === 502 ? { code: result.code } : {}),
         reply: result.reply,
       }),
     };

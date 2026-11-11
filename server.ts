@@ -59,6 +59,7 @@ app.post('/api/chat', async (req: Request, res: Response) => {
 
     return res.status(result.statusCode).json({
       error: result.error,
+      ...(result.statusCode === 502 ? { code: result.code } : {}),
       reply: result.reply,
     });
   } catch (error: any) {
