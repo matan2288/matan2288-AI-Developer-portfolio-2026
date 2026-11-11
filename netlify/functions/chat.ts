@@ -56,8 +56,6 @@ export const handler: Handler = async (event: HandlerEvent, _context?: any) => {
       conversationHistory,
       env: process.env,
       timeoutMs: 15000,
-      noKeyReply:
-        'The Gemini API key is currently not configured on the production server. Please set GEMINI_API_KEY in your Netlify site environment variables.',
     });
 
     if (result.statusCode === 200) {
@@ -70,28 +68,16 @@ export const handler: Handler = async (event: HandlerEvent, _context?: any) => {
         body: JSON.stringify({
           reply: result.reply,
           source: result.source,
-          model: result.model,
-        }),
-      };
-    }
-
-    if (result.statusCode === 503) {
-      return {
-        statusCode: 503,
-        headers: corsHeaders,
-        body: JSON.stringify({
-          noKey: result.noKey,
-          reply: result.reply,
         }),
       };
     }
 
     return {
-      statusCode: 502,
+      statusCode: result.statusCode,
       headers: corsHeaders,
       body: JSON.stringify({
         error: result.error,
-        details: result.details,
+        reply: result.reply,
       }),
     };
   } catch (error: any) {

@@ -44,7 +44,6 @@ export default defineConfig(({ mode }) => {
                   userMessage,
                   conversationHistory,
                   env: { ...process.env, ...env },
-                  noKeyReply: 'The Gemini API key is currently not configured in .env',
                 });
 
                 res.statusCode = result.statusCode;
@@ -53,20 +52,12 @@ export default defineConfig(({ mode }) => {
                   return res.end(JSON.stringify({
                     reply: result.reply,
                     source: result.source,
-                    model: result.model,
-                  }));
-                }
-
-                if (result.statusCode === 503) {
-                  return res.end(JSON.stringify({
-                    noKey: result.noKey,
-                    reply: result.reply,
                   }));
                 }
 
                 return res.end(JSON.stringify({
                   error: result.error,
-                  details: result.details,
+                  reply: result.reply,
                 }));
               } catch (err: any) {
                 res.statusCode = 500;

@@ -35,7 +35,7 @@ const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
 
-// Chat Endpoint (RAG Pipeline primary -> Gemini fallback)
+// Chat Endpoint (RAG-only BFF proxy)
 app.post('/api/chat', async (req: Request, res: Response) => {
   try {
     const { conversationHistory = [], userMessage = '' } = req.body;
@@ -47,8 +47,6 @@ app.post('/api/chat', async (req: Request, res: Response) => {
       userMessage,
       conversationHistory,
       env: process.env,
-      noKeyReply:
-        'The Gemini API key is currently not configured, but I can tell you that Matan is an exceptional Full-Stack Developer specializing in checkout systems, React/Vue development, and Adobe Analytics. Your API key can be found in the Settings > Secrets panel.',
     });
 
     if (result.statusCode === 200) {
@@ -56,20 +54,12 @@ app.post('/api/chat', async (req: Request, res: Response) => {
       return res.json({
         reply: result.reply,
         source: result.source,
-        model: result.model,
       });
     }
 
-    if (result.statusCode === 503) {
-      return res.status(503).json({
-        noKey: result.noKey,
-        reply: result.reply,
-      });
-    }
-
-    return res.status(502).json({
+    return res.status(result.statusCode).json({
       error: result.error,
-      details: result.details,
+      reply: result.reply,
     });
   } catch (error: any) {
     console.error('Chat API Error:', error);
