@@ -76,7 +76,7 @@ export const AICommandBar: React.FC = () => {
           >
             <div className="relative w-64 max-w-[calc(100vw-3rem)] bg-white text-text border border-border rounded-xl p-3 shadow-md text-left transition-all duration-200 ease-out scale-95 group-hover:scale-100 group-focus-within:scale-100">
               <p className="text-[11.5px] text-text-muted leading-relaxed font-normal m-0 text-left">
-                RAG Knowledge Base indexes public portfolio projects and professional experience. No private data.
+                RAG Knowledge Base indexes public portfolio projects and professional experience. No Confidential data.
               </p>
               {/* Pointer Arrow on Desktop (pointing right) */}
               <div className="hidden sm:block absolute top-1/2 -translate-y-1/2 -right-1 w-2 h-2 bg-white border-t border-r border-border rotate-45 transform" />
@@ -99,20 +99,10 @@ export const AICommandBar: React.FC = () => {
         <button
           type="submit"
           disabled={!inputQuery.trim() || loading}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-neutral-50 disabled:bg-neutral-100 text-text disabled:text-neutral-400 border border-border/80 hover:border-neutral-300 rounded-lg text-xs font-medium transition-all cursor-pointer disabled:cursor-not-allowed shrink-0 shadow-2xs active:scale-[0.98]"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-neutral-50 disabled:bg-neutral-100 text-text disabled:text-neutral-400 border border-border/80 hover:border-neutral-300 disabled:hover:border-border/80 rounded-lg text-xs font-medium transition-all cursor-pointer disabled:cursor-not-allowed shrink-0 shadow-2xs active:scale-[0.98] disabled:active:scale-100"
         >
-          {loading ? (
-            <div className="flex items-center gap-1 px-1 py-0.5" aria-label="Loading">
-              <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-              <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-              <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-            </div>
-          ) : (
-            <>
-              <span>Ask</span>
-              <ArrowRight size={12} />
-            </>
-          )}
+          <span>Ask</span>
+          <ArrowRight size={12} />
         </button>
       </form>
 
