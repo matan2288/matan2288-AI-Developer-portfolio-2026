@@ -1,8 +1,7 @@
-import React, { useState, useRef } from 'react';
-import { ArrowRight, Mail, MessageSquare, Github, Linkedin, Camera, Check, MapPin } from 'lucide-react';
+import React from 'react';
+import { ArrowRight, Mail, MessageSquare, Github, Linkedin, MapPin } from 'lucide-react';
 import { AICommandBar } from '../features/dashboard';
 import { PortfolioContent } from '../features/dashboard/types';
-import { updateAvatarUrl } from '../services/tinaContent';
 
 interface HeroContainerProps {
   portfolio: PortfolioContent;
@@ -14,66 +13,15 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
   portfolio,
   onNavClick,
 }) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const [showSuccessToast, setShowSuccessToast] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleFileUpload = (file: File) => {
-    if (!file.type.startsWith('image/')) {
-      alert('Please choose an image file (JPEG, PNG, WebP, etc.)');
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const dataUrl = e.target?.result as string;
-      if (dataUrl) {
-        updateAvatarUrl(dataUrl);
-        setShowSuccessToast(true);
-        setTimeout(() => setShowSuccessToast(false), 3500);
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      handleFileUpload(e.dataTransfer.files[0]);
-    }
-  };
-
   return (
     <section id="home" className="bg-white pt-24 sm:pt-28 pb-12 sm:pb-16">
       <div className="max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 w-full">
         {/* Centered Structured Hero Content */}
         <div className="flex flex-col items-center text-center space-y-5 sm:space-y-6">
 
-          {/* Centered Profile Avatar with Direct Upload & Drag-and-Drop */}
-          <div className="relative group shrink-0">
-            <input
-              type="file"
-              ref={fileInputRef}
-              accept="image/*"
-              className="hidden"
-              onChange={(e) => {
-                if (e.target.files && e.target.files[0]) {
-                  handleFileUpload(e.target.files[0]);
-                }
-              }}
-            />
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
-              onDragLeave={() => setIsDragging(false)}
-              onDrop={handleDrop}
-              title="Click or drag & drop to update profile photo"
-              className={`w-[12em] h-[12em] rounded-3xl overflow-hidden bg-neutral-100 text-left cursor-pointer shrink-0 shadow-2xs relative transition-all duration-200 ${isDragging
-                ? 'ring-2 ring-text/30 scale-105'
-                : 'hover:opacity-95'
-                }`}
-            >
+          {/* Centered Profile Avatar (Editable only from Admin Platform) */}
+          <div className="relative shrink-0">
+            <div className="w-[12em] h-[12em] rounded-3xl overflow-hidden bg-neutral-100 shrink-0 shadow-2xs relative">
               <img
                 src={portfolio.avatarUrl}
                 alt={portfolio.developerName}
@@ -84,25 +32,9 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
                     target.src = 'https://avatars.githubusercontent.com/u/60103076?v=4';
                   }
                 }}
-                className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                className="w-full h-full object-cover object-top"
               />
-              {/* Hover Overlay */}
-              <div className={`absolute inset-0 bg-black/45 backdrop-blur-[1px] flex flex-col items-center justify-center text-white transition-opacity duration-200 ${isDragging ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                }`}>
-                <Camera className="w-5 h-5 mb-1" />
-                <span className="text-[10px] font-medium tracking-tight whitespace-nowrap">
-                  {isDragging ? 'Drop photo' : 'Change photo'}
-                </span>
-              </div>
-            </button>
-
-            {/* Success Toast */}
-            {showSuccessToast && (
-              <div className="absolute -bottom-9 left-1/2 -translate-x-1/2 z-30 bg-neutral-900 text-white text-[11px] font-medium px-3 py-1.5 rounded-lg shadow-lg flex items-center gap-1.5 whitespace-nowrap animate-fade-in">
-                <Check className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Profile photo updated!</span>
-              </div>
-            )}
+            </div>
           </div>
 
           {/* Name & Title & Location Stack */}
