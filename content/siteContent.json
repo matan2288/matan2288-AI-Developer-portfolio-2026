@@ -280,6 +280,25 @@
       ],
       "driveUrl": "/certifications/Web_Dev_Bootcamp_Certification_24e0b667.pdf",
       "verificationUrl": "/certifications/Web_Dev_Bootcamp_Certification_24e0b667.pdf"
+    },
+    {
+      "id": "google-drive-certification-166d9ne",
+      "title": "AI Engineer Core Track - LLM Engineering, RAG, Agents",
+      "category": "AI",
+      "topic": "LLM Engineering, RAG, Agents",
+      "issuer": "Verified Certification",
+      "issueDate": "2026",
+      "credentialId": "166d9NE_UmFvv10z7MPBHFT_DCIrAeUly",
+      "description": "Comprehensive certification covering LLM Engineering, Retrieval-Augmented Generation (RAG), and autonomous AI Agents.",
+      "skills": [
+        "LLM Engineering",
+        "RAG",
+        "AI Agents",
+        "GenAI",
+        "Prompt Engineering"
+      ],
+      "driveUrl": "https://drive.google.com/drive/folders/166d9NE_UmFvv10z7MPBHFT_DCIrAeUly",
+      "verificationUrl": "https://drive.google.com/drive/folders/166d9NE_UmFvv10z7MPBHFT_DCIrAeUly"
     }
   ],
   "skills": [
