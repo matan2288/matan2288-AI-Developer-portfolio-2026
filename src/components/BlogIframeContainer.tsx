@@ -9,7 +9,7 @@ interface BlogIframeContainerProps {
 export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBackToPortfolio }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [hasTimedOut, setHasTimedOut] = useState<boolean>(false);
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const portfolio = useTinaPortfolio();
 
