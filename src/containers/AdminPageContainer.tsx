@@ -241,7 +241,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
       role: 'Technical Leadership',
       company: 'Enterprise Partner',
       avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=160&auto=format&fit=crop&q=80',
-      linkedInUrl: 'https://www.linkedin.com/in/matan2288'
+      linkedInUrl: 'https://www.linkedin.com/in/matan-elmaliach/'
     };
     handleStateChange(prev => ({ ...prev, recommendations: [...prev.recommendations, newRec] }));
   };
@@ -389,8 +389,8 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
           <button
             onClick={() => setMobilePanel('editor')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${mobilePanel === 'editor'
-                ? 'bg-white text-text font-semibold shadow-2xs border border-border/40'
-                : 'text-text-muted hover:text-text'
+              ? 'bg-white text-text font-semibold shadow-2xs border border-border/40'
+              : 'text-text-muted hover:text-text'
               }`}
           >
             Editor
@@ -398,8 +398,8 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
           <button
             onClick={() => setMobilePanel('preview')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${mobilePanel === 'preview'
-                ? 'bg-white text-text font-semibold shadow-2xs border border-border/40'
-                : 'text-text-muted hover:text-text'
+              ? 'bg-white text-text font-semibold shadow-2xs border border-border/40'
+              : 'text-text-muted hover:text-text'
               }`}
           >
             Preview
@@ -430,12 +430,12 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
             onClick={handleSave}
             disabled={isSaving}
             className={`inline-flex items-center gap-2 px-4 sm:px-4.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-2xs cursor-pointer border ${isSaving
-                ? 'bg-neutral-100 text-text-muted border-neutral-300 cursor-not-allowed opacity-80'
-                : isSaved
-                  ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-300 ring-2 ring-emerald-200/40'
-                  : saveError
-                    ? 'bg-red-50 hover:bg-red-100 text-red-700 border-red-300'
-                    : 'bg-white hover:bg-neutral-50 text-text border-border/80 hover:border-neutral-300 active:scale-[0.98]'
+              ? 'bg-neutral-100 text-text-muted border-neutral-300 cursor-not-allowed opacity-80'
+              : isSaved
+                ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-300 ring-2 ring-emerald-200/40'
+                : saveError
+                  ? 'bg-red-50 hover:bg-red-100 text-red-700 border-red-300'
+                  : 'bg-white hover:bg-neutral-50 text-text border-border/80 hover:border-neutral-300 active:scale-[0.98]'
               }`}
           >
             {isSaving ? (
@@ -483,8 +483,8 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer whitespace-nowrap shrink-0 ${isActive
-                      ? 'bg-white text-text font-semibold shadow-2xs border border-border/80'
-                      : 'text-text-muted hover:text-text hover:bg-neutral-100/70'
+                    ? 'bg-white text-text font-semibold shadow-2xs border border-border/80'
+                    : 'text-text-muted hover:text-text hover:bg-neutral-100/70'
                     }`}
                 >
                   <Icon size={13} className={isActive ? 'text-text' : 'text-text-muted'} />
@@ -616,8 +616,8 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                         <div className="flex items-center gap-2">
                           <span className="text-xs font-semibold text-text">Blog Navigation Tab</span>
                           <span className={`text-[9px] font-medium px-2 py-0.5 rounded-full ${cmsState.portfolio.showBlogTab !== false
-                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                              : 'bg-neutral-100 text-neutral-500 border border-neutral-200'
+                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                            : 'bg-neutral-100 text-neutral-500 border border-neutral-200'
                             }`}>
                             {cmsState.portfolio.showBlogTab !== false ? 'Visible' : 'Hidden'}
                           </span>
@@ -1147,8 +1147,8 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-semibold text-text">Blog Tab in Navbar</span>
                       <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${cmsState.portfolio.showBlogTab !== false
-                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                          : 'bg-neutral-100 text-neutral-500 border border-neutral-200'
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                        : 'bg-neutral-100 text-neutral-500 border border-neutral-200'
                         }`}>
                         {cmsState.portfolio.showBlogTab !== false ? 'Active & Visible' : 'Hidden from Navbar'}
                       </span>
@@ -1217,8 +1217,8 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                         type="button"
                         onClick={() => updateGeneralField('blogUrl', preset.url)}
                         className={`p-3 rounded-xl border text-left text-xs transition-all cursor-pointer ${cmsState.portfolio.blogUrl === preset.url
-                            ? 'border-text bg-neutral-100/80 font-medium text-text shadow-2xs'
-                            : 'border-border/80 bg-white text-text-muted hover:text-text hover:bg-neutral-50'
+                          ? 'border-text bg-neutral-100/80 font-medium text-text shadow-2xs'
+                          : 'border-border/80 bg-white text-text-muted hover:text-text hover:bg-neutral-50'
                           }`}
                       >
                         <div className="font-semibold text-xs text-text">{preset.name}</div>
@@ -1257,8 +1257,8 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                         setIsEditingJson(!isEditingJson);
                       }}
                       className={`inline-flex items-center gap-1.5 px-3 py-1.5 border rounded-lg text-xs font-medium cursor-pointer transition-colors shadow-2xs ${isEditingJson
-                          ? 'bg-neutral-100 border-text text-text'
-                          : 'bg-white border-border hover:border-text text-text'
+                        ? 'bg-neutral-100 border-text text-text'
+                        : 'bg-white border-border hover:border-text text-text'
                         }`}
                     >
                       <Code size={13} />
@@ -1348,10 +1348,10 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
           <div className="px-5 py-3 border-t border-border/80 bg-neutral-50/60 flex items-center justify-between text-[11px] text-text-muted shrink-0">
             <span className="flex items-center gap-2 truncate max-w-[70%]">
               <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isSaving
-                  ? 'bg-amber-500 animate-pulse'
-                  : saveError
-                    ? 'bg-red-500'
-                    : 'bg-emerald-500'
+                ? 'bg-amber-500 animate-pulse'
+                : saveError
+                  ? 'bg-red-500'
+                  : 'bg-emerald-500'
                 }`} />
               <span className="truncate">
                 {isSaving

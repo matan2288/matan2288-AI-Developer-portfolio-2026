@@ -107,7 +107,7 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
               <Github size={17} />
             </a>
             <a
-              href={portfolio.linkedInUrl || "https://linkedin.com"}
+              href={portfolio.linkedInUrl || "https://www.linkedin.com/in/matan-elmaliach/"}
               target="_blank"
               rel="noopener noreferrer"
               className="text-neutral-500 hover:text-neutral-900 transition-colors p-1 cursor-pointer"
