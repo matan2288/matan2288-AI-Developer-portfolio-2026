@@ -36,11 +36,10 @@
       "period": "Jun 2025 – Present",
       "isLatest": true,
       "bullets": [
-        "Accelerated velocity across a 10-developer team by designing AI-native workflows with custom agent rules, MCP toolchains, and context engineering (Cursor, GitHub Copilot).",
-        "Evolved internal AI and RAG prototypes from experimental POCs into standardized, repeatable agentic workflows across shared team repositories.",
-        "Built 3 platform-wide JS automation libraries (Lead Web Architect approved, adopted by all 10 developers), eliminating analytics and AEM boilerplate across weekly releases (10–55+ peak tickets).",
-        "Led GTM, GA4, and Firebase Analytics implementation for a Tier-1 US telecom platform (UScellular / T-Mobile), unifying web and mobile WebView tracking for millions of subscribers.",
-        "Shipped custom AEM experiences for flagship Apple, Samsung, and Google launches alongside the T-Mobile rebrand on weekly milestones, while performing regular peer code reviews."
+        "Agent-Driven Development (ADD) & UI Architecture: Architected a spec-to-code pipeline using context engineering and structured agent workflows, adapting official client designs to existing system architecture or engineering new features and solutions for Apple, Samsung, and Google AEM launches.",
+        "Frontend Infrastructure & Developer Experience: Built reusable JavaScript utilities (WebView routing, asset paths, event tracking) documented in Confluence and approved by the client Lead Web Architect, pairing them with .cursorrules for 10 developers to slash boilerplate code and AI token costs across 55+ weekly tickets.",
+        "AI Workflow & MCP Standardization: Led team-wide adoption of Cursor coding agents, configuring modular rules and MCP toolchains (Figma, DevTools, Bitbucket) to align prompt patterns, prevent AI hallucinations, and standardize delivery.",
+        "Automated a11y Guardrails & Performance: Embedded ADA compliance into the agent coding lifecycle using custom AI guardrails and Chrome DevTools validation, maintaining zero Core Web Vitals regressions."
       ],
       "skills": [
         "Agentic AI & MCP",
@@ -58,10 +57,10 @@
       "period": "Jan 2024 – Jun 2025",
       "isLatest": false,
       "bullets": [
-        "Built Adobe Analytics infrastructure from scratch (20+ events) across e-commerce and Self-Care apps; led bi-weekly client syncs as SME.",
-        "Developed frontend OKTA SSO authentication infrastructure across customer-facing e-commerce and self-service applications.",
-        "Shipped Drupal CMS modules, feature-flag rollouts, and core e-commerce integrations (credit checks, device protection, Google reCAPTCHA bot mitigation).",
-        "Mentored 2 engineers on analytics pipelines (3x team capacity) and enforced standards via peer code reviews."
+        "Analytics Infrastructure: Built Adobe Analytics architecture from scratch (20+ events) across e-commerce and Self-Care apps, leading bi-weekly client syncs as the Subject Matter Expert.",
+        "Identity & Authentication: Developed frontend OKTA SSO authentication infrastructure across customer-facing e-commerce and self-service applications.",
+        "CMS & E-Commerce Integrations: Shipped Drupal CMS modules, feature-flag rollouts, and core integrations including credit checks, device protection, and Google reCAPTCHA bot mitigation.",
+        "Mentorship & Code Quality: Mentored 2 engineers on analytics pipelines, tripling team capacity and enforcing code standards via rigorous peer reviews."
       ],
       "skills": [
         "Frontend Infrastructure",
@@ -79,10 +78,10 @@
       "period": "Jan 2023 – Jan 2024",
       "isLatest": false,
       "bullets": [
-        "Owned core frontend delivery for the UK's Ofcom-mandated One Touch Switch system (ThreeUK), serving millions of subscribers.",
-        "Shipped shared React/TypeScript (Redux-Saga, MUI) features across web, ARIM retail tablets, and mobile apps.",
-        "Delivered broadband compliance, modernized buy-flow features, card-payment add-ons, and cart redesigns (eSIM, number allocation, spend caps).",
-        "Provided on-site UK production support across 20+ release handovers, weekend task forces, and debugging guides."
+        "End-to-End Ownership: Owned core frontend delivery for a UK regulatory telecom provider-switching system, enabling millions of subscribers to seamlessly transfer broadband and mobile services online.",
+        "Cross-Platform Feature Delivery: Shipped shared React and TypeScript features (Redux-Saga, MUI) across consumer web, retail tablets, and mobile applications.",
+        "Complex UI & Buy-Flows: Delivered broadband compliance flows, card-payment add-ons, and cart redesigns supporting eSIM, number allocation, and spend caps.",
+        "Delivered on-site production support at client locations in the UK, supporting release activities, troubleshooting critical issues, and improving technical documentation."
       ],
       "skills": [
         "React",
@@ -100,10 +99,10 @@
       "period": "Jun 2022 – Jan 2023",
       "isLatest": false,
       "bullets": [
-        "Contributed to storefront migration from React/Contentful to Vue.js, Drupal, and PHP on Acquia with zero disruption.",
-        "Rebuilt core checkout, cart management, BYOD, and address validation flows with 100% functional parity.",
-        "Delivered configurable CMS storefront modules and buy-flow UI redesigns within a PI-based Agile cadence.",
-        "Coordinated feature grooming, spec alignment, and QA validation directly with client stakeholders and Product Owners across two production apps."
+        "Enterprise Platform Migration: Migrated a major storefront from React and Contentful to Vue.js, Drupal, and PHP on Acquia with zero customer disruption.",
+        "Checkout & Cart Architecture: Rebuilt core checkout, cart management, BYOD (Bring Your Own Device), and address validation flows to achieve 100% functional parity.",
+        "CMS Module Development: Delivered configurable Drupal CMS storefront modules and comprehensive buy-flow UI redesigns within a strict PI-based Agile cadence.",
+        "Cross-Functional Alignment: Coordinated feature grooming, technical specs, and QA validation directly with client stakeholders and Product Owners across two production apps."
       ],
       "skills": [
         "Vue.js",
