@@ -79,8 +79,8 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-border transition-all duration-200">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Brand Name */}
-        <a 
-          href="#home" 
+        <a
+          href="#home"
           onClick={(e) => {
             if (currentView !== 'portfolio') {
               onSelectView('portfolio');
@@ -88,7 +88,7 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
             } else {
               onNavClick(e, '#home');
             }
-          }} 
+          }}
           className="flex items-center gap-2"
         >
           <span className="text-sm font-bold tracking-tight text-text uppercase">
@@ -107,11 +107,10 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
               href={item.href}
               onClick={(e) => onNavClick(e, item.href)}
               data-active={currentView === 'portfolio' && activeSection === item.num}
-              className={`relative text-xs tracking-tight py-1.5 transition-colors cursor-pointer ${
-                currentView === 'portfolio' && activeSection === item.num 
-                  ? 'text-text font-semibold' 
+              className={`relative text-xs tracking-tight py-1.5 transition-colors cursor-pointer ${currentView === 'portfolio' && activeSection === item.num
+                  ? 'text-text font-semibold'
                   : 'text-text-muted hover:text-text'
-              }`}
+                }`}
             >
               <span>{item.label}</span>
             </a>
@@ -122,18 +121,17 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
 
           {/* Navigation to Certification Page */}
           <a
-            href="#certifications"
+            href="/certifications"
             onClick={(e) => {
               e.preventDefault();
               onSelectView('certifications');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             data-active={currentView === 'certifications'}
-            className={`relative text-xs tracking-tight py-1.5 transition-colors cursor-pointer ${
-              currentView === 'certifications'
+            className={`relative text-xs tracking-tight py-1.5 transition-colors cursor-pointer ${currentView === 'certifications'
                 ? 'text-text font-semibold'
                 : 'text-text-muted hover:text-text'
-            }`}
+              }`}
           >
             <span>Certifications</span>
           </a>
@@ -141,25 +139,24 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
           {/* Navigation to Blog Page */}
           {showBlogTab && (
             <a
-              href="#blog"
+              href="/blog"
               onClick={(e) => {
                 e.preventDefault();
                 onSelectView('blog');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               data-active={currentView === 'blog'}
-              className={`relative text-xs tracking-tight py-1.5 transition-colors cursor-pointer ${
-                currentView === 'blog'
+              className={`relative text-xs tracking-tight py-1.5 transition-colors cursor-pointer ${currentView === 'blog'
                   ? 'text-text font-semibold'
                   : 'text-text-muted hover:text-text'
-              }`}
+                }`}
             >
               <span>Blog</span>
             </a>
           )}
 
           {/* Refined 1px minimalist sliding underline indicator */}
-          <span 
+          <span
             aria-hidden="true"
             className="absolute bottom-0 h-px bg-text pointer-events-none transition-all duration-200 ease-out"
             style={{
@@ -171,8 +168,8 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
         </nav>
 
         {/* Mobile menu toggle */}
-        <button 
-          onClick={() => setIsMenuOpen(!isMenuOpen)} 
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="md:hidden text-text p-1.5 hover:bg-neutral-100 rounded-lg focus:outline-none transition-colors"
           aria-label="Toggle navigation menu"
         >
@@ -189,11 +186,10 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
                 key={item.num}
                 href={item.href}
                 onClick={(e) => onNavClick(e, item.href)}
-                className={`text-xs py-2 flex items-center justify-between transition-colors ${
-                  currentView === 'portfolio' && activeSection === item.num 
-                    ? 'text-text font-bold' 
+                className={`text-xs py-2 flex items-center justify-between transition-colors ${currentView === 'portfolio' && activeSection === item.num
+                    ? 'text-text font-bold'
                     : 'text-text-muted hover:text-text'
-                }`}
+                  }`}
               >
                 <span>{item.label}</span>
                 <span className="text-[10px] text-text-subtle font-mono">{item.num}</span>
@@ -201,16 +197,15 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
             ))}
 
             <a
-              href="#certifications"
+              href="/certifications"
               onClick={(e) => {
                 e.preventDefault();
                 onSelectView('certifications');
                 setIsMenuOpen(false);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className={`text-xs py-2 flex items-center justify-between transition-colors cursor-pointer ${
-                currentView === 'certifications' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
-              }`}
+              className={`text-xs py-2 flex items-center justify-between transition-colors cursor-pointer ${currentView === 'certifications' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
+                }`}
             >
               <span className="flex items-center gap-2">
                 <Award size={13} className={currentView === 'certifications' ? 'text-text' : 'text-text-muted'} />
@@ -220,16 +215,15 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
 
             {showBlogTab && (
               <a
-                href="#blog"
+                href="/blog"
                 onClick={(e) => {
                   e.preventDefault();
                   onSelectView('blog');
                   setIsMenuOpen(false);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className={`text-xs py-2 flex items-center justify-between transition-colors cursor-pointer ${
-                  currentView === 'blog' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
-                }`}
+                className={`text-xs py-2 flex items-center justify-between transition-colors cursor-pointer ${currentView === 'blog' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
+                  }`}
               >
                 <span className="flex items-center gap-2">
                   <BookOpen size={13} className={currentView === 'blog' ? 'text-text' : 'text-text-muted'} />

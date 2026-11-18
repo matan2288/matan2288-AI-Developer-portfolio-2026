@@ -12,8 +12,8 @@ import { CertificationsContainer } from './containers/CertificationsContainer';
 import { PersonaChatProvider, AIFloatingWidget } from './features/dashboard';
 import { EditorLoginModal } from './components/EditorLoginModal';
 import { isEditorAuthenticated, logoutEditor } from './services/editorAuth';
-import { 
-  useTinaPortfolio, 
+import {
+  useTinaPortfolio,
   useTinaRecommendations,
   useTinaCertifications
 } from './services/tinaContent';
@@ -23,7 +23,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('00');
   const [editorAuthenticated, setEditorAuthenticatedState] = useState<boolean>(() => isEditorAuthenticated());
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  
+
   // Detect initial view from URL params, pathname, or hash
   const [currentView, setCurrentView] = useState<'portfolio' | 'blog' | 'admin' | 'certifications'>(() => {
     if (typeof window !== 'undefined') {
@@ -74,13 +74,8 @@ export default function App() {
     if (typeof window !== 'undefined') {
       if (view === 'portfolio') {
         window.history.pushState({}, '', '/');
-      } else if (view === 'admin') {
-        window.history.pushState({}, '', '/admin');
       } else {
-        const url = new URL(window.location.href);
-        url.searchParams.set('view', view);
-        url.hash = `#${view}`;
-        window.history.pushState({}, '', url.toString());
+        window.history.pushState({}, '', `/${view}`);
       }
     }
   };
@@ -140,11 +135,11 @@ export default function App() {
 
   // Navigation config for scroll-spy and header links
   const navItems = [
-    { num: '00', label: 'Home',         id: 'home',         href: '#home' },
-    { num: '01', label: 'About',        id: 'about',        href: '#about' },
-    { num: '02', label: 'Experience',   id: 'experience',   href: '#experience' },
+    { num: '00', label: 'Home', id: 'home', href: '#home' },
+    { num: '01', label: 'About', id: 'about', href: '#about' },
+    { num: '02', label: 'Experience', id: 'experience', href: '#experience' },
     { num: '03', label: 'Testimonials', id: 'testimonials', href: '#testimonials' },
-    { num: '04', label: 'Contact',      id: 'contact',      href: '#contact' },
+    { num: '04', label: 'Contact', id: 'contact', href: '#contact' },
   ];
 
   const isClickScrollingRef = useRef(false);
@@ -254,15 +249,15 @@ export default function App() {
     <PersonaChatProvider>
       {/* Dedicated Full-Page Admin Studio View */}
       {currentView === 'admin' && editorAuthenticated ? (
-        <AdminPageContainer 
-          onBackToPortfolio={() => handleSelectView('portfolio')} 
+        <AdminPageContainer
+          onBackToPortfolio={() => handleSelectView('portfolio')}
           onLogout={handleEditorLogout}
         />
       ) : (
         <div className="min-h-screen bg-white text-text font-sans selection:bg-neutral-100 selection:text-text antialiased scroll-smooth">
-          
+
           {/* Header / Navbar Container */}
-          <NavbarContainer 
+          <NavbarContainer
             brandName="MATAN AI"
             portfolioName={portfolio.developerName}
             navItems={navItems}
@@ -278,7 +273,7 @@ export default function App() {
           {/* Main View Switcher */}
           {currentView === 'blog' ? (
             <main className="pt-16 h-screen flex flex-col overflow-hidden">
-              <BlogIframeContainer 
+              <BlogIframeContainer
                 onBackToPortfolio={() => {
                   handleSelectView('portfolio');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -287,7 +282,7 @@ export default function App() {
             </main>
           ) : currentView === 'certifications' ? (
             <main>
-              <CertificationsContainer 
+              <CertificationsContainer
                 certifications={portfolioCertifications}
                 developerName={portfolio.developerName}
                 onBackToPortfolio={() => {
@@ -298,16 +293,16 @@ export default function App() {
             </main>
           ) : (
             <main className="pt-16">
-              
+
               {/* Section 00 — Hero Container */}
-              <HeroContainer 
+              <HeroContainer
                 portfolio={portfolio}
                 onNavClick={handleNavClick}
                 onOpenTinaAdmin={() => handleSelectView('admin')}
               />
 
               {/* Section 01 — About Overview Container */}
-              <AboutContainer 
+              <AboutContainer
                 title={portfolio.aboutTitle}
                 content={portfolio.aboutBio1}
               />
@@ -316,12 +311,12 @@ export default function App() {
               <ExperienceContainer />
 
               {/* Section 03 — Testimonials Container */}
-              <TestimonialsContainer 
+              <TestimonialsContainer
                 recommendations={portfolioRecommendations}
               />
 
               {/* Section 04 — Contact Container */}
-              <ContactContainer 
+              <ContactContainer
                 portfolio={portfolio}
               />
 
@@ -330,16 +325,16 @@ export default function App() {
 
           {/* Sticky Bottom-Right Floating Agent Widget (accessible anywhere across the page) */}
           {currentView === 'portfolio' && (
-            <AIFloatingWidget 
-              avatarUrl={portfolio.avatarUrl} 
-              developerName={portfolio.developerName} 
+            <AIFloatingWidget
+              avatarUrl={portfolio.avatarUrl}
+              developerName={portfolio.developerName}
             />
           )}
 
           {/* Footer Container */}
           {currentView !== 'blog' && (
-            <FooterContainer 
-              developerName={portfolio.developerName} 
+            <FooterContainer
+              developerName={portfolio.developerName}
               contactEmail={portfolio.contactEmail}
               linkedInUrl={portfolio.linkedInUrl}
             />
@@ -349,10 +344,10 @@ export default function App() {
       )}
 
       {/* Protected Editor Login Modal */}
-      <EditorLoginModal 
-        isOpen={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)} 
-        onSuccess={handleLoginSuccess} 
+      <EditorLoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onSuccess={handleLoginSuccess}
       />
     </PersonaChatProvider>
   );
