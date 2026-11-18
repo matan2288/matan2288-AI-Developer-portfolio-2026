@@ -99,7 +99,7 @@ export const AICommandBar: React.FC = () => {
         <button
           type="submit"
           disabled={!inputQuery.trim() || loading}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-neutral-50 disabled:bg-neutral-100 text-text disabled:text-neutral-400 border border-border/80 hover:border-neutral-300 disabled:hover:border-border/80 rounded-lg text-xs font-medium transition-all cursor-pointer disabled:cursor-not-allowed shrink-0 shadow-2xs active:scale-[0.98] disabled:active:scale-100"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-neutral-50 disabled:bg-neutral-100 text-text disabled:text-neutral-400 rounded-lg text-xs font-medium transition-all cursor-pointer disabled:cursor-not-allowed shrink-0 shadow-2xs active:scale-[0.98] disabled:active:scale-100 outline-none focus:outline-none"
         >
           <span>Ask</span>
           <ArrowRight size={12} />
@@ -115,11 +115,11 @@ export const AICommandBar: React.FC = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden"
+            className="overflow-hidden flex flex-col items-center justify-center text-center"
           >
-            <div className="rounded-xl border border-border/90 bg-neutral-50/60 p-3.5 sm:p-4 text-xs sm:text-[13px] text-left">
-              <div className="flex items-center justify-between pb-2 border-b border-border/70 gap-2">
-                <span className="text-[11px] font-medium text-text-muted truncate">
+            <div className="bg-transparent border-0 shadow-none text-neutral-400 p-3.5 sm:p-4 text-xs sm:text-[13px] text-center flex flex-col items-center justify-center w-full">
+              <div className="flex items-center justify-between pb-2 border-b border-border/40 gap-2 w-full">
+                <span className="text-[11px] font-medium text-neutral-400 truncate">
                   {lastQuestion ? `"${lastQuestion}"` : 'AI Response'}
                 </span>
 
@@ -128,7 +128,7 @@ export const AICommandBar: React.FC = () => {
                     <button
                       type="button"
                       onClick={handleCopy}
-                      className="p-1 rounded text-text-muted hover:text-text hover:bg-neutral-200/50 transition-colors cursor-pointer"
+                      className="p-1 rounded text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer"
                       title="Copy response"
                     >
                       {copied ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
@@ -137,7 +137,7 @@ export const AICommandBar: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setShowResponse(false)}
-                    className="p-1 rounded text-text-muted hover:text-text hover:bg-neutral-200/50 transition-colors cursor-pointer"
+                    className="p-1 rounded text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer"
                     title="Dismiss"
                   >
                     <X size={13} />
@@ -145,24 +145,24 @@ export const AICommandBar: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-2.5 text-text leading-relaxed text-left">
+              <div className="pt-2.5 text-neutral-400 leading-relaxed text-center w-full">
                 {loading ? (
-                  <div className="flex items-center gap-2 py-1 text-text-muted text-xs">
+                  <div className="flex items-center justify-center gap-2 py-1 text-neutral-400 text-xs">
                     <div className="flex items-center gap-1.5 px-0.5 py-0.5">
                       <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                       <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                       <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                     </div>
-                    <span className="text-[11px] text-text-muted font-sans select-none">Thinking...</span>
+                    <span className="text-[11px] text-neutral-400 font-sans select-none">Thinking...</span>
                   </div>
                 ) : (
-                  <div className="space-y-2 text-left">
-                    <div className="whitespace-pre-wrap text-left leading-relaxed">{renderFormattedContent(lastAnswer || '')}</div>
-                    <div className="flex items-center justify-end pt-0.5">
+                  <div className="space-y-2 text-center w-full">
+                    <div className="whitespace-pre-wrap text-center leading-relaxed text-neutral-400">{renderFormattedContent(lastAnswer || '')}</div>
+                    <div className="flex items-center justify-center pt-0.5">
                       <button
                         type="button"
                         onClick={clearChat}
-                        className="text-[11px] text-text-muted hover:text-text underline cursor-pointer"
+                        className="text-[11px] text-neutral-400 hover:text-neutral-600 underline cursor-pointer"
                       >
                         Clear
                       </button>

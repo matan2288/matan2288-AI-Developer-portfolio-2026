@@ -67,10 +67,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'matan2
   };
 
   return (
-    <div className="bg-bg-alt/70 backdrop-blur-xs p-5 sm:p-6 rounded-2xl border border-border/60">
+    <div className="bg-neutral-50/70 p-5 sm:p-6 rounded-2xl">
       {submitted ? (
         <div className="py-8 px-4 text-center space-y-4">
-          <div className="w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center mx-auto">
+          <div className="w-10 h-10 rounded-full bg-neutral-100 text-text flex items-center justify-center mx-auto">
             <Check size={18} strokeWidth={2.2} />
           </div>
 
@@ -86,19 +86,19 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'matan2
           <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
             <a
               href={mailtoUrl}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-neutral-100/70 hover:bg-neutral-200/60 text-text-muted hover:text-text text-[11px] font-medium rounded-lg transition-colors cursor-pointer border-none outline-none"
             >
-              <Mail size={13} />
+              <Mail size={12} className="text-text-muted" />
               <span>Open in Email App</span>
-              <ArrowUpRight size={13} className="text-neutral-400" />
+              <ArrowUpRight size={12} className="text-neutral-400" />
             </a>
 
             <button
               type="button"
               onClick={handleReset}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-white hover:bg-neutral-50 text-text font-medium text-xs rounded-lg transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-neutral-100/70 hover:bg-neutral-200/60 text-text-muted hover:text-text font-medium text-[11px] rounded-lg transition-colors cursor-pointer border-none outline-none"
             >
-              <RotateCcw size={12} className="text-neutral-500" />
+              <RotateCcw size={11} className="text-neutral-400" />
               <span>Send another</span>
             </button>
           </div>
@@ -131,20 +131,20 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'matan2
           />
 
           <div className="pt-1 flex justify-end">
-            <Button
+            <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full sm:w-auto px-5 py-2 text-xs"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-neutral-100/70 hover:bg-neutral-200/60 text-text-muted hover:text-text text-[11px] font-medium rounded-lg transition-colors cursor-pointer border-none outline-none"
             >
               {isSubmitting ? (
                 <span>Preparing message...</span>
               ) : (
                 <>
                   <span>Send Message</span>
-                  <ArrowRight size={12} className="ml-1.5" />
+                  <ArrowRight size={11} />
                 </>
               )}
-            </Button>
+            </button>
           </div>
         </form>
       )}

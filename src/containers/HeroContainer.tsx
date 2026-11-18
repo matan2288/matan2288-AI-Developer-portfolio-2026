@@ -79,7 +79,7 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
             <a
               href="#experience"
               onClick={(e) => onNavClick(e, '#experience')}
-              className="inline-flex items-center gap-1.5 font-medium text-neutral-900 hover:text-neutral-600 transition-colors cursor-pointer group"
+              className="inline-flex items-center gap-1.5 font-medium text-neutral-900 hover:text-neutral-600 transition-colors cursor-pointer group outline-none focus:outline-none"
             >
               <span>View Experience</span>
               <ArrowRight size={14} className="text-neutral-500 transition-transform group-hover:translate-x-0.5" />
@@ -88,7 +88,7 @@ export const HeroContainer: React.FC<HeroContainerProps> = ({
             <a
               href="#contact"
               onClick={(e) => onNavClick(e, '#contact')}
-              className="inline-flex items-center gap-1.5 font-medium text-neutral-600 hover:text-neutral-900 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 font-medium text-neutral-600 hover:text-neutral-900 transition-colors cursor-pointer outline-none focus:outline-none"
             >
               <MessageSquare size={15} className="text-neutral-500" />
               <span>Get in Touch</span>
