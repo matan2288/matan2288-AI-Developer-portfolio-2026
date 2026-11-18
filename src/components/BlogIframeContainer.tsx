@@ -112,104 +112,103 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
       {/* Main Content Area */}
       <div className="flex-1 w-full h-full relative bg-neutral-50 overflow-hidden flex flex-col">
 
-        {/* Show Toolbar Button on Top-Center - Borderless & Ultra-Dim */}
+        {/* Show Toolbar Arrow attached to bottom-middle of navbar */}
         {isCollapsed && (
-            <div className="absolute top-2.5 left-1/2 -translate-x-1/2 z-30 animate-in fade-in duration-200">
-              <button
-                onClick={() => setIsCollapsed(false)}
-                title="Show toolbar"
-                aria-label="Show toolbar"
-                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-transparent hover:bg-transparent border-0 shadow-none outline-none text-[10px] font-normal text-neutral-400 opacity-20 hover:opacity-80 hover:text-neutral-600 transition-all duration-200 cursor-pointer group"
-              >
-                <span className="transition-colors">Show Toolbar</span>
-                <ChevronDown size={11} className="transition-colors" />
-              </button>
-            </div>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 z-30 animate-in fade-in duration-200">
+            <button
+              onClick={() => setIsCollapsed(false)}
+              title="Show toolbar"
+              aria-label="Show toolbar"
+              className="inline-flex items-center justify-center px-3 pt-0.5 pb-1 bg-transparent border-0 shadow-none outline-none text-neutral-400 opacity-45 hover:opacity-100 hover:text-neutral-600 hover:translate-y-0.5 transition-all duration-200 cursor-pointer"
+            >
+              <ChevronDown size={14} />
+            </button>
+          </div>
         )}
 
-            {/* Loading Spinner with early hint */}
-            {!isLoaded && !hasTimedOut && (
-              <div className="absolute inset-0 bg-white/95 backdrop-blur-xs flex flex-col items-center justify-center gap-3 z-20 p-6 text-center">
-                <div className="w-7 h-7 border-2 border-neutral-400 border-t-neutral-800 rounded-full animate-spin" />
-                <p className="text-xs font-medium text-text">
-                  Connecting to {displayHost}...
+        {/* Loading Spinner with early hint */}
+        {!isLoaded && !hasTimedOut && (
+          <div className="absolute inset-0 bg-white/95 backdrop-blur-xs flex flex-col items-center justify-center gap-3 z-20 p-6 text-center">
+            <div className="w-7 h-7 border-2 border-neutral-400 border-t-neutral-800 rounded-full animate-spin" />
+            <p className="text-xs font-medium text-text">
+              Connecting to {displayHost}...
+            </p>
+            <p className="text-[11px] text-text-muted max-w-xs">
+              If the blog does not appear in a moment, click below to open directly in a new tab.
+            </p>
+            <a
+              href={iframeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-transparent hover:bg-neutral-100/70 text-neutral-400 hover:text-text-muted text-[11px] font-normal transition-all border-0 outline-none"
+            >
+              <span>Open in New Window</span>
+              <ExternalLink size={12} className="text-neutral-400" />
+            </a>
+          </div>
+        )}
+
+        {/* Fallback Banner for blocked iframe security policies (X-Frame-Options: SAMEORIGIN) */}
+        {hasTimedOut && !isLoaded && (
+          <div className="absolute inset-0 bg-white flex flex-col items-center justify-center p-6 z-20 text-center animate-fadeIn">
+            <div className="max-w-md w-full p-6 sm:p-8 bg-transparent border-0 shadow-none text-center space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-transparent border-0 flex items-center justify-center mx-auto text-neutral-400">
+                <Globe size={24} />
+              </div>
+
+              <div className="space-y-1.5">
+                <h3 className="text-base sm:text-lg font-bold text-neutral-700 uppercase tracking-tight font-heading">
+                  External Engineering Blog
+                </h3>
+                <p className="text-xs text-text-muted leading-relaxed font-mono break-all">
+                  {iframeUrl}
                 </p>
-                <p className="text-[11px] text-text-muted max-w-xs">
-                  If the blog does not appear in a moment, click below to open directly in a new tab.
+              </div>
+
+              <div className="p-3 bg-neutral-50/70 rounded-xl border-0 text-left text-xs text-text-muted space-y-1">
+                <div className="flex items-center gap-1.5 font-semibold text-text text-[11px]">
+                  <ShieldAlert size={13} className="text-amber-600 shrink-0" />
+                  <span>External Host Protection</span>
+                </div>
+                <p className="text-[11px] text-text-muted leading-relaxed">
+                  Major publication platforms (Google, Medium, Substack) restrict direct iframe embedding through browser security headers (<code className="text-[10px] bg-neutral-100 px-1 py-0.5 rounded">X-Frame-Options</code>).
                 </p>
+              </div>
+
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5">
                 <a
                   href={iframeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-transparent hover:bg-neutral-100/70 text-neutral-400 hover:text-text-muted text-[11px] font-normal transition-all border-0 outline-none"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border-0 bg-neutral-100/70 hover:bg-neutral-200/60 text-xs font-medium text-text transition-colors cursor-pointer"
                 >
-                  <span>Open in New Window</span>
-                  <ExternalLink size={12} className="text-neutral-400" />
+                  <span>Open Blog in New Tab</span>
+                  <ExternalLink size={13} />
                 </a>
+
+                <button
+                  type="button"
+                  onClick={onBackToPortfolio}
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl border-0 bg-transparent hover:bg-neutral-100/70 text-[11px] font-normal text-neutral-400 hover:text-text-muted transition-colors cursor-pointer"
+                >
+                  Back to Portfolio
+                </button>
               </div>
-            )}
-
-            {/* Fallback Banner for blocked iframe security policies (X-Frame-Options: SAMEORIGIN) */}
-            {hasTimedOut && !isLoaded && (
-              <div className="absolute inset-0 bg-white flex flex-col items-center justify-center p-6 z-20 text-center animate-fadeIn">
-                <div className="max-w-md w-full p-6 sm:p-8 bg-transparent border-0 shadow-none text-center space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-transparent border-0 flex items-center justify-center mx-auto text-neutral-400">
-                    <Globe size={24} />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <h3 className="text-base sm:text-lg font-bold text-neutral-700 uppercase tracking-tight font-heading">
-                      External Engineering Blog
-                    </h3>
-                    <p className="text-xs text-text-muted leading-relaxed font-mono break-all">
-                      {iframeUrl}
-                    </p>
-                  </div>
-
-                  <div className="p-3 bg-neutral-50/70 rounded-xl border-0 text-left text-xs text-text-muted space-y-1">
-                    <div className="flex items-center gap-1.5 font-semibold text-text text-[11px]">
-                      <ShieldAlert size={13} className="text-amber-600 shrink-0" />
-                      <span>External Host Protection</span>
-                    </div>
-                    <p className="text-[11px] text-text-muted leading-relaxed">
-                      Major publication platforms (Google, Medium, Substack) restrict direct iframe embedding through browser security headers (<code className="text-[10px] bg-neutral-100 px-1 py-0.5 rounded">X-Frame-Options</code>).
-                    </p>
-                  </div>
-
-                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5">
-                    <a
-                      href={iframeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border-0 bg-neutral-100/70 hover:bg-neutral-200/60 text-xs font-medium text-text transition-colors cursor-pointer"
-                    >
-                      <span>Open Blog in New Tab</span>
-                      <ExternalLink size={13} />
-                    </a>
-
-                    <button
-                      type="button"
-                      onClick={onBackToPortfolio}
-                      className="w-full sm:w-auto px-4 py-2.5 rounded-xl border-0 bg-transparent hover:bg-neutral-100/70 text-[11px] font-normal text-neutral-400 hover:text-text-muted transition-colors cursor-pointer"
-                    >
-                      Back to Portfolio
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* The Embedded Frame */}
-            <iframe
-              ref={iframeRef}
-              src={iframeUrl}
-              title="Engineering Blog"
-              className="w-full h-full border-0 block flex-1"
-              onLoad={() => setIsLoaded(true)}
-            />
+            </div>
           </div>
+        )}
+
+        {/* The Embedded Frame */}
+        <iframe
+          ref={iframeRef}
+          src={iframeUrl}
+          title="Engineering Blog"
+          className="w-full h-full border-0 block flex-1"
+          onLoad={() => setIsLoaded(true)}
+        />
+      </div>
     </div>
-      );
+  );
 };
 
-      export default BlogIframeContainer;
+export default BlogIframeContainer;
