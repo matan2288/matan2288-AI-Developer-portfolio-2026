@@ -337,11 +337,13 @@ export default function App() {
           )}
 
           {/* Footer Container */}
-          <FooterContainer 
-            developerName={portfolio.developerName} 
-            contactEmail={portfolio.contactEmail}
-            linkedInUrl={portfolio.linkedInUrl}
-          />
+          {currentView !== 'blog' && (
+            <FooterContainer 
+              developerName={portfolio.developerName} 
+              contactEmail={portfolio.contactEmail}
+              linkedInUrl={portfolio.linkedInUrl}
+            />
+          )}
 
         </div>
       )}
