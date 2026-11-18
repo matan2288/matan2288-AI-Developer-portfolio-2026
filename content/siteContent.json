@@ -207,59 +207,23 @@
   ],
   "certifications": [
     {
-      "id": "cursor-genai-sdlc",
-      "title": "Cursor: GenAI Driven SDLC",
+      "id": "google-drive-certification-166d9ne",
+      "title": "AI Engineer Core Track - LLM Engineering, RAG, Agents",
       "category": "AI",
-      "topic": "GenAI & SDLC Engineering",
-      "issuer": "Amdocs",
-      "issueDate": "Jun 2026",
-      "credentialId": "AMDOCS-CURSOR-2026",
-      "description": "Certificate of completion for the Amdocs learning plan in Cursor & GenAI-Driven Software Development Life Cycle (SDLC).",
+      "topic": "LLM Engineering, RAG, Agents",
+      "issuer": "Verified Certification",
+      "issueDate": "2026",
+      "credentialId": "166d9NE_UmFvv10z7MPBHFT_DCIrAeUly",
+      "description": "Comprehensive certification covering LLM Engineering, Retrieval-Augmented Generation (RAG), and autonomous AI Agents.",
       "skills": [
-        "Cursor",
+        "LLM Engineering",
+        "RAG",
+        "AI Agents",
         "GenAI",
-        "SDLC",
-        "Code Automation",
-        "AI Engineering"
+        "Prompt Engineering"
       ],
-      "driveUrl": "/certifications/Cursor_Certification_Andics_ab86ae39.pdf",
-      "verificationUrl": "/certifications/Cursor_Certification_Andics_ab86ae39.pdf"
-    },
-    {
-      "id": "principles-secure-coding",
-      "title": "Principles of Secure Coding",
-      "category": "Security",
-      "topic": "Application Security",
-      "issuer": "Udemy",
-      "issueDate": "Aug 2026",
-      "credentialId": "UC-936ff33b-c9d1-40b2-8f2d-2435d5ee5c3c",
-      "description": "Certified training in secure coding fundamentals, application security principles, defensive architecture, and vulnerability prevention.",
-      "skills": [
-        "Secure Coding",
-        "AppSec",
-        "Vulnerability Prevention",
-        "OWASP"
-      ],
-      "driveUrl": "/certifications/Principles_of_Secure_Coding_certfication_da0fed44.pdf",
-      "verificationUrl": "https://ude.my/UC-936ff33b-c9d1-40b2-8f2d-2435d5ee5c3c"
-    },
-    {
-      "id": "securing-genai-systems",
-      "title": "Securing GenAI Systems",
-      "category": "AI Security",
-      "topic": "GenAI Security & Safety",
-      "issuer": "Udemy",
-      "issueDate": "Aug 2026",
-      "credentialId": "UC-1286298a-0720-4cf6-ae5a-956141931da7",
-      "description": "Specialized certification in securing generative AI architectures, prompt injection defenses, LLM guardrails, data leakage mitigation, and AI safety.",
-      "skills": [
-        "GenAI Security",
-        "LLM Guardrails",
-        "Prompt Injection Defense",
-        "AI Safety"
-      ],
-      "driveUrl": "/certifications/Securing_GenAI_Systems_certification_7039d733.pdf",
-      "verificationUrl": "https://ude.my/UC-1286298a-0720-4cf6-ae5a-956141931da7"
+      "driveUrl": "https://drive.google.com/file/d/12NfmEOV-ASf6kZ-wrx5et6dlclZfdHkH/view?usp=sharing",
+      "verificationUrl": "https://drive.google.com/drive/folders/166d9NE_UmFvv10z7MPBHFT_DCIrAeUly"
     },
     {
       "id": "etgar-bootcamp",
@@ -281,23 +245,59 @@
       "verificationUrl": "/certifications/Web_Dev_Bootcamp_Certification_24e0b667.pdf"
     },
     {
-      "id": "google-drive-certification-166d9ne",
-      "title": "AI Engineer Core Track - LLM Engineering, RAG, Agents",
-      "category": "AI",
-      "topic": "LLM Engineering, RAG, Agents",
-      "issuer": "Verified Certification",
-      "issueDate": "2026",
-      "credentialId": "166d9NE_UmFvv10z7MPBHFT_DCIrAeUly",
-      "description": "Comprehensive certification covering LLM Engineering, Retrieval-Augmented Generation (RAG), and autonomous AI Agents.",
+      "id": "securing-genai-systems",
+      "title": "Securing GenAI Systems",
+      "category": "AI Security",
+      "topic": "GenAI Security & Safety",
+      "issuer": "Udemy",
+      "issueDate": "Aug 2026",
+      "credentialId": "UC-1286298a-0720-4cf6-ae5a-956141931da7",
+      "description": "Specialized certification in securing generative AI architectures, prompt injection defenses, LLM guardrails, data leakage mitigation, and AI safety.",
       "skills": [
-        "LLM Engineering",
-        "RAG",
-        "AI Agents",
-        "GenAI",
-        "Prompt Engineering"
+        "GenAI Security",
+        "LLM Guardrails",
+        "Prompt Injection Defense",
+        "AI Safety"
       ],
-      "driveUrl": "https://drive.google.com/file/d/12NfmEOV-ASf6kZ-wrx5et6dlclZfdHkH/view?usp=sharing",
-      "verificationUrl": "https://drive.google.com/drive/folders/166d9NE_UmFvv10z7MPBHFT_DCIrAeUly"
+      "driveUrl": "/certifications/Securing_GenAI_Systems_certification_7039d733.pdf",
+      "verificationUrl": "https://ude.my/UC-1286298a-0720-4cf6-ae5a-956141931da7"
+    },
+    {
+      "id": "principles-secure-coding",
+      "title": "Principles of Secure Coding",
+      "category": "Security",
+      "topic": "Application Security",
+      "issuer": "Udemy",
+      "issueDate": "Aug 2026",
+      "credentialId": "UC-936ff33b-c9d1-40b2-8f2d-2435d5ee5c3c",
+      "description": "Certified training in secure coding fundamentals, application security principles, defensive architecture, and vulnerability prevention.",
+      "skills": [
+        "Secure Coding",
+        "AppSec",
+        "Vulnerability Prevention",
+        "OWASP"
+      ],
+      "driveUrl": "/certifications/Principles_of_Secure_Coding_certfication_da0fed44.pdf",
+      "verificationUrl": "https://ude.my/UC-936ff33b-c9d1-40b2-8f2d-2435d5ee5c3c"
+    },
+    {
+      "id": "cursor-genai-sdlc",
+      "title": "Cursor: GenAI Driven SDLC",
+      "category": "AI",
+      "topic": "GenAI & SDLC Engineering",
+      "issuer": "Amdocs",
+      "issueDate": "Jun 2026",
+      "credentialId": "AMDOCS-CURSOR-2026",
+      "description": "Certificate of completion for the Amdocs learning plan in Cursor & GenAI-Driven Software Development Life Cycle (SDLC).",
+      "skills": [
+        "Cursor",
+        "GenAI",
+        "SDLC",
+        "Code Automation",
+        "AI Engineering"
+      ],
+      "driveUrl": "/certifications/Cursor_Certification_Andics_ab86ae39.pdf",
+      "verificationUrl": "/certifications/Cursor_Certification_Andics_ab86ae39.pdf"
     }
   ],
   "skills": [
