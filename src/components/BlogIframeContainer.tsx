@@ -51,18 +51,19 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
     <div className="flex-1 w-full flex flex-col bg-white overflow-hidden relative">
       {/* Sleek Utility Bar (Collapsible) */}
       <div
-        className={`bg-white border-b border-border flex items-center justify-between gap-3 shrink-0 z-20 transition-all duration-300 ease-in-out ${isCollapsed
-          ? 'h-0 -translate-y-full opacity-0 overflow-hidden py-0 px-4 sm:px-6 border-transparent pointer-events-none'
-          : 'h-12 px-4 sm:px-6 opacity-100 translate-y-0'
+        className={`bg-white border-b border-border flex items-center justify-between gap-2 sm:gap-3 shrink-0 z-20 transition-all duration-300 ease-in-out ${isCollapsed
+          ? 'h-0 -translate-y-full opacity-0 overflow-hidden py-0 px-3 sm:px-6 border-transparent pointer-events-none'
+          : 'h-12 px-3 sm:px-6 opacity-100 translate-y-0 overflow-x-auto scrollbar-none'
           }`}
       >
-        <div className="flex items-center gap-3 min-w-0">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0 shrink-0">
           <button
             onClick={onBackToPortfolio}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-transparent hover:bg-neutral-100/70 text-[11px] text-neutral-400 hover:text-text-muted font-normal transition-all cursor-pointer shrink-0 border-0 outline-none"
+            className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-lg bg-transparent hover:bg-neutral-100/70 text-[11px] text-neutral-400 hover:text-text-muted font-normal transition-all cursor-pointer shrink-0 whitespace-nowrap border-0 outline-none"
           >
-            <ArrowLeft size={12} />
-            <span>Back to Portfolio</span>
+            <ArrowLeft size={13} className="shrink-0" />
+            <span className="hidden sm:inline">Back to Portfolio</span>
+            <span className="sm:hidden">Back</span>
           </button>
 
           <span className="text-border text-xs hidden sm:inline">|</span>
@@ -74,36 +75,37 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 shrink-0">
+        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
           <button
             onClick={handleRefresh}
             title="Reload Blog"
-            className="p-1.5 rounded-lg bg-transparent hover:bg-neutral-100/70 text-neutral-400 hover:text-text-muted transition-all cursor-pointer border-0 outline-none"
+            className="p-1.5 rounded-lg bg-transparent hover:bg-neutral-100/70 text-neutral-400 hover:text-text-muted transition-all cursor-pointer shrink-0 border-0 outline-none"
           >
-            <RefreshCw size={12} className={!isLoaded && !hasTimedOut ? 'animate-spin' : ''} />
+            <RefreshCw size={13} className={!isLoaded && !hasTimedOut ? 'animate-spin' : ''} />
           </button>
 
           <a
             href={iframeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-transparent hover:bg-neutral-100/70 text-neutral-400 hover:text-text-muted text-[11px] font-normal transition-all cursor-pointer border-0 outline-none group"
+            className="inline-flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-lg bg-transparent hover:bg-neutral-100/70 text-neutral-400 hover:text-text-muted text-[11px] font-normal transition-all cursor-pointer shrink-0 whitespace-nowrap border-0 outline-none group"
             title="Open blog in new window"
           >
-            <span>Open Blog in Tab</span>
-            <ArrowUpRight size={12} className="text-neutral-400 group-hover:text-text-muted transition-colors" />
+            <span className="hidden sm:inline">Open Blog in Tab</span>
+            <span className="sm:hidden">Open Tab</span>
+            <ArrowUpRight size={13} className="shrink-0 text-neutral-400 group-hover:text-text-muted transition-colors" />
           </a>
 
-          <div className="h-4 w-px bg-border/80 mx-0.5" />
+          <div className="h-4 w-px bg-border/80 mx-0.5 shrink-0" />
 
           {/* Collapse / Hide in one click */}
           <button
             onClick={() => setIsCollapsed(true)}
             title="Hide toolbar for full-screen reading"
             aria-label="Hide toolbar"
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-transparent hover:bg-neutral-100/70 text-neutral-400 hover:text-text-muted text-[11px] font-normal transition-all cursor-pointer border-0 outline-none"
+            className="inline-flex items-center justify-center gap-1.5 p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-transparent hover:bg-neutral-100/70 text-neutral-400 hover:text-text-muted text-[11px] font-normal transition-all cursor-pointer shrink-0 whitespace-nowrap border-0 outline-none"
           >
-            <ChevronUp size={12} />
+            <ChevronUp size={14} className="shrink-0" />
             <span className="hidden sm:inline">Hide Toolbar</span>
           </button>
         </div>
@@ -119,9 +121,9 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
               onClick={() => setIsCollapsed(false)}
               title="Show toolbar"
               aria-label="Show toolbar"
-              className="inline-flex items-center justify-center px-3 pt-0.5 pb-1 bg-transparent border-0 shadow-none outline-none text-neutral-400 opacity-45 hover:opacity-100 hover:text-neutral-600 hover:translate-y-0.5 transition-all duration-200 cursor-pointer"
+              className="inline-flex items-center justify-center px-4 pt-1 pb-1.5 bg-transparent border-0 shadow-none outline-none text-neutral-400 opacity-55 hover:opacity-100 hover:text-neutral-600 hover:translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
-              <ChevronDown size={14} />
+              <ChevronDown size={18} />
             </button>
           </div>
         )}
@@ -156,17 +158,14 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
                 <animate id="SVGo3aOUHlJ" fill="freeze" attributeName="y" begin="SVG14lAaeuv.end" dur="0.2s" values="1;13" />
               </rect>
             </svg>
-            <p className="text-xs font-medium text-text">
-              Connecting to {displayHost}...
-            </p>
-            <p className="text-[11px] text-text-muted max-w-xs">
-              If the blog does not appear in a moment, click below to open directly in a new tab.
+            <p className="text-xs font-medium text-text-muted">
+              Loading blog...
             </p>
             <a
               href={iframeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-transparent hover:bg-neutral-100/70 text-neutral-400 hover:text-text-muted text-[11px] font-normal transition-all border-0 outline-none"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-transparent hover:bg-neutral-100/70 text-neutral-400 hover:text-text-muted text-[11px] font-normal transition-all border-0 outline-none"
             >
               <span>Open in New Window</span>
               <ExternalLink size={12} className="text-neutral-400" />
