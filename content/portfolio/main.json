@@ -9,8 +9,8 @@
   "aboutBio2": "Tel Aviv, Israel · Available for hybrid or remote roles.",
   "contactEmail": "matan2288@gmail.com",
   "linkedInUrl": "https://www.linkedin.com/in/matan-elmaliach/",
-  "blogUrl": "https://blog.google/technology/ai/",
-  "showBlogTab": false,
+  "blogUrl": "https://devblog.app/",
+  "showBlogTab": true,
   "stats": [
     {
       "value": "~5 Years",
