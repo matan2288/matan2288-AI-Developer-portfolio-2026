@@ -23,8 +23,8 @@ interface NavbarContainerProps {
 }
 
 export const NavbarContainer: React.FC<NavbarContainerProps> = ({
-  portfolioName = 'MATAN AI',
-  brandName = 'MATAN AI',
+  portfolioName = 'MATAN-AI.DEV',
+  brandName = 'MATAN-AI.DEV',
   navItems,
   activeSection,
   currentView,
@@ -35,9 +35,11 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
   onSelectView,
   showBlogTab = true,
 }) => {
-  const brand = brandName || 'MATAN AI';
-  const firstName = brand.split(' ')[0] || 'MATAN';
-  const restName = brand.split(' ').slice(1).join(' ') || 'AI';
+  const brand = brandName && brandName !== 'MATAN AI' ? brandName : 'MATAN-AI.DEV';
+  const dotIndex = brand.indexOf('.');
+  const isDomain = dotIndex > 0 && !brand.includes(' ');
+  const firstName = isDomain ? brand.slice(0, dotIndex) : brand.split(' ')[0] || 'MATAN-AI';
+  const restName = isDomain ? brand.slice(dotIndex) : brand.split(' ').slice(1).join(' ');
 
   const navRef = useRef<HTMLElement>(null);
   const [indicator, setIndicator] = useState<{ left: number; width: number; opacity: number }>({
@@ -80,8 +82,9 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Brand Name */}
         <a
-          href="#home"
+          href="/"
           onClick={(e) => {
+            e.preventDefault();
             if (currentView !== 'portfolio') {
               onSelectView('portfolio');
               window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -91,11 +94,13 @@ export const NavbarContainer: React.FC<NavbarContainerProps> = ({
           }}
           className="flex items-center gap-2"
         >
-          <span className="text-sm font-bold tracking-tight text-text uppercase">
+          <span className="text-[13px] font-semibold tracking-tight text-neutral-500 hover:text-neutral-700 transition-colors uppercase">
             {firstName}
-            <span className="text-text-muted font-normal ml-1">
-              {restName}
-            </span>
+            {restName && (
+              <span className={`text-neutral-400 font-normal ${isDomain ? '' : 'ml-1'}`}>
+                {restName}
+              </span>
+            )}
           </span>
         </a>
 
