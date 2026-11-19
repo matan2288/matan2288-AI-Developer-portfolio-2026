@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Reorder, useDragControls } from 'motion/react';
 import {
   Save,
   RotateCcw,
@@ -21,7 +22,8 @@ import {
   LogOut,
   Loader2,
   AlertCircle,
-  RefreshCw
+  RefreshCw,
+  GripVertical
 } from 'lucide-react';
 import {
   getStoredTinaContent,
@@ -39,6 +41,144 @@ import { TestimonialsContainer } from './TestimonialsContainer';
 import { ContactContainer } from './ContactContainer';
 import { FooterContainer } from './FooterContainer';
 import { CertificationsContainer } from './CertificationsContainer';
+
+interface SortableCertificationCardProps {
+  cert: CertificationItem;
+  idx: number;
+  onUpdate: (index: number, field: keyof CertificationItem, value: any) => void;
+  onDelete: (index: number) => void;
+}
+
+const SortableCertificationCard: React.FC<SortableCertificationCardProps> = ({
+  cert,
+  idx,
+  onUpdate,
+  onDelete,
+}) => {
+  const dragControls = useDragControls();
+
+  return (
+    <Reorder.Item
+      value={cert}
+      dragListener={false}
+      dragControls={dragControls}
+      className="p-4 bg-white border border-border/80 rounded-xl space-y-3 shadow-2xs hover:border-text/40 transition-colors list-none"
+      whileDrag={{ scale: 1.01, boxShadow: '0 8px 24px rgba(15, 23, 42, 0.08)' }}
+    >
+      {/* Top Bar: Drag Handle, Row # and Delete */}
+      <div className="flex items-center justify-between pb-2 border-b border-border/60">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onPointerDown={(e) => dragControls.start(e)}
+            className="p-1 -ml-1 text-neutral-400 hover:text-text cursor-grab active:cursor-grabbing touch-none rounded transition-colors"
+            title="Drag to reorder"
+            aria-label="Drag to reorder certification"
+          >
+            <GripVertical size={14} />
+          </button>
+          <span className="w-5 h-5 rounded-full bg-neutral-100 border border-border text-text-muted font-sans text-[10px] flex items-center justify-center font-medium">
+            {idx + 1}
+          </span>
+          <span className="text-xs font-medium text-text truncate max-w-[240px]">
+            {cert.title ? `${cert.title.replace(/[^a-zA-Z0-9\s_-]/g, '').trim().replace(/[\s]+/g, '_')}.pdf` : 'Untitled.pdf'}
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={() => onDelete(idx)}
+          className="p-1.5 text-text-muted hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+          title="Delete file"
+        >
+          <Trash2 size={13} />
+        </button>
+      </div>
+
+      {/* Document Name & Category */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label className="block text-[11px] font-medium text-text-muted mb-1">
+            Document Name
+          </label>
+          <input
+            type="text"
+            value={cert.title}
+            onChange={(e) => onUpdate(idx, 'title', e.target.value)}
+            placeholder="e.g. Full-Stack Web Development Diploma"
+            className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white font-medium text-text outline-none focus:border-text transition-all"
+          />
+        </div>
+        <div>
+          <label className="block text-[11px] font-medium text-text-muted mb-1">
+            Category Label (Left)
+          </label>
+          <input
+            type="text"
+            value={cert.category || ''}
+            onChange={(e) => onUpdate(idx, 'category', e.target.value)}
+            placeholder="e.g. AI, Security, Full Stack"
+            className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white font-medium text-text outline-none focus:border-text transition-all font-mono"
+          />
+        </div>
+      </div>
+
+      {/* Issuer & Year */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label className="block text-[11px] font-medium text-text-muted mb-1">
+            Issuer
+          </label>
+          <input
+            type="text"
+            value={cert.issuer}
+            onChange={(e) => onUpdate(idx, 'issuer', e.target.value)}
+            placeholder="e.g. Etgar College"
+            className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white text-text outline-none focus:border-text transition-all"
+          />
+        </div>
+        <div>
+          <label className="block text-[11px] font-medium text-text-muted mb-1">
+            Year
+          </label>
+          <input
+            type="text"
+            value={cert.issueDate}
+            onChange={(e) => onUpdate(idx, 'issueDate', e.target.value)}
+            placeholder="e.g. 2020"
+            className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white text-text outline-none focus:border-text transition-all font-mono"
+          />
+        </div>
+      </div>
+
+      {/* Google Drive PDF URL */}
+      <div>
+        <label className="block text-[11px] font-medium text-text-muted mb-1">
+          Google Drive Link
+        </label>
+        <div className="flex gap-2 items-center">
+          <input
+            type="url"
+            value={cert.driveUrl}
+            onChange={(e) => onUpdate(idx, 'driveUrl', e.target.value)}
+            placeholder="https://drive.google.com/file/d/.../preview"
+            className="flex-1 px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white font-mono text-text outline-none focus:border-text transition-all truncate"
+          />
+          {cert.driveUrl && (
+            <a
+              href={cert.driveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg border border-border hover:bg-neutral-100 text-text-muted hover:text-text transition-colors shrink-0"
+              title="Test link in new tab"
+            >
+              <ExternalLink size={13} />
+            </a>
+          )}
+        </div>
+      </div>
+    </Reorder.Item>
+  );
+};
 
 interface AdminPageContainerProps {
   onBackToPortfolio: () => void;
@@ -482,9 +622,9 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer whitespace-nowrap shrink-0 ${isActive
-                      ? 'bg-white text-text font-semibold shadow-2xs border border-border/80'
-                      : 'text-text-muted hover:text-text hover:bg-neutral-100/70'
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors cursor-pointer whitespace-nowrap shrink-0 ${isActive
+                      ? 'bg-white text-text shadow-2xs border-border/80'
+                      : 'border-transparent text-text-muted hover:text-text hover:bg-neutral-100/70'
                     }`}
                 >
                   <Icon size={13} className={isActive ? 'text-text' : 'text-text-muted'} />
@@ -575,11 +715,21 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-medium text-text-muted mb-1.5">Hero Bio Summary</label>
+                    <label className="block text-[11px] font-medium text-text-muted mb-1.5">About Section Title</label>
+                    <input
+                      type="text"
+                      value={cmsState.portfolio.aboutTitle}
+                      onChange={(e) => updateGeneralField('aboutTitle', e.target.value)}
+                      className="w-full px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-medium text-text-muted mb-1.5">About Bio</label>
                     <textarea
-                      rows={3}
-                      value={cmsState.portfolio.heroBio}
-                      onChange={(e) => updateGeneralField('heroBio', e.target.value)}
+                      rows={4}
+                      value={cmsState.portfolio.aboutBio1}
+                      onChange={(e) => updateGeneralField('aboutBio1', e.target.value)}
                       className="w-full px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all leading-relaxed"
                     />
                   </div>
@@ -606,70 +756,6 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                         onChange={(e) => updateGeneralField('linkedInUrl', e.target.value)}
                         className="w-full px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all"
                       />
-                    </div>
-                  </div>
-
-                  {/* Blog iFrame URL & Navigation Visibility */}
-                  <div className="pt-3 border-t border-border/60 space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-neutral-50/70 border border-border/70 rounded-xl">
-                      <div className="space-y-0.5">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-semibold text-text">Blog Navigation Tab</span>
-                          <span className={`text-[9px] font-medium px-2 py-0.5 rounded-full ${cmsState.portfolio.showBlogTab !== false
-                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                              : 'bg-neutral-100 text-neutral-500 border border-neutral-200'
-                            }`}>
-                            {cmsState.portfolio.showBlogTab !== false ? 'Visible' : 'Hidden'}
-                          </span>
-                        </div>
-                        <span className="text-[11px] text-text-muted block">
-                          {cmsState.portfolio.showBlogTab !== false
-                            ? 'The Blog tab is visible in the main navigation bar'
-                            : 'The Blog tab is hidden from the main navigation bar'}
-                        </span>
-                      </div>
-                      <button
-                        type="button"
-                        role="switch"
-                        aria-checked={cmsState.portfolio.showBlogTab !== false}
-                        onClick={() => updateGeneralField('showBlogTab', cmsState.portfolio.showBlogTab === false ? true : false)}
-                        className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${cmsState.portfolio.showBlogTab !== false ? 'bg-text' : 'bg-neutral-300'
-                          }`}
-                      >
-                        <span
-                          className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition duration-200 ease-in-out ${cmsState.portfolio.showBlogTab !== false ? 'translate-x-4' : 'translate-x-0'
-                            }`}
-                        />
-                      </button>
-                    </div>
-
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <label className="block text-[11px] font-medium text-text-muted">
-                          Blog iFrame URL (Full-Screen View)
-                        </label>
-                        <span className="text-[10px] text-text-subtle font-medium">Editor Mode Only</span>
-                      </div>
-                      <div className="flex gap-2 items-center">
-                        <input
-                          type="url"
-                          placeholder="https://blog.google/technology/ai/"
-                          value={cmsState.portfolio.blogUrl || ''}
-                          onChange={(e) => updateGeneralField('blogUrl', e.target.value)}
-                          className="flex-1 px-3.5 py-2 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white focus:border-text outline-none transition-all font-mono text-text"
-                        />
-                        {cmsState.portfolio.blogUrl && (
-                          <a
-                            href={cmsState.portfolio.blogUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 rounded-lg border border-border hover:bg-neutral-100 text-text-muted hover:text-text transition-colors shrink-0"
-                            title="Test URL in new tab"
-                          >
-                            <ExternalLink size={13} />
-                          </a>
-                        )}
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -992,128 +1078,22 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                   </button>
                 </div>
 
-                <div className="space-y-3.5">
+                <Reorder.Group
+                  axis="y"
+                  values={cmsState.certifications || defaultTinaContent.certifications}
+                  onReorder={(newOrder) => handleStateChange(prev => ({ ...prev, certifications: newOrder }))}
+                  className="space-y-3.5"
+                >
                   {(cmsState.certifications || defaultTinaContent.certifications).map((cert, idx) => (
-                    <div
+                    <SortableCertificationCard
                       key={cert.id || idx}
-                      className="p-4 bg-white border border-border/80 rounded-xl space-y-3 shadow-2xs hover:border-text/40 transition-colors"
-                    >
-                      {/* Top Bar: Row # and Delete */}
-                      <div className="flex items-center justify-between pb-2 border-b border-border/60">
-                        <div className="flex items-center gap-2">
-                          <span className="w-5 h-5 rounded-full bg-neutral-100 border border-border text-text-muted font-sans text-[10px] flex items-center justify-center font-medium">
-                            {idx + 1}
-                          </span>
-                          <span className="text-xs font-medium text-text truncate max-w-[260px]">
-                            {cert.title ? `${cert.title.replace(/[^a-zA-Z0-9\s_-]/g, '').trim().replace(/[\s]+/g, '_')}.pdf` : 'Untitled.pdf'}
-                          </span>
-                        </div>
-                        <button
-                          onClick={() => deleteCertification(idx)}
-                          className="p-1.5 text-text-muted hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
-                          title="Delete file"
-                        >
-                          <Trash2 size={13} />
-                        </button>
-                      </div>
-
-                      {/* Document Name, Category & Topic */}
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div>
-                          <label className="block text-[11px] font-medium text-text-muted mb-1">
-                            Document Name
-                          </label>
-                          <input
-                            type="text"
-                            value={cert.title}
-                            onChange={(e) => updateCertification(idx, 'title', e.target.value)}
-                            placeholder="e.g. Full-Stack Web Development Diploma"
-                            className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white font-medium text-text outline-none focus:border-text transition-all"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[11px] font-medium text-text-muted mb-1">
-                            Category Label (Left)
-                          </label>
-                          <input
-                            type="text"
-                            value={cert.category || ''}
-                            onChange={(e) => updateCertification(idx, 'category', e.target.value)}
-                            placeholder="e.g. AI, Security, Full Stack"
-                            className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white font-medium text-text outline-none focus:border-text transition-all font-mono"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[11px] font-medium text-text-muted mb-1">
-                            Topic / Domain
-                          </label>
-                          <input
-                            type="text"
-                            value={cert.topic || ''}
-                            onChange={(e) => updateCertification(idx, 'topic', e.target.value)}
-                            placeholder="e.g. Full-Stack Web Development"
-                            className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white font-medium text-text outline-none focus:border-text transition-all"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Issuer & Year */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                          <label className="block text-[11px] font-medium text-text-muted mb-1">
-                            Issuer
-                          </label>
-                          <input
-                            type="text"
-                            value={cert.issuer}
-                            onChange={(e) => updateCertification(idx, 'issuer', e.target.value)}
-                            placeholder="e.g. Etgar College"
-                            className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white text-text outline-none focus:border-text transition-all"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[11px] font-medium text-text-muted mb-1">
-                            Year
-                          </label>
-                          <input
-                            type="text"
-                            value={cert.issueDate}
-                            onChange={(e) => updateCertification(idx, 'issueDate', e.target.value)}
-                            placeholder="e.g. 2020"
-                            className="w-full px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white text-text outline-none focus:border-text transition-all font-mono"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Google Drive PDF URL */}
-                      <div>
-                        <label className="block text-[11px] font-medium text-text-muted mb-1">
-                          Google Drive Link
-                        </label>
-                        <div className="flex gap-2 items-center">
-                          <input
-                            type="url"
-                            value={cert.driveUrl}
-                            onChange={(e) => updateCertification(idx, 'driveUrl', e.target.value)}
-                            placeholder="https://drive.google.com/file/d/.../preview"
-                            className="flex-1 px-3 py-1.5 border border-border rounded-lg text-xs bg-neutral-50/50 focus:bg-white font-mono text-text outline-none focus:border-text transition-all truncate"
-                          />
-                          {cert.driveUrl && (
-                            <a
-                              href={cert.driveUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="p-2 rounded-lg border border-border hover:bg-neutral-100 text-text-muted hover:text-text transition-colors shrink-0"
-                              title="Test link in new tab"
-                            >
-                              <ExternalLink size={13} />
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+                      cert={cert}
+                      idx={idx}
+                      onUpdate={updateCertification}
+                      onDelete={deleteCertification}
+                    />
                   ))}
-                </div>
+                </Reorder.Group>
               </div>
             )}
 
@@ -1200,39 +1180,11 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({
                   </div>
                 </div>
 
-                {/* Quick Presets */}
-                <div className="space-y-2.5">
-                  <span className="block text-[11px] font-medium text-text-muted">
-                    Quick Platform Presets
-                  </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {[
-                      { name: 'Google AI Blog', url: 'https://blog.google/technology/ai/' },
-                      { name: 'Dev.to Feed', url: 'https://dev.to' },
-                      { name: 'Medium', url: 'https://medium.com' },
-                      { name: 'Substack', url: 'https://substack.com' },
-                    ].map((preset) => (
-                      <button
-                        key={preset.name}
-                        type="button"
-                        onClick={() => updateGeneralField('blogUrl', preset.url)}
-                        className={`p-3 rounded-xl border text-left text-xs transition-all cursor-pointer ${cmsState.portfolio.blogUrl === preset.url
-                            ? 'border-text bg-neutral-100/80 font-medium text-text shadow-2xs'
-                            : 'border-border/80 bg-white text-text-muted hover:text-text hover:bg-neutral-50'
-                          }`}
-                      >
-                        <div className="font-semibold text-xs text-text">{preset.name}</div>
-                        <div className="text-[10px] text-text-muted font-mono truncate mt-0.5">{preset.url}</div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
                 {/* Active Embed Summary */}
                 <div className="p-3.5 bg-neutral-50/80 rounded-xl border border-border/70 text-[11px] text-text-muted space-y-1">
                   <div className="font-medium text-text">Active Embed Target:</div>
                   <div className="font-mono text-[10px] text-text break-all">
-                    {cmsState.portfolio.blogUrl?.trim() || 'https://ai.google/blog/ (Default)'}
+                    {cmsState.portfolio.blogUrl?.trim() || 'https://blog.google/technology/ai/ (Default)'}
                   </div>
                 </div>
               </div>

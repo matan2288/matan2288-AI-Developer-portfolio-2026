@@ -134,7 +134,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contactEmail = 'matan2
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-neutral-100/70 hover:bg-neutral-200/60 text-text-muted hover:text-text text-[11px] font-medium rounded-lg transition-colors cursor-pointer border-none outline-none"
+              className="inline-flex items-center gap-1.5 px-2 py-1.5 bg-transparent hover:bg-transparent text-text-muted hover:text-text text-[11px] font-medium rounded-lg transition-colors cursor-pointer border-none outline-none"
             >
               {isSubmitting ? (
                 <span>Preparing message...</span>

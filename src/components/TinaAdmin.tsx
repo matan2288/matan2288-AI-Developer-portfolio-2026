@@ -313,18 +313,6 @@ export const TinaAdmin: React.FC<TinaAdminProps> = ({ isOpen, onClose }) => {
 
               <div>
                 <label className="block text-xs font-sans text-text-muted uppercase mb-1 font-bold">
-                  Hero Short Bio
-                </label>
-                <textarea
-                  rows={3}
-                  value={cmsState.portfolio.heroBio}
-                  onChange={(e) => updateGeneralField('heroBio', e.target.value)}
-                  className="w-full px-3 py-2 border border-border rounded-lg text-sm text-text bg-bg-alt focus:outline-none focus:border-text"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-sans text-text-muted uppercase mb-1 font-bold">
                   About Section Title
                 </label>
                 <input
