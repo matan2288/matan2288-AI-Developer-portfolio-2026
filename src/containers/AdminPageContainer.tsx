@@ -170,6 +170,120 @@ const SortableCertificationCard: React.FC<SortableCertificationCardProps> = ({ c
 	);
 };
 
+interface SortableTestimonialCardProps {
+	rec: RecommendationItem;
+	idx: number;
+	onUpdate: (index: number, field: keyof RecommendationItem, value: string) => void;
+	onDelete: (index: number) => void;
+}
+
+const SortableTestimonialCard: React.FC<SortableTestimonialCardProps> = ({ rec, idx, onUpdate, onDelete }) => {
+	const dragControls = useDragControls();
+
+	return (
+		<Reorder.Item
+			value={rec}
+			dragListener={false}
+			dragControls={dragControls}
+			className="border-border/80 hover:border-text/40 list-none space-y-4 rounded-xl border bg-white p-5 shadow-2xs transition-colors"
+			whileDrag={{ scale: 1.01, boxShadow: '0 8px 24px rgba(15, 23, 42, 0.08)' }}
+		>
+			<div className="border-border/60 flex items-center justify-between border-b pb-2.5">
+				<div className="flex items-center gap-2">
+					<button
+						type="button"
+						onPointerDown={(e) => dragControls.start(e)}
+						className="hover:text-text -ml-1 cursor-grab touch-none rounded p-1 text-neutral-400 transition-colors active:cursor-grabbing"
+						title="Drag to reorder"
+						aria-label="Drag to reorder testimonial"
+					>
+						<GripVertical size={14} />
+					</button>
+					<span className="text-text text-xs font-semibold">
+						Testimonial #{idx + 1} <span className="text-border/80 mx-1">/</span>{' '}
+						<span className="text-text-muted font-normal">{rec.company}</span>
+					</span>
+				</div>
+				<button
+					type="button"
+					onClick={() => onDelete(idx)}
+					title="Remove Card"
+					className="text-text-muted cursor-pointer rounded-lg p-1.5 transition-colors hover:bg-red-50 hover:text-red-600"
+				>
+					<Trash2 size={13} />
+				</button>
+			</div>
+
+			<div>
+				<label className="text-text-muted mb-1 block text-[11px] font-medium">Quote</label>
+				<textarea
+					rows={3}
+					value={rec.quote}
+					onChange={(e) => onUpdate(idx, 'quote', e.target.value)}
+					className="border-border focus:border-text w-full rounded-lg border bg-neutral-50/50 px-3 py-2 text-xs leading-relaxed italic transition-all outline-none focus:bg-white"
+				/>
+			</div>
+
+			<div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+				<div>
+					<label className="text-text-muted mb-1 block text-[11px] font-medium">Author Name</label>
+					<input
+						type="text"
+						value={rec.author}
+						onChange={(e) => onUpdate(idx, 'author', e.target.value)}
+						className="border-border focus:border-text w-full rounded-lg border bg-neutral-50/50 px-3 py-1.5 text-xs font-medium transition-all outline-none focus:bg-white"
+					/>
+				</div>
+				<div>
+					<label className="text-text-muted mb-1 block text-[11px] font-medium">Role Title</label>
+					<input
+						type="text"
+						value={rec.role}
+						onChange={(e) => onUpdate(idx, 'role', e.target.value)}
+						className="border-border focus:border-text w-full rounded-lg border bg-neutral-50/50 px-3 py-1.5 text-xs transition-all outline-none focus:bg-white"
+					/>
+				</div>
+				<div>
+					<label className="text-text-muted mb-1 block text-[11px] font-medium">Company / Org</label>
+					<input
+						type="text"
+						value={rec.company}
+						onChange={(e) => onUpdate(idx, 'company', e.target.value)}
+						className="border-border focus:border-text w-full rounded-lg border bg-neutral-50/50 px-3 py-1.5 text-xs transition-all outline-none focus:bg-white"
+					/>
+				</div>
+			</div>
+
+			<div className="grid grid-cols-1 gap-3 pt-1 sm:grid-cols-2">
+				<div>
+					<label className="text-text-muted mb-1 block text-[11px] font-medium">
+						Avatar Image URL (LinkedIn / API)
+					</label>
+					<input
+						type="url"
+						value={rec.avatarUrl || ''}
+						onChange={(e) => onUpdate(idx, 'avatarUrl', e.target.value)}
+						placeholder="https://... (LinkedIn profile photo / API)"
+						className="border-border focus:border-text text-text w-full rounded-lg border bg-neutral-50/50 px-3 py-1.5 font-mono text-xs transition-all outline-none focus:bg-white"
+					/>
+				</div>
+				<div>
+					<label className="text-text-muted mb-1 block text-[11px] font-medium">
+						LinkedIn Profile URL
+					</label>
+					<input
+						type="url"
+						value={rec.linkedInUrl || ''}
+						onChange={(e) => onUpdate(idx, 'linkedInUrl', e.target.value)}
+						placeholder="https://www.linkedin.com/in/..."
+						className="border-border focus:border-text text-text w-full rounded-lg border bg-neutral-50/50 px-3 py-1.5 font-mono text-xs transition-all outline-none focus:bg-white"
+					/>
+				</div>
+			</div>
+		</Reorder.Item>
+	);
+};
+
 interface AdminPageContainerProps {
 	onBackToPortfolio: () => void;
 	onLogout?: () => void;
@@ -376,6 +490,7 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
 	// Testimonial handlers
 	const addRecommendation = () => {
 		const newRec: RecommendationItem = {
+			id: `rec_${Date.now()}`,
 			quote: 'Matan is an exceptional engineer who consistently ships reliable, high-performance web systems.',
 			author: 'VP of Engineering',
 			role: 'Technical Leadership',
@@ -1053,109 +1168,24 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
 									</div>
 								)}
 
-								{cmsState.recommendations.map((rec: RecommendationItem, idx: number) => (
-									<div
-										key={idx}
-										className="border-border/80 space-y-4 rounded-xl border bg-white p-5 shadow-2xs"
-									>
-										<div className="border-border/60 flex items-center justify-between border-b pb-2.5">
-											<span className="text-text text-xs font-semibold">
-												Testimonial #{idx + 1} <span className="text-border/80 mx-1">/</span>{' '}
-												<span className="text-text-muted font-normal">{rec.company}</span>
-											</span>
-											<button
-												onClick={() => deleteRecommendation(idx)}
-												title="Remove Card"
-												className="text-text-muted cursor-pointer rounded-lg p-1.5 transition-colors hover:bg-red-50 hover:text-red-600"
-											>
-												<Trash2 size={13} />
-											</button>
-										</div>
-
-										<div>
-											<label className="text-text-muted mb-1 block text-[11px] font-medium">
-												Quote
-											</label>
-											<textarea
-												rows={3}
-												value={rec.quote}
-												onChange={(e) => updateRecommendation(idx, 'quote', e.target.value)}
-												className="border-border focus:border-text w-full rounded-lg border bg-neutral-50/50 px-3 py-2 text-xs leading-relaxed italic transition-all outline-none focus:bg-white"
-											/>
-										</div>
-
-										<div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-											<div>
-												<label className="text-text-muted mb-1 block text-[11px] font-medium">
-													Author Name
-												</label>
-												<input
-													type="text"
-													value={rec.author}
-													onChange={(e) =>
-														updateRecommendation(idx, 'author', e.target.value)
-													}
-													className="border-border focus:border-text w-full rounded-lg border bg-neutral-50/50 px-3 py-1.5 text-xs font-medium transition-all outline-none focus:bg-white"
-												/>
-											</div>
-											<div>
-												<label className="text-text-muted mb-1 block text-[11px] font-medium">
-													Role Title
-												</label>
-												<input
-													type="text"
-													value={rec.role}
-													onChange={(e) => updateRecommendation(idx, 'role', e.target.value)}
-													className="border-border focus:border-text w-full rounded-lg border bg-neutral-50/50 px-3 py-1.5 text-xs transition-all outline-none focus:bg-white"
-												/>
-											</div>
-											<div>
-												<label className="text-text-muted mb-1 block text-[11px] font-medium">
-													Company / Org
-												</label>
-												<input
-													type="text"
-													value={rec.company}
-													onChange={(e) =>
-														updateRecommendation(idx, 'company', e.target.value)
-													}
-													className="border-border focus:border-text w-full rounded-lg border bg-neutral-50/50 px-3 py-1.5 text-xs transition-all outline-none focus:bg-white"
-												/>
-											</div>
-										</div>
-
-										<div className="grid grid-cols-1 gap-3 pt-1 sm:grid-cols-2">
-											<div>
-												<label className="text-text-muted mb-1 block text-[11px] font-medium">
-													Avatar Image URL (LinkedIn / API)
-												</label>
-												<input
-													type="url"
-													value={rec.avatarUrl || ''}
-													onChange={(e) =>
-														updateRecommendation(idx, 'avatarUrl', e.target.value)
-													}
-													placeholder="https://... (LinkedIn profile photo / API)"
-													className="border-border focus:border-text text-text w-full rounded-lg border bg-neutral-50/50 px-3 py-1.5 font-mono text-xs transition-all outline-none focus:bg-white"
-												/>
-											</div>
-											<div>
-												<label className="text-text-muted mb-1 block text-[11px] font-medium">
-													LinkedIn Profile URL
-												</label>
-												<input
-													type="url"
-													value={rec.linkedInUrl || ''}
-													onChange={(e) =>
-														updateRecommendation(idx, 'linkedInUrl', e.target.value)
-													}
-													placeholder="https://www.linkedin.com/in/..."
-													className="border-border focus:border-text text-text w-full rounded-lg border bg-neutral-50/50 px-3 py-1.5 font-mono text-xs transition-all outline-none focus:bg-white"
-												/>
-											</div>
-										</div>
-									</div>
-								))}
+								<Reorder.Group
+									axis="y"
+									values={cmsState.recommendations}
+									onReorder={(newOrder) =>
+										handleStateChange((prev) => ({ ...prev, recommendations: newOrder }))
+									}
+									className="space-y-4"
+								>
+									{cmsState.recommendations.map((rec: RecommendationItem, idx: number) => (
+										<SortableTestimonialCard
+											key={rec.id || `${rec.author}-${rec.company}-${rec.quote?.slice(0, 16) || idx}`}
+											rec={rec}
+											idx={idx}
+											onUpdate={updateRecommendation}
+											onDelete={deleteRecommendation}
+										/>
+									))}
+								</Reorder.Group>
 							</div>
 						)}
 

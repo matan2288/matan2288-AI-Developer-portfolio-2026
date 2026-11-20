@@ -26,7 +26,7 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
 	} = usePersonaChat();
 
 	const [inputText, setInputText] = useState('');
-	const [showInquiries, setShowInquiries] = useState(false);
+	const [showInquiries, setShowInquiries] = useState(true);
 	const scrollContainerRef = useRef<HTMLDivElement>(null);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -128,7 +128,10 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
 							<div className="flex items-center gap-1">
 								<button
 									type="button"
-									onClick={clearChat}
+									onClick={() => {
+										clearChat();
+										setShowInquiries(true);
+									}}
 									className="text-text-muted hover:text-text cursor-pointer rounded-lg p-1.5 transition-colors hover:bg-neutral-100"
 									title="Reset conversation"
 								>
@@ -171,7 +174,7 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
 											<div
 												className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed break-words ${isModel
 														? 'text-text border-border rounded-tl-xs border bg-neutral-50'
-														: 'bg-text rounded-tr-xs font-normal text-white shadow-2xs'
+														: 'bg-neutral-200/75 text-text border border-neutral-300/60 rounded-tr-xs font-normal'
 													}`}
 											>
 												<div className="whitespace-pre-wrap">
@@ -183,39 +186,31 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
 											</span>
 										</motion.div>
 
-										{/* Inquiries Section - associated directly with the welcome greeting at idx 0 */}
+										{/* Suggested Prompts Section - associated directly with the welcome greeting at idx 0 */}
 										{idx === 0 && (
 											<div className="space-y-2 pt-1 pb-1">
-												{messages.length > 1 ? (
-													<div className="flex items-center justify-between">
-														<button
-															type="button"
-															onClick={() => setShowInquiries((prev) => !prev)}
-															className="text-text-muted hover:text-text border-border/80 inline-flex cursor-pointer items-center gap-1.5 rounded-lg border bg-neutral-50 px-2.5 py-1 text-[11px] font-medium transition-colors select-none hover:bg-neutral-100"
-														>
-															<span>
-																{showInquiries
+												<div className="flex items-center justify-between">
+													<button
+														type="button"
+														onClick={() => setShowInquiries((prev) => !prev)}
+														className="text-neutral-400 hover:text-neutral-600 border-border/50 inline-flex cursor-pointer items-center gap-1.5 rounded-lg border bg-neutral-50/50 px-2.5 py-1 text-[11px] font-normal transition-colors select-none hover:bg-neutral-100/70"
+													>
+														<span>
+															{showInquiries
 																? 'Hide Prompts'
-																	: 'Suggested Prompts (8)'}
-															</span>
-															<ChevronDown
-																size={12}
-																className={`transition-transform duration-200 ${showInquiries ? 'rotate-180' : ''}`}
-															/>
-														</button>
-													</div>
-												) : (
-													<span className="text-text-muted block text-[10px] font-semibold tracking-wider uppercase">
-														Quick Prompts
-													</span>
-												)}
+																: `Suggested Prompts (${suggestedQuestions.length})`}
+														</span>
+														<ChevronDown
+															size={12}
+															className={`transition-transform duration-200 ${showInquiries ? 'rotate-180' : ''}`}
+														/>
+													</button>
+												</div>
 
 												<AnimatePresence initial={false}>
-													{(messages.length <= 1 || showInquiries) && (
+													{showInquiries && (
 														<motion.div
-															initial={
-																messages.length > 1 ? { opacity: 0, height: 0 } : false
-															}
+															initial={{ opacity: 0, height: 0 }}
 															animate={{ opacity: 1, height: 'auto' }}
 															exit={{ opacity: 0, height: 0 }}
 															transition={{ duration: 0.2 }}
