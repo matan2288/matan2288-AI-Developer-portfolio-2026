@@ -268,9 +268,7 @@ const SortableTestimonialCard: React.FC<SortableTestimonialCardProps> = ({ rec, 
 					/>
 				</div>
 				<div>
-					<label className="text-text-muted mb-1 block text-[11px] font-medium">
-						LinkedIn Profile URL
-					</label>
+					<label className="text-text-muted mb-1 block text-[11px] font-medium">LinkedIn Profile URL</label>
 					<input
 						type="url"
 						value={rec.linkedInUrl || ''}
@@ -1178,7 +1176,10 @@ export const AdminPageContainer: React.FC<AdminPageContainerProps> = ({ onBackTo
 								>
 									{cmsState.recommendations.map((rec: RecommendationItem, idx: number) => (
 										<SortableTestimonialCard
-											key={rec.id || `${rec.author}-${rec.company}-${rec.quote?.slice(0, 16) || idx}`}
+											key={
+												rec.id ||
+												`${rec.author}-${rec.company}-${rec.quote?.slice(0, 16) || idx}`
+											}
 											rec={rec}
 											idx={idx}
 											onUpdate={updateRecommendation}
