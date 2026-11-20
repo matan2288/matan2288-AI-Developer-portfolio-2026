@@ -2,243 +2,253 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Menu, X, BookOpen, Award } from 'lucide-react';
 
 interface NavItem {
-  num: string;
-  label: string;
-  id: string;
-  href: string;
+	num: string;
+	label: string;
+	id: string;
+	href: string;
 }
 
 interface NavbarContainerProps {
-  portfolioName?: string;
-  brandName?: string;
-  navItems: NavItem[];
-  activeSection: string;
-  currentView: 'portfolio' | 'blog' | 'admin' | 'certifications';
-  isMenuOpen: boolean;
-  setIsMenuOpen: (open: boolean) => void;
-  onNavClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
-  onOpenTinaAdmin?: () => void;
-  onSelectView: (view: 'portfolio' | 'blog' | 'admin' | 'certifications') => void;
-  showBlogTab?: boolean;
+	portfolioName?: string;
+	brandName?: string;
+	navItems: NavItem[];
+	activeSection: string;
+	currentView: 'portfolio' | 'blog' | 'admin' | 'certifications';
+	isMenuOpen: boolean;
+	setIsMenuOpen: (open: boolean) => void;
+	onNavClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
+	onOpenTinaAdmin?: () => void;
+	onSelectView: (view: 'portfolio' | 'blog' | 'admin' | 'certifications') => void;
+	showBlogTab?: boolean;
 }
 
 export const NavbarContainer: React.FC<NavbarContainerProps> = ({
-  portfolioName = 'MATAN-AI.DEV',
-  brandName = 'MATAN-AI.DEV',
-  navItems,
-  activeSection,
-  currentView,
-  isMenuOpen,
-  setIsMenuOpen,
-  onNavClick,
-  onOpenTinaAdmin,
-  onSelectView,
-  showBlogTab = true,
+	portfolioName = 'MATAN-AI.DEV',
+	brandName = 'MATAN-AI.DEV',
+	navItems,
+	activeSection,
+	currentView,
+	isMenuOpen,
+	setIsMenuOpen,
+	onNavClick,
+	onOpenTinaAdmin,
+	onSelectView,
+	showBlogTab = true,
 }) => {
-  const brand = brandName && brandName !== 'MATAN AI' ? brandName : 'MATAN-AI.DEV';
-  const dotIndex = brand.indexOf('.');
-  const isDomain = dotIndex > 0 && !brand.includes(' ');
-  const firstName = isDomain ? brand.slice(0, dotIndex) : brand.split(' ')[0] || 'MATAN-AI';
-  const restName = isDomain ? brand.slice(dotIndex) : brand.split(' ').slice(1).join(' ');
+	const brand = brandName && brandName !== 'MATAN AI' ? brandName : 'MATAN-AI.DEV';
+	const dotIndex = brand.indexOf('.');
+	const isDomain = dotIndex > 0 && !brand.includes(' ');
+	const firstName = isDomain ? brand.slice(0, dotIndex) : brand.split(' ')[0] || 'MATAN-AI';
+	const restName = isDomain ? brand.slice(dotIndex) : brand.split(' ').slice(1).join(' ');
 
-  const navRef = useRef<HTMLElement>(null);
-  const [indicator, setIndicator] = useState<{ left: number; width: number; opacity: number }>({
-    left: 0,
-    width: 0,
-    opacity: 0,
-  });
+	const navRef = useRef<HTMLElement>(null);
+	const [indicator, setIndicator] = useState<{ left: number; width: number; opacity: number }>({
+		left: 0,
+		width: 0,
+		opacity: 0,
+	});
 
-  const updateIndicator = useCallback(() => {
-    if (!navRef.current) return;
-    const activeEl = navRef.current.querySelector('[data-active="true"]') as HTMLElement | null;
-    if (activeEl) {
-      const navRect = navRef.current.getBoundingClientRect();
-      const elRect = activeEl.getBoundingClientRect();
-      setIndicator({
-        left: elRect.left - navRect.left,
-        width: elRect.width,
-        opacity: 1,
-      });
-    } else {
-      setIndicator((prev) => ({ ...prev, opacity: 0 }));
-    }
-  }, []);
+	const updateIndicator = useCallback(() => {
+		if (!navRef.current) return;
+		const activeEl = navRef.current.querySelector('[data-active="true"]') as HTMLElement | null;
+		if (activeEl) {
+			const navRect = navRef.current.getBoundingClientRect();
+			const elRect = activeEl.getBoundingClientRect();
+			setIndicator({
+				left: elRect.left - navRect.left,
+				width: elRect.width,
+				opacity: 1,
+			});
+		} else {
+			setIndicator((prev) => ({ ...prev, opacity: 0 }));
+		}
+	}, []);
 
-  useEffect(() => {
-    updateIndicator();
-  }, [activeSection, currentView, updateIndicator]);
+	useEffect(() => {
+		updateIndicator();
+	}, [activeSection, currentView, updateIndicator]);
 
-  useEffect(() => {
-    window.addEventListener('resize', updateIndicator);
-    const timeout = setTimeout(updateIndicator, 100);
-    return () => {
-      window.removeEventListener('resize', updateIndicator);
-      clearTimeout(timeout);
-    };
-  }, [updateIndicator]);
+	useEffect(() => {
+		window.addEventListener('resize', updateIndicator);
+		const timeout = setTimeout(updateIndicator, 100);
+		return () => {
+			window.removeEventListener('resize', updateIndicator);
+			clearTimeout(timeout);
+		};
+	}, [updateIndicator]);
 
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-border transition-all duration-200">
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Brand Name */}
-        <a
-          href="/"
-          onClick={(e) => {
-            e.preventDefault();
-            if (currentView !== 'portfolio') {
-              onSelectView('portfolio');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-              onNavClick(e, '#home');
-            }
-          }}
-          className="flex items-center gap-2"
-        >
-          <span className="text-[13px] font-semibold tracking-tight text-neutral-500 hover:text-neutral-700 transition-colors uppercase">
-            {firstName}
-            {restName && (
-              <span className={`text-neutral-400 font-normal ${isDomain ? '' : 'ml-1'}`}>
-                {restName}
-              </span>
-            )}
-          </span>
-        </a>
+	return (
+		<header className="border-border fixed top-0 right-0 left-0 z-50 border-b bg-white/80 backdrop-blur-md transition-all duration-200">
+			<div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+				{/* Brand Name */}
+				<a
+					href="/"
+					onClick={(e) => {
+						e.preventDefault();
+						if (currentView !== 'portfolio') {
+							onSelectView('portfolio');
+							window.scrollTo({ top: 0, behavior: 'smooth' });
+						} else {
+							onNavClick(e, '#home');
+						}
+					}}
+					className="flex items-center gap-2"
+				>
+					<span className="text-[13px] font-semibold tracking-tight text-neutral-500 uppercase transition-colors hover:text-neutral-700">
+						{firstName}
+						{restName && (
+							<span className={`font-normal text-neutral-400 ${isDomain ? '' : 'ml-1'}`}>{restName}</span>
+						)}
+					</span>
+				</a>
 
-        {/* Desktop inline navigation */}
-        <nav ref={navRef} className="hidden md:flex items-center gap-4 lg:gap-6 relative py-1">
-          {navItems.map((item) => (
-            <a
-              key={item.num}
-              href={item.href}
-              onClick={(e) => onNavClick(e, item.href)}
-              data-active={currentView === 'portfolio' && activeSection === item.num}
-              className={`relative text-xs tracking-tight py-1.5 transition-colors cursor-pointer ${currentView === 'portfolio' && activeSection === item.num
-                  ? 'text-text font-semibold'
-                  : 'text-text-muted hover:text-text'
-                }`}
-            >
-              <span>{item.label}</span>
-            </a>
-          ))}
+				{/* Desktop inline navigation */}
+				<nav ref={navRef} className="relative hidden items-center gap-4 py-1 md:flex lg:gap-6">
+					{navItems.map((item) => (
+						<a
+							key={item.num}
+							href={item.href}
+							onClick={(e) => onNavClick(e, item.href)}
+							data-active={currentView === 'portfolio' && activeSection === item.num}
+							className={`relative cursor-pointer py-1.5 text-xs tracking-tight transition-colors ${
+								currentView === 'portfolio' && activeSection === item.num
+									? 'text-text font-semibold'
+									: 'text-text-muted hover:text-text'
+							}`}
+						>
+							<span>{item.label}</span>
+						</a>
+					))}
 
-          {/* Pipeline delimiter */}
-          <span className="text-border/70 text-xs font-light select-none">|</span>
+					{/* Pipeline delimiter */}
+					<span className="text-border/70 text-xs font-light select-none">|</span>
 
-          {/* Navigation to Certification Page */}
-          <a
-            href="/certifications"
-            onClick={(e) => {
-              e.preventDefault();
-              onSelectView('certifications');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            data-active={currentView === 'certifications'}
-            className={`relative text-xs tracking-tight py-1.5 transition-colors cursor-pointer ${currentView === 'certifications'
-                ? 'text-text font-semibold'
-                : 'text-text-muted hover:text-text'
-              }`}
-          >
-            <span>Certifications</span>
-          </a>
+					{/* Navigation to Certification Page */}
+					<a
+						href="/certifications"
+						onClick={(e) => {
+							e.preventDefault();
+							onSelectView('certifications');
+							window.scrollTo({ top: 0, behavior: 'smooth' });
+						}}
+						data-active={currentView === 'certifications'}
+						className={`relative cursor-pointer py-1.5 text-xs tracking-tight transition-colors ${
+							currentView === 'certifications'
+								? 'text-text font-semibold'
+								: 'text-text-muted hover:text-text'
+						}`}
+					>
+						<span>Certifications</span>
+					</a>
 
-          {/* Navigation to Blog Page */}
-          {showBlogTab && (
-            <a
-              href="/blog"
-              onClick={(e) => {
-                e.preventDefault();
-                onSelectView('blog');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              data-active={currentView === 'blog'}
-              className={`relative text-xs tracking-tight py-1.5 transition-colors cursor-pointer ${currentView === 'blog'
-                  ? 'text-text font-semibold'
-                  : 'text-text-muted hover:text-text'
-                }`}
-            >
-              <span>Blog</span>
-            </a>
-          )}
+					{/* Navigation to Blog Page */}
+					{showBlogTab && (
+						<a
+							href="/blog"
+							onClick={(e) => {
+								e.preventDefault();
+								onSelectView('blog');
+								window.scrollTo({ top: 0, behavior: 'smooth' });
+							}}
+							data-active={currentView === 'blog'}
+							className={`relative cursor-pointer py-1.5 text-xs tracking-tight transition-colors ${
+								currentView === 'blog' ? 'text-text font-semibold' : 'text-text-muted hover:text-text'
+							}`}
+						>
+							<span>Blog</span>
+						</a>
+					)}
 
-          {/* Refined 1px minimalist sliding underline indicator */}
-          <span
-            aria-hidden="true"
-            className="absolute bottom-0 h-px bg-text pointer-events-none transition-all duration-200 ease-out"
-            style={{
-              left: `${indicator.left}px`,
-              width: `${indicator.width}px`,
-              opacity: indicator.opacity,
-            }}
-          />
-        </nav>
+					{/* Refined 1px minimalist sliding underline indicator */}
+					<span
+						aria-hidden="true"
+						className="bg-text pointer-events-none absolute bottom-0 h-px transition-all duration-200 ease-out"
+						style={{
+							left: `${indicator.left}px`,
+							width: `${indicator.width}px`,
+							opacity: indicator.opacity,
+						}}
+					/>
+				</nav>
 
-        {/* Mobile menu toggle */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden text-text p-1.5 hover:bg-neutral-100 rounded-lg focus:outline-none transition-colors"
-          aria-label="Toggle navigation menu"
-        >
-          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-      </div>
+				{/* Mobile menu toggle */}
+				<button
+					onClick={() => setIsMenuOpen(!isMenuOpen)}
+					className="text-text rounded-lg p-1.5 transition-colors hover:bg-neutral-100 focus:outline-none md:hidden"
+					aria-label="Toggle navigation menu"
+				>
+					{isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+				</button>
+			</div>
 
-      {/* Mobile collapsible dropdown */}
-      {isMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-border px-5 py-2.5 shadow-md max-h-[80vh] overflow-y-auto animate-fadeIn">
-          <div className="flex flex-col divide-y divide-border/40">
-            {navItems.map((item) => (
-              <a
-                key={item.num}
-                href={item.href}
-                onClick={(e) => onNavClick(e, item.href)}
-                className={`text-xs py-2 flex items-center justify-between transition-colors ${currentView === 'portfolio' && activeSection === item.num
-                    ? 'text-text font-bold'
-                    : 'text-text-muted hover:text-text'
-                  }`}
-              >
-                <span>{item.label}</span>
-                <span className="text-[10px] text-text-subtle font-mono">{item.num}</span>
-              </a>
-            ))}
+			{/* Mobile collapsible dropdown */}
+			{isMenuOpen && (
+				<div className="border-border animate-fadeIn absolute top-16 right-0 left-0 max-h-[80vh] overflow-y-auto border-b bg-white/95 px-5 py-2.5 shadow-md backdrop-blur-md md:hidden">
+					<div className="divide-border/40 flex flex-col divide-y">
+						{navItems.map((item) => (
+							<a
+								key={item.num}
+								href={item.href}
+								onClick={(e) => onNavClick(e, item.href)}
+								className={`flex items-center justify-between py-2 text-xs transition-colors ${
+									currentView === 'portfolio' && activeSection === item.num
+										? 'text-text font-bold'
+										: 'text-text-muted hover:text-text'
+								}`}
+							>
+								<span>{item.label}</span>
+								<span className="text-text-subtle font-mono text-[10px]">{item.num}</span>
+							</a>
+						))}
 
-            <a
-              href="/certifications"
-              onClick={(e) => {
-                e.preventDefault();
-                onSelectView('certifications');
-                setIsMenuOpen(false);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className={`text-xs py-2 flex items-center justify-between transition-colors cursor-pointer ${currentView === 'certifications' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
-                }`}
-            >
-              <span className="flex items-center gap-2">
-                <Award size={13} className={currentView === 'certifications' ? 'text-text' : 'text-text-muted'} />
-                <span>Certifications</span>
-              </span>
-            </a>
+						<a
+							href="/certifications"
+							onClick={(e) => {
+								e.preventDefault();
+								onSelectView('certifications');
+								setIsMenuOpen(false);
+								window.scrollTo({ top: 0, behavior: 'smooth' });
+							}}
+							className={`flex cursor-pointer items-center justify-between py-2 text-xs transition-colors ${
+								currentView === 'certifications'
+									? 'text-text font-bold'
+									: 'text-text-muted hover:text-text'
+							}`}
+						>
+							<span className="flex items-center gap-2">
+								<Award
+									size={13}
+									className={currentView === 'certifications' ? 'text-text' : 'text-text-muted'}
+								/>
+								<span>Certifications</span>
+							</span>
+						</a>
 
-            {showBlogTab && (
-              <a
-                href="/blog"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onSelectView('blog');
-                  setIsMenuOpen(false);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className={`text-xs py-2 flex items-center justify-between transition-colors cursor-pointer ${currentView === 'blog' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
-                  }`}
-              >
-                <span className="flex items-center gap-2">
-                  <BookOpen size={13} className={currentView === 'blog' ? 'text-text' : 'text-text-muted'} />
-                  <span>Blog</span>
-                </span>
-              </a>
-            )}
-          </div>
-        </div>
-      )}
-    </header>
-  );
+						{showBlogTab && (
+							<a
+								href="/blog"
+								onClick={(e) => {
+									e.preventDefault();
+									onSelectView('blog');
+									setIsMenuOpen(false);
+									window.scrollTo({ top: 0, behavior: 'smooth' });
+								}}
+								className={`flex cursor-pointer items-center justify-between py-2 text-xs transition-colors ${
+									currentView === 'blog' ? 'text-text font-bold' : 'text-text-muted hover:text-text'
+								}`}
+							>
+								<span className="flex items-center gap-2">
+									<BookOpen
+										size={13}
+										className={currentView === 'blog' ? 'text-text' : 'text-text-muted'}
+									/>
+									<span>Blog</span>
+								</span>
+							</a>
+						)}
+					</div>
+				</div>
+			)}
+		</header>
+	);
 };

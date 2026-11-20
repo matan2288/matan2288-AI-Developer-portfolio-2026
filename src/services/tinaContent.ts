@@ -1,33 +1,39 @@
 import { useState, useEffect } from 'react';
 import siteContent from '../../content/siteContent.json';
 
-import { PillarItem, SkillCategory, RecommendationItem, ExperienceItem, CertificationItem } from '../features/dashboard/types';
+import {
+	PillarItem,
+	SkillCategory,
+	RecommendationItem,
+	ExperienceItem,
+	CertificationItem,
+} from '../features/dashboard/types';
 
 export interface PortfolioGeneralContent {
-  developerName: string;
-  title: string;
-  location: string;
-  avatarUrl: string;
-  heroBio: string;
-  aboutTitle: string;
-  aboutBio1: string;
-  aboutBio2: string;
-  contactEmail: string;
-  linkedInUrl: string;
-  blogUrl?: string;
-  showBlogTab?: boolean;
-  stats: { value: string; label: string }[];
+	developerName: string;
+	title: string;
+	location: string;
+	avatarUrl: string;
+	heroBio: string;
+	aboutTitle: string;
+	aboutBio1: string;
+	aboutBio2: string;
+	contactEmail: string;
+	linkedInUrl: string;
+	blogUrl?: string;
+	showBlogTab?: boolean;
+	stats: { value: string; label: string }[];
 }
 
 const LOCAL_STORAGE_KEY = 'tina_cms_portfolio_content_v11';
 
 export const defaultTinaContent = {
-  portfolio: siteContent.portfolio as PortfolioGeneralContent,
-  pillars: [] as PillarItem[],
-  skills: (siteContent.skills || []) as SkillCategory[],
-  experiences: siteContent.experiences as ExperienceItem[],
-  recommendations: siteContent.recommendations as RecommendationItem[],
-  certifications: siteContent.certifications as CertificationItem[],
+	portfolio: siteContent.portfolio as PortfolioGeneralContent,
+	pillars: [] as PillarItem[],
+	skills: (siteContent.skills || []) as SkillCategory[],
+	experiences: siteContent.experiences as ExperienceItem[],
+	recommendations: siteContent.recommendations as RecommendationItem[],
+	certifications: siteContent.certifications as CertificationItem[],
 };
 
 // Global in-memory draft state (allows live real-time preview without saving)
@@ -35,73 +41,117 @@ let liveDraftContent: typeof defaultTinaContent | null = null;
 
 // Helper to get active Tina CMS content (live draft > localStorage > default JSON)
 export function getStoredTinaContent() {
-  if (liveDraftContent) {
-    return {
-      ...defaultTinaContent,
-      ...liveDraftContent,
-      portfolio: {
-        ...defaultTinaContent.portfolio,
-        ...(liveDraftContent.portfolio || {}),
-        stats: Array.isArray(liveDraftContent.portfolio?.stats) ? liveDraftContent.portfolio.stats : defaultTinaContent.portfolio.stats,
-      },
-      pillars: Array.isArray(liveDraftContent.pillars) && liveDraftContent.pillars.length > 0 ? liveDraftContent.pillars : defaultTinaContent.pillars,
-      skills: Array.isArray(liveDraftContent.skills) && liveDraftContent.skills.length > 0 ? liveDraftContent.skills : defaultTinaContent.skills,
-      experiences: Array.isArray(liveDraftContent.experiences) && liveDraftContent.experiences.length > 0 ? liveDraftContent.experiences : defaultTinaContent.experiences,
-      recommendations: Array.isArray(liveDraftContent.recommendations) && liveDraftContent.recommendations.length > 0 ? liveDraftContent.recommendations : defaultTinaContent.recommendations,
-      certifications: Array.isArray(liveDraftContent.certifications) && liveDraftContent.certifications.length > 0 ? liveDraftContent.certifications : defaultTinaContent.certifications,
-    };
-  }
-  try {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      const safeAvatarUrl = (!parsed.portfolio?.avatarUrl || parsed.portfolio.avatarUrl.includes('picsum.photos'))
-        ? defaultTinaContent.portfolio.avatarUrl
-        : parsed.portfolio.avatarUrl;
-      const title = (parsed.portfolio?.title === 'Software Developer' || !parsed.portfolio?.title)
-        ? defaultTinaContent.portfolio.title
-        : parsed.portfolio.title;
-      return {
-        ...defaultTinaContent,
-        ...parsed,
-        portfolio: {
-          ...defaultTinaContent.portfolio,
-          ...(parsed.portfolio || {}),
-          title,
-          avatarUrl: safeAvatarUrl,
-          stats: (Array.isArray(parsed.portfolio?.stats) && parsed.portfolio.stats.length === 4)
-            ? parsed.portfolio.stats
-            : defaultTinaContent.portfolio.stats,
-        },
-        pillars: Array.isArray(parsed.pillars) && parsed.pillars.length > 0 ? parsed.pillars : defaultTinaContent.pillars,
-        skills: Array.isArray(parsed.skills) && parsed.skills.length > 0 ? parsed.skills : defaultTinaContent.skills,
-        experiences: (Array.isArray(parsed.experiences) && parsed.experiences.length === defaultTinaContent.experiences.length && !parsed.experiences.some((e: any) => e.id === 'bootcamp' || e.id === 'navy' || (e.id === 'amdocs-three-uk' && !e.period?.includes('2023'))))
-          ? parsed.experiences
-          : defaultTinaContent.experiences,
-        recommendations: (Array.isArray(parsed.recommendations) && parsed.recommendations.length >= defaultTinaContent.recommendations.length && !parsed.recommendations.some((r: any) => r.author === 'Senior Delivery Director'))
-          ? parsed.recommendations.map((r: RecommendationItem, idx: number) => ({
-            ...(defaultTinaContent.recommendations[idx] || {}),
-            ...r,
-            avatarUrl: r.avatarUrl || defaultTinaContent.recommendations[idx % defaultTinaContent.recommendations.length]?.avatarUrl,
-            linkedInUrl: r.linkedInUrl || defaultTinaContent.recommendations[idx % defaultTinaContent.recommendations.length]?.linkedInUrl,
-          }))
-          : defaultTinaContent.recommendations,
-        certifications: Array.isArray(parsed.certifications) && parsed.certifications.length > 0
-          ? parsed.certifications.map((c: CertificationItem) => {
-            const def = defaultTinaContent.certifications.find(dc => dc.id === c.id);
-            return {
-              ...(def || {}),
-              ...c,
-              category: c.category || def?.category,
-            };
-          })
-          : defaultTinaContent.certifications,
-      };
-    }
-  } catch (e) {
-    console.warn('Failed to load stored Tina CMS content:', e);
-  }
-  return defaultTinaContent;
+	if (liveDraftContent) {
+		return {
+			...defaultTinaContent,
+			...liveDraftContent,
+			portfolio: {
+				...defaultTinaContent.portfolio,
+				...(liveDraftContent.portfolio || {}),
+				stats: Array.isArray(liveDraftContent.portfolio?.stats)
+					? liveDraftContent.portfolio.stats
+					: defaultTinaContent.portfolio.stats,
+			},
+			pillars:
+				Array.isArray(liveDraftContent.pillars) && liveDraftContent.pillars.length > 0
+					? liveDraftContent.pillars
+					: defaultTinaContent.pillars,
+			skills:
+				Array.isArray(liveDraftContent.skills) && liveDraftContent.skills.length > 0
+					? liveDraftContent.skills
+					: defaultTinaContent.skills,
+			experiences:
+				Array.isArray(liveDraftContent.experiences) && liveDraftContent.experiences.length > 0
+					? liveDraftContent.experiences
+					: defaultTinaContent.experiences,
+			recommendations:
+				Array.isArray(liveDraftContent.recommendations) && liveDraftContent.recommendations.length > 0
+					? liveDraftContent.recommendations
+					: defaultTinaContent.recommendations,
+			certifications:
+				Array.isArray(liveDraftContent.certifications) && liveDraftContent.certifications.length > 0
+					? liveDraftContent.certifications
+					: defaultTinaContent.certifications,
+		};
+	}
+	try {
+		const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+		if (saved) {
+			const parsed = JSON.parse(saved);
+			const safeAvatarUrl =
+				!parsed.portfolio?.avatarUrl || parsed.portfolio.avatarUrl.includes('picsum.photos')
+					? defaultTinaContent.portfolio.avatarUrl
+					: parsed.portfolio.avatarUrl;
+			const title =
+				parsed.portfolio?.title === 'Software Developer' || !parsed.portfolio?.title
+					? defaultTinaContent.portfolio.title
+					: parsed.portfolio.title;
+			return {
+				...defaultTinaContent,
+				...parsed,
+				portfolio: {
+					...defaultTinaContent.portfolio,
+					...(parsed.portfolio || {}),
+					title,
+					avatarUrl: safeAvatarUrl,
+					stats:
+						Array.isArray(parsed.portfolio?.stats) && parsed.portfolio.stats.length === 4
+							? parsed.portfolio.stats
+							: defaultTinaContent.portfolio.stats,
+				},
+				pillars:
+					Array.isArray(parsed.pillars) && parsed.pillars.length > 0
+						? parsed.pillars
+						: defaultTinaContent.pillars,
+				skills:
+					Array.isArray(parsed.skills) && parsed.skills.length > 0
+						? parsed.skills
+						: defaultTinaContent.skills,
+				experiences:
+					Array.isArray(parsed.experiences) &&
+					parsed.experiences.length === defaultTinaContent.experiences.length &&
+					!parsed.experiences.some(
+						(e: any) =>
+							e.id === 'bootcamp' ||
+							e.id === 'navy' ||
+							(e.id === 'amdocs-three-uk' && !e.period?.includes('2023'))
+					)
+						? parsed.experiences
+						: defaultTinaContent.experiences,
+				recommendations:
+					Array.isArray(parsed.recommendations) &&
+					parsed.recommendations.length >= defaultTinaContent.recommendations.length &&
+					!parsed.recommendations.some((r: any) => r.author === 'Senior Delivery Director')
+						? parsed.recommendations.map((r: RecommendationItem, idx: number) => ({
+								...(defaultTinaContent.recommendations[idx] || {}),
+								...r,
+								avatarUrl:
+									r.avatarUrl ||
+									defaultTinaContent.recommendations[idx % defaultTinaContent.recommendations.length]
+										?.avatarUrl,
+								linkedInUrl:
+									r.linkedInUrl ||
+									defaultTinaContent.recommendations[idx % defaultTinaContent.recommendations.length]
+										?.linkedInUrl,
+							}))
+						: defaultTinaContent.recommendations,
+				certifications:
+					Array.isArray(parsed.certifications) && parsed.certifications.length > 0
+						? parsed.certifications.map((c: CertificationItem) => {
+								const def = defaultTinaContent.certifications.find((dc) => dc.id === c.id);
+								return {
+									...(def || {}),
+									...c,
+									category: c.category || def?.category,
+								};
+							})
+						: defaultTinaContent.certifications,
+			};
+		}
+	} catch (e) {
+		console.warn('Failed to load stored Tina CMS content:', e);
+	}
+	return defaultTinaContent;
 }
 
 // Global subscribers for real-time reactivity when Tina CMS updates
@@ -109,40 +159,40 @@ type Listener = () => void;
 const listeners = new Set<Listener>();
 
 export function subscribeToTinaContent(listener: Listener) {
-  listeners.add(listener);
-  return () => {
-    listeners.delete(listener);
-  };
+	listeners.add(listener);
+	return () => {
+		listeners.delete(listener);
+	};
 }
 
 function notifySubscribers() {
-  listeners.forEach((fn) => fn());
+	listeners.forEach((fn) => fn());
 }
 
 export function setLiveDraftTinaContent(draft: typeof defaultTinaContent | null) {
-  liveDraftContent = draft;
-  notifySubscribers();
+	liveDraftContent = draft;
+	notifySubscribers();
 }
 
 export function saveTinaContent(newContent: typeof defaultTinaContent) {
-  try {
-    liveDraftContent = null;
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newContent));
-    notifySubscribers();
-    // Also dispatch custom storage event for same-window iframes
-    window.dispatchEvent(new Event('tina-content-updated'));
-  } catch (e) {
-    console.error('Failed to save Tina CMS content:', e);
-  }
+	try {
+		liveDraftContent = null;
+		localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newContent));
+		notifySubscribers();
+		// Also dispatch custom storage event for same-window iframes
+		window.dispatchEvent(new Event('tina-content-updated'));
+	} catch (e) {
+		console.error('Failed to save Tina CMS content:', e);
+	}
 }
 
 export interface ContentCommitResponse {
-  success: boolean;
-  message?: string;
-  error?: string;
-  local?: boolean;
-  commitSha?: string;
-  savedFiles?: string[];
+	success: boolean;
+	message?: string;
+	error?: string;
+	local?: boolean;
+	commitSha?: string;
+	savedFiles?: string[];
 }
 
 /**
@@ -150,223 +200,224 @@ export interface ContentCommitResponse {
  * AND to the physical JSON files on disk (local development) or GitHub (production).
  */
 export async function persistTinaContentToServer(
-  newContent: typeof defaultTinaContent,
-  commitMessage: string = 'cms: update site content via admin'
+	newContent: typeof defaultTinaContent,
+	commitMessage: string = 'cms: update site content via admin'
 ): Promise<ContentCommitResponse> {
-  // Always update local cache & listeners first for instant reactive UI updates
-  saveTinaContent(newContent);
+	// Always update local cache & listeners first for instant reactive UI updates
+	saveTinaContent(newContent);
 
-  const siteContentPayload = {
-    portfolio: newContent.portfolio,
-    experiences: newContent.experiences,
-    recommendations: newContent.recommendations,
-    certifications: newContent.certifications,
-    skills: newContent.skills,
-  };
+	const siteContentPayload = {
+		portfolio: newContent.portfolio,
+		experiences: newContent.experiences,
+		recommendations: newContent.recommendations,
+		certifications: newContent.certifications,
+		skills: newContent.skills,
+	};
 
-  const files = [
-    {
-      path: 'content/siteContent.json',
-      content: JSON.stringify(siteContentPayload, null, 2) + '\n',
-    },
-    {
-      path: 'content/portfolio/main.json',
-      content: JSON.stringify(newContent.portfolio, null, 2) + '\n',
-    },
-  ];
+	const files = [
+		{
+			path: 'content/siteContent.json',
+			content: JSON.stringify(siteContentPayload, null, 2) + '\n',
+		},
+		{
+			path: 'content/portfolio/main.json',
+			content: JSON.stringify(newContent.portfolio, null, 2) + '\n',
+		},
+	];
 
-  try {
-      const payload = JSON.stringify({
-        files,
-        message: commitMessage,
-      });
+	try {
+		const payload = JSON.stringify({
+			files,
+			message: commitMessage,
+		});
 
-      const headers = {
-        'Content-Type': 'application/json',
-      };
+		const headers = {
+			'Content-Type': 'application/json',
+		};
 
-      // Try primary endpoint /api/content-commit
-      let res = await fetch('/api/content-commit', {
-        method: 'POST',
-        headers,
-        body: payload,
-      });
+		// Try primary endpoint /api/content-commit
+		let res = await fetch('/api/content-commit', {
+			method: 'POST',
+			headers,
+			body: payload,
+		});
 
-      // If 404 (e.g. Netlify rewrite not active), fallback to direct Netlify function path
-      if(res.status === 404) {
-        try {
-          const netlifyRes = await fetch('/.netlify/functions/content-commit', {
-            method: 'POST',
-            headers,
-            body: payload,
-          });
-    if (netlifyRes.status !== 404) {
-      res = netlifyRes;
-    }
-  } catch (fallbackErr) {
-    console.warn('Netlify function direct fallback error:', fallbackErr);
-  }
-}
+		// If 404 (e.g. Netlify rewrite not active), fallback to direct Netlify function path
+		if (res.status === 404) {
+			try {
+				const netlifyRes = await fetch('/.netlify/functions/content-commit', {
+					method: 'POST',
+					headers,
+					body: payload,
+				});
+				if (netlifyRes.status !== 404) {
+					res = netlifyRes;
+				}
+			} catch (fallbackErr) {
+				console.warn('Netlify function direct fallback error:', fallbackErr);
+			}
+		}
 
-const contentType = res.headers.get('content-type') || '';
-let data: any = {};
-if (contentType.includes('application/json')) {
-  data = await res.json();
-} else {
-  const text = await res.text();
-  throw new Error(
-    res.status === 404
-      ? 'Content commit endpoint not found (404). Check Netlify function deployment and environment variables.'
-      : `Server responded with status ${res.status}`
-  );
-}
+		const contentType = res.headers.get('content-type') || '';
+		let data: any = {};
+		if (contentType.includes('application/json')) {
+			data = await res.json();
+		} else {
+			const text = await res.text();
+			throw new Error(
+				res.status === 404
+					? 'Content commit endpoint not found (404). Check Netlify function deployment and environment variables.'
+					: `Server responded with status ${res.status}`
+			);
+		}
 
-if (!res.ok || !data.success) {
-  throw new Error(data.error || `Server responded with status ${res.status}`);
-}
+		if (!res.ok || !data.success) {
+			throw new Error(data.error || `Server responded with status ${res.status}`);
+		}
 
-return {
-  success: true,
-  message: data.message || 'Saved successfully',
-  local: data.local,
-  commitSha: data.commitSha,
-  savedFiles: data.savedFiles || files.map(f => f.path),
-};
-  } catch (err: any) {
-  console.error('Failed to commit content to backend:', err);
-  return {
-    success: false,
-    error: err?.message || 'Failed to persist content to backend API',
-  };
-}
+		return {
+			success: true,
+			message: data.message || 'Saved successfully',
+			local: data.local,
+			commitSha: data.commitSha,
+			savedFiles: data.savedFiles || files.map((f) => f.path),
+		};
+	} catch (err: any) {
+		console.error('Failed to commit content to backend:', err);
+		return {
+			success: false,
+			error: err?.message || 'Failed to persist content to backend API',
+		};
+	}
 }
 
 export function updateAvatarUrl(newAvatarUrl: string) {
-  const current = getStoredTinaContent();
-  const updated = {
-    ...current,
-    portfolio: {
-      ...current.portfolio,
-      avatarUrl: newAvatarUrl,
-    },
-  };
-  saveTinaContent(updated);
+	const current = getStoredTinaContent();
+	const updated = {
+		...current,
+		portfolio: {
+			...current.portfolio,
+			avatarUrl: newAvatarUrl,
+		},
+	};
+	saveTinaContent(updated);
 }
 
 export const getTinaContent = getStoredTinaContent;
 
 export function resetTinaContentToDefaults() {
-  liveDraftContent = null;
-  localStorage.removeItem(LOCAL_STORAGE_KEY);
-  notifySubscribers();
-  window.dispatchEvent(new Event('tina-content-updated'));
+	liveDraftContent = null;
+	localStorage.removeItem(LOCAL_STORAGE_KEY);
+	notifySubscribers();
+	window.dispatchEvent(new Event('tina-content-updated'));
 }
 
 // Set up cross-window and postMessage listeners for live iframe synchronization
 if (typeof window !== 'undefined') {
-  window.addEventListener('storage', (e) => {
-    if (e.key === LOCAL_STORAGE_KEY) {
-      liveDraftContent = null;
-      notifySubscribers();
-    }
-  });
+	window.addEventListener('storage', (e) => {
+		if (e.key === LOCAL_STORAGE_KEY) {
+			liveDraftContent = null;
+			notifySubscribers();
+		}
+	});
 
-  window.addEventListener('tina-content-updated', () => {
-    liveDraftContent = null;
-    notifySubscribers();
-  });
+	window.addEventListener('tina-content-updated', () => {
+		liveDraftContent = null;
+		notifySubscribers();
+	});
 
-  window.addEventListener('message', (event) => {
-    try {
-      if (event.data && event.data.type === 'TINA_CMS_LIVE_DRAFT') {
-        liveDraftContent = event.data.payload;
-        notifySubscribers();
-      } else if (event.data && event.data.type === 'TINA_CMS_CLEAR_DRAFT') {
-        liveDraftContent = null;
-        notifySubscribers();
-      }
-    } catch (err) {
-      console.warn('Error handling Tina CMS message:', err);
-    }
-  });
+	window.addEventListener('message', (event) => {
+		try {
+			if (event.data && event.data.type === 'TINA_CMS_LIVE_DRAFT') {
+				liveDraftContent = event.data.payload;
+				notifySubscribers();
+			} else if (event.data && event.data.type === 'TINA_CMS_CLEAR_DRAFT') {
+				liveDraftContent = null;
+				notifySubscribers();
+			}
+		} catch (err) {
+			console.warn('Error handling Tina CMS message:', err);
+		}
+	});
 }
 
 // React Hooks for Tina Content
 export function useTinaPortfolio() {
-  const [content, setContent] = useState<PortfolioGeneralContent>(() => getStoredTinaContent().portfolio);
+	const [content, setContent] = useState<PortfolioGeneralContent>(() => getStoredTinaContent().portfolio);
 
-  useEffect(() => {
-    const unsubscribe = subscribeToTinaContent(() => {
-      setContent(getStoredTinaContent().portfolio);
-    });
-    return unsubscribe;
-  }, []);
+	useEffect(() => {
+		const unsubscribe = subscribeToTinaContent(() => {
+			setContent(getStoredTinaContent().portfolio);
+		});
+		return unsubscribe;
+	}, []);
 
-  return content;
+	return content;
 }
 
 export function useTinaPillars() {
-  const [pillars, setPillars] = useState<PillarItem[]>(() => getStoredTinaContent().pillars);
+	const [pillars, setPillars] = useState<PillarItem[]>(() => getStoredTinaContent().pillars);
 
-  useEffect(() => {
-    const unsubscribe = subscribeToTinaContent(() => {
-      setPillars(getStoredTinaContent().pillars);
-    });
-    return unsubscribe;
-  }, []);
+	useEffect(() => {
+		const unsubscribe = subscribeToTinaContent(() => {
+			setPillars(getStoredTinaContent().pillars);
+		});
+		return unsubscribe;
+	}, []);
 
-  return pillars;
+	return pillars;
 }
 
 export function useTinaSkills() {
-  const [skills, setSkills] = useState<SkillCategory[]>(() => getStoredTinaContent().skills);
+	const [skills, setSkills] = useState<SkillCategory[]>(() => getStoredTinaContent().skills);
 
-  useEffect(() => {
-    const unsubscribe = subscribeToTinaContent(() => {
-      setSkills(getStoredTinaContent().skills);
-    });
-    return unsubscribe;
-  }, []);
+	useEffect(() => {
+		const unsubscribe = subscribeToTinaContent(() => {
+			setSkills(getStoredTinaContent().skills);
+		});
+		return unsubscribe;
+	}, []);
 
-  return skills;
+	return skills;
 }
 
 export function useTinaExperiences() {
-  const [experiences, setExperiences] = useState<ExperienceItem[]>(() => getStoredTinaContent().experiences);
+	const [experiences, setExperiences] = useState<ExperienceItem[]>(() => getStoredTinaContent().experiences);
 
-  useEffect(() => {
-    const unsubscribe = subscribeToTinaContent(() => {
-      setExperiences(getStoredTinaContent().experiences);
-    });
-    return unsubscribe;
-  }, []);
+	useEffect(() => {
+		const unsubscribe = subscribeToTinaContent(() => {
+			setExperiences(getStoredTinaContent().experiences);
+		});
+		return unsubscribe;
+	}, []);
 
-  return experiences;
+	return experiences;
 }
 
 export function useTinaRecommendations() {
-  const [recs, setRecs] = useState<RecommendationItem[]>(() => getStoredTinaContent().recommendations);
+	const [recs, setRecs] = useState<RecommendationItem[]>(() => getStoredTinaContent().recommendations);
 
-  useEffect(() => {
-    const unsubscribe = subscribeToTinaContent(() => {
-      setRecs(getStoredTinaContent().recommendations);
-    });
-    return unsubscribe;
-  }, []);
+	useEffect(() => {
+		const unsubscribe = subscribeToTinaContent(() => {
+			setRecs(getStoredTinaContent().recommendations);
+		});
+		return unsubscribe;
+	}, []);
 
-  return recs;
+	return recs;
 }
 
 export function useTinaCertifications() {
-  const [certs, setCerts] = useState<CertificationItem[]>(() => getStoredTinaContent().certifications || defaultTinaContent.certifications);
+	const [certs, setCerts] = useState<CertificationItem[]>(
+		() => getStoredTinaContent().certifications || defaultTinaContent.certifications
+	);
 
-  useEffect(() => {
-    const unsubscribe = subscribeToTinaContent(() => {
-      setCerts(getStoredTinaContent().certifications || defaultTinaContent.certifications);
-    });
-    return unsubscribe;
-  }, []);
+	useEffect(() => {
+		const unsubscribe = subscribeToTinaContent(() => {
+			setCerts(getStoredTinaContent().certifications || defaultTinaContent.certifications);
+		});
+		return unsubscribe;
+	}, []);
 
-  return certs;
+	return certs;
 }
-

@@ -1,364 +1,311 @@
 {
-  "portfolio": {
-    "developerName": "Hi, I'm Matan",
-    "title": "And I'm a AI-Driven Software Developer",
-    "location": "Tel Aviv, Israel",
-    "avatarUrl": "/profile.png",
-    "heroBio": "Software developer specializing in React, TypeScript, and full-stack web applications with 4 years of experience building scalable systems.",
-    "aboutTitle": "Where Software Engineering Meets AI",
-    "aboutBio1": "I’m a AI-Driven Software Engineer with about ~5 years of experience building digital products, scalable applications, and user-focused experiences. My background spans frontend engineering, backend development, and enterprise digital platforms. Today, I’m expanding that foundation into AI engineering exploring LLMs, intelligent systems, and agent-based workflows to build smarter, more capable software.",
-    "aboutBio2": "Tel Aviv, Israel · Available for hybrid or remote roles.",
-    "contactEmail": "matan2288@gmail.com",
-    "linkedInUrl": "https://www.linkedin.com/in/matan-elmaliach/",
-    "blogUrl": "https://devblog.app/",
-    "showBlogTab": true,
-    "stats": [
-      {
-        "value": "~5 Years",
-        "label": "Experience"
-      },
-      {
-        "value": "Applied GenAI",
-        "label": "LLMs & AI Agents"
-      },
-      {
-        "value": "AI · FE",
-        "label": "Focused"
-      }
-    ]
-  },
-  "experiences": [
-    {
-      "id": "amdocs-us-cellular",
-      "company": "UScellular / T-Mobile",
-      "role": "AI Engineer - Agentic Workflows & Frontend Platform",
-      "location": "Raanana, IL",
-      "period": "Jun 2025 – Present",
-      "isLatest": true,
-      "bullets": [
-        "Agent-Driven Development (ADD) & UI Architecture: Architected a spec-to-code pipeline using context engineering and structured agent workflows, adapting official client designs to existing system architecture or engineering new features and solutions for Apple, Samsung, and Google AEM launches.",
-        "Frontend Infrastructure & Developer Experience: Built reusable JavaScript utilities (WebView routing, asset paths, event tracking) documented in Confluence and approved by the client Lead Web Architect, pairing them with .cursorrules for 10 developers to slash boilerplate code and AI token costs across 55+ weekly tickets.",
-        "AI Workflow & MCP Standardization: Led team-wide adoption of Cursor coding agents, configuring modular rules and MCP toolchains (Figma, DevTools, Bitbucket) to align prompt patterns, prevent AI hallucinations, and standardize delivery.",
-        "Automated a11y Guardrails & Performance: Embedded ADA compliance into the agent coding lifecycle using custom AI guardrails and Chrome DevTools validation, maintaining zero Core Web Vitals regressions."
-      ],
-      "skills": [
-        "Agentic AI & MCP",
-        "RAG & Workflows",
-        "JavaScript Automation",
-        "AEM",
-        "GA4 / Firebase Analytics"
-      ]
-    },
-    {
-      "id": "amdocs-altice-usa",
-      "company": "Altice USA",
-      "role": "Frontend Infrastructure Engineer",
-      "location": "Raanana, IL",
-      "period": "Jan 2024 – Jun 2025",
-      "isLatest": false,
-      "bullets": [
-        "Analytics Infrastructure: Built Adobe Analytics architecture from scratch (20+ events) across e-commerce and Self-Care apps, leading bi-weekly client syncs as the Subject Matter Expert.",
-        "Identity & Authentication: Developed frontend OKTA SSO authentication infrastructure across customer-facing e-commerce and self-service applications.",
-        "CMS & E-Commerce Integrations: Shipped Drupal CMS modules, feature-flag rollouts, and core integrations including credit checks, device protection, and Google reCAPTCHA bot mitigation.",
-        "Mentorship & Engineering Standards: Mentored 2 engineers on cross-application architecture and complex integrations, tripling team delivery capacity while enforcing code quality via strict code reviews."
-      ],
-      "skills": [
-        "Frontend Infrastructure",
-        "Adobe Analytics",
-        "Okta SSO",
-        "Drupal / AEM",
-        "Code Reviews & Mentoring"
-      ]
-    },
-    {
-      "id": "amdocs-three-uk",
-      "company": "Three UK",
-      "role": "Frontend Engineer, E-Commerce & Regulated Systems",
-      "location": "Sderot, IL",
-      "period": "Jan 2023 – Jan 2024",
-      "isLatest": false,
-      "bullets": [
-        "End-to-End Ownership: Owned core frontend delivery for a UK regulatory telecom provider-switching system, enabling millions of subscribers to seamlessly transfer broadband and mobile services online.",
-        "Cross-Platform Feature Delivery: Shipped shared React and TypeScript features (Redux-Saga, MUI) across consumer web, retail tablets, and mobile applications.",
-        "Complex UI & Buy-Flows: Delivered broadband compliance flows, card-payment add-ons, and cart redesigns supporting eSIM, number allocation, and spend caps.",
-        "Delivered on-site production support at client locations in the UK, supporting release activities, troubleshooting critical issues, and improving technical documentation."
-      ],
-      "skills": [
-        "React",
-        "TypeScript",
-        "Redux-Saga",
-        "E-Commerce & Regulated Systems",
-        "On-Site UK Support"
-      ]
-    },
-    {
-      "id": "amdocs-altice-migration",
-      "company": "Altice USA",
-      "role": "Frontend Engineer, E-Commerce & Platform Migration",
-      "location": "Sderot, IL",
-      "period": "Jun 2022 – Jan 2023",
-      "isLatest": false,
-      "bullets": [
-        "Enterprise Platform Migration: Migrated a major storefront from React and Contentful to Vue.js, Drupal, and PHP on Acquia with zero customer disruption.",
-        "Checkout & Cart Architecture: Rebuilt core checkout, cart management, BYOD (Bring Your Own Device), and address validation flows to achieve 100% functional parity.",
-        "CMS Module Development: Delivered configurable Drupal CMS storefront modules and comprehensive buy-flow UI redesigns within a strict PI-based Agile cadence.",
-        "Cross-Functional Alignment: Coordinated feature grooming, technical specs, and QA validation directly with client stakeholders and Product Owners across two production apps."
-      ],
-      "skills": [
-        "Vue.js",
-        "Drupal & PHP",
-        "Storefront Migration",
-        "Checkout & Cart",
-        "Agile / Acquia"
-      ]
-    }
-  ],
-  "recommendations": [
-    {
-      "id": "rec-yasmin-avraham",
-      "author": "Yasmin Avraham",
-      "role": "Software Developer",
-      "company": "Amdocs",
-      "quote": "Matan and I worked together on the same team, and it was a great experience. He is very professional, reliable, and takes real responsibility for his work. Collaborating with him was always easy and pleasant because of his positive attitude and great teamwork.",
-      "avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQHS457yVUEBzw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1613906863914?e=1795651200&v=beta&t=57s4EU3j21tlRHbDYKbsKRnBeljfGnAVWgRxNjUsTFc",
-      "linkedInUrl": "https://www.linkedin.com/in/yasmin-avraham"
-    },
-    {
-      "id": "rec-eloisacssantos",
-      "author": "Eloisa Santos",
-      "role": "Business Analyst",
-      "company": "Amdocs",
-      "quote": "I had the pleasure of working with Matan on the same project, where I was the Product Owner and he worked as a developer.\n\nWhat I appreciated most about Matan was his willingness to collaborate and find the best solution for both the product and the technical implementation. He was always open to discussing requirements, clarifying details, and working through challenges together.\n\nMatan is a dedicated and reliable professional, with a positive attitude and a strong sense of ownership. Beyond his technical skills, he is someone who is easy to work with and who genuinely contributes to a healthy and productive team environment.\n\nI really enjoyed working with Matan and would be happy to work with him again. I highly recommend him and wish him all the best in his next professional challenge.",
-      "avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQF75yhO58TlJQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1634927036590?e=1795651200&v=beta&t=ddLXHyiK_UhYfzkg0x7MoeLs4VpFF1A9N7_UMu8uspQ",
-      "linkedInUrl": "https://www.linkedin.com/in/eloisacssantos"
-    },
-    {
-      "id": "rec-marios-panteli-88b69b198",
-      "author": "Marios Panteli",
-      "role": "Senior Tech Project Manager",
-      "company": "Fayara",
-      "quote": "I had the pleasure of working with Matan and can confidently say that he is a highly dedicated, professional, and talented individual.\n\nThroughout our collaboration, he consistently demonstrated strong technical skills, a proactive attitude, and a genuine commitment to delivering high-quality results. His ability to take ownership, collaborate effectively with colleagues, and approach challenges with a solution-oriented mindset made him a valuable member of the team.\n\nBeyond his professional capabilities, he bring a positive attitude, reliability, and a strong team spirit to everything he does.\n\nI truly enjoyed working with him and would highly recommend him to any team or organization looking for a skilled and committed professional. I wish him continued success in their career!",
-      "avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQHuEshoT2kZaQ/profile-displayphoto-scale_400_400/B4DZ5LgLUIJ4Ag-/0/1779383188265?e=1795651200&v=beta&t=Ldd5C-OsZXVNSpcxI0QIfhf8rTMr14-wILCDSbrTh2s",
-      "linkedInUrl": "https://www.linkedin.com/in/marios-panteli-88b69b198"
-    },
-    {
-      "id": "rec-ehud-marchi",
-      "author": "Ehud Marchi",
-      "role": "Software Engineer",
-      "company": "Amdocs",
-      "quote": "I had the pleasure of working with Matan, and he is a highly responsible and dedicated developer. He’s a great team player, reliable, supportive, and always willing to help. Matan is the kind of person who can make a real impact and be a valuable part of any team. I highly recommend him.",
-      "avatarUrl": "https://media.licdn.com/dms/image/v2/C5603AQFnZQZMPxDhEA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1607446226341?e=1795651200&v=beta&t=3eUqKeWQe0tghT_6Km0EZyibOeWHgqWjmrQ_r3enVyQ",
-      "linkedInUrl": "https://www.linkedin.com/in/ehud-marchi"
-    },
-    {
-      "id": "rec-adarsh-singh-b651b71b4",
-      "author": "Adarsh Singh",
-      "role": "Software QA Engineer",
-      "company": "Siemens",
-      "quote": "I had a great experience working with Matan, his frontend technical skills and collaborative approach make him a wonderful team player. I'd highly recommend him and wish him a very good luck.",
-      "avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGiax7VRW5ZKg/profile-displayphoto-scale_400_400/B4DZqtPL1aGgAg-/0/1763843031987?e=1795651200&v=beta&t=NH_F64x_sEcCbSpe88hpRPVxqWY7oxEt3Fi95G3oSBg",
-      "linkedInUrl": "https://www.linkedin.com/in/adarsh-singh-b651b71b4"
-    },
-    {
-      "id": "rec-noam-shmueli",
-      "author": "Noam Shmueli",
-      "role": "Product Owner",
-      "company": "B2B SaaS",
-      "quote": "It was a true pleasure working alongside Matan. He is an exceptionally precise and thoughtful software engineer who approaches every problem with high attention to detail.\n\nBeyond his technical sharpness, Matan is the ultimate team player - always willing to jump in to assist teammates, review code thoroughly, and contribute constructively to team discussions. \nI’d welcome the chance to work with him again without hesitation",
-      "avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQED8GBUweMlsQ/profile-displayphoto-scale_400_400/B4DZ3Y2WFHJsAg-/0/1777459619068?e=1795651200&v=beta&t=EI4uNpNUUut89m2vQvlsJKTdwnRKQFNCNZe6k_gZPs0",
-      "linkedInUrl": "https://www.linkedin.com/in/noam-shmueli"
-    },
-    {
-      "id": "rec-john-yaghobieh-4baa93107",
-      "author": "John Yaghobieh",
-      "role": "Tech Lead",
-      "company": "Agentic AI & Full-Stack",
-      "quote": "I highly recommend Matan. He is an incredibly hardworking professional who always tackles challenges head-on. He consistently goes above and beyond, taking full ownership of his projects. He is a natural leader who knows how to step up and drive things forward, maintaining the highest level of professionalism in everything he does. Any team would be lucky to have him on board.",
-      "avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQEX-1AvyayRTw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1619541513083?e=1795651200&v=beta&t=5GV3q8DGJidSdXg3d8mdVi_Un-g9vFoxebHu4QWRfss",
-      "linkedInUrl": "https://www.linkedin.com/in/john-yaghobieh-4baa93107"
-    },
-    {
-      "id": "rec-refael-huri-0a8b48168",
-      "author": "Refael Huri",
-      "role": "Software Engineer",
-      "company": "Amdocs",
-      "quote": "It was an absolute pleasure working with Matan on our software engineering project. Matan is a highly talented, dedicated, and detail-oriented developer who consistently delivers high-quality code and robust solutions.\n\nThroughout our collaboration, he demonstrated exceptional problem-solving skills, a deep understanding of software architecture, and the ability to tackle complex technical challenges efficiently. Beyond his technical prowess, Matan is a fantastic team player-collaborative, communicative, and always willing to support his peers. Any development team would be lucky to have him.\"",
-      "avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQHpAvHrz7-csQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1538035308408?e=1795651200&v=beta&t=IpT7vSBEaRU9kOVj4MP1vYPAeadeMoIttlVuDsGaMK0",
-      "linkedInUrl": "https://www.linkedin.com/in/refael-huri-0a8b48168"
-    },
-    {
-      "id": "rec-tomer-steiner-full-stack",
-      "author": "Tomer Steiner",
-      "role": "Senior Software Engineer",
-      "company": "Amdocs",
-      "quote": "I had the pleasure of working with Matan at Amdocs, where we were part of the same team, collaborating on the development of our project's website.\n\nMatan is an excellent UI Developer with strong expertise in React and modern front-end technologies. He consistently demonstrated great technical skills, attention to detail, and the ability to deliver high-quality, clean, and maintainable code.\n\nBeyond his technical abilities, Matan is a great team player, always willing to collaborate, share knowledge, and help others. He is professional, dedicated, and brings a positive attitude to the team.\n\nI highly recommend Matan to any team looking for a talented and reliable Front-End Developer.",
-      "avatarUrl": "https://media.licdn.com/dms/image/v2/C5603AQFG-yXGoJoJ2w/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1545034444673?e=1795651200&v=beta&t=cLxI0sSiSUYtyHEDug51XluXIdp6jhODdZI0EpVnDfc",
-      "linkedInUrl": "https://www.linkedin.com/in/tomer-steiner-full-stack"
-    },
-    {
-      "id": "rec-omri-biton-04369b147",
-      "author": "Omri Biton",
-      "role": "Software Developer",
-      "company": "Amdocs",
-      "quote": "I had the pleasure of working alongside Matan at Amdocs on the Digital UI program for Altice, where we were both frontend developers on the same customer-facing platform.\n\nMatan is a strong full-stack developer with deep frontend skills. He's highly proficient in React, JavaScript and modern UI tooling. What stands out most is his curiosity and drive to keep improving. He's always among the first to explore new technologies, whether that's upgrading our component tooling or adopting AI-assisted development tools early and showing the team how much time they can save. He did all this while pursuing his degree, which says a lot about his discipline and work ethic.\n\nHe contributed to successful deliveries, including an Okta integration demo that was well received. He's also a great teammate. He's generous with his knowledge, always ready to discuss an architecture idea or help debug a tricky configuration, and he's honest and practical when giving advice.\n\nAny team would be lucky to have Matan. I highly recommend him.",
-      "avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGNAkgrnvW8Qw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1687553332034?e=1795651200&v=beta&t=Ehj9snbI49g1FqauWB9rN2AUCuw-xv4zLJ1rRywD2Jw",
-      "linkedInUrl": "https://www.linkedin.com/in/omri-biton-04369b147"
-    }
-  ],
-  "certifications": [
-    {
-      "id": "google-drive-certification-166d9ne",
-      "title": "AI Engineer Core Track - LLM Engineering, RAG, Agents",
-      "category": "AI",
-      "topic": "LLM Engineering, RAG, Agents",
-      "issuer": "Verified Certification",
-      "issueDate": "2026",
-      "credentialId": "166d9NE_UmFvv10z7MPBHFT_DCIrAeUly",
-      "description": "Comprehensive certification covering LLM Engineering, Retrieval-Augmented Generation (RAG), and autonomous AI Agents.",
-      "skills": [
-        "LLM Engineering",
-        "RAG",
-        "AI Agents",
-        "GenAI",
-        "Prompt Engineering"
-      ],
-      "driveUrl": "https://drive.google.com/file/d/12NfmEOV-ASf6kZ-wrx5et6dlclZfdHkH/view?usp=sharing",
-      "verificationUrl": "https://drive.google.com/drive/folders/166d9NE_UmFvv10z7MPBHFT_DCIrAeUly"
-    },
-    {
-      "id": "etgar-bootcamp",
-      "title": "Full-Stack Web Development Diploma (335h)",
-      "category": "Full Stack",
-      "topic": "Full-Stack Web Development",
-      "issuer": "Ministry of Labor & Etgar College",
-      "issueDate": "2020",
-      "credentialId": "1349438",
-      "description": "Official Israeli Ministry of Labor and Etgar College certification in Full Stack Web Technologies & Applications (335 accredited academic hours) covering JavaScript, React, Node.js, and SQL.",
-      "skills": [
-        "JavaScript",
-        "React",
-        "Node.js",
-        "SQL",
-        "Web Applications"
-      ],
-      "driveUrl": "/certifications/Web_Dev_Bootcamp_Certification_24e0b667.pdf",
-      "verificationUrl": "/certifications/Web_Dev_Bootcamp_Certification_24e0b667.pdf"
-    },
-    {
-      "id": "securing-genai-systems",
-      "title": "Securing GenAI Systems",
-      "category": "AI Security",
-      "topic": "GenAI Security & Safety",
-      "issuer": "Udemy",
-      "issueDate": "Aug 2026",
-      "credentialId": "UC-1286298a-0720-4cf6-ae5a-956141931da7",
-      "description": "Specialized certification in securing generative AI architectures, prompt injection defenses, LLM guardrails, data leakage mitigation, and AI safety.",
-      "skills": [
-        "GenAI Security",
-        "LLM Guardrails",
-        "Prompt Injection Defense",
-        "AI Safety"
-      ],
-      "driveUrl": "/certifications/Securing_GenAI_Systems_certification_7039d733.pdf",
-      "verificationUrl": "https://ude.my/UC-1286298a-0720-4cf6-ae5a-956141931da7"
-    },
-    {
-      "id": "principles-secure-coding",
-      "title": "Principles of Secure Coding",
-      "category": "Security",
-      "topic": "Application Security",
-      "issuer": "Udemy",
-      "issueDate": "Aug 2026",
-      "credentialId": "UC-936ff33b-c9d1-40b2-8f2d-2435d5ee5c3c",
-      "description": "Certified training in secure coding fundamentals, application security principles, defensive architecture, and vulnerability prevention.",
-      "skills": [
-        "Secure Coding",
-        "AppSec",
-        "Vulnerability Prevention",
-        "OWASP"
-      ],
-      "driveUrl": "/certifications/Principles_of_Secure_Coding_certfication_da0fed44.pdf",
-      "verificationUrl": "https://ude.my/UC-936ff33b-c9d1-40b2-8f2d-2435d5ee5c3c"
-    },
-    {
-      "id": "cursor-genai-sdlc",
-      "title": "Cursor: GenAI Driven SDLC",
-      "category": "AI",
-      "topic": "GenAI & SDLC Engineering",
-      "issuer": "Amdocs",
-      "issueDate": "Jun 2026",
-      "credentialId": "AMDOCS-CURSOR-2026",
-      "description": "Certificate of completion for the Amdocs learning plan in Cursor & GenAI-Driven Software Development Life Cycle (SDLC).",
-      "skills": [
-        "Cursor",
-        "GenAI",
-        "SDLC",
-        "Code Automation",
-        "AI Engineering"
-      ],
-      "driveUrl": "/certifications/Cursor_Certification_Andics_ab86ae39.pdf",
-      "verificationUrl": "/certifications/Cursor_Certification_Andics_ab86ae39.pdf"
-    }
-  ],
-  "skills": [
-    {
-      "title": "Core Frontend Frameworks",
-      "items": [
-        "React",
-        "React Native",
-        "Vue 3",
-        "Redux Toolkit",
-        "Redux-Saga",
-        "Vuex",
-        "TypeScript",
-        "JavaScript (ES6+)"
-      ]
-    },
-    {
-      "title": "Styling & UI Architecture",
-      "items": [
-        "Sass / SCSS",
-        "Tailwind CSS",
-        "Storybook",
-        "Framer Motion",
-        "Semantic HTML5",
-        "ARIA Accessibility"
-      ]
-    },
-    {
-      "title": "Backend & Databases",
-      "items": [
-        "Node.js",
-        "Java",
-        "Express.js",
-        "MySQL",
-        "MongoDB",
-        "RESTful APIs"
-      ]
-    },
-    {
-      "title": "CMS & Platforms",
-      "items": [
-        "Adobe Experience Manager (AEM)",
-        "Drupal",
-        "PHP",
-        "Contentful CMS",
-        "TinaCMS"
-      ]
-    },
-    {
-      "title": "Artificial Intelligence & Workspaces",
-      "items": [
-        "Agent Orchestration",
-        "Context Engineering",
-        "RAG pipelines",
-        "Semantic Embeddings",
-        "VectorDB",
-        "MCP Servers",
-        "Figma",
-        "Playwright automation",
-        "Vitest"
-      ]
-    }
-  ]
+	"portfolio": {
+		"developerName": "Hi, I'm Matan",
+		"title": "And I'm a AI-Driven Software Developer",
+		"location": "Tel Aviv, Israel",
+		"avatarUrl": "/profile.png",
+		"heroBio": "Software developer specializing in React, TypeScript, and full-stack web applications with 4 years of experience building scalable systems.",
+		"aboutTitle": "Where Software Engineering Meets AI",
+		"aboutBio1": "I’m a AI-Driven Software Engineer with about ~5 years of experience building digital products, scalable applications, and user-focused experiences. My background spans frontend engineering, backend development, and enterprise digital platforms. Today, I’m expanding that foundation into AI engineering exploring LLMs, intelligent systems, and agent-based workflows to build smarter, more capable software.",
+		"aboutBio2": "Tel Aviv, Israel · Available for hybrid or remote roles.",
+		"contactEmail": "matan2288@gmail.com",
+		"linkedInUrl": "https://www.linkedin.com/in/matan-elmaliach/",
+		"blogUrl": "https://devblog.app/",
+		"showBlogTab": true,
+		"stats": [
+			{
+				"value": "~5 Years",
+				"label": "Experience"
+			},
+			{
+				"value": "Applied GenAI",
+				"label": "LLMs & AI Agents"
+			},
+			{
+				"value": "AI · FE",
+				"label": "Focused"
+			}
+		]
+	},
+	"experiences": [
+		{
+			"id": "amdocs-us-cellular",
+			"company": "UScellular / T-Mobile",
+			"role": "AI Engineer - Agentic Workflows & Frontend Platform",
+			"location": "Raanana, IL",
+			"period": "Jun 2025 – Present",
+			"isLatest": true,
+			"bullets": [
+				"Agent-Driven Development (ADD) & UI Architecture: Architected a spec-to-code pipeline using context engineering and structured agent workflows, adapting official client designs to existing system architecture or engineering new features and solutions for Apple, Samsung, and Google AEM launches.",
+				"Frontend Infrastructure & Developer Experience: Built reusable JavaScript utilities (WebView routing, asset paths, event tracking) documented in Confluence and approved by the client Lead Web Architect, pairing them with .cursorrules for 10 developers to slash boilerplate code and AI token costs across 55+ weekly tickets.",
+				"AI Workflow & MCP Standardization: Led team-wide adoption of Cursor coding agents, configuring modular rules and MCP toolchains (Figma, DevTools, Bitbucket) to align prompt patterns, prevent AI hallucinations, and standardize delivery.",
+				"Automated a11y Guardrails & Performance: Embedded ADA compliance into the agent coding lifecycle using custom AI guardrails and Chrome DevTools validation, maintaining zero Core Web Vitals regressions."
+			],
+			"skills": [
+				"Agentic AI & MCP",
+				"RAG & Workflows",
+				"JavaScript Automation",
+				"AEM",
+				"GA4 / Firebase Analytics"
+			]
+		},
+		{
+			"id": "amdocs-altice-usa",
+			"company": "Altice USA",
+			"role": "Frontend Infrastructure Engineer",
+			"location": "Raanana, IL",
+			"period": "Jan 2024 – Jun 2025",
+			"isLatest": false,
+			"bullets": [
+				"Analytics Infrastructure: Built Adobe Analytics architecture from scratch (20+ events) across e-commerce and Self-Care apps, leading bi-weekly client syncs as the Subject Matter Expert.",
+				"Identity & Authentication: Developed frontend OKTA SSO authentication infrastructure across customer-facing e-commerce and self-service applications.",
+				"CMS & E-Commerce Integrations: Shipped Drupal CMS modules, feature-flag rollouts, and core integrations including credit checks, device protection, and Google reCAPTCHA bot mitigation.",
+				"Mentorship & Engineering Standards: Mentored 2 engineers on cross-application architecture and complex integrations, tripling team delivery capacity while enforcing code quality via strict code reviews."
+			],
+			"skills": [
+				"Frontend Infrastructure",
+				"Adobe Analytics",
+				"Okta SSO",
+				"Drupal / AEM",
+				"Code Reviews & Mentoring"
+			]
+		},
+		{
+			"id": "amdocs-three-uk",
+			"company": "Three UK",
+			"role": "Frontend Engineer, E-Commerce & Regulated Systems",
+			"location": "Sderot, IL",
+			"period": "Jan 2023 – Jan 2024",
+			"isLatest": false,
+			"bullets": [
+				"End-to-End Ownership: Owned core frontend delivery for a UK regulatory telecom provider-switching system, enabling millions of subscribers to seamlessly transfer broadband and mobile services online.",
+				"Cross-Platform Feature Delivery: Shipped shared React and TypeScript features (Redux-Saga, MUI) across consumer web, retail tablets, and mobile applications.",
+				"Complex UI & Buy-Flows: Delivered broadband compliance flows, card-payment add-ons, and cart redesigns supporting eSIM, number allocation, and spend caps.",
+				"Delivered on-site production support at client locations in the UK, supporting release activities, troubleshooting critical issues, and improving technical documentation."
+			],
+			"skills": ["React", "TypeScript", "Redux-Saga", "E-Commerce & Regulated Systems", "On-Site UK Support"]
+		},
+		{
+			"id": "amdocs-altice-migration",
+			"company": "Altice USA",
+			"role": "Frontend Engineer, E-Commerce & Platform Migration",
+			"location": "Sderot, IL",
+			"period": "Jun 2022 – Jan 2023",
+			"isLatest": false,
+			"bullets": [
+				"Enterprise Platform Migration: Migrated a major storefront from React and Contentful to Vue.js, Drupal, and PHP on Acquia with zero customer disruption.",
+				"Checkout & Cart Architecture: Rebuilt core checkout, cart management, BYOD (Bring Your Own Device), and address validation flows to achieve 100% functional parity.",
+				"CMS Module Development: Delivered configurable Drupal CMS storefront modules and comprehensive buy-flow UI redesigns within a strict PI-based Agile cadence.",
+				"Cross-Functional Alignment: Coordinated feature grooming, technical specs, and QA validation directly with client stakeholders and Product Owners across two production apps."
+			],
+			"skills": ["Vue.js", "Drupal & PHP", "Storefront Migration", "Checkout & Cart", "Agile / Acquia"]
+		}
+	],
+	"recommendations": [
+		{
+			"id": "rec-yasmin-avraham",
+			"author": "Yasmin Avraham",
+			"role": "Software Developer",
+			"company": "Amdocs",
+			"quote": "Matan and I worked together on the same team, and it was a great experience. He is very professional, reliable, and takes real responsibility for his work. Collaborating with him was always easy and pleasant because of his positive attitude and great teamwork.",
+			"avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQHS457yVUEBzw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1613906863914?e=1795651200&v=beta&t=57s4EU3j21tlRHbDYKbsKRnBeljfGnAVWgRxNjUsTFc",
+			"linkedInUrl": "https://www.linkedin.com/in/yasmin-avraham"
+		},
+		{
+			"id": "rec-eloisacssantos",
+			"author": "Eloisa Santos",
+			"role": "Business Analyst",
+			"company": "Amdocs",
+			"quote": "I had the pleasure of working with Matan on the same project, where I was the Product Owner and he worked as a developer.\n\nWhat I appreciated most about Matan was his willingness to collaborate and find the best solution for both the product and the technical implementation. He was always open to discussing requirements, clarifying details, and working through challenges together.\n\nMatan is a dedicated and reliable professional, with a positive attitude and a strong sense of ownership. Beyond his technical skills, he is someone who is easy to work with and who genuinely contributes to a healthy and productive team environment.\n\nI really enjoyed working with Matan and would be happy to work with him again. I highly recommend him and wish him all the best in his next professional challenge.",
+			"avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQF75yhO58TlJQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1634927036590?e=1795651200&v=beta&t=ddLXHyiK_UhYfzkg0x7MoeLs4VpFF1A9N7_UMu8uspQ",
+			"linkedInUrl": "https://www.linkedin.com/in/eloisacssantos"
+		},
+		{
+			"id": "rec-marios-panteli-88b69b198",
+			"author": "Marios Panteli",
+			"role": "Senior Tech Project Manager",
+			"company": "Fayara",
+			"quote": "I had the pleasure of working with Matan and can confidently say that he is a highly dedicated, professional, and talented individual.\n\nThroughout our collaboration, he consistently demonstrated strong technical skills, a proactive attitude, and a genuine commitment to delivering high-quality results. His ability to take ownership, collaborate effectively with colleagues, and approach challenges with a solution-oriented mindset made him a valuable member of the team.\n\nBeyond his professional capabilities, he bring a positive attitude, reliability, and a strong team spirit to everything he does.\n\nI truly enjoyed working with him and would highly recommend him to any team or organization looking for a skilled and committed professional. I wish him continued success in their career!",
+			"avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQHuEshoT2kZaQ/profile-displayphoto-scale_400_400/B4DZ5LgLUIJ4Ag-/0/1779383188265?e=1795651200&v=beta&t=Ldd5C-OsZXVNSpcxI0QIfhf8rTMr14-wILCDSbrTh2s",
+			"linkedInUrl": "https://www.linkedin.com/in/marios-panteli-88b69b198"
+		},
+		{
+			"id": "rec-ehud-marchi",
+			"author": "Ehud Marchi",
+			"role": "Software Engineer",
+			"company": "Amdocs",
+			"quote": "I had the pleasure of working with Matan, and he is a highly responsible and dedicated developer. He’s a great team player, reliable, supportive, and always willing to help. Matan is the kind of person who can make a real impact and be a valuable part of any team. I highly recommend him.",
+			"avatarUrl": "https://media.licdn.com/dms/image/v2/C5603AQFnZQZMPxDhEA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1607446226341?e=1795651200&v=beta&t=3eUqKeWQe0tghT_6Km0EZyibOeWHgqWjmrQ_r3enVyQ",
+			"linkedInUrl": "https://www.linkedin.com/in/ehud-marchi"
+		},
+		{
+			"id": "rec-adarsh-singh-b651b71b4",
+			"author": "Adarsh Singh",
+			"role": "Software QA Engineer",
+			"company": "Siemens",
+			"quote": "I had a great experience working with Matan, his frontend technical skills and collaborative approach make him a wonderful team player. I'd highly recommend him and wish him a very good luck.",
+			"avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGiax7VRW5ZKg/profile-displayphoto-scale_400_400/B4DZqtPL1aGgAg-/0/1763843031987?e=1795651200&v=beta&t=NH_F64x_sEcCbSpe88hpRPVxqWY7oxEt3Fi95G3oSBg",
+			"linkedInUrl": "https://www.linkedin.com/in/adarsh-singh-b651b71b4"
+		},
+		{
+			"id": "rec-noam-shmueli",
+			"author": "Noam Shmueli",
+			"role": "Product Owner",
+			"company": "B2B SaaS",
+			"quote": "It was a true pleasure working alongside Matan. He is an exceptionally precise and thoughtful software engineer who approaches every problem with high attention to detail.\n\nBeyond his technical sharpness, Matan is the ultimate team player - always willing to jump in to assist teammates, review code thoroughly, and contribute constructively to team discussions. \nI’d welcome the chance to work with him again without hesitation",
+			"avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQED8GBUweMlsQ/profile-displayphoto-scale_400_400/B4DZ3Y2WFHJsAg-/0/1777459619068?e=1795651200&v=beta&t=EI4uNpNUUut89m2vQvlsJKTdwnRKQFNCNZe6k_gZPs0",
+			"linkedInUrl": "https://www.linkedin.com/in/noam-shmueli"
+		},
+		{
+			"id": "rec-john-yaghobieh-4baa93107",
+			"author": "John Yaghobieh",
+			"role": "Tech Lead",
+			"company": "Agentic AI & Full-Stack",
+			"quote": "I highly recommend Matan. He is an incredibly hardworking professional who always tackles challenges head-on. He consistently goes above and beyond, taking full ownership of his projects. He is a natural leader who knows how to step up and drive things forward, maintaining the highest level of professionalism in everything he does. Any team would be lucky to have him on board.",
+			"avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQEX-1AvyayRTw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1619541513083?e=1795651200&v=beta&t=5GV3q8DGJidSdXg3d8mdVi_Un-g9vFoxebHu4QWRfss",
+			"linkedInUrl": "https://www.linkedin.com/in/john-yaghobieh-4baa93107"
+		},
+		{
+			"id": "rec-refael-huri-0a8b48168",
+			"author": "Refael Huri",
+			"role": "Software Engineer",
+			"company": "Amdocs",
+			"quote": "It was an absolute pleasure working with Matan on our software engineering project. Matan is a highly talented, dedicated, and detail-oriented developer who consistently delivers high-quality code and robust solutions.\n\nThroughout our collaboration, he demonstrated exceptional problem-solving skills, a deep understanding of software architecture, and the ability to tackle complex technical challenges efficiently. Beyond his technical prowess, Matan is a fantastic team player-collaborative, communicative, and always willing to support his peers. Any development team would be lucky to have him.\"",
+			"avatarUrl": "https://media.licdn.com/dms/image/v2/C4D03AQHpAvHrz7-csQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1538035308408?e=1795651200&v=beta&t=IpT7vSBEaRU9kOVj4MP1vYPAeadeMoIttlVuDsGaMK0",
+			"linkedInUrl": "https://www.linkedin.com/in/refael-huri-0a8b48168"
+		},
+		{
+			"id": "rec-tomer-steiner-full-stack",
+			"author": "Tomer Steiner",
+			"role": "Senior Software Engineer",
+			"company": "Amdocs",
+			"quote": "I had the pleasure of working with Matan at Amdocs, where we were part of the same team, collaborating on the development of our project's website.\n\nMatan is an excellent UI Developer with strong expertise in React and modern front-end technologies. He consistently demonstrated great technical skills, attention to detail, and the ability to deliver high-quality, clean, and maintainable code.\n\nBeyond his technical abilities, Matan is a great team player, always willing to collaborate, share knowledge, and help others. He is professional, dedicated, and brings a positive attitude to the team.\n\nI highly recommend Matan to any team looking for a talented and reliable Front-End Developer.",
+			"avatarUrl": "https://media.licdn.com/dms/image/v2/C5603AQFG-yXGoJoJ2w/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1545034444673?e=1795651200&v=beta&t=cLxI0sSiSUYtyHEDug51XluXIdp6jhODdZI0EpVnDfc",
+			"linkedInUrl": "https://www.linkedin.com/in/tomer-steiner-full-stack"
+		},
+		{
+			"id": "rec-omri-biton-04369b147",
+			"author": "Omri Biton",
+			"role": "Software Developer",
+			"company": "Amdocs",
+			"quote": "I had the pleasure of working alongside Matan at Amdocs on the Digital UI program for Altice, where we were both frontend developers on the same customer-facing platform.\n\nMatan is a strong full-stack developer with deep frontend skills. He's highly proficient in React, JavaScript and modern UI tooling. What stands out most is his curiosity and drive to keep improving. He's always among the first to explore new technologies, whether that's upgrading our component tooling or adopting AI-assisted development tools early and showing the team how much time they can save. He did all this while pursuing his degree, which says a lot about his discipline and work ethic.\n\nHe contributed to successful deliveries, including an Okta integration demo that was well received. He's also a great teammate. He's generous with his knowledge, always ready to discuss an architecture idea or help debug a tricky configuration, and he's honest and practical when giving advice.\n\nAny team would be lucky to have Matan. I highly recommend him.",
+			"avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGNAkgrnvW8Qw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1687553332034?e=1795651200&v=beta&t=Ehj9snbI49g1FqauWB9rN2AUCuw-xv4zLJ1rRywD2Jw",
+			"linkedInUrl": "https://www.linkedin.com/in/omri-biton-04369b147"
+		}
+	],
+	"certifications": [
+		{
+			"id": "google-drive-certification-166d9ne",
+			"title": "AI Engineer Core Track - LLM Engineering, RAG, Agents",
+			"category": "AI",
+			"topic": "LLM Engineering, RAG, Agents",
+			"issuer": "Udemy",
+			"issueDate": "",
+			"credentialId": "166d9NE_UmFvv10z7MPBHFT_DCIrAeUly",
+			"description": "Comprehensive certification covering LLM Engineering, Retrieval-Augmented Generation (RAG), and autonomous AI Agents.",
+			"skills": ["LLM Engineering", "RAG", "AI Agents", "GenAI", "Prompt Engineering"],
+			"driveUrl": "https://drive.google.com/file/d/12NfmEOV-ASf6kZ-wrx5et6dlclZfdHkH/view?usp=sharing",
+			"verificationUrl": "https://drive.google.com/drive/folders/166d9NE_UmFvv10z7MPBHFT_DCIrAeUly"
+		},
+		{
+			"id": "etgar-bootcamp",
+			"title": "Full-Stack Web Development Diploma (335h)",
+			"category": "Full Stack",
+			"topic": "Full-Stack Web Development",
+			"issuer": "Ministry of Labor & Etgar College",
+			"issueDate": "",
+			"credentialId": "1349438",
+			"description": "Official Israeli Ministry of Labor and Etgar College certification in Full Stack Web Technologies & Applications (335 accredited academic hours) covering JavaScript, React, Node.js, and SQL.",
+			"skills": ["JavaScript", "React", "Node.js", "SQL", "Web Applications"],
+			"driveUrl": "/certifications/Web_Dev_Bootcamp_Certification_24e0b667.pdf",
+			"verificationUrl": "/certifications/Web_Dev_Bootcamp_Certification_24e0b667.pdf"
+		},
+		{
+			"id": "securing-genai-systems",
+			"title": "Securing GenAI Systems",
+			"category": "AI Security",
+			"topic": "GenAI Security & Safety",
+			"issuer": "Udemy",
+			"issueDate": "",
+			"credentialId": "UC-1286298a-0720-4cf6-ae5a-956141931da7",
+			"description": "Specialized certification in securing generative AI architectures, prompt injection defenses, LLM guardrails, data leakage mitigation, and AI safety.",
+			"skills": ["GenAI Security", "LLM Guardrails", "Prompt Injection Defense", "AI Safety"],
+			"driveUrl": "/certifications/Securing_GenAI_Systems_certification_7039d733.pdf",
+			"verificationUrl": "https://ude.my/UC-1286298a-0720-4cf6-ae5a-956141931da7"
+		},
+		{
+			"id": "principles-secure-coding",
+			"title": "Principles of Secure Coding",
+			"category": "Security",
+			"topic": "Application Security",
+			"issuer": "Udemy",
+			"issueDate": "",
+			"credentialId": "UC-936ff33b-c9d1-40b2-8f2d-2435d5ee5c3c",
+			"description": "Certified training in secure coding fundamentals, application security principles, defensive architecture, and vulnerability prevention.",
+			"skills": ["Secure Coding", "AppSec", "Vulnerability Prevention", "OWASP"],
+			"driveUrl": "/certifications/Principles_of_Secure_Coding_certfication_da0fed44.pdf",
+			"verificationUrl": "https://ude.my/UC-936ff33b-c9d1-40b2-8f2d-2435d5ee5c3c"
+		},
+		{
+			"id": "cursor-genai-sdlc",
+			"title": "Cursor: GenAI Driven SDLC",
+			"category": "AI",
+			"topic": "GenAI & SDLC Engineering",
+			"issuer": "Amdocs",
+			"issueDate": "",
+			"credentialId": "AMDOCS-CURSOR-2026",
+			"description": "Certificate of completion for the Amdocs learning plan in Cursor & GenAI-Driven Software Development Life Cycle (SDLC).",
+			"skills": ["Cursor", "GenAI", "SDLC", "Code Automation", "AI Engineering"],
+			"driveUrl": "/certifications/Cursor_Certification_Andics_ab86ae39.pdf",
+			"verificationUrl": "/certifications/Cursor_Certification_Andics_ab86ae39.pdf"
+		}
+	],
+	"skills": [
+		{
+			"title": "Core Frontend Frameworks",
+			"items": [
+				"React",
+				"React Native",
+				"Vue 3",
+				"Redux Toolkit",
+				"Redux-Saga",
+				"Vuex",
+				"TypeScript",
+				"JavaScript (ES6+)"
+			]
+		},
+		{
+			"title": "Styling & UI Architecture",
+			"items": [
+				"Sass / SCSS",
+				"Tailwind CSS",
+				"Storybook",
+				"Framer Motion",
+				"Semantic HTML5",
+				"ARIA Accessibility"
+			]
+		},
+		{
+			"title": "Backend & Databases",
+			"items": ["Node.js", "Java", "Express.js", "MySQL", "MongoDB", "RESTful APIs"]
+		},
+		{
+			"title": "CMS & Platforms",
+			"items": ["Adobe Experience Manager (AEM)", "Drupal", "PHP", "Contentful CMS", "TinaCMS"]
+		},
+		{
+			"title": "Artificial Intelligence & Workspaces",
+			"items": [
+				"Agent Orchestration",
+				"Context Engineering",
+				"RAG pipelines",
+				"Semantic Embeddings",
+				"VectorDB",
+				"MCP Servers",
+				"Figma",
+				"Playwright automation",
+				"Vitest"
+			]
+		}
+	]
 }
