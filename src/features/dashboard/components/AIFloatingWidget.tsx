@@ -169,11 +169,10 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
 											className={`flex flex-col ${isModel ? 'items-start' : 'items-end'} w-full space-y-1`}
 										>
 											<div
-												className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed break-words ${
-													isModel
+												className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed break-words ${isModel
 														? 'text-text border-border rounded-tl-xs border bg-neutral-50'
 														: 'bg-text rounded-tr-xs font-normal text-white shadow-2xs'
-												}`}
+													}`}
 											>
 												<div className="whitespace-pre-wrap">
 													{renderFormattedContent(m.text)}
@@ -196,8 +195,8 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
 														>
 															<span>
 																{showInquiries
-																	? 'Hide Inquiries'
-																	: 'Suggested Inquiries (8)'}
+																? 'Hide Prompts'
+																	: 'Suggested Prompts (8)'}
 															</span>
 															<ChevronDown
 																size={12}
@@ -207,7 +206,7 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
 													</div>
 												) : (
 													<span className="text-text-muted block text-[10px] font-semibold tracking-wider uppercase">
-														Quick Inquiries
+														Quick Prompts
 													</span>
 												)}
 
@@ -299,29 +298,28 @@ export const AIFloatingWidget: React.FC<AIFloatingWidgetProps> = ({
 				whileTap={{ scale: 0.98 }}
 				transition={{ type: 'spring', stiffness: 400, damping: 25 }}
 				onClick={toggleChat}
-				className={`text-text pointer-events-auto relative inline-flex h-10 cursor-pointer items-center justify-center gap-2 rounded-full border bg-white px-4 transition-all sm:h-10.5 sm:px-4.5 ${
-					shouldBlink
+				className={`text-text pointer-events-auto relative inline-flex h-10 cursor-pointer items-center justify-center gap-2 rounded-full border bg-white px-4 transition-all sm:h-10.5 sm:px-4.5 ${shouldBlink
 						? 'animate-minimal-blink border-neutral-300 font-medium'
 						: 'border-border/80 font-medium shadow-sm hover:border-neutral-300 hover:bg-neutral-50 hover:shadow-md'
-				}`}
+					}`}
 				aria-label="Toggle AI Assistant"
 			>
 				<motion.div
 					animate={
 						loading
 							? {
-									scale: [1, 1.08, 1],
-									opacity: [0.7, 1, 0.7],
-								}
+								scale: [1, 1.08, 1],
+								opacity: [0.7, 1, 0.7],
+							}
 							: { scale: 1, opacity: 1 }
 					}
 					transition={
 						loading
 							? {
-									duration: 1.2,
-									repeat: Infinity,
-									ease: 'easeInOut',
-								}
+								duration: 1.2,
+								repeat: Infinity,
+								ease: 'easeInOut',
+							}
 							: { duration: 0.2 }
 					}
 					className="flex shrink-0 origin-center items-center justify-center bg-transparent"
