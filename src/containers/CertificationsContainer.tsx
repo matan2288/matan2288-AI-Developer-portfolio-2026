@@ -131,11 +131,11 @@ export const CertificationsContainer: React.FC<CertificationsContainerProps> = (
 
       {/* Show Google Drive & Local PDF Modal Viewer */}
       {selectedCert && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-4 sm:p-8 animate-in fade-in duration-200">
           <div
-            className={`bg-white rounded-xl border border-border shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ${isFullscreen
+            className={`bg-white rounded-2xl border border-border/80 shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ${isFullscreen
               ? 'w-full h-full max-w-none max-h-none rounded-none'
-              : 'w-full max-w-4xl h-[85vh]'
+              : 'w-full max-w-3xl h-[82vh]'
               }`}
           >
             {/* Modal Header */}

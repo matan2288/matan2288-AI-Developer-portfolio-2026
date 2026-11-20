@@ -15,7 +15,7 @@ export const AICommandBar: React.FC = () => {
 
   const [inputQuery, setInputQuery] = useState('');
   const [copied, setCopied] = useState(false);
-  const [showResponse, setShowResponse] = useState(true);
+  const [showResponse, setShowResponse] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onSubmit = async (e: React.FormEvent) => {

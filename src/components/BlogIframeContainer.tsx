@@ -177,26 +177,26 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
         {hasTimedOut && !isLoaded && (
           <div className="absolute inset-0 bg-white flex flex-col items-center justify-center p-6 z-20 text-center animate-fadeIn">
             <div className="max-w-md w-full p-6 sm:p-8 bg-transparent border-0 shadow-none text-center space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-transparent border-0 flex items-center justify-center mx-auto text-neutral-400">
-                <Globe size={24} />
+              <div className="w-10 h-10 rounded-xl bg-transparent border-0 flex items-center justify-center mx-auto text-neutral-300">
+                <Globe size={22} />
               </div>
 
-              <div className="space-y-1.5">
-                <h3 className="text-base sm:text-lg font-bold text-neutral-700 uppercase tracking-tight font-heading">
+              <div className="space-y-1">
+                <h3 className="text-sm font-semibold text-neutral-700 tracking-tight">
                   External Engineering Blog
                 </h3>
-                <p className="text-xs text-text-muted leading-relaxed font-mono break-all">
+                <p className="text-[11px] text-neutral-400 leading-relaxed font-mono break-all">
                   {iframeUrl}
                 </p>
               </div>
 
-              <div className="p-3 bg-neutral-50/70 rounded-xl border-0 text-left text-xs text-text-muted space-y-1">
-                <div className="flex items-center gap-1.5 font-semibold text-text text-[11px]">
-                  <ShieldAlert size={13} className="text-amber-600 shrink-0" />
+              <div className="p-3 bg-neutral-50/50 rounded-xl border-0 text-left text-[11px] text-neutral-500 space-y-1">
+                <div className="flex items-center gap-1.5 font-medium text-neutral-700 text-[11px]">
+                  <ShieldAlert size={12} className="text-neutral-400 shrink-0" />
                   <span>External Host Protection</span>
                 </div>
-                <p className="text-[11px] text-text-muted leading-relaxed">
-                  Major publication platforms (Google, Medium, Substack) restrict direct iframe embedding through browser security headers (<code className="text-[10px] bg-neutral-100 px-1 py-0.5 rounded">X-Frame-Options</code>).
+                <p className="text-[11px] text-neutral-400 leading-relaxed">
+                  External platforms restrict direct iframe embedding through security headers (<code className="text-[10px] bg-neutral-100 px-1 py-0.5 rounded text-neutral-600">X-Frame-Options</code>).
                 </p>
               </div>
 
@@ -205,16 +205,16 @@ export const BlogIframeContainer: React.FC<BlogIframeContainerProps> = ({ onBack
                   href={iframeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border-0 bg-neutral-100/70 hover:bg-neutral-200/60 text-xs font-medium text-text transition-colors cursor-pointer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl bg-neutral-100/70 hover:bg-neutral-200/60 text-xs font-medium text-neutral-700 transition-colors cursor-pointer border-0 outline-none"
                 >
                   <span>Open Blog in New Tab</span>
-                  <ExternalLink size={13} />
+                  <ExternalLink size={12} className="text-neutral-500" />
                 </a>
 
                 <button
                   type="button"
                   onClick={onBackToPortfolio}
-                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl border-0 bg-transparent hover:bg-neutral-100/70 text-[11px] font-normal text-neutral-400 hover:text-text-muted transition-colors cursor-pointer"
+                  className="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-transparent hover:bg-neutral-100/70 text-[11px] font-normal text-neutral-400 hover:text-neutral-700 transition-colors cursor-pointer border-0 outline-none"
                 >
                   Back to Portfolio
                 </button>

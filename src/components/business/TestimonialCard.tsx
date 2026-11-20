@@ -73,11 +73,11 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({ recommendation
     <motion.div
       layout
       transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-      className="bg-white/70 backdrop-blur-xs border border-border/80 py-[25px] px-[30px] rounded-2xl shadow-2xs hover:shadow-xs transition-colors duration-200 flex flex-col justify-between h-full group overflow-hidden"
+      className="bg-white/70 backdrop-blur-xs border border-border/80 py-[25px] px-[30px] rounded-2xl shadow-2xs hover:shadow-xs transition-colors duration-200 flex flex-col justify-between h-auto group"
     >
       {/* Quote text with smooth height layout animation and overflow protection */}
-      <motion.div layout="position" className="mb-6 flex-1 flex flex-col justify-start overflow-hidden">
-        <div className="overflow-hidden">
+      <motion.div layout="position" className="mb-6 flex-1 flex flex-col justify-start">
+        <div>
           <motion.p
             ref={textRef}
             layout="position"
@@ -104,18 +104,18 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({ recommendation
                 e.stopPropagation();
                 handleToggle();
               }}
-              className="text-xs text-text-subtle hover:text-[#0A66C2] font-normal transition-colors cursor-pointer inline-flex items-center gap-1 group/btn"
+              className="text-xs text-neutral-400 hover:text-neutral-800 font-normal transition-colors cursor-pointer inline-flex items-center gap-1 group/btn"
               title={isExpanded ? 'Show less' : 'Show full recommendation'}
             >
               {!isExpanded ? (
                 <>
-                  <span className="font-mono text-text-muted text-xs group-hover/btn:text-[#0A66C2] transition-colors">...</span>
-                  <span className="text-[11px] text-text-subtle group-hover/btn:text-[#0A66C2] underline underline-offset-4 decoration-border-hover group-hover/btn:decoration-[#0A66C2] transition-colors">
+                  <span className="font-mono text-neutral-400 text-xs group-hover/btn:text-neutral-800 transition-colors">...</span>
+                  <span className="text-[11px] text-neutral-400 group-hover/btn:text-neutral-800 underline underline-offset-4 decoration-neutral-200 group-hover/btn:decoration-neutral-400 transition-colors">
                     more
                   </span>
                 </>
               ) : (
-                <span className="text-[11px] text-text-subtle group-hover/btn:text-[#0A66C2] underline underline-offset-4 decoration-border-hover group-hover/btn:decoration-[#0A66C2] transition-colors">
+                <span className="text-[11px] text-neutral-400 group-hover/btn:text-neutral-800 underline underline-offset-4 decoration-neutral-200 group-hover/btn:decoration-neutral-400 transition-colors">
                   show less
                 </span>
               )}
